@@ -1,0 +1,9 @@
+# Ignore client folder during Render backend deployment
+client/
+.next/
+node_modules/client/
+*.md
+docs/
+.vscode/
+.idea/
+*.log

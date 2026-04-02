@@ -1,0 +1,209 @@
+# Render Blueprint for NayiBareilly Multi-Service Platform
+# Deploy: Connect this repo to Render and it will auto-deploy all services
+
+services:
+  # ============================================
+  # PostgreSQL Database
+  # ============================================
+  - type: pserv
+    name: nayibareilly-db
+    plan: free # Use 'standard' for production
+    region: singapore # Change to your preferred region
+    databaseName: nayibareilly
+    databaseUser: nayibareilly
+    ipAllowList: [] # Empty allows all IPs
+
+  # ============================================
+  # Redis Cache (Optional but recommended)
+  # ============================================
+  # Render doesn't provide free Redis, use external provider like:
+  # - Upstash (Free tier available)
+  # - Redis Cloud (Free 30MB)
+  # Add REDIS_URL to environment variables below
+
+  # ============================================
+  # Backend API Server (Express + Prisma)
+  # ============================================
+  - type: web
+    name: nayibareilly-api
+    runtime: node
+    region: singapore # Change to your preferred region
+    plan: free # Upgrade to 'starter' or higher for production
+    rootDir: server
+    buildCommand: npm ci && npx prisma generate && npx prisma migrate deploy
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      # Node Environment
+      - key: NODE_ENV
+        value: production
+      
+      # Server Configuration
+      - key: PORT
+        value: 4002
+      
+      - key: CLIENT_ORIGIN
+        sync: false # Set manually in Render dashboard
+      
+      # Database (auto-populated from PostgreSQL service)
+      - key: DATABASE_URL
+        fromDatabase:
+          name: nayibareilly-db
+          property: connectionString
+      
+      # JWT Secrets (CRITICAL - Set in Render dashboard)
+      - key: JWT_SECRET
+        generateValue: true
+        sync: false
+      
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+        sync: false
+      
+      - key: REFRESH_TOKEN_HASH_SECRET
+        generateValue: true
+        sync: false
+      
+      - key: JWT_EXPIRES_IN
+        value: 1h
+      
+      - key: JWT_REFRESH_EXPIRES_IN
+        value: 7d
+      
+      # Redis (Set manually - use external provider)
+      - key: REDIS_URL
+        sync: false
+      
+      - key: REDIS_CLUSTER_MODE
+        value: false
+      
+      - key: REDIS_ENABLED
+        value: true
+      
+      # Cloudinary (Set manually in Render dashboard)
+      - key: STORAGE_PROVIDER
+        value: cloudinary
+      
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      
+      - key: CLOUDINARY_FOLDER
+        value: nayibareilly
+      
+      - key: STORAGE_CDN_BASE_URL
+        sync: false
+      
+      # Rate Limiting
+      - key: RATE_LIMIT_WINDOW_MS
+        value: 900000
+      
+      - key: RATE_LIMIT_MAX_REQUESTS
+        value: 100
+      
+      # File Upload
+      - key: MAX_FILE_SIZE
+        value: 10485760
+      
+      - key: MAX_FILES_PER_UPLOAD
+        value: 5
+      
+      # Email (Optional - for notifications)
+      - key: EMAIL_ENABLED
+        value: false
+      
+      # Telemetry (Optional)
+      - key: ENABLE_TELEMETRY
+        value: false
+      
+      # CORS
+      - key: CORS_ALLOWED_ORIGINS
+        sync: false
+      
+      # Feature Flags
+      - key: ENABLE_REALTIME
+        value: true
+      
+      - key: ENABLE_NOTIFICATIONS
+        value: true
+      
+      - key: ENABLE_ADVANCED_SEARCH
+        value: true
+
+  # ============================================
+  # Frontend (Next.js)
+  # ============================================
+  - type: web
+    name: nayibareilly-frontend
+    runtime: node
+    region: singapore # Change to your preferred region
+    plan: free # Upgrade to 'starter' or higher for production
+    rootDir: client
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    envVars:
+      # Next.js
+      - key: NODE_ENV
+        value: production
+      
+      - key: PORT
+        value: 3000
+      
+      # API URLs (Update after backend is deployed)
+      - key: NEXT_PUBLIC_API_URL
+        sync: false # Set to: https://nayibareilly-api.onrender.com/api
+      
+      - key: NEXT_PUBLIC_SOCKET_URL
+        sync: false # Set to: https://nayibareilly-api.onrender.com
+      
+      # App Configuration
+      - key: NEXT_PUBLIC_APP_NAME
+        value: NayiBareilly
+      
+      - key: NEXT_PUBLIC_APP_VERSION
+        value: 1.0.0
+      
+      - key: NEXT_PUBLIC_APP_DESCRIPTION
+        value: Citizen Issue Reporting Platform
+      
+      # Google Maps (Optional)
+      - key: NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
+        sync: false
+      
+      # Feature Flags
+      - key: NEXT_PUBLIC_ENABLE_ANALYTICS
+        value: false
+      
+      - key: NEXT_PUBLIC_ENABLE_NOTIFICATIONS
+        value: true
+      
+      - key: NEXT_PUBLIC_ENABLE_REALTIME
+        value: true
+      
+      - key: NEXT_PUBLIC_ENABLE_PWA
+        value: false
+      
+      # UI Settings
+      - key: NEXT_PUBLIC_ITEMS_PER_PAGE
+        value: 10
+      
+      - key: NEXT_PUBLIC_MAX_FILE_SIZE
+        value: 10485760
+      
+      - key: NEXT_PUBLIC_SUPPORTED_IMAGE_TYPES
+        value: image/jpeg,image/png,image/webp,image/avif
+      
+      # Performance
+      - key: NEXT_PUBLIC_API_TIMEOUT
+        value: 30000
+      
+      - key: NEXT_PUBLIC_ENABLE_COMPRESSION
+        value: true
+      
+      - key: NEXT_PUBLIC_IMAGE_QUALITY
+        value: 85

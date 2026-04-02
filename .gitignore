@@ -1,0 +1,212 @@
+# ================================
+# Nagarsetu Multi-Service Project
+# ================================
+
+# Dependencies
+**/node_modules/
+# Commit package-lock.json for production deployments
+# **/package-lock.json
+
+# Environment Variables (CRITICAL - Never commit actual .env files!)
+# Only commit .env.example files as templates
+# Ignore all .env files
+**/.env
+**/.env.local
+**/.env.*.local
+**/.env.development
+**/.env.development.local
+**/.env.production
+**/.env.production.local
+**/.env.test
+**/.env.test.local
+# Exception: Allow all .env.example files to be committed
+!**/.env.example
+!**/.env*.example
+
+# ================================
+# CLIENT (Next.js) SPECIFIC
+# ================================
+client/.next/
+client/out/
+client/build/
+client/dist/
+client/.turbo/
+client/.swc/
+client/next-env.d.ts
+client/*.tsbuildinfo
+
+# ================================
+# SERVER & ADMIN-SERVER SPECIFIC
+# ================================
+server/dist/
+server/build/
+admin-server/dist/
+admin-server/build/
+
+# Uploads (keep structure)
+**/uploads/*
+!**/uploads/.gitkeep
+
+# Logs
+**/logs/
+**/*.log
+**/npm-debug.log*
+**/yarn-debug.log*
+**/yarn-error.log*
+**/lerna-debug.log*
+**/pnpm-debug.log*
+
+# ================================
+# DEVELOPMENT & BUILD ARTIFACTS
+# ================================
+# Coverage reports
+**/coverage/
+**/.nyc_output/
+
+# Runtime data
+**/pids/
+**/*.pid
+**/tmp/
+**/temp/
+
+# Cache directories
+**/.cache/
+**/.parcel-cache/
+**/.eslintcache
+**/.stylelintcache
+
+# Optional npm cache directory
+**/.npm
+
+# Optional REPL history
+**/.node_repl_history
+
+# ================================
+# DATABASE & STORAGE
+# ================================
+# Database files
+**/*.sqlite
+**/*.sqlite3
+**/*.db
+
+# Prisma
+**/prisma/migrations/
+**/prisma/.env
+# Don't ignore the schema - it's needed for the database
+!**/prisma/schema.prisma
+!**/prisma/seed.ts
+!**/prisma/seed.js
+
+# ================================
+# OPERATING SYSTEM
+# ================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+Desktop.ini
+
+# Linux
+*~
+
+# ================================
+# IDE & EDITORS
+# ================================
+# VSCode
+.vscode/settings.json
+.vscode/launch.json
+.vscode/extensions.json
+.vscode/c_cpp_properties.json
+.vscode/tasks.json
+.history/
+
+# JetBrains IDEs
+.idea/
+*.swp
+*.swo
+*~
+
+# Vim
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+
+# ================================
+# DEPLOYMENT & CLOUD
+# ================================
+# Vercel
+.vercel
+
+# Netlify
+.netlify/
+
+# Heroku
+Procfile.dev
+
+# Docker
+Dockerfile.dev
+docker-compose.override.yml
+
+# ================================
+# SECURITY & CERTIFICATES
+# ================================
+# SSL certificates
+**/*.pem
+**/*.key
+**/*.crt
+**/*.cert
+
+# ================================
+# PROJECT SPECIFIC EXCLUSIONS
+# ================================
+# Test results
+**/test-results/
+**/playwright-report/
+**/.playwright/
+
+# Temporary fix files (keeping examples)
+**/fix-*.sh
+**/error-fix-*.js
+**/typescript-fixes.js
+**/build-error-fixes.sh
+
+# Delete marked files
+**/**(delete)
+**/**(edit - *)
+
+# Documentation artifacts (keep main docs)
+**/DEPLOYMENT_FIXES_NEEDED.md
+**/ERROR_FIX_GUIDE.md
+**/FIXES_APPLIED.md
+**/TROUBLESHOOTING_OLD.md
+
+# PM2 runtime files
+**/.pm2/
+**/pm2.log
+**/ecosystem.config.js.bak
+
+# Redis dump files
+**/dump.rdb
+
+# Backup files
+**/*.bak
+**/*.backup
+**/*.old
+**/*.orig
+
+ 
+# Sensitive test data
+TEST-CREDENTIALS.md

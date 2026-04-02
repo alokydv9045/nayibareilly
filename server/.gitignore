@@ -1,0 +1,24 @@
+# Dependencies
+node_modules
+
+# Environment Variables (NEVER COMMIT!)
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+.env.test
+# Allow .env.example to be committed
+!.env.example
+
+# Uploads
+uploads/*
+!uploads/.gitkeep
+
+# Logs
+logs/
+*.log
+
+# Build
+dist/
+build/

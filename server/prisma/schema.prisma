@@ -1,0 +1,493 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String          @id @default(cuid())
+  email             String          @unique
+  passwordHash      String
+  name              String
+  phone             String?
+  address           String?
+  avatarUrl         String?
+  roles             UserRole[]      @default([citizen])
+  requestedRole     String?
+  isActive          Boolean         @default(true)
+  isVerified        Boolean         @default(false)
+  verifyToken       String?
+  verifyTokenExp    DateTime?
+  resetToken        String?
+  resetTokenExp     DateTime?
+  lastLogin         DateTime?
+  loginAttempts     Int             @default(0)
+  lockUntil         DateTime?
+  departmentId      String?
+  fcmToken          String?         @map("fcm_token")
+  fcmTokenUpdatedAt DateTime?       @map("fcm_token_updated_at")
+  isFlagged         Boolean         @default(false)
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  activityLogs      ActivityLog[]
+  departmentHead    Department[]    @relation("DepartmentHead")
+  comments          IssueComment[]
+  timelineEntries   IssueTimeline[] @relation("TimelineUser")
+  assignedIssues    Issue[]         @relation("IssueAssignee")
+  reportedIssues    Issue[]         @relation("IssueReporter")
+  resolvedIssues    Issue[]         @relation("IssueResolver")
+  notifications     Notification[]
+  notificationPreferences NotificationPreference?
+  refreshTokens     RefreshToken[]
+  savedSearches     SavedSearch[]
+  department        Department?     @relation(fields: [departmentId], references: [id])
+  votes             Vote[]
+
+  @@index([email])
+  @@index([departmentId])
+  @@index([roles])
+  @@index([isActive])
+  @@index([isFlagged])
+  @@map("users")
+}
+
+model Department {
+  id           String          @id @default(cuid())
+  name         String          @unique
+  description  String
+  code         String          @unique
+  contactEmail String?
+  contactPhone String?
+  isActive     Boolean         @default(true)
+  slaHours     Int             @default(48)
+  priority     Int             @default(1)
+  budget       Float           @default(0)
+  headId       String?
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  head         User?           @relation("DepartmentHead", fields: [headId], references: [id])
+  categories   IssueCategory[]
+  issues       Issue[]
+  users        User[]
+
+  @@map("departments")
+}
+
+model IssueCategory {
+  id                     String        @id @default(cuid())
+  name                   String        @unique
+  description            String
+  icon                   String        @default("alert-circle")
+  color                  String        @default("#6B7280")
+  priority               IssuePriority @default(MEDIUM)
+  slaHours               Int           @default(48)
+  isActive               Boolean       @default(true)
+  requiresLocation       Boolean       @default(true)
+  requiresImages         Boolean       @default(false)
+  allowsAnonymous        Boolean       @default(true)
+  defaultDepartmentId    String?
+  autoEscalateAfterHours Int?
+  escalateToDepartmentId String?
+  notifyRoles            UserRole[]    @default([])
+  createdAt              DateTime      @default(now())
+  updatedAt              DateTime      @updatedAt
+  defaultDepartment      Department?   @relation(fields: [defaultDepartmentId], references: [id])
+  issues                 Issue[]
+
+  @@map("issue_categories")
+}
+
+model Issue {
+  id            String        @id @default(cuid())
+  reportId      String        @unique
+  title         String
+  description   String
+  status        IssueStatus   @default(PENDING)
+  priority      IssuePriority @default(MEDIUM)
+  latitude      Float?
+  longitude     Float?
+  address       String?
+  landmark      String?
+  ward          String?
+  zone          String?
+  reporterId    String?
+  reporterName  String
+  reporterEmail String
+  reporterPhone String?
+  isAnonymous   Boolean       @default(false)
+  categoryId    String?
+  departmentId  String?
+  assignedToId  String?
+
+  // Moderator workflow fields
+  moderatorId      String? // Who reviewed and assigned
+  moderatorNotes   String? // Moderator's assignment reasoning
+  moderatedAt      DateTime? // When moderator reviewed
+  moderationStatus ModerationStatus @default(PENDING_REVIEW)
+  qualityScore     Int? // Quality check score (0-100)
+  isSpam           Boolean          @default(false)
+  isFlagged        Boolean          @default(false)
+  spamReason       String?
+  needsMoreInfo    Boolean          @default(false)
+  infoRequested    String? // What info is needed
+
+  // Department assignment tracking
+  assignedByModeratorAt DateTime? // When moderator assigned to dept
+  acceptedByDeptAt      DateTime? // When dept admin accepted
+  assignedToStaffAt     DateTime? // When assigned to field staff
+
+  // Staff workflow tracking
+  staffStartedAt   DateTime? // When staff started work
+  staffArrivedAt   DateTime? // When staff reached location
+  staffCompletedAt DateTime? // When staff completed work
+
+  // Citizen verification
+  citizenVerifiedAt DateTime? // When citizen verified
+  citizenRating     Int? // 1-5 stars
+  citizenFeedback   String? // Citizen's feedback
+
+  slaDeadline         DateTime?
+  slaBreached         Boolean         @default(false)
+  resolutionTimeHours Int?
+  isEscalated         Boolean         @default(false)
+  escalatedAt         DateTime?
+  escalationLevel     Int             @default(0)
+  escalationReason    String?
+  resolutionSummary   String?
+  resolutionDetails   String?
+  resolvedAt          DateTime?
+  resolvedById        String?
+  resolutionCost      Float?
+  upvotes             Int             @default(0)
+  downvotes           Int             @default(0)
+  totalVotes          Int             @default(0)
+  viewCount           Int             @default(0)
+  isPublic            Boolean         @default(true)
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+  activityLogs        ActivityLog[]
+  comments            IssueComment[]
+  images              IssueMedia[]
+  timeline            IssueTimeline[]
+  notifications       Notification[]  @relation("NotificationIssue")
+  assignedTo          User?           @relation("IssueAssignee", fields: [assignedToId], references: [id])
+  category            IssueCategory?  @relation(fields: [categoryId], references: [id])
+  department          Department?     @relation(fields: [departmentId], references: [id])
+  reporter            User?           @relation("IssueReporter", fields: [reporterId], references: [id])
+  resolvedBy          User?           @relation("IssueResolver", fields: [resolvedById], references: [id])
+  votes               Vote[]
+  voiceNotes          VoiceNote[]
+
+  @@index([status])
+  @@index([priority])
+  @@index([departmentId])
+  @@index([categoryId])
+  @@index([reporterId])
+  @@index([assignedToId])
+  @@index([moderationStatus])
+  @@index([isFlagged])
+  @@index([createdAt])
+  @@index([resolvedAt])
+  @@map("issues")
+}
+
+model IssueMedia {
+  id           String   @id @default(cuid())
+  issueId      String
+  url          String
+  filename     String
+  originalName String?
+  mimeType     String?
+  size         Int?
+  uploadedAt   DateTime @default(now())
+  issue        Issue    @relation(fields: [issueId], references: [id], onDelete: Cascade)
+
+  @@map("issue_media")
+}
+
+model IssueComment {
+  id         String   @id @default(cuid())
+  issueId    String
+  userId     String?
+  content    String
+  isInternal Boolean  @default(false)
+  isPublic   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  issue      Issue    @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  user       User?    @relation(fields: [userId], references: [id])
+
+  @@map("issue_comments")
+}
+
+model IssueTimeline {
+  id            String      @id @default(cuid())
+  issueId       String
+  status        IssueStatus
+  note          String?
+  performedById String?
+  createdAt     DateTime    @default(now())
+  issue         Issue       @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  performedBy   User?       @relation("TimelineUser", fields: [performedById], references: [id])
+
+  @@map("issue_timeline")
+}
+
+model Vote {
+  id        String   @id @default(cuid())
+  userId    String
+  issueId   String
+  isUpvote  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  issue     Issue    @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, issueId])
+  @@map("votes")
+}
+
+model ActivityLog {
+  id          String         @id @default(cuid())
+  action      ActivityAction
+  description String
+  metadata    Json?
+  userId      String?
+  issueId     String?
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime       @default(now())
+  issue       Issue?         @relation(fields: [issueId], references: [id])
+  user        User?          @relation(fields: [userId], references: [id])
+
+  @@map("activity_logs")
+}
+
+model RefreshToken {
+  id        String    @id @default(cuid())
+  tokenHash String    @unique
+  userId    String
+  userAgent String?
+  ipAddress String?
+  isValid   Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  expiresAt DateTime
+  lastUsed  DateTime  @default(now())
+  revokedAt DateTime?
+  revokedBy String?
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("refresh_tokens")
+}
+
+model Notification {
+  id             String             @id @default(cuid())
+  userId         String
+  title          String
+  message        String?
+  type           NotificationType   @default(INFO)
+  category       String? // issue_status, assignment, comment, escalation, etc.
+  relatedIssueId String?
+  relatedUserId  String? // For user-related notifications
+  actionUrl      String? // Deep link to the relevant page
+  metadata       Json?
+  read           Boolean            @default(false)
+  priority       NotificationPriority @default(NORMAL)
+  expiresAt      DateTime? // For time-sensitive notifications
+  createdAt      DateTime           @default(now())
+  readAt         DateTime?
+  user           User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  issue          Issue?             @relation("NotificationIssue", fields: [relatedIssueId], references: [id], onDelete: SetNull)
+
+  @@index([userId, read, createdAt])
+  @@index([userId, type])
+  @@index([relatedIssueId])
+  @@index([createdAt])
+  @@map("notifications")
+}
+
+model NotificationPreference {
+  id                    String   @id @default(cuid())
+  userId                String   @unique
+  enableInApp           Boolean  @default(true)
+  enableEmail           Boolean  @default(true)
+  enablePush            Boolean  @default(true)
+  
+  // Category preferences
+  issueStatusUpdates    Boolean  @default(true)
+  issueAssignments      Boolean  @default(true)
+  issueComments         Boolean  @default(true)
+  issueEscalations      Boolean  @default(true)
+  issueResolutions      Boolean  @default(true)
+  systemAnnouncements   Boolean  @default(true)
+  
+  // Frequency settings
+  emailDigest           EmailDigestFrequency @default(IMMEDIATE)
+  quietHoursStart       Int?     // Hour of day (0-23)
+  quietHoursEnd         Int?     // Hour of day (0-23)
+  
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notification_preferences")
+}
+
+enum NotificationType {
+  INFO
+  SUCCESS
+  WARNING
+  ERROR
+  ANNOUNCEMENT
+}
+
+enum NotificationPriority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+enum EmailDigestFrequency {
+  IMMEDIATE
+  HOURLY
+  DAILY
+  WEEKLY
+  NEVER
+}
+
+model VoiceNote {
+  id            String   @id @default(cuid())
+  issueId       String
+  audioUrl      String
+  transcription String?
+  duration      Int? // Duration in seconds
+  fileSize      Int? // File size in bytes
+  mimeType      String   @default("audio/webm")
+  fileName      String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  issue         Issue    @relation(fields: [issueId], references: [id], onDelete: Cascade)
+
+  @@index([issueId])
+  @@map("voice_notes")
+}
+
+enum UserRole {
+  citizen
+  moderator
+  staff
+  dept_admin
+  mayor
+  super_admin
+}
+
+enum IssueStatus {
+  PENDING
+  PENDING_MODERATOR_REVIEW
+  APPROVED_BY_MODERATOR
+  ASSIGNED_TO_DEPARTMENT
+  ACCEPTED_BY_DEPARTMENT
+  TRIAGED
+  ASSIGNED
+  ASSIGNED_TO_STAFF
+  STAFF_EN_ROUTE
+  STAFF_ON_SITE
+  IN_PROGRESS
+  WORK_COMPLETED
+  PENDING_CITIZEN_VERIFICATION
+  CITIZEN_VERIFIED
+  RESOLVED
+  CLOSED
+  ESCALATED
+  REJECTED
+  NEEDS_MORE_INFO
+  SPAM
+}
+
+enum ModerationStatus {
+  PENDING_REVIEW
+  UNDER_REVIEW
+  APPROVED
+  REJECTED
+  NEEDS_MORE_INFO
+  SPAM_FLAGGED
+  ASSIGNED
+  PENDING_ASSIGNMENT
+}
+
+enum IssuePriority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum ActivityAction {
+  LOGIN
+  CREATED
+  STATUS_CHANGED
+  ASSIGNED
+  ESCALATED
+  RESOLVED
+  CLOSED
+  REOPENED
+  COMMENTED
+  ATTACHMENT_ADDED
+  LOCATION_UPDATED
+  PRIORITY_CHANGED
+  DEPARTMENT_TRANSFERRED
+  SLA_BREACHED
+  VOTED
+  DELETED
+  REASSIGNED
+  UNASSIGNED
+}
+
+// Assignment History Model
+model AssignmentHistory {
+  id               String         @id @default(cuid())
+  issueId          String
+  issueReportId    String?
+  fromAssigneeId   String?
+  fromAssigneeName String?
+  toAssigneeId     String
+  toAssigneeName   String
+  changedById      String
+  changedByName    String
+  reason           String?
+  type             AssignmentType
+  priority         IssuePriority?
+  notes            String?
+  createdAt        DateTime       @default(now())
+
+  @@index([issueId])
+  @@index([toAssigneeId])
+  @@index([changedById])
+  @@index([createdAt])
+  @@map("assignment_history")
+}
+
+enum AssignmentType {
+  INITIAL
+  REASSIGNMENT
+  UNASSIGNMENT
+}
+
+// Saved Search Model
+model SavedSearch {
+  id        String   @id @default(cuid())
+  userId    String
+  name      String
+  query     String
+  filters   Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt])
+  @@map("saved_searches")
+}
