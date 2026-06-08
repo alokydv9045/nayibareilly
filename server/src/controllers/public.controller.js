@@ -267,6 +267,132 @@ export const getPublicReports = async (req, res) => {
 }
 
 /**
+ * Get a single public report by ID
+ * No authentication required
+ */
+export const getPublicReportById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const issue = await prisma.issue.findUnique({
+      where: { 
+        id,
+        moderationStatus: 'APPROVED' // Ensure only approved issues are accessible
+      },
+      select: {
+        id: true,
+        reportId: true,
+        title: true,
+        description: true,
+        status: true,
+        priority: true,
+        upvotes: true,
+        downvotes: true,
+        totalVotes: true,
+        viewCount: true,
+        latitude: true,
+        longitude: true,
+        address: true,
+        createdAt: true,
+        updatedAt: true,
+        resolvedAt: true,
+        category: {
+          select: {
+            id: true,
+            name: true,
+            icon: true,
+            color: true
+          }
+        },
+        reporter: {
+          select: {
+            id: true,
+            name: true,
+            avatarUrl: true
+          }
+        },
+        department: {
+          select: {
+            id: true,
+            name: true
+          }
+        },
+        images: {
+          select: {
+            id: true,
+            url: true,
+            caption: true
+          }
+        },
+        statusHistory: {
+          orderBy: { createdAt: 'asc' },
+          select: {
+            status: true,
+            createdAt: true,
+            notes: true,
+            createdById: true
+          }
+        },
+        comments: {
+          where: {
+            moderationStatus: 'APPROVED',
+            parentId: null
+          },
+          orderBy: { createdAt: 'desc' },
+          select: {
+            id: true,
+            content: true,
+            createdAt: true,
+            upvotes: true,
+            author: {
+              select: {
+                id: true,
+                name: true,
+                roles: true,
+                avatarUrl: true
+              }
+            },
+            replies: {
+              where: { moderationStatus: 'APPROVED' },
+              orderBy: { createdAt: 'asc' },
+              select: {
+                id: true,
+                content: true,
+                createdAt: true,
+                upvotes: true,
+                author: {
+                  select: {
+                    id: true,
+                    name: true,
+                    roles: true,
+                    avatarUrl: true
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    });
+
+    if (!issue) {
+      return fail(res, 404, 'Report not found or not approved for public viewing');
+    }
+
+    // Increment view count in background
+    prisma.issue.update({
+      where: { id },
+      data: { viewCount: { increment: 1 } }
+    }).catch(e => console.error('Error incrementing view count:', e));
+
+    return ok(res, issue);
+  } catch (error) {
+    console.error('Error fetching public report details:', error);
+    return fail(res, 500, 'Failed to fetch public report details', error.message);
+  }
+}
+
+/**
  * Get public category statistics for homepage filters
  * No authentication required
  */

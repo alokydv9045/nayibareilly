@@ -6,5 +6,5 @@ interface PageProps {
 
 export default async function LegacyIssueRedirect({ params }: PageProps) {
   const { id } = await params
-  redirect(`/app/issue/${id}`)
+  redirect(`/reports/${id}`)
 }

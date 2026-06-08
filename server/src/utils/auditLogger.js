@@ -140,9 +140,7 @@ export const auditLog = (eventType, level, message, data = {}, req = null) => {
     console.log(JSON.stringify(logEntry))
   }
 
-  // TODO: In production, also send to external logging service
-  // Example: send to ELK stack, Splunk, or cloud logging service
-  
+  // In production, rely on standard output forwarding (e.g., to ELK stack, CloudWatch)
   return logEntry
 }
 
@@ -196,14 +194,14 @@ export const authLogger = {
     )
   },
 
-  loginFailure: (email, reason, req) => auditLog(
+  loginFailure: (email, reason, req, attemptCount = 1) => auditLog(
     AuthEventType.LOGIN_FAILURE,
     LogLevel.SECURITY,
     `Login failed for email: ${email}`,
     { 
       email,
       reason,
-      attemptCount: 1 // TODO: Track attempt counts
+      attemptCount
     },
     req
   ),
@@ -652,7 +650,7 @@ export const securityMonitor = {
     const current = securityMonitor.trackFailedLogins.get(key) || 0
     securityMonitor.trackFailedLogins.set(key, current + 1)
     
-    authLogger.loginFailure(email, 'invalid_credentials', req)
+    authLogger.loginFailure(email, 'invalid_credentials', req, current + 1)
     
     if (current >= 2) {
       authLogger.suspiciousActivity(

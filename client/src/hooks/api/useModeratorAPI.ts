@@ -1,4 +1,4 @@
-﻿/**
+/**
  * useModeratorAPI - Custom hook for moderator API calls
  * Provides clean abstraction for all moderator endpoints
  */
@@ -59,6 +59,28 @@ interface PerformanceMetrics {
     needsInfo: number
   }
   topCategories: Array<{ categoryId: string; _count: { _all: number } }>
+}
+
+interface ModeratorHistoryResponse {
+  history: Array<{
+    id: string
+    title: string
+    description: string
+    status: string
+    reviewedAt: string
+    reviewedBy: string
+    decision: string
+    reason?: string
+    reporterName: string
+    address: string
+    categoryName?: string
+  }>
+  pagination: {
+    page: number
+    limit: number
+    total: number
+    pages: number
+  }
 }
 
 export function useModeratorAPI() {
@@ -135,6 +157,21 @@ export function useModeratorAPI() {
 
     if (!response.ok) {
       throw new Error('Failed to fetch performance metrics')
+    }
+
+    const data = await response.json()
+    return data.data || data
+  }, [apiRoot, getAuthHeaders])
+
+  // Fetch moderator history
+  const fetchHistory = useCallback(async (page = 1, limit = 20): Promise<ModeratorHistoryResponse> => {
+    const response = await fetch(`${apiRoot}/api/v1/moderator/history?page=${page}&limit=${limit}`, {
+      headers: getAuthHeaders(),
+      cache: 'no-store'
+    })
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch moderator history')
     }
 
     const data = await response.json()
@@ -267,6 +304,7 @@ export function useModeratorAPI() {
     fetchPending,
     fetchDepartments,
     fetchPerformance,
+    fetchHistory,
     checkDuplicates,
     approveIssue,
     rejectIssue,

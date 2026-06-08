@@ -55,19 +55,7 @@ if (!hasPino) {
   rawLogger = logger
 } else {
   // Use Pino logger
-  const transport = !isProduction
-    ? {
-        target: 'pino-pretty',
-        options: {
-          colorize: true,
-          translateTime: 'HH:MM:ss',
-          ignore: 'pid,hostname,service,env',
-          messageFormat: '{msg}',
-          singleLine: true,
-          hideObject: true
-        }
-      }
-    : undefined
+  const transport = undefined // Disabled to fix thread-stream crash on Node 24 Windows
 
   const baseLogger = pino({
     level,

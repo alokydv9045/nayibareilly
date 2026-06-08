@@ -25,11 +25,11 @@ const getApiBaseUrl = (): string => {
   if (isProduction) {
     return process.env.NEXT_PUBLIC_API_URL_PROD || 
            process.env.NEXT_PUBLIC_API_URL || 
-           'https://nayibareilly.onrender.com/api'
+           'http://localhost:4001/api'
   }
   
   // Fallback
-  return process.env.NEXT_PUBLIC_API_URL || 'https://nayibareilly.onrender.com/api'
+  return process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4001/api'
 }
 
 /**
@@ -47,11 +47,12 @@ const getSocketBaseUrl = (): string => {
   if (isProduction) {
     return process.env.NEXT_PUBLIC_SOCKET_URL_PROD || 
            process.env.NEXT_PUBLIC_SOCKET_URL || 
-           'https://nayibareilly.onrender.com'
+           process.env.NEXT_PUBLIC_WS_URL ||
+           'http://localhost:4001'
   }
   
   // Fallback
-  return process.env.NEXT_PUBLIC_SOCKET_URL || 'https://nayibareilly.onrender.com'
+  return process.env.NEXT_PUBLIC_SOCKET_URL || process.env.NEXT_PUBLIC_WS_URL || 'http://localhost:4001'
 }
 
 /**

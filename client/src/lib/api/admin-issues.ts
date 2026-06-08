@@ -60,9 +60,9 @@ export const fetchAdminIssues = async (filters: AdminIssuesFilters = {}): Promis
 }
 
 // Update single issue status
-export const updateIssueStatus = async (id: string, status: string) => {
+export const updateIssueStatus = async (id: string, status: string, note?: string) => {
   // Prefer dedicated status route on server to ensure timeline logging and notifications
-  const { data } = await api.put(`/issues/${id}/status`, { status })
+  const { data } = await api.put(`/issues/${id}/status`, { status, note })
   return data?.data?.issue
 }
 
@@ -113,7 +113,7 @@ export const useAdminIssues = (filters: AdminIssuesFilters) => {
 export const useUpdateIssueStatus = () => {
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: ({ id, status }: { id: string; status: string }) => updateIssueStatus(id, status),
+    mutationFn: ({ id, status, note }: { id: string; status: string; note?: string }) => updateIssueStatus(id, status, note),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['adminIssues'] })
     }

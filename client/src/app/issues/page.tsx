@@ -1,6 +1,7 @@
-﻿'use client'
+'use client'
 
 import { useState, useMemo } from 'react'
+import { useRouter } from 'next/navigation'
 import { ColumnDef } from '@tanstack/react-table'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -59,6 +60,7 @@ const categoryConfig = {
 }
 
 export default function IssuesPage() {
+  const router = useRouter()
   const [page] = useState(1) // future: pagination integration
   // Future: UI controls will update these filters
   const [statusFilter] = useState<string | undefined>()
@@ -293,7 +295,7 @@ export default function IssuesPage() {
     setDetailsDialog({ open: true, issue })
   }
 
-  const handleUpdateStatus = (issue: IssueRow, newStatus: IssueRow['status']) => {
+  const handleUpdateStatus = (issue: IssueRow, newStatus: IssueRow['status'], note?: string) => {
     const prev = qc.getQueryData<{ items: AdminIssue[]; total: number; page: number; pages: number }>(['adminIssues'])
     // optimistic update
     qc.setQueryData(['adminIssues'], (data: { items: AdminIssue[]; total: number; page: number; pages: number } | undefined) => {
@@ -303,7 +305,7 @@ export default function IssuesPage() {
         items: data.items.map((i: AdminIssue) => i._id === issue.id ? { ...i, status: newStatus, updatedAt: new Date().toISOString(), resolvedAt: newStatus === 'RESOLVED' ? new Date().toISOString() : i.resolvedAt } : i)
       }
     })
-    updateStatus.mutate({ id: issue.id, status: newStatus }, {
+    updateStatus.mutate({ id: issue.id, status: newStatus, note }, {
       onSuccess: () => toast.success('Status updated'),
       onError: () => {
         toast.error('Failed to update status')
@@ -392,18 +394,16 @@ export default function IssuesPage() {
     setRejectDialog({ open: true, issue })
   }
 
-  const handleRejectConfirm = (_reason: string) => {
+  const handleRejectConfirm = (reason: string) => {
     const issue = rejectDialog.issue
     if (!issue) return
     
-    handleUpdateStatus(issue, 'REJECTED')
+    handleUpdateStatus(issue, 'REJECTED', reason)
     setRejectDialog({ open: false, issue: null })
-    // Note: In production, send rejection reason to backend
   }
 
   const handleAddIssue = () => {
-    // TODO: Open add issue modal
-    toast('Add issue functionality coming soon', { icon: 'ℹ️' })
+    router.push('/report')
   }
 
   const handleRefresh = () => {
@@ -411,8 +411,45 @@ export default function IssuesPage() {
   }
 
   const handleExport = () => {
-    // TODO: Implement export functionality
-    toast('Export functionality coming soon', { icon: 'ℹ️' })
+    if (!issues || issues.length === 0) {
+      toast('No data to export', { icon: '⚠️' })
+      return
+    }
+    
+    try {
+      const headers = ['ID', 'Title', 'Category', 'Status', 'Priority', 'Department', 'Created At']
+      const csvRows = [headers.join(',')]
+      
+      issues.forEach(issue => {
+        const row = [
+          issue.id,
+          `"${issue.title.replace(/"/g, '""')}"`,
+          issue.category,
+          issue.status,
+          issue.priority,
+          issue.assignedTo?.department || 'Unassigned',
+          new Date(issue.createdAt).toLocaleString()
+        ]
+        csvRows.push(row.join(','))
+      })
+      
+      const csvData = csvRows.join('\n')
+      const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' })
+      const url = URL.createObjectURL(blob)
+      
+      const link = document.createElement('a')
+      link.setAttribute('href', url)
+      link.setAttribute('download', `nayibareilly_issues_${new Date().toISOString().split('T')[0]}.csv`)
+      link.style.visibility = 'hidden'
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      
+      toast('Exported successfully', { icon: '✅' })
+    } catch (error) {
+      console.error('Export error:', error)
+      toast('Failed to export data', { icon: '❌' })
+    }
   }
 
   return (

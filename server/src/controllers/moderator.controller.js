@@ -678,3 +678,82 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
 function toRad(degrees) {
   return degrees * (Math.PI / 180)
 }
+
+/**
+ * Get review history for a moderator
+ */
+export const getModeratorHistory = async (req, res) => {
+  try {
+    const moderatorId = req.user.id
+    
+    // Pagination params
+    const page = parseInt(req.query.page) || 1
+    const limit = parseInt(req.query.limit) || 20
+    const skip = (page - 1) * limit
+
+    const history = await prisma.issue.findMany({
+      where: {
+        moderatorId,
+        moderatedAt: { not: null }
+      },
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        moderationStatus: true,
+        status: true,
+        moderatedAt: true,
+        moderatorNotes: true,
+        address: true,
+        reporter: {
+          select: { name: true }
+        },
+        category: {
+          select: { name: true }
+        }
+      },
+      orderBy: {
+        moderatedAt: 'desc'
+      },
+      skip,
+      take: limit
+    })
+
+    const transformedHistory = history.map(item => ({
+      id: item.id,
+      title: item.title,
+      description: item.description,
+      status: item.moderationStatus.toLowerCase(),
+      reviewedAt: item.moderatedAt,
+      reviewedBy: req.user.name || 'Moderator',
+      decision: item.moderationStatus.toLowerCase(),
+      reason: item.moderatorNotes,
+      reporterName: item.reporter?.name || 'Anonymous',
+      address: item.address || 'Unknown Location',
+      categoryName: item.category?.name || 'Uncategorized'
+    }))
+
+    const total = await prisma.issue.count({
+      where: {
+        moderatorId,
+        moderatedAt: { not: null }
+      }
+    })
+
+    return ok(res, {
+      history: transformedHistory,
+      pagination: {
+        page,
+        limit,
+        total,
+        pages: Math.ceil(total / limit)
+      }
+    })
+  } catch (error) {
+    logger.error('Error fetching moderator history', {
+      error: error.message,
+      moderatorId: req.user.id
+    })
+    return fail(res, 500, 'Failed to fetch moderator history')
+  }
+}

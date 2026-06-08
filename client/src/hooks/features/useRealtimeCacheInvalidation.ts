@@ -1,6 +1,7 @@
-﻿import { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import socketService from '@/lib/services/socket-service'
+import { logger } from '@/lib/utils/logger'
 
 // Type definitions for API responses
 interface SystemStatsResponse {
@@ -36,7 +37,7 @@ export function useRealtimeCacheInvalidation() {
   useEffect(() => {
     // User-related events
     socketService.onUserNew((data) => {
-      console.log('ðŸ”„ Invalidating user caches due to new user:', data.newUser?.name)
+      logger.debug('🔄 Invalidating user caches due to new user:', data.newUser?.name)
       
       // Invalidate admin system stats
       queryClient.invalidateQueries({ queryKey: ['admin', 'system-stats'] })
@@ -69,7 +70,7 @@ export function useRealtimeCacheInvalidation() {
     })
 
     socketService.onUserVerified((data) => {
-      console.log('ðŸ”„ Invalidating user caches due to user verification:', data.verifiedUser?.name)
+      logger.debug('🔄 Invalidating user caches due to user verification:', data.verifiedUser?.name)
       
       // Invalidate user count and verification stats
       queryClient.invalidateQueries({ queryKey: ['admin', 'system-stats'] })
@@ -96,7 +97,7 @@ export function useRealtimeCacheInvalidation() {
 
     // System stats events
     socketService.onSystemStats((data) => {
-      console.log('ðŸ”„ Updating system stats cache:', data)
+      logger.debug('🔄 Updating system stats cache:', data)
       
       // Update system stats cache directly
       queryClient.setQueryData(['admin', 'system-stats'], {
@@ -116,7 +117,7 @@ export function useRealtimeCacheInvalidation() {
 
     // Issue-related events
     socketService.onIssueCreated((data) => {
-      console.log('ðŸ”„ Invalidating issue caches due to new issue:', data.issue.title)
+      logger.debug('🔄 Invalidating issue caches due to new issue:', data.issue.title)
       
       // Invalidate all issue-related queries
       queryClient.invalidateQueries({ queryKey: ['issues'] })
@@ -128,7 +129,7 @@ export function useRealtimeCacheInvalidation() {
     })
 
     socketService.onIssueUpdated((data) => {
-      console.log('ðŸ”„ Invalidating issue caches due to issue update:', data.issue.title)
+      logger.debug('🔄 Invalidating issue caches due to issue update:', data.issue.title)
       
       // Invalidate specific issue and lists
       queryClient.invalidateQueries({ queryKey: ['issue', data.issueId] })
@@ -139,7 +140,7 @@ export function useRealtimeCacheInvalidation() {
     })
 
     socketService.onIssueAssigned((data) => {
-      console.log('ðŸ”„ Invalidating caches due to issue assignment:', data.issue.title)
+      logger.debug('🔄 Invalidating caches due to issue assignment:', data.issue.title)
       
       // Invalidate assignment-related queries
       queryClient.invalidateQueries({ queryKey: ['my-assigned-issues'] })
@@ -149,7 +150,7 @@ export function useRealtimeCacheInvalidation() {
     })
 
     socketService.onIssueEscalated((data) => {
-      console.log('ðŸ”„ Invalidating caches due to issue escalation:', data.issue.title)
+      logger.debug('🔄 Invalidating caches due to issue escalation:', data.issue.title)
       
       // Invalidate escalation-related queries
       queryClient.invalidateQueries({ queryKey: ['admin', 'dashboard'] })
@@ -159,7 +160,7 @@ export function useRealtimeCacheInvalidation() {
 
     // Department stats events
     socketService.onDepartmentStats((data) => {
-      console.log('ðŸ”„ Updating department stats cache:', data.departmentId)
+      logger.debug('🔄 Updating department stats cache:', data.departmentId)
       
       // Invalidate department-specific queries
       queryClient.invalidateQueries({ queryKey: ['department', 'stats'] })
@@ -169,7 +170,7 @@ export function useRealtimeCacheInvalidation() {
 
     // System alerts
     socketService.onSystemAlert((data) => {
-      console.log('âš ï¸ System alert received:', data.message)
+      logger.warn('⚠️ System alert received:', data.message)
       
       // Could invalidate system health queries if they exist
       queryClient.invalidateQueries({ queryKey: ['system', 'health'] })

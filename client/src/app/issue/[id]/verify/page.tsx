@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
@@ -88,7 +88,7 @@ export default function VerifyIssuePage({ params }: { params: Promise<{ id: stri
         const verifiableStatuses = ['WORK_COMPLETED', 'PENDING_CITIZEN_VERIFICATION', 'RESOLVED']
         if (!verifiableStatuses.includes(issueData.status)) {
           toast.error(`Issue cannot be verified in ${issueData.status} status`)
-          router.push(`/issue/${issueId}`)
+          router.push(`/reports/${issueId}`)
           return
         }
 
@@ -147,7 +147,7 @@ export default function VerifyIssuePage({ params }: { params: Promise<{ id: stri
 
       // Redirect to issue details or my issues
       setTimeout(() => {
-        router.push(`/issue/${issueId}`)
+        router.push(`/reports/${issueId}`)
       }, 1500)
 
     } catch (error: unknown) {
@@ -388,7 +388,7 @@ export default function VerifyIssuePage({ params }: { params: Promise<{ id: stri
             <div className="flex items-center justify-between pt-6 border-t border-white/10">
               <Button
                 variant="outline"
-                onClick={() => router.push(`/issue/${issueId}`)}
+                onClick={() => router.push(`/reports/${issueId}`)}
                 className="border-white/30 text-white hover:bg-white/10"
                 disabled={submitting}
               >

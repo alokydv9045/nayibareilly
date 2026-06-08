@@ -250,7 +250,7 @@ export default function Footer() {
                 Community Guidelines
               </Link>
               <Link 
-                href="/accessibility" 
+                href="/" 
                 className="flex items-center text-gray-300 hover:text-white transition-colors text-sm"
               >
                 <Activity className="h-4 w-4 mr-2" />

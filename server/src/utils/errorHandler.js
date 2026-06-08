@@ -2,6 +2,7 @@
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import * as Sentry from '@sentry/node'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -157,9 +158,9 @@ class ErrorLogger {
       // File log for all environments
       await fs.promises.appendFile(this.getLogFileName(), logEntry)
       
-      // TODO: Send to external monitoring service (Sentry, etc.)
-      if (process.env.NODE_ENV === 'production') {
-        // await this.sendToMonitoringService(errorInfo)
+      // Send to external monitoring service (Sentry, etc.)
+      if (process.env.NODE_ENV === 'production' && process.env.SENTRY_DSN) {
+        await this.sendToMonitoringService(errorInfo, error)
       }
       
     } catch (logError) {
@@ -167,9 +168,32 @@ class ErrorLogger {
     }
   }
 
-  // TODO: Implement external monitoring service integration
-  async sendToMonitoringService(errorInfo) {
-    // Implementation for Sentry, DataDog, etc.
+  // Send to Sentry
+  async sendToMonitoringService(errorInfo, originalError = null) {
+    try {
+      Sentry.withScope(scope => {
+        scope.setLevel(errorInfo.level.toLowerCase());
+        scope.setTags({
+          type: errorInfo.type,
+          statusCode: errorInfo.statusCode
+        });
+        scope.setExtras({
+          metadata: errorInfo.metadata,
+          request: errorInfo.request
+        });
+        
+        if (errorInfo.request && errorInfo.request.userId) {
+          scope.setUser({ id: errorInfo.request.userId, ip_address: errorInfo.request.ip });
+        }
+        
+        // Use the original Error object if it was passed, otherwise capture the formatted message
+        const exceptionToCapture = originalError || new Error(errorInfo.message);
+        exceptionToCapture.name = errorInfo.type;
+        Sentry.captureException(exceptionToCapture);
+      });
+    } catch (sentryError) {
+      console.error('Failed to send error to Sentry:', sentryError);
+    }
   }
 }
 

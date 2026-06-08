@@ -44,6 +44,23 @@ router.get('/pending', [
 });
 
 /**
+ * GET /api/v1/moderator/history
+ * Get moderator review history
+ */
+router.get('/history', [
+  auth(['MODERATOR', 'ADMIN', 'SUPER_ADMIN']),
+  query('page').optional().isInt({ min: 1 }),
+  query('limit').optional().isInt({ min: 1, max: 100 })
+], async (req, res, next) => {
+  try {
+    const { getModeratorHistory } = await import('../../../controllers/moderator.controller.js');
+    return getModeratorHistory(req, res, next);
+  } catch (error) {
+    next(error);
+  }
+});
+
+/**
  * GET /api/v1/moderator/departments
  * Get list of departments for assignment
  */

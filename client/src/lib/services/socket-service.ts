@@ -1,5 +1,6 @@
-﻿import { io, Socket } from 'socket.io-client';
+import { io, Socket } from 'socket.io-client';
 import { config } from '@/lib/constants/app.config'
+import { logger } from '@/lib/utils/logger'
 
 // Socket event data types
 interface IssueEventData {
@@ -98,21 +99,21 @@ class SocketService {
     });
 
     this.socket.on('connect', () => {
-      console.log('âœ… Socket connected');
+      logger.debug('✅ Socket connected');
       this.isConnected = true;
     });
 
     this.socket.on('disconnect', (reason) => {
-      console.log('âŒ Socket disconnected:', reason);
+      logger.debug('❌ Socket disconnected:', reason);
       this.isConnected = false;
     });
 
     this.socket.on('connect_error', (error) => {
-      console.error('ðŸ”¥ Socket connection error:', error);
+      logger.error('🔥 Socket connection error:', error);
     });
 
     this.socket.on('reconnect', () => {
-      console.log('ðŸ”„ Socket reconnected');
+      logger.debug('🔄 Socket reconnected');
     });
 
     // Admin-specific event listeners
@@ -124,60 +125,60 @@ class SocketService {
 
     // Issue updates
     this.socket.on('issue:created', (data: IssueEventData) => {
-      console.log('ðŸ“ New issue created:', data);
+      logger.debug('📝 New issue created:', data);
       // Handle new issue notification
     });
 
     this.socket.on('issue:updated', (data: IssueEventData) => {
-      console.log('ðŸ“ Issue updated:', data);
+      logger.debug('📝 Issue updated:', data);
       // Handle issue update
     });
 
     this.socket.on('issue:assigned', (data: IssueEventData) => {
-      console.log('ðŸ‘¤ Issue assigned:', data);
+      logger.debug('👤 Issue assigned:', data);
       // Handle issue assignment
     });
 
     this.socket.on('issue:escalated', (data: IssueEventData) => {
-      console.log('ðŸš¨ Issue escalated:', data);
+      logger.debug('🚨 Issue escalated:', data);
       // Handle escalation notification
     });
 
     // User management events
     this.socket.on('user:login', (data: UserEventData) => {
-      console.log('ðŸ” User logged in:', data);
+      logger.debug('🔑 User logged in:', data);
       // Handle user login notification
     });
 
     this.socket.on('user:created', (data: UserEventData) => {
-      console.log('ðŸ‘¤ New user created:', data);
+      logger.debug('👤 New user created:', data);
       // Handle new user notification
     });
 
     // New real-time user events
     this.socket.on('user:new', (data: UserStatsData) => {
-      console.log('ðŸ‘¤ New user registered:', data);
+      logger.debug('👤 New user registered:', data);
       // Handle new user registration with stats update
     });
 
     this.socket.on('user:verified', (data: UserStatsData) => {
-      console.log('âœ… User verified:', data);
+      logger.debug('✅ User verified:', data);
       // Handle user verification with stats update
     });
 
     // System events
     this.socket.on('system:alert', (data: SystemAlertData) => {
-      console.log('âš ï¸ System alert:', data);
+      logger.debug('⚠️ System alert:', data);
       // Handle system alerts
     });
 
     this.socket.on('system:stats', (data: SystemStatsData) => {
-      console.log('ðŸ“Š System stats updated:', data);
+      logger.debug('📊 System stats updated:', data);
       // Handle real-time system stats updates
     });
 
     this.socket.on('department:stats', (data: DepartmentStatsData) => {
-      console.log('ðŸ“Š Department stats updated:', data);
+      logger.debug('📊 Department stats updated:', data);
       // Handle real-time stats updates
     });
   }

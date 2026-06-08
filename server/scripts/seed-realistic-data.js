@@ -406,32 +406,49 @@ async function main() {
   ]
 
   const issues = []
-  for (let i = 0; i < issueTemplates.length; i++) {
-    const template = issueTemplates[i]
-    const reporter = randomChoice(citizens)
-    const createdDate = randomDate(new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), new Date())
-    
-    const issue = await prisma.issue.create({
-      data: {
-        reportId: `REP-${String(Date.now() + i).slice(-6)}`,
-        title: template.title,
-        description: template.description,
-        categoryId: template.categoryId,
-        reporterId: reporter.id,
-        reporterName: reporter.name,
-        reporterEmail: reporter.email,
-        priority: template.priority,
-        status: randomChoice(['PENDING', 'TRIAGED', 'IN_PROGRESS', 'RESOLVED']),
-        moderationStatus: 'APPROVED',
-        latitude: template.location.lat,
-        longitude: template.location.lng,
-        address: template.location.address,
-        isAnonymous: false,
-        createdAt: createdDate,
-        updatedAt: randomDate(createdDate, new Date())
-      }
-    })
-    issues.push(issue)
+  // Generate 50 issues (5 iterations of the 10 templates)
+  let issueCounter = 1;
+  for (let iteration = 0; iteration < 5; iteration++) {
+    for (let i = 0; i < issueTemplates.length; i++) {
+      const template = issueTemplates[i]
+      const reporter = randomChoice(citizens)
+      const createdDate = randomDate(new Date(Date.now() - 60 * 24 * 60 * 60 * 1000), new Date())
+      
+      const allStatuses = [
+        'PENDING', 'PENDING', 'PENDING_MODERATOR_REVIEW', 
+        'ASSIGNED_TO_DEPARTMENT', 'TRIAGED', 'ASSIGNED_TO_STAFF', 
+        'STAFF_EN_ROUTE', 'IN_PROGRESS', 'IN_PROGRESS', 
+        'WORK_COMPLETED', 'PENDING_CITIZEN_VERIFICATION', 
+        'RESOLVED', 'RESOLVED', 'RESOLVED', 'CLOSED'
+      ];
+      
+      const status = randomChoice(allStatuses);
+      
+      const issue = await prisma.issue.create({
+        data: {
+          reportId: `REP-${String(Date.now()).slice(-4)}${String(issueCounter).padStart(3, '0')}`,
+          title: template.title + (iteration > 0 ? ` (${iteration})` : ''),
+          description: template.description,
+          categoryId: template.categoryId,
+          reporterId: reporter.id,
+          reporterName: reporter.name,
+          reporterEmail: reporter.email,
+          priority: template.priority,
+          status: status,
+          moderationStatus: 'APPROVED',
+          latitude: template.location.lat + (Math.random() * 0.01 - 0.005),
+          longitude: template.location.lng + (Math.random() * 0.01 - 0.005),
+          address: template.location.address,
+          departmentId: template.categoryId ? undefined : null, // The department is inferred from category mostly, or we could explicitly assign it. Let's let the system handle it or leave it null.
+          isAnonymous: false,
+          createdAt: createdDate,
+          updatedAt: randomDate(createdDate, new Date()),
+          resolvedAt: ['RESOLVED', 'CLOSED'].includes(status) ? new Date() : null
+        }
+      })
+      issues.push(issue)
+      issueCounter++;
+    }
   }
 
   // 5. Add some comments and timeline entries

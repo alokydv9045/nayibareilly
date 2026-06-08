@@ -1,7 +1,8 @@
-﻿import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { api } from '@/lib/api/client'
-// import socketService from '@/lib/services/socket-service' // TODO: Enable for real-time Socket.IO integration
+import socketService from '@/lib/services/socket-service'
+import { logger } from '@/lib/utils/logger'
 
 // Public statistics type
 export type PublicStats = {
@@ -88,6 +89,7 @@ export const publicKeys = {
   all: ['public'] as const,
   stats: () => [...publicKeys.all, 'stats'] as const,
   reports: (params?: PublicReportsParams) => [...publicKeys.all, 'reports', params] as const,
+  report: (id: string) => [...publicKeys.all, 'report', id] as const,
   categories: () => [...publicKeys.all, 'categories'] as const,
   activity: (limit?: number) => [...publicKeys.all, 'activity', limit] as const,
 }
@@ -104,23 +106,23 @@ export function usePublicStats() {
     queryKey: publicKeys.stats(),
     queryFn: async () => {
       try {
-        console.log('🔍 Fetching public stats from /api/public/stats')
+        logger.debug('🔍 Fetching public stats from /api/public/stats')
         const { data } = await api.get('/public/stats')
         
-        console.log('📦 Public stats response:', data)
+        logger.debug('📦 Public stats response:', data)
         
         // Handle different response structures
         const stats = data?.data || data
         
         if (!stats || typeof stats !== 'object') {
-          console.warn('⚠️ Invalid stats response:', stats)
+          logger.warn('⚠️ Invalid stats response:', stats)
           return null
         }
         
-        console.log('✅ Public stats loaded:', stats)
+        logger.debug('✅ Public stats loaded:', stats)
         return stats as PublicStats
       } catch (error) {
-        console.error('❌ Failed to fetch public stats:', error)
+        logger.error('❌ Failed to fetch public stats:', error)
         throw error
       }
     },
@@ -130,10 +132,17 @@ export function usePublicStats() {
   })
 
   // Real-time Socket.IO integration
-  // Note: Relying on polling for now (every 30s)
-  // TODO: Add public event listeners to socketService for real-time updates
   useEffect(() => {
-    // Placeholder for future real-time Socket.IO integration
+    const handleStatsUpdate = () => {
+      queryClient.invalidateQueries({ queryKey: publicKeys.stats() })
+    }
+    socketService.onSystemStats(handleStatsUpdate)
+    socketService.onIssueCreated(handleStatsUpdate)
+    socketService.onIssueUpdated(handleStatsUpdate)
+    
+    return () => {
+      // Cleanup handled by socket service optionally
+    }
   }, [queryClient])
 
   return query
@@ -150,16 +159,16 @@ export function usePublicReports(params?: PublicReportsParams) {
     queryKey: publicKeys.reports(params),
     queryFn: async () => {
       try {
-        console.log('🔍 Fetching public reports with params:', params)
+        logger.debug('🔍 Fetching public reports with params:', params)
         const { data } = await api.get('/public/reports', { params })
         
-        console.log('📦 Public reports response:', data)
+        logger.debug('📦 Public reports response:', data)
         
         // Handle different response structures
         const response = data?.data || data
         
         if (!response || !Array.isArray(response.issues)) {
-          console.warn('⚠️ Invalid reports response:', response)
+          logger.warn('⚠️ Invalid reports response:', response)
           return {
             issues: [],
             pagination: {
@@ -173,10 +182,10 @@ export function usePublicReports(params?: PublicReportsParams) {
           }
         }
         
-        console.log(`✅ Loaded ${response.issues.length} public reports`)
+        logger.debug(`✅ Loaded ${response.issues.length} public reports`)
         return response as PublicReportsResponse
       } catch (error) {
-        console.error('❌ Failed to fetch public reports:', error)
+        logger.error('❌ Failed to fetch public reports:', error)
         throw error
       }
     },
@@ -186,11 +195,64 @@ export function usePublicReports(params?: PublicReportsParams) {
   })
 
   // Real-time Socket.IO integration for new issues
-  // Note: Relying on polling for now (every 60s)
-  // TODO: Add public event listeners to socketService for real-time updates
   useEffect(() => {
-    // Placeholder for future real-time Socket.IO integration
+    const handleIssuesUpdate = () => {
+      queryClient.invalidateQueries({ queryKey: publicKeys.reports() })
+      queryClient.invalidateQueries({ queryKey: publicKeys.activity() })
+    }
+    socketService.onIssueCreated(handleIssuesUpdate)
+    socketService.onIssueUpdated(handleIssuesUpdate)
   }, [queryClient])
+
+  return query
+}
+
+/**
+ * Hook to fetch a single public report by ID
+ * Automatically refreshes and integrates with Socket.IO
+ */
+export function usePublicReport(id: string) {
+  const queryClient = useQueryClient()
+
+  const query = useQuery({
+    queryKey: publicKeys.report(id),
+    queryFn: async () => {
+      if (!id) return null;
+      try {
+        logger.debug(`🔍 Fetching public report details for: ${id}`)
+        const { data } = await api.get(`/public/reports/${id}`)
+        
+        const report = data?.data || data
+        
+        if (!report || !report.id) {
+          logger.warn('⚠️ Invalid report response:', report)
+          return null
+        }
+        
+        return report as any // Let page handle specific structure
+      } catch (error) {
+        logger.error(`❌ Failed to fetch public report ${id}:`, error)
+        throw error
+      }
+    },
+    enabled: !!id,
+    staleTime: 30 * 1000,
+    refetchInterval: 60 * 1000,
+    retry: 2,
+  })
+
+  // Real-time Socket.IO integration
+  useEffect(() => {
+    if (!id) return;
+    const handleReportUpdate = (updatedReport: any) => {
+      if (updatedReport?.id === id || updatedReport?.reportId === id) {
+        queryClient.invalidateQueries({ queryKey: publicKeys.report(id) })
+      }
+    }
+    
+    // Invalidate if the specific issue is updated
+    socketService.onIssueUpdated(handleReportUpdate)
+  }, [queryClient, id])
 
   return query
 }
@@ -203,20 +265,20 @@ export function usePublicCategories() {
     queryKey: publicKeys.categories(),
     queryFn: async () => {
       try {
-        console.log('🔍 Fetching public categories')
+        logger.debug('🔍 Fetching public categories')
         const { data } = await api.get('/public/categories')
         
         const categories = data?.data || data || []
         
         if (!Array.isArray(categories)) {
-          console.warn('⚠️ Invalid categories response:', categories)
+          logger.warn('⚠️ Invalid categories response:', categories)
           return []
         }
         
-        console.log(`✅ Loaded ${categories.length} categories`)
+        logger.debug(`✅ Loaded ${categories.length} categories`)
         return categories as PublicCategory[]
       } catch (error) {
-        console.error('❌ Failed to fetch public categories:', error)
+        logger.error('❌ Failed to fetch public categories:', error)
         throw error
       }
     },
@@ -235,20 +297,20 @@ export function useRecentActivity(limit: number = 10) {
     queryKey: publicKeys.activity(limit),
     queryFn: async () => {
       try {
-        console.log('ðŸ” Fetching recent activity with limit:', limit)
+        logger.debug('🔍 Fetching recent activity with limit:', limit)
         const { data } = await api.get('/public/activity', { params: { limit } })
         
         const activities = data?.data || data || []
         
         if (!Array.isArray(activities)) {
-          console.warn('âš ï¸ Invalid activity response:', activities)
+          logger.warn('⚠️ Invalid activity response:', activities)
           return []
         }
         
-        console.log(`âœ… Loaded ${activities.length} recent activities`)
+        logger.debug(`✅ Loaded ${activities.length} recent activities`)
         return activities as RecentActivity[]
       } catch (error) {
-        console.error('âŒ Failed to fetch recent activity:', error)
+        logger.error('❌ Failed to fetch recent activity:', error)
         throw error
       }
     },
@@ -258,10 +320,12 @@ export function useRecentActivity(limit: number = 10) {
   })
 
   // Real-time Socket.IO integration
-  // Note: Relying on polling for now (every 30s)
-  // TODO: Add public event listeners to socketService for real-time updates
   useEffect(() => {
-    // Placeholder for future real-time Socket.IO integration
+    const handleActivityUpdate = () => {
+      queryClient.invalidateQueries({ queryKey: publicKeys.activity() })
+    }
+    socketService.onIssueCreated(handleActivityUpdate)
+    socketService.onIssueUpdated(handleActivityUpdate)
   }, [queryClient])
 
   return query

@@ -4,6 +4,7 @@ import React, { Component, ReactNode } from 'react'
 import { toast } from 'react-hot-toast'
 import { AlertTriangle, RefreshCw, Home } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import * as Sentry from '@sentry/nextjs'
 
 interface ErrorBoundaryProps {
   children: ReactNode
@@ -59,7 +60,9 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
     // Send to monitoring service in production
     if (process.env.NODE_ENV === 'production') {
-      // TODO: Send to monitoring service (e.g., Sentry)
+      Sentry.captureException(error, {
+        extra: { componentStack: errorInfo.componentStack }
+      })
     }
   }
 

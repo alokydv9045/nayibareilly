@@ -1,4 +1,4 @@
-﻿"use client"
+"use client"
 
 import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -8,6 +8,7 @@ import Image from 'next/image';
 // Layout and Auth
 import RequireUser from '@/components/features/auth/RequireUser';
 import CitizenLayout from '@/components/layout/CitizenLayout';
+import { useTrackedIssueDetails } from '@/hooks/api/useTrackIssue';
 
 // UI Components
 import { Button } from '@/components/ui/button';
@@ -59,13 +60,15 @@ interface SubmittedIssue {
 function ReportSuccessContent() {
   const [language, setLanguage] = useState<Language>('en');
   const [issue, setIssue] = useState<SubmittedIssue | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   
   const t = useTranslation(language);
   const router = useRouter();
   const searchParams = useSearchParams();
   const issueId = searchParams.get('id');
+
+  const { data: fetchedIssue, isLoading: isFetching, error: fetchError } = useTrackedIssueDetails(issueId || '');
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   // Language detection from browser
   useEffect(() => {
@@ -77,58 +80,58 @@ function ReportSuccessContent() {
 
   // Fetch issue details
   useEffect(() => {
-    const fetchIssueDetails = async () => {
-      if (!issueId) {
-        setError('No issue ID provided');
-        setIsLoading(false);
-        return;
-      }
+    if (!issueId) {
+      setError('No issue ID provided');
+      setIsLoading(false);
+      return;
+    }
 
+    // Try to get submitted data from localStorage first
+    const lastSubmittedReport = localStorage.getItem('lastSubmittedReport');
+    if (lastSubmittedReport) {
       try {
-        // Try to get submitted data from localStorage first
-        const lastSubmittedReport = localStorage.getItem('lastSubmittedReport');
-        if (lastSubmittedReport) {
-          const submittedData = JSON.parse(lastSubmittedReport);
-          if (submittedData.id === issueId) {
-            setIssue({
-              ...submittedData,
-              status: 'new',
-              createdAt: submittedData.submittedAt || new Date().toISOString(),
-              estimatedResolution: '2-3 working days'
-            });
-            setIsLoading(false);
-            return;
-          }
+        const submittedData = JSON.parse(lastSubmittedReport);
+        if (submittedData.id === issueId) {
+          setIssue({
+            ...submittedData,
+            status: 'new',
+            createdAt: submittedData.submittedAt || new Date().toISOString(),
+            estimatedResolution: '2-3 working days'
+          });
+          setIsLoading(false);
+          return;
         }
-        
-        // Fallback to mock data if localStorage data not found
-        const mockIssue: SubmittedIssue = {
-          id: issueId,
-          title: 'Broken streetlight near market area',
-          category: 'streetlights',
-          status: 'new',
-          location: {
-            latitude: 28.6139,
-            longitude: 77.209,
-            address: 'Near Central Market, Sector 12, New Delhi'
-          },
-          createdAt: new Date().toISOString(),
-          trackingNumber: `NGR-${Date.now().toString().slice(-6)}`,
-          priority: 'medium',
-          estimatedResolution: '2-3 working days'
-        };
+      } catch (e) {
+        // ignore parse error
+      }
+    }
 
-        setIssue(mockIssue);
-      } catch {
+    // If not in localStorage, wait for fetched data
+    if (!isFetching) {
+      if (fetchedIssue) {
+        setIssue({
+          id: fetchedIssue.id,
+          title: fetchedIssue.title,
+          category: fetchedIssue.category?.id || 'roads',
+          status: fetchedIssue.status.toLowerCase(),
+          location: {
+            latitude: fetchedIssue.latitude || 0,
+            longitude: fetchedIssue.longitude || 0,
+            address: fetchedIssue.address || undefined
+          },
+          createdAt: fetchedIssue.createdAt,
+          trackingNumber: fetchedIssue.reportId || `NGR-${fetchedIssue.id.substring(0, 6)}`,
+          estimatedResolution: '2-3 working days',
+          photos: fetchedIssue.images?.map(img => ({ id: Math.random().toString(), preview: img.url }))
+        });
+        setIsLoading(false);
+      } else if (fetchError) {
         setError('Failed to load issue details');
         toast.error('Could not load report details');
-      } finally {
         setIsLoading(false);
       }
-    };
-
-    fetchIssueDetails();
-  }, [issueId]);
+    }
+  }, [issueId, fetchedIssue, isFetching, fetchError]);
 
   const copyTrackingNumber = () => {
     if (issue?.trackingNumber) {
@@ -143,7 +146,7 @@ function ReportSuccessContent() {
     const shareData = {
       title: `Nayibareilly Issue Report - ${issue.trackingNumber}`,
       text: `Track my civic issue report: ${issue.title}`,
-      url: `${window.location.origin}/issue/${issue.id}`
+      url: `${window.location.origin}/reports/${issue.id}`
     };
 
     try {
@@ -453,7 +456,7 @@ function ReportSuccessContent() {
                 variant="outline"
                 className="flex items-center gap-2"
               >
-                <Link href={`/issue/${issue.id}`}>
+                <Link href={`/reports/${issue.id}`}>
                   <Eye className="h-4 w-4" />
                   {t.trackStatus}
                 </Link>

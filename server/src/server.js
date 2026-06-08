@@ -1,4 +1,15 @@
 import './config/loadEnv.js'
+import * as Sentry from '@sentry/node'
+
+// Initialize Sentry early
+if (process.env.SENTRY_DSN) {
+  Sentry.init({
+    dsn: process.env.SENTRY_DSN,
+    environment: process.env.NODE_ENV || 'development',
+    tracesSampleRate: 1.0,
+  });
+}
+
 import cluster from 'cluster'
 import os from 'os'
 import path from 'path'
@@ -44,22 +55,8 @@ if (!disableClustering && cluster.isPrimary) {
 
   // Run database migrations once in the primary process before forking workers.
   // This ensures the schema (users table etc.) is present when workers start.
-  try {
-    const { execSync } = await import('child_process')
-    const migrationCwd = path.join(__dirname, '..')
-    console.log('📦 Checking database...')
-    
-    // Run from server root with explicit output
-    const output = execSync('npx prisma migrate deploy', { 
-      stdio: 'pipe', 
-      cwd: migrationCwd,
-      encoding: 'utf8'
-    })
-    console.log('✅ Database ready')
-  } catch (err) {
-    console.log('❌ Database migration failed:', err.message)
-    // Continue startup; workers may still start but DB might be missing tables.
-  }
+  // Note: Disabled automatic migrations in code to prevent startup failures on existing databases.
+  console.log('📦 Database check bypassed in code (run migrations manually if needed).')
 
   for (let i = 0; i < maxWorkers; i++) {
     cluster.fork()
@@ -380,17 +377,13 @@ if (!disableClustering && cluster.isPrimary) {
     v1Routes(req, res, next)
   })
 
-  // Assignment routes - direct mounting (not through v1Routes)
-  const { default: assignmentRoutes } = await import('./routes/assignment.js')
-  app.use('/api', assignmentRoutes)
+  // Notifications routes - map /api/notifications/* to /api/v1/notifications/*
+  app.use('/api/notifications', (req, res, next) => {
+    req.url = `/notifications${req.url}` // Remove leading slash and let v1Routes handle it
+    v1Routes(req, res, next)
+  })
 
-  // Search routes - direct mounting (not through v1Routes)
-  const { default: searchRoutes } = await import('./routes/search.js')
-  app.use('/api/search', searchRoutes)
 
-  // Notification routes - direct mounting (not through v1Routes)
-  const { default: notificationRoutes } = await import('./routes/notifications.js')
-  app.use('/api/notifications', notificationRoutes)
 
   app.use(notFound)
   app.use(errorHandler)

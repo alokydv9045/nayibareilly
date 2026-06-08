@@ -47,7 +47,7 @@ export function CommandPalette({ isOpen, onClose }: CommandPaletteProps) {
     // Check issues
     if (index < currentIndex + results.issues.length) {
       const issue = results.issues[index - currentIndex]
-      router.push(`/issue/${issue.id}`)
+      router.push(`/reports/${issue.id}`)
       onClose()
       return
     }

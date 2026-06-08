@@ -1,8 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Optimized output for Vercel deployment
-  output: 'standalone',
+  // Optimized output for Vercel deployment (disabled for local serving)
+  // output: 'standalone',
   
   // Performance optimizations
   compress: true,

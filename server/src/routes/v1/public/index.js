@@ -9,6 +9,7 @@ import { query } from 'express-validator';
 import { 
   getPublicStats, 
   getPublicReports, 
+  getPublicReportById,
   getPublicCategories,
   getRecentActivity,
   getPublicMapData
@@ -21,6 +22,12 @@ const router = Router();
  * Get public statistics for homepage counters
  */
 router.get('/stats', getPublicStats);
+
+/**
+ * GET /api/v1/public/reports/:id
+ * Get a single public report by ID
+ */
+router.get('/reports/:id', getPublicReportById);
 
 /**
  * GET /api/v1/public/reports

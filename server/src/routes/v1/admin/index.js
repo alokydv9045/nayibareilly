@@ -26,7 +26,7 @@ import {
   getModeratorStats,
   getModeratorPending,
   getDepartmentRealtimeStats
-} from '../../../controllers/admin.controller.js';
+, updateUserRoles, activateUser, deactivateUser, getCategory, updateCategory, deleteCategory, getActivityLogs } from '../../../controllers/admin.controller.js';
 
 const router = Router();
 
@@ -100,10 +100,7 @@ router.get('/users', [
 router.patch('/users/:userId/roles', [
   auth(['SUPER_ADMIN']),
   body('roles').isArray().notEmpty()
-], async (req, res) => {
-  // This will be implemented in admin.controller.js
-  res.status(501).json({ success: false, message: 'Not implemented yet' });
-});
+], updateUserRoles);
 
 /**
  * PATCH /api/v1/admin/users/:userId/activate
@@ -111,10 +108,7 @@ router.patch('/users/:userId/roles', [
  */
 router.patch('/users/:userId/activate', [
   auth(['SUPER_ADMIN', 'ADMIN'])
-], async (req, res) => {
-  // This will be implemented in admin.controller.js
-  res.status(501).json({ success: false, message: 'Not implemented yet' });
-});
+], activateUser);
 
 /**
  * PATCH /api/v1/admin/users/:userId/deactivate
@@ -122,10 +116,7 @@ router.patch('/users/:userId/activate', [
  */
 router.patch('/users/:userId/deactivate', [
   auth(['SUPER_ADMIN', 'ADMIN'])
-], async (req, res) => {
-  // This will be implemented in admin.controller.js
-  res.status(501).json({ success: false, message: 'Not implemented yet' });
-});
+], deactivateUser);
 
 /**
  * GET /api/v1/admin/activity-logs
@@ -137,10 +128,7 @@ router.get('/activity-logs', [
   query('issueId').optional().isString(),
   query('page').optional().isInt({ min: 1 }),
   query('limit').optional().isInt({ min: 1, max: 100 })
-], async (req, res) => {
-  // This will be implemented in admin.controller.js
-  res.status(501).json({ success: false, message: 'Not implemented yet' });
-});
+], getActivityLogs);
 
 /**
  * GET /api/v1/admin/categories
@@ -156,9 +144,7 @@ router.get('/categories', [
  */
 router.get('/categories/:id', [
   auth()
-], async (req, res) => {
-  res.status(501).json({ success: false, message: 'Not implemented yet' });
-});
+], getCategory);
 
 /**
  * POST /api/v1/admin/categories
@@ -180,9 +166,7 @@ router.patch('/categories/:id', [
   body('name').optional().isString().trim().isLength({ min: 2, max: 100 }),
   body('description').optional().isString(),
   body('icon').optional().isString()
-], async (req, res) => {
-  res.status(501).json({ success: false, message: 'Not implemented yet' });
-});
+], updateCategory);
 
 /**
  * DELETE /api/v1/admin/categories/:id
@@ -190,9 +174,7 @@ router.patch('/categories/:id', [
  */
 router.delete('/categories/:id', [
   auth(['SUPER_ADMIN'])
-], async (req, res) => {
-  res.status(501).json({ success: false, message: 'Not implemented yet' });
-});
+], deleteCategory);
 
 /**
  * GET /api/v1/admin/leaderboard

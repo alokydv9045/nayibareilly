@@ -18,7 +18,7 @@ export default function IssueCard({ issue }: { issue: Issue }) {
       </div>
       <h3 className="mt-2 font-semibold">{issue.title}</h3>
       <div className="mt-3 text-sm">
-  <Link href={`/app/issue/${issue.id}`} className="text-sky-700 hover:underline">View details</Link>
+  <Link href={`/reports/${issue.id}`} className="text-sky-700 hover:underline">View details</Link>
       </div>
     </div>
   )

@@ -335,7 +335,7 @@ export default function StaffAssignedPage() {
                         size="sm"
                         asChild
                       >
-                        <Link href={`/issue/${issue.id}`}>
+                        <Link href={`/reports/${issue.id}`}>
                           View Details
                           <ArrowRight className="h-4 w-4 ml-2" />
                         </Link>

@@ -14,7 +14,9 @@
     "build:all": "npm run build:server && npm run build:client",
     "build:server": "npm --prefix server run build",
     "build:client": "npm --prefix client run build",
-    "start": "npm --prefix server run start"
+    "start": "concurrently \"npm:start:server\" \"npm:start:client\"",
+    "start:server": "npm --prefix server run start",
+    "start:client": "npm --prefix client run start"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"

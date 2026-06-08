@@ -25,7 +25,7 @@ export default function IssueCardCitizen({
   const actions = (
     <div className="flex items-center gap-2 flex-wrap">
       {showViewButton && (
-        <Link href={`/issue/${issue.id}`} className="flex-1">
+        <Link href={`/reports/${issue.id}`} className="flex-1">
           <Button variant="default" size="sm" className="w-full">
             <Eye className="w-4 h-4 mr-2" />
             View Details
@@ -42,7 +42,7 @@ export default function IssueCardCitizen({
         </Link>
       )}
 
-      <Link href={`/issue/${issue.id}#comments`}>
+      <Link href={`/reports/${issue.id}#comments`}>
         <Button variant="ghost" size="sm">
           <MessageSquare className="w-4 h-4 mr-2" />
           Comment

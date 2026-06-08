@@ -20,6 +20,8 @@ import {
   RefreshCw
 } from 'lucide-react'
 import { ProtectedRoute } from '@/components/features/auth/ProtectedRoute'
+import { useModeratorAPI } from '@/hooks/api/useModeratorAPI'
+import { toast } from 'react-hot-toast'
 
 interface HistoryItem {
   id: string
@@ -37,48 +39,31 @@ interface HistoryItem {
 
 export default function ModeratorHistoryPage() {
   const router = useRouter()
+  const { fetchHistory } = useModeratorAPI()
   const [searchTerm, setSearchTerm] = useState("")
   const [statusFilter, setStatusFilter] = useState("all")
   const [dateFilter, setDateFilter] = useState("all")
   const [isLoading, setIsLoading] = useState(true)
-
-  // Mock data for demonstration
-  const mockHistory: HistoryItem[] = [
-    {
-      id: "1",
-      title: "Broken Streetlight on Main Street",
-      description: "The streetlight near the park has been out for weeks",
-      status: "approved",
-      reviewedAt: "2024-01-15T10:30:00Z",
-      reviewedBy: "Moderator",
-      decision: "approved",
-      reason: "Valid infrastructure issue",
-      reporterName: "John Doe",
-      address: "Main Street, Downtown",
-      categoryName: "Infrastructure"
-    },
-    {
-      id: "2", 
-      title: "Garbage Not Collected",
-      description: "Garbage bins haven't been emptied in our area for 3 days",
-      status: "rejected",
-      reviewedAt: "2024-01-14T14:20:00Z",
-      reviewedBy: "Moderator",
-      decision: "rejected",
-      reason: "Duplicate report",
-      reporterName: "Jane Smith",
-      address: "Oak Avenue, Suburb",
-      categoryName: "Sanitation"
+  const [history, setHistory] = useState<HistoryItem[]>([])
+  
+  const loadHistory = async () => {
+    setIsLoading(true)
+    try {
+      const data = await fetchHistory(1, 100) // load up to 100 recent items
+      setHistory(data.history || [])
+    } catch (error) {
+      toast.error('Failed to load review history')
+      console.error(error)
+    } finally {
+      setIsLoading(false)
     }
-  ]
+  }
 
   useEffect(() => {
-    // Simulate loading
-    const timer = setTimeout(() => setIsLoading(false), 1000)
-    return () => clearTimeout(timer)
+    loadHistory()
   }, [])
 
-  const filteredHistory = mockHistory.filter((item: HistoryItem) => {
+  const filteredHistory = history.filter((item: HistoryItem) => {
     const matchesSearch = searchTerm === "" || 
       item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -124,7 +109,7 @@ export default function ModeratorHistoryPage() {
                 <p className="text-gray-600">Track all your moderation decisions</p>
               </div>
             </div>
-            <Button variant="outline" disabled={isLoading}>
+            <Button variant="outline" disabled={isLoading} onClick={loadHistory}>
               <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
               Refresh
             </Button>

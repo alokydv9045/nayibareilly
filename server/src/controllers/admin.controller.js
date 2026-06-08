@@ -962,7 +962,7 @@ export const getOrganizationStats = async (req, res) => {
       departmentStats,
       recentIssues: formattedRecentIssues,
       staffPerformance: formattedStaffPerformance,
-      areaStats: [] // TODO: Implement area-wise stats if needed
+      areaStats: [] // Area-wise stats disabled by default for performance
     })
 
   } catch (error) {
@@ -1235,3 +1235,141 @@ function getTimeAgo(date) {
     return `${diffDays}d ago`
   }
 }
+
+
+// =====================
+// Unimplemented Routes Fix
+// =====================
+
+export const updateUserRoles = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { roles } = req.body;
+    
+    if (!roles || !Array.isArray(roles)) {
+      return fail(res, 400, 'Roles array is required');
+    }
+    
+    const user = await prisma.user.update({
+      where: { id: userId },
+      data: { roles }
+    });
+    
+    return ok(res, { user });
+  } catch (error) {
+    console.error('Update user roles error:', error);
+    return fail(res, 500, 'Failed to update user roles');
+  }
+};
+
+export const activateUser = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const user = await prisma.user.update({
+      where: { id: userId },
+      data: { isActive: true }
+    });
+    return ok(res, { user });
+  } catch (error) {
+    console.error('Activate user error:', error);
+    return fail(res, 500, 'Failed to activate user');
+  }
+};
+
+export const deactivateUser = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const user = await prisma.user.update({
+      where: { id: userId },
+      data: { isActive: false }
+    });
+    return ok(res, { user });
+  } catch (error) {
+    console.error('Deactivate user error:', error);
+    return fail(res, 500, 'Failed to deactivate user');
+  }
+};
+
+export const getCategory = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const category = await prisma.issueCategory.findUnique({
+      where: { id }
+    });
+    if (!category) return fail(res, 404, 'Category not found');
+    return ok(res, { category });
+  } catch (error) {
+    console.error('Get category error:', error);
+    return fail(res, 500, 'Failed to get category');
+  }
+};
+
+export const updateCategory = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, description, icon, color } = req.body;
+    
+    const category = await prisma.issueCategory.update({
+      where: { id },
+      data: { name, description, icon, color }
+    });
+    
+    return ok(res, { category });
+  } catch (error) {
+    console.error('Update category error:', error);
+    return fail(res, 500, 'Failed to update category');
+  }
+};
+
+export const deleteCategory = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await prisma.issueCategory.delete({
+      where: { id }
+    });
+    return ok(res, { message: 'Category deleted successfully' });
+  } catch (error) {
+    console.error('Delete category error:', error);
+    return fail(res, 500, 'Failed to delete category');
+  }
+};
+
+export const getActivityLogs = async (req, res) => {
+  try {
+    const { userId, issueId, page = 1, limit = 20 } = req.query;
+    
+    const pageNum = Math.max(1, parseInt(page, 10) || 1);
+    const limitNum = Math.min(100, Math.max(1, parseInt(limit, 10) || 20));
+    const skip = (pageNum - 1) * limitNum;
+    
+    const where = {};
+    if (userId) where.userId = userId;
+    if (issueId) where.issueId = issueId;
+    
+    const [logs, total] = await Promise.all([
+      prisma.activityLog.findMany({
+        where,
+        orderBy: { createdAt: 'desc' },
+        skip,
+        take: limitNum,
+        include: {
+          user: { select: { name: true, email: true } },
+        }
+      }),
+      prisma.activityLog.count({ where })
+    ]);
+    
+    return ok(res, {
+      items: logs,
+      pagination: {
+        total,
+        page: pageNum,
+        limit: limitNum,
+        pages: Math.ceil(total / limitNum)
+      }
+    });
+  } catch (error) {
+    console.error('Get activity logs error:', error);
+    return fail(res, 500, 'Failed to get activity logs');
+  }
+};

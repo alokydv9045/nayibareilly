@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { usePublicReport } from '@/hooks/api/usePublic';
 
 // Layout Components
 import PublicLayout from '@/components/layout/PublicLayout';
@@ -134,170 +135,84 @@ export default function ReportDetailPage() {
   // Map state
   const [_showMap, _setShowMap] = useState(false);
 
-  // Enhanced mock data
-  useEffect(() => {
-    const fetchReport = async () => {
-      setIsLoading(true);
-      try {
-        // Simulate API delay
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        // Enhanced mock data
-        const mockReport: ReportDetail = {
-          id: reportId,
-          title: 'मेन रोड पर बड़ा गड्ढा - गंभीर सुरक्षा चिंता',
-          description: 'राजा रोड पर मुख्य चौराहे के पास एक बड़ा और खतरनाक गड्ढा है जो पिछले एक सप्ताह से और भी बड़ा हो गया है। यह ट्रैफिक जाम का कारण बन रहा है और वाहनों को नुकसान पहुंचा रहा है। कई दुर्घटनाएं हो चुकी हैं और स्थानीय निवासी तत्काल कार्रवाई की मांग कर रहे हैं। बारिश के बाद स्थिति और भी खराब हो गई है।',
-          category: 'roads',
-          status: 'in_progress',
-          priority: 'high',
-          location: {
-            area: 'Civil Lines',
-            city: 'Bareilly',
-            address: 'राजा रोड मुख्य चौराहा, सिविल लाइन्स, बरेली - 243001',
-            coordinates: {
-              latitude: 28.6139,
-              longitude: 77.209
-            }
-          },
-          reportedBy: 'राज कुमार (Verified Citizen)',
-          reportedAt: '2024-10-05T10:30:00Z',
-          updatedAt: '2024-10-09T14:20:00Z',
-          views: 1247,
-          likes: 89,
-          upvotes: 156,
-          downvotes: 8,
-          userVote: null,
-          estimatedResolution: '3-5 working days',
-          assignedDepartment: 'सड़क विकास विभाग (Road Development Department)',
-          statusHistory: [
-            {
-              status: 'new',
-              timestamp: '2024-10-05T10:30:00Z',
-              note: 'नागरिक द्वारा रिपोर्ट जमा की गई',
-              updatedBy: 'System'
-            },
-            {
-              status: 'under_review',
-              timestamp: '2024-10-05T16:45:00Z',
-              note: 'सड़क विकास विभाग को समीक्षा के लिए भेजा गया',
-              updatedBy: 'Admin Team'
-            },
-            {
-              status: 'approved',
-              timestamp: '2024-10-06T09:15:00Z',
-              note: 'मरम्मत कार्य को मंजूरी दी गई, टीम को भेजा गया',
-              updatedBy: 'Department Head'
-            },
-            {
-              status: 'in_progress',
-              timestamp: '2024-10-08T11:30:00Z',
-              note: 'मरम्मत कार्य शुरू, सामग्री मंगवाई गई है',
-              updatedBy: 'Field Engineer'
-            }
-          ],
-          photos: [
-            {
-              id: '1',
-              url: '/api/placeholder/600/400',
-              caption: 'गड्ढे की मुख्य तस्वीर - सुबह का समय',
-              type: 'image'
-            },
-            {
-              id: '2',
-              url: '/api/placeholder/600/400',
-              caption: 'गड्ढे के कारण हुई क्षति',
-              type: 'image'
-            },
-            {
-              id: '3',
-              url: '/api/placeholder/600/400',
-              caption: 'आसपास का क्षेत्र और ट्रैफिक स्थिति',
-              type: 'image'
-            },
-            {
-              id: '4',
-              url: '/api/placeholder/600/400',
-              caption: 'वर्तमान मरम्मत कार्य की स्थिति',
-              type: 'image'
-            }
-          ],
-          tags: ['गड्ढा', 'सड़क', 'सुरक्षा', 'ट्रैफिक', 'तत्काल'],
-          relatedReports: [
-            {
-              id: '2',
-              title: 'पास के चौराहे पर टूटी हुई सड़क',
-              status: 'new',
-              distance: '0.5 km'
-            },
-            {
-              id: '3',
-              title: 'राजा रोड पर स्ट्रीट लाइट नहीं जल रही',
-              status: 'resolved',
-              distance: '0.3 km'
-            }
-          ]
-        };
-        
-        setReport(mockReport);
-        setCurrentVote(mockReport.userVote || null);
-        
-        // Mock comments
-        const mockComments: Comment[] = [
-          {
-            id: '1',
-            author: 'सुनीता शर्मा',
-            authorAvatar: '/api/placeholder/40/40',
-            content: 'बहुत अच्छी रिपोर्ट! मैं भी यही समस्या देख रही थी। इस गड्ढे के कारण मेरे वाहन को भी नुकसान हुआ है।',
-            timestamp: '2024-10-06T08:15:00Z',
-            likes: 12,
-            isLiked: false,
-            replies: [
-              {
-                id: '1-1',
-                author: 'राज कुमार',
-                authorAvatar: '/api/placeholder/40/40',
-                content: 'धन्यवाद सुनीता जी! हमें मिलकर इस समस्या का समाधान करना चाहिए।',
-                timestamp: '2024-10-06T10:30:00Z',
-                likes: 5,
-                isLiked: false
-              }
-            ]
-          },
-          {
-            id: '2',
-            author: 'सड़क विकास विभाग',
-            authorAvatar: '/api/placeholder/40/40',
-            content: 'हमने आपकी शिकायत को गंभीरता से लिया है। मरम्मत का कार्य इस सप्ताह शुरू होगा। असुविधा के लिए खेद है।',
-            timestamp: '2024-10-07T14:20:00Z',
-            likes: 34,
-            isLiked: true,
-            isOfficial: true,
-            department: 'सड़क विकास विभाग'
-          },
-          {
-            id: '3',
-            author: 'अमित वर्मा',
-            authorAvatar: '/api/placeholder/40/40',
-            content: 'यह एक बहुत ही जरूरी मुद्दा है। मैंने भी इसी तरह की समस्या अपने क्षेत्र में देखी है।',
-            timestamp: '2024-10-08T16:45:00Z',
-            likes: 8,
-            isLiked: false
-          }
-        ];
-        
-        setComments(mockComments);
-      } catch {
-        setError('रिपोर्ट विवरण लोड करने में असफल');
-        toast.error('Failed to load report details');
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const { data: fetchedReport, isLoading: isReportLoading, error: reportError } = usePublicReport(reportId);
 
-    if (reportId) {
-      fetchReport();
+  useEffect(() => {
+    if (fetchedReport) {
+      // Map API data to ReportDetail interface
+      const mappedReport: ReportDetail = {
+        id: fetchedReport.id,
+        title: fetchedReport.title,
+        description: fetchedReport.description || '',
+        category: fetchedReport.category?.id || fetchedReport.category?.name || 'roads',
+        status: fetchedReport.status,
+        priority: fetchedReport.priority || 'medium',
+        location: {
+          area: fetchedReport.address?.split(',')[0] || 'Unknown Area',
+          city: 'Bareilly',
+          address: fetchedReport.address,
+          coordinates: fetchedReport.latitude && fetchedReport.longitude ? {
+            latitude: fetchedReport.latitude,
+            longitude: fetchedReport.longitude
+          } : undefined
+        },
+        reportedBy: fetchedReport.reporter?.name || 'Anonymous Citizen',
+        reportedAt: fetchedReport.createdAt,
+        updatedAt: fetchedReport.updatedAt,
+        views: fetchedReport.viewCount || 0,
+        likes: fetchedReport.upvotes || 0,
+        upvotes: fetchedReport.upvotes || 0,
+        downvotes: fetchedReport.downvotes || 0,
+        userVote: null,
+        estimatedResolution: 'Pending Assessment',
+        assignedDepartment: fetchedReport.department?.name || 'Unassigned',
+        statusHistory: fetchedReport.statusHistory?.map((h: any) => ({
+          status: h.status.toLowerCase(),
+          timestamp: h.createdAt,
+          note: h.notes || '',
+          updatedBy: 'System'
+        })) || [],
+        photos: fetchedReport.images?.map((img: any) => ({
+          id: img.id,
+          url: img.url,
+          caption: img.caption || '',
+          type: 'image'
+        })) || [],
+        tags: [],
+        relatedReports: []
+      };
+      
+      setReport(mappedReport);
+      
+      const mappedComments = fetchedReport.comments?.map((c: any) => ({
+        id: c.id,
+        author: c.author?.name || 'Anonymous',
+        authorAvatar: c.author?.avatarUrl,
+        content: c.content,
+        timestamp: c.createdAt,
+        likes: c.upvotes || 0,
+        isLiked: false,
+        replies: c.replies?.map((r: any) => ({
+          id: r.id,
+          author: r.author?.name || 'Anonymous',
+          authorAvatar: r.author?.avatarUrl,
+          content: r.content,
+          timestamp: r.createdAt,
+          likes: r.upvotes || 0,
+          isLiked: false
+        })) || []
+      })) || [];
+      
+      setComments(mappedComments);
+      setIsLoading(false);
+      setError(null);
+    } else if (reportError) {
+      setError('Report not found or not approved for public viewing');
+      setIsLoading(false);
+    } else if (!isReportLoading) {
+      setIsLoading(true);
     }
-  }, [reportId]);
+  }, [fetchedReport, reportError, isReportLoading]);
 
   // Enhanced interaction handlers
   const handleVote = async (voteType: 'up' | 'down') => {

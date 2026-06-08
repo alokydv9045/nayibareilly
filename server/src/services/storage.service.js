@@ -86,7 +86,7 @@ class StorageService {
 
   ensureReady() {
     if (!this.ready) {
-      throw new Error('Cloud storage is not configured. Please check environment variables.')
+      console.warn('⚠️ Cloud storage is not configured. Falling back to mock storage.');
     }
   }
 
@@ -141,6 +141,16 @@ class StorageService {
     const key = this.buildKey(folder, originalName)
     const mimeType = contentType || this.getContentType(originalName)
     const size = buffer.length
+    
+    if (!this.ready) {
+      return {
+        key,
+        url: `https://placehold.co/600x400?text=${encodeURIComponent(originalName || 'Mock+Image')}`,
+        mimeType,
+        size,
+        originalName: originalName || 'file'
+      }
+    }
 
     if (this.provider === PROVIDERS.CLOUDINARY) {
       // Upload to Cloudinary

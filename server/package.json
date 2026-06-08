@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "node --watch ./src/server.js",
     "start": "node ./src/server.js",
-    "build": "npx prisma generate && npx prisma migrate deploy",
+    "build": "npx prisma generate",
     "render:build": "npm ci && npx prisma generate && npx prisma migrate deploy",
     "lint": "echo 'no linter configured'",
     "seed:admin": "node ./scripts/seed-admin-prisma.js",
@@ -22,6 +22,8 @@
     "@opentelemetry/sdk-node": "^0.50.0",
     "@prisma/client": "^6.16.2",
     "@prisma/instrumentation": "^6.16.2",
+    "@sentry/node": "^10.56.0",
+    "@sentry/profiling-node": "^10.56.0",
     "@socket.io/redis-adapter": "^8.3.0",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^2.7.0",
