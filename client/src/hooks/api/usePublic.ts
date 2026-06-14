@@ -229,7 +229,7 @@ export function usePublicReport(id: string) {
           return null
         }
         
-        return report as any // Let page handle specific structure
+        return report as PublicReport // Let page handle specific structure
       } catch (error) {
         logger.error(`❌ Failed to fetch public report ${id}:`, error)
         throw error
@@ -244,7 +244,7 @@ export function usePublicReport(id: string) {
   // Real-time Socket.IO integration
   useEffect(() => {
     if (!id) return;
-    const handleReportUpdate = (updatedReport: any) => {
+    const handleReportUpdate = (updatedReport: Partial<PublicReport> & { reportId?: string }) => {
       if (updatedReport?.id === id || updatedReport?.reportId === id) {
         queryClient.invalidateQueries({ queryKey: publicKeys.report(id) })
       }

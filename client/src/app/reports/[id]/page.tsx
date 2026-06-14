@@ -166,13 +166,13 @@ export default function ReportDetailPage() {
         userVote: null,
         estimatedResolution: 'Pending Assessment',
         assignedDepartment: fetchedReport.department?.name || 'Unassigned',
-        statusHistory: fetchedReport.statusHistory?.map((h: any) => ({
+        statusHistory: fetchedReport.statusHistory?.map((h: { status: string; createdAt: string; notes?: string }) => ({
           status: h.status.toLowerCase(),
           timestamp: h.createdAt,
           note: h.notes || '',
           updatedBy: 'System'
         })) || [],
-        photos: fetchedReport.images?.map((img: any) => ({
+        photos: fetchedReport.images?.map((img: { id: string; url: string; caption?: string }) => ({
           id: img.id,
           url: img.url,
           caption: img.caption || '',
@@ -184,7 +184,7 @@ export default function ReportDetailPage() {
       
       setReport(mappedReport);
       
-      const mappedComments = fetchedReport.comments?.map((c: any) => ({
+      const mappedComments = fetchedReport.comments?.map((c: { id: string; author?: { name?: string; avatarUrl?: string }; content: string; createdAt: string; upvotes: number; replies?: Array<{ id: string; author?: { name?: string; avatarUrl?: string }; content: string; createdAt: string; upvotes: number }> }) => ({
         id: c.id,
         author: c.author?.name || 'Anonymous',
         authorAvatar: c.author?.avatarUrl,
@@ -192,7 +192,7 @@ export default function ReportDetailPage() {
         timestamp: c.createdAt,
         likes: c.upvotes || 0,
         isLiked: false,
-        replies: c.replies?.map((r: any) => ({
+        replies: c.replies?.map((r: { id: string; author?: { name?: string; avatarUrl?: string }; content: string; createdAt: string; upvotes: number }) => ({
           id: r.id,
           author: r.author?.name || 'Anonymous',
           authorAvatar: r.author?.avatarUrl,

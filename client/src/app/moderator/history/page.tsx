@@ -61,6 +61,7 @@ export default function ModeratorHistoryPage() {
 
   useEffect(() => {
     loadHistory()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const filteredHistory = history.filter((item: HistoryItem) => {

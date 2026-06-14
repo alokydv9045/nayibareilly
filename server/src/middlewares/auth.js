@@ -334,7 +334,7 @@ export const optionalAuth = async (req, res, next) => {
   try {
     const token = authHeader.slice(7)
     
-    if (isTokenBlacklisted(token)) {
+    if (await isTokenBlacklisted(token)) {
       return next()
     }
 
@@ -374,9 +374,9 @@ export const requireStaff = auth(['super_admin', 'dept_admin', 'moderator', 'sta
 
 // Self or admin access middleware (for user profile endpoints)
 export const requireSelfOrAdmin = async (req, res, next) => {
-  const auth = auth()
+  const authMiddleware = auth()
   
-  await auth(req, res, () => {
+  await authMiddleware(req, res, () => {
     const targetUserId = req.params.userId || req.params.id
     const isAdmin = req.user.roles.includes('super_admin') || req.user.roles.includes('dept_admin')
     const isSelf = req.user.id === targetUserId

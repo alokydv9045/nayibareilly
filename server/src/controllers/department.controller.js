@@ -92,6 +92,8 @@ export const getDepartmentIssues = async (req, res) => {
     // Check authorization: must be dept head, super_admin, or mayor
     const isAuthorized = 
       department.headId === user.id ||
+      (user.roles.includes('dept_admin') && user.departmentId === departmentId) ||
+      (user.roles.includes('staff') && user.departmentId === departmentId) ||
       user.roles.includes('super_admin') ||
       user.roles.includes('mayor')
     
@@ -167,6 +169,7 @@ export const getDepartmentStaff = async (req, res) => {
     
     const isAuthorized = 
       department.headId === req.user.id ||
+      (req.user.roles.includes('dept_admin') && req.user.departmentId === departmentId) ||
       req.user.roles.includes('super_admin') ||
       req.user.roles.includes('mayor')
     
@@ -253,6 +256,7 @@ export const assignIssueToStaff = async (req, res) => {
     // Verify authorization: must be dept head, super_admin, or mayor
     const isAuthorized = 
       issue.department.headId === deptAdminId ||
+      (req.user.roles.includes('dept_admin') && req.user.departmentId === issue.departmentId) ||
       req.user.roles.includes('super_admin') ||
       req.user.roles.includes('mayor')
     

@@ -27,8 +27,8 @@ router.get('/', [
 ], async (req, res, next) => {
   try {
     // Import controller dynamically to maintain structure
-    const { getIssues } = await import('../../../controllers/issue.controller.js');
-    return getIssues(req, res, next);
+    const { listIssues } = await import('../../../controllers/issue.controller.js');
+    return listIssues(req, res, next);
   } catch (error) {
     next(error);
   }
@@ -135,11 +135,11 @@ router.get('/track/:reportId', [
  */
 router.get('/:id', [
   auth(),
-  param('id').isInt()
+  param('id').isString()
 ], async (req, res, next) => {
   try {
-    const { getIssueById } = await import('../../../controllers/issue.controller.js');
-    return getIssueById(req, res, next);
+    const { getIssue } = await import('../../../controllers/issue.controller.js');
+    return getIssue(req, res, next);
   } catch (error) {
     next(error);
   }
@@ -167,7 +167,7 @@ router.get('/track/:reportId', [
 router.patch('/:id', [
   auth(),
   validateCSRFToken,
-  param('id').isInt(),
+  param('id').isString(),
   body('title').optional().isString().isLength({ min: 5, max: 200 }),
   body('description').optional().isString().isLength({ min: 10, max: 2000 }),
   body('status').optional().isString()
@@ -187,7 +187,7 @@ router.patch('/:id', [
 router.delete('/:id', [
   auth(['ADMIN', 'SUPER_ADMIN']),
   validateCSRFToken,
-  param('id').isInt()
+  param('id').isString()
 ], async (req, res, next) => {
   try {
     const { deleteIssue } = await import('../../../controllers/issue.controller.js');
@@ -204,7 +204,7 @@ router.delete('/:id', [
 router.post('/:id/vote', [
   auth(),
   validateCSRFToken,
-  param('id').isInt(),
+  param('id').isString(),
   body('type').isIn(['up', 'down'])
 ], async (req, res, next) => {
   try {
@@ -221,7 +221,7 @@ router.post('/:id/vote', [
  */
 router.get('/:id/timeline', [
   auth(),
-  param('id').isInt()
+  param('id').isString()
 ], async (req, res, next) => {
   try {
     const { getIssueTimeline } = await import('../../../controllers/issue.controller.js');

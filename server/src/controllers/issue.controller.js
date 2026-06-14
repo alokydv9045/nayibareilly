@@ -620,10 +620,29 @@ export const getIssueByReportId = async (req, res) => {
 }
 
 export const updateIssue = async (req, res) => {
-  const updates = req.body
-  if (updates.status) delete updates.status
-  const issue = await prisma.issue.update({ where: { id: req.params.id }, data: updates })
-  if (!issue) return fail(res, 404, 'Issue not found')
+  const issueId = req.params.id
+  const issueToUpdate = await prisma.issue.findUnique({ where: { id: issueId } })
+  
+  if (!issueToUpdate) return fail(res, 404, 'Issue not found')
+  
+  // Authorization check
+  const isAdminOrMod = req.user.roles.includes('super_admin') || req.user.roles.includes('dept_admin') || req.user.roles.includes('moderator')
+  if (issueToUpdate.reporterId !== req.user.id && !isAdminOrMod) {
+    return fail(res, 403, 'Not authorized to update this issue')
+  }
+
+  // Only allow updating title and description from general update endpoint
+  const { title, description } = req.body
+  const data = {}
+  if (title) data.title = title
+  if (description) data.description = description
+  
+  if (Object.keys(data).length === 0) {
+    return fail(res, 400, 'No valid fields provided to update')
+  }
+
+  const issue = await prisma.issue.update({ where: { id: issueId }, data })
+  
   try { 
     const io = req.app.get('io')
     io.emit('issue:update', { id: issue.id, status: issue.status })
@@ -830,12 +849,16 @@ export const triageIssue = async (req, res) => {
 
 // NOTE: assignToStaff has been moved to department.controller.js
 // Staff assignment should only be done by department admins through department routes
-
 export const startWork = async (req, res) => {
   // Only assigned staff can start
-  const issue = await prisma.issue.findUnique({ where: { id: req.params.id }, select: { id: true, assignedToId: true } })
+  const issue = await prisma.issue.findUnique({ where: { id: req.params.id }, select: { id: true, assignedToId: true, status: true } })
   if (!issue) return fail(res, 404, 'Issue not found')
   if (issue.assignedToId !== req.user?.id) return fail(res, 403, 'Only assigned staff can start work')
+  
+  if (!['ASSIGNED_TO_STAFF', 'IN_PROGRESS'].includes(issue.status)) {
+    return fail(res, 400, `Cannot start work on issue in ${issue.status} status`)
+  }
+
   const updated = await prisma.issue.update({
     where: { id: issue.id },
     data: {
@@ -873,11 +896,21 @@ export const resolveIssue = async (req, res) => {
       id: true, 
       createdAt: true, 
       assignedToId: true,
-      reporterId: true 
+      reporterId: true,
+      status: true
     }
   })
   
   if (!existingIssue) return fail(res, 404, 'Issue not found')
+  
+  const isAdminOrMod = req.user?.roles?.includes('super_admin') || req.user?.roles?.includes('dept_admin');
+  if (existingIssue.assignedToId !== req.user?.id && !isAdminOrMod) {
+    return fail(res, 403, 'Only assigned staff or admins can resolve this issue')
+  }
+
+  if (['RESOLVED', 'CLOSED', 'REJECTED', 'SPAM'].includes(existingIssue.status)) {
+    return fail(res, 400, `Cannot resolve issue that is already ${existingIssue.status}`)
+  }
   
   // Calculate resolution time in hours
   const now = new Date()
@@ -1661,3 +1694,31 @@ export const escalateIssue = async (req, res) => {
     return fail(res, 500, 'Failed to escalate issue')
   }
 }
+
+export const deleteIssue = async (req, res) => {
+  const issueId = req.params.id;
+  const issue = await prisma.issue.findUnique({ where: { id: issueId } });
+  if (!issue) return fail(res, 404, 'Issue not found');
+  
+  const isAdmin = req.user.roles.includes('super_admin') || req.user.roles.includes('dept_admin');
+  if (!isAdmin) return fail(res, 403, 'Only admins can delete issues');
+  
+  await prisma.issue.delete({ where: { id: issueId } });
+  return ok(res, { message: 'Issue deleted successfully' });
+}
+
+export const getIssueTimeline = async (req, res) => {
+  const issueId = req.params.id;
+  const issue = await prisma.issue.findUnique({
+    where: { id: issueId },
+    include: {
+      timeline: {
+        orderBy: { createdAt: 'asc' },
+        include: { performedBy: { select: { name: true, roles: true } } }
+      }
+    }
+  });
+  if (!issue) return fail(res, 404, 'Issue not found');
+  return ok(res, { timeline: issue.timeline });
+}
+

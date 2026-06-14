@@ -4,17 +4,15 @@ import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
+
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { 
   ArrowLeft,
   BarChart3,
   TrendingUp,
-  Calendar,
   Activity,
   Clock,
   CheckCircle,
-  AlertTriangle,
   Users,
   Target
 } from 'lucide-react'
