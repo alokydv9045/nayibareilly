@@ -244,8 +244,8 @@ export function usePublicReport(id: string) {
   // Real-time Socket.IO integration
   useEffect(() => {
     if (!id) return;
-    const handleReportUpdate = (updatedReport: Partial<PublicReport> & { reportId?: string }) => {
-      if (updatedReport?.id === id || updatedReport?.reportId === id) {
+    const handleReportUpdate = (updatedReport: any) => {
+      if (updatedReport?.id === id || updatedReport?.reportId === id || updatedReport?.issueId === id) {
         queryClient.invalidateQueries({ queryKey: publicKeys.report(id) })
       }
     }

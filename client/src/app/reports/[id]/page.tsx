@@ -144,39 +144,34 @@ export default function ReportDetailPage() {
         id: fetchedReport.id,
         title: fetchedReport.title,
         description: fetchedReport.description || '',
-        category: fetchedReport.category?.id || fetchedReport.category?.name || 'roads',
+        category: fetchedReport.categoryName || 'roads',
         status: fetchedReport.status,
         priority: fetchedReport.priority || 'medium',
         location: {
-          area: fetchedReport.address?.split(',')[0] || 'Unknown Area',
+          area: fetchedReport.location?.address?.split(',')[0] || 'Unknown Area',
           city: 'Bareilly',
-          address: fetchedReport.address,
-          coordinates: fetchedReport.latitude && fetchedReport.longitude ? {
-            latitude: fetchedReport.latitude,
-            longitude: fetchedReport.longitude
+          address: fetchedReport.location?.address,
+          coordinates: fetchedReport.location?.latitude && fetchedReport.location?.longitude ? {
+            latitude: fetchedReport.location.latitude,
+            longitude: fetchedReport.location.longitude
           } : undefined
         },
-        reportedBy: fetchedReport.reporter?.name || 'Anonymous Citizen',
+        reportedBy: fetchedReport.user?.fullName || 'Anonymous Citizen',
         reportedAt: fetchedReport.createdAt,
-        updatedAt: fetchedReport.updatedAt,
-        views: fetchedReport.viewCount || 0,
-        likes: fetchedReport.upvotes || 0,
-        upvotes: fetchedReport.upvotes || 0,
-        downvotes: fetchedReport.downvotes || 0,
+        updatedAt: fetchedReport.updatedAt || fetchedReport.createdAt,
+        views: fetchedReport.viewsCount || 0,
+        likes: fetchedReport.votesCount || 0,
+        upvotes: fetchedReport.votesCount || 0,
+        downvotes: 0,
         userVote: null,
         estimatedResolution: 'Pending Assessment',
         assignedDepartment: fetchedReport.department?.name || 'Unassigned',
-        statusHistory: fetchedReport.statusHistory?.map((h: { status: string; createdAt: string; notes?: string }) => ({
-          status: h.status.toLowerCase(),
-          timestamp: h.createdAt,
-          note: h.notes || '',
-          updatedBy: 'System'
-        })) || [],
-        photos: fetchedReport.images?.map((img: { id: string; url: string; caption?: string }) => ({
-          id: img.id,
+        statusHistory: [],
+        photos: fetchedReport.images?.map((img: { url: string; filename: string }, index: number) => ({
+          id: img.filename || `img-${index}`,
           url: img.url,
-          caption: img.caption || '',
-          type: 'image'
+          caption: '',
+          type: 'image' as const
         })) || [],
         tags: [],
         relatedReports: []
@@ -184,24 +179,7 @@ export default function ReportDetailPage() {
       
       setReport(mappedReport);
       
-      const mappedComments = fetchedReport.comments?.map((c: { id: string; author?: { name?: string; avatarUrl?: string }; content: string; createdAt: string; upvotes: number; replies?: Array<{ id: string; author?: { name?: string; avatarUrl?: string }; content: string; createdAt: string; upvotes: number }> }) => ({
-        id: c.id,
-        author: c.author?.name || 'Anonymous',
-        authorAvatar: c.author?.avatarUrl,
-        content: c.content,
-        timestamp: c.createdAt,
-        likes: c.upvotes || 0,
-        isLiked: false,
-        replies: c.replies?.map((r: { id: string; author?: { name?: string; avatarUrl?: string }; content: string; createdAt: string; upvotes: number }) => ({
-          id: r.id,
-          author: r.author?.name || 'Anonymous',
-          authorAvatar: r.author?.avatarUrl,
-          content: r.content,
-          timestamp: r.createdAt,
-          likes: r.upvotes || 0,
-          isLiked: false
-        })) || []
-      })) || [];
+      const mappedComments: Comment[] = [];
       
       setComments(mappedComments);
       setIsLoading(false);
