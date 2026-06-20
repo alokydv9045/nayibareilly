@@ -320,54 +320,34 @@ export const getPublicReportById = async (req, res) => {
         images: {
           select: {
             id: true,
-            url: true,
-            caption: true
+            url: true
           }
         },
-        statusHistory: {
+        timeline: {
           orderBy: { createdAt: 'asc' },
           select: {
             status: true,
             createdAt: true,
-            notes: true,
-            createdById: true
+            note: true,
+            performedById: true
           }
         },
         comments: {
           where: {
-            moderationStatus: 'APPROVED',
-            parentId: null
+            isPublic: true,
+            isInternal: false
           },
           orderBy: { createdAt: 'desc' },
           select: {
             id: true,
             content: true,
             createdAt: true,
-            upvotes: true,
-            author: {
+            user: {
               select: {
                 id: true,
                 name: true,
                 roles: true,
                 avatarUrl: true
-              }
-            },
-            replies: {
-              where: { moderationStatus: 'APPROVED' },
-              orderBy: { createdAt: 'asc' },
-              select: {
-                id: true,
-                content: true,
-                createdAt: true,
-                upvotes: true,
-                author: {
-                  select: {
-                    id: true,
-                    name: true,
-                    roles: true,
-                    avatarUrl: true
-                  }
-                }
               }
             }
           }

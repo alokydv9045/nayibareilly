@@ -102,11 +102,11 @@ export default function InfrastructureDepartmentPage() {
   // Priority colors
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'CRITICAL': return 'bg-red-600 text-white'
-      case 'HIGH': return 'bg-orange-500 text-white'
+      case 'CRITICAL': return 'bg-red-600 text-amber-950'
+      case 'HIGH': return 'bg-orange-500 text-amber-950'
       case 'MEDIUM': return 'bg-yellow-500 text-black'
-      case 'LOW': return 'bg-green-500 text-white'
-      default: return 'bg-gray-500 text-white'
+      case 'LOW': return 'bg-green-500 text-amber-950'
+      default: return 'bg-gray-500 text-amber-950'
     }
   }
 
@@ -127,7 +127,7 @@ export default function InfrastructureDepartmentPage() {
   if (!user) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center">
-        <div className="text-white">Loading...</div>
+        <div className="text-amber-950">Loading...</div>
       </div>
     )
   }
@@ -138,65 +138,65 @@ export default function InfrastructureDepartmentPage() {
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center space-x-3 mb-4">
-            <div className="p-3 bg-blue-600/20 rounded-xl border border-blue-500/30">
-              <Construction className="h-8 w-8 text-blue-400" />
+            <div className="p-3 bg-blue-600/20 rounded-xl border border-blue-200">
+              <Construction className="h-8 w-8 text-blue-600" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-white">Infrastructure & Public Works</h1>
+              <h1 className="text-3xl font-bold text-amber-950">Infrastructure & Public Works</h1>
               <p className="text-blue-200">Roads, Construction & Public Infrastructure Development</p>
             </div>
           </div>
           
           {/* Quick Stats */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-            <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+            <Card className="bg-amber-100/50  border-amber-200/60">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-blue-200 text-sm">Total Issues</p>
-                    <p className="text-2xl font-bold text-white">{stats?.totalIssues || 0}</p>
-                    <p className="text-xs text-blue-400">PWD + Traffic</p>
+                    <p className="text-2xl font-bold text-amber-950">{stats?.totalIssues || 0}</p>
+                    <p className="text-xs text-blue-600">PWD + Traffic</p>
                   </div>
-                  <Construction className="h-8 w-8 text-blue-400" />
+                  <Construction className="h-8 w-8 text-blue-600" />
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+            <Card className="bg-amber-100/50  border-amber-200/60">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-orange-200 text-sm">In Progress</p>
-                    <p className="text-2xl font-bold text-white">{stats?.inProgressIssues || 0}</p>
-                    <p className="text-xs text-orange-400">Active Work</p>
+                    <p className="text-2xl font-bold text-amber-950">{stats?.inProgressIssues || 0}</p>
+                    <p className="text-xs text-orange-600">Active Work</p>
                   </div>
-                  <RefreshCw className="h-8 w-8 text-orange-400" />
+                  <RefreshCw className="h-8 w-8 text-orange-600" />
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+            <Card className="bg-amber-100/50  border-amber-200/60">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-green-200 text-sm">Completed Today</p>
-                    <p className="text-2xl font-bold text-white">{stats?.resolvedToday || 0}</p>
-                    <p className="text-xs text-green-400">Resolved</p>
+                    <p className="text-2xl font-bold text-amber-950">{stats?.resolvedToday || 0}</p>
+                    <p className="text-xs text-green-600">Resolved</p>
                   </div>
-                  <CheckCircle className="h-8 w-8 text-green-400" />
+                  <CheckCircle className="h-8 w-8 text-green-600" />
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+            <Card className="bg-amber-100/50  border-amber-200/60">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-yellow-200 text-sm">Staff Members</p>
-                    <p className="text-2xl font-bold text-white">{infrastructureStaff.length}</p>
-                    <p className="text-xs text-yellow-400">Engineers & Officers</p>
+                    <p className="text-2xl font-bold text-amber-950">{infrastructureStaff.length}</p>
+                    <p className="text-xs text-yellow-600">Engineers & Officers</p>
                   </div>
-                  <Users className="h-8 w-8 text-yellow-400" />
+                  <Users className="h-8 w-8 text-yellow-600" />
                 </div>
               </CardContent>
             </Card>
@@ -205,7 +205,7 @@ export default function InfrastructureDepartmentPage() {
 
         {/* Main Content */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="bg-white/10 border border-white/20">
+          <TabsList className="bg-amber-100/50 border border-amber-200/60">
             <TabsTrigger value="dashboard" className="data-[state=active]:bg-blue-600/30">
               Dashboard
             </TabsTrigger>
@@ -227,10 +227,10 @@ export default function InfrastructureDepartmentPage() {
           <TabsContent value="dashboard" className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Issue Distribution */}
-              <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+              <Card className="bg-amber-100/50  border-amber-200/60">
                 <CardHeader>
-                  <CardTitle className="text-white flex items-center space-x-2">
-                    <BarChart3 className="h-5 w-5 text-blue-400" />
+                  <CardTitle className="text-amber-950 flex items-center space-x-2">
+                    <BarChart3 className="h-5 w-5 text-blue-600" />
                     <span>Issue Categories</span>
                   </CardTitle>
                 </CardHeader>
@@ -242,12 +242,12 @@ export default function InfrastructureDepartmentPage() {
                       { type: 'Street Lighting', count: 5, color: 'bg-yellow-500', icon: Zap },
                       { type: 'Construction Projects', count: 12, color: 'bg-green-500', icon: HardHat }
                     ].map((item, index) => (
-                      <div key={index} className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
+                      <div key={index} className="flex items-center justify-between p-3 bg-white rounded-lg">
                         <div className="flex items-center space-x-3">
-                          <item.icon className="h-5 w-5 text-blue-300" />
-                          <span className="text-white text-sm">{item.type}</span>
+                          <item.icon className="h-5 w-5 text-blue-600" />
+                          <span className="text-amber-950 text-sm">{item.type}</span>
                         </div>
-                        <Badge className="bg-white/20 text-white">{item.count}</Badge>
+                        <Badge className="bg-amber-200/50 text-amber-950">{item.count}</Badge>
                       </div>
                     ))}
                   </div>
@@ -255,22 +255,22 @@ export default function InfrastructureDepartmentPage() {
               </Card>
 
               {/* Staff Workload Summary */}
-              <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+              <Card className="bg-amber-100/50  border-amber-200/60">
                 <CardHeader>
-                  <CardTitle className="text-white flex items-center space-x-2">
-                    <Users className="h-5 w-5 text-blue-400" />
+                  <CardTitle className="text-amber-950 flex items-center space-x-2">
+                    <Users className="h-5 w-5 text-blue-600" />
                     <span>Staff Distribution</span>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    <div className="p-3 bg-orange-600/20 border border-orange-500/30 rounded-lg">
+                    <div className="p-3 bg-orange-600/20 border border-orange-200 rounded-lg">
                       <div className="flex items-center justify-between mb-2">
                         <div className="flex items-center space-x-2">
-                          <HardHat className="h-5 w-5 text-orange-400" />
-                          <span className="text-white font-medium">PWD Engineers</span>
+                          <HardHat className="h-5 w-5 text-orange-600" />
+                          <span className="text-amber-950 font-medium">PWD Engineers</span>
                         </div>
-                        <Badge className="bg-orange-600 text-white">{pwdStaff.length}</Badge>
+                        <Badge className="bg-orange-600 text-amber-950">{pwdStaff.length}</Badge>
                       </div>
                       <p className="text-orange-200 text-xs">Roads, Construction & Infrastructure</p>
                     </div>
@@ -279,10 +279,10 @@ export default function InfrastructureDepartmentPage() {
               </Card>
 
               {/* Recent Activities */}
-              <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+              <Card className="bg-amber-100/50  border-amber-200/60">
                 <CardHeader>
-                  <CardTitle className="text-white flex items-center space-x-2">
-                    <Activity className="h-5 w-5 text-blue-400" />
+                  <CardTitle className="text-amber-950 flex items-center space-x-2">
+                    <Activity className="h-5 w-5 text-blue-600" />
                     <span>Recent Activities</span>
                   </CardTitle>
                 </CardHeader>
@@ -294,14 +294,14 @@ export default function InfrastructureDepartmentPage() {
                       { action: 'Pothole filling started', location: 'Civil Lines', time: '6 hours ago', type: 'pwd' },
                       { action: 'Parking issue resolved', location: 'Bus Stand', time: '8 hours ago', type: 'traffic' }
                     ].map((activity, index) => (
-                      <div key={index} className="p-3 bg-white/5 rounded-lg">
+                      <div key={index} className="p-3 bg-white rounded-lg">
                         <div className="flex items-center justify-between mb-1">
-                          <span className="text-white text-sm font-medium">{activity.action}</span>
-                          <Badge className={`text-xs ${activity.type === 'pwd' ? 'bg-orange-600' : 'bg-red-600'} text-white`}>
+                          <span className="text-amber-950 text-sm font-medium">{activity.action}</span>
+                          <Badge className={`text-xs ${activity.type === 'pwd' ? 'bg-orange-600' : 'bg-red-600'} text-amber-950`}>
                             {activity.type.toUpperCase()}
                           </Badge>
                         </div>
-                        <div className="flex items-center justify-between text-blue-300 text-xs">
+                        <div className="flex items-center justify-between text-blue-600 text-xs">
                           <span>{activity.location}</span>
                           <span>{activity.time}</span>
                         </div>
@@ -312,10 +312,10 @@ export default function InfrastructureDepartmentPage() {
               </Card>
 
               {/* Equipment Status */}
-              <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+              <Card className="bg-amber-100/50  border-amber-200/60">
                 <CardHeader>
-                  <CardTitle className="text-white flex items-center space-x-2">
-                    <Truck className="h-5 w-5 text-blue-400" />
+                  <CardTitle className="text-amber-950 flex items-center space-x-2">
+                    <Truck className="h-5 w-5 text-blue-600" />
                     <span>Equipment Status</span>
                   </CardTitle>
                 </CardHeader>
@@ -327,15 +327,15 @@ export default function InfrastructureDepartmentPage() {
                       { equipment: 'Excavators', available: 6, total: 8, status: 'Fair' },
                       { equipment: 'Signal Controllers', available: 25, total: 28, status: 'Good' }
                     ].map((item, index) => (
-                      <div key={index} className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
+                      <div key={index} className="flex items-center justify-between p-3 bg-white rounded-lg">
                         <div>
-                          <p className="text-white text-sm font-medium">{item.equipment}</p>
-                          <p className="text-blue-300 text-xs">{item.available}/{item.total} Available</p>
+                          <p className="text-amber-950 text-sm font-medium">{item.equipment}</p>
+                          <p className="text-blue-600 text-xs">{item.available}/{item.total} Available</p>
                         </div>
                         <Badge className={`text-xs ${
                           item.status === 'Excellent' ? 'bg-green-600' : 
                           item.status === 'Good' ? 'bg-blue-600' : 'bg-yellow-600'
-                        } text-white`}>
+                        } text-amber-950`}>
                           {item.status}
                         </Badge>
                       </div>
@@ -353,15 +353,15 @@ export default function InfrastructureDepartmentPage() {
                 placeholder="Search issues..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="max-w-md bg-white/10 border-white/20 text-white placeholder:text-blue-300"
+                className="max-w-md bg-amber-100/50 border-amber-200/60 text-amber-950 placeholder:text-blue-600"
               />
               <Select value={issueFilter} onValueChange={setIssueFilter}>
-                <SelectTrigger className="w-48 bg-white/10 border-white/20 text-white">
+                <SelectTrigger className="w-48 bg-amber-100/50 border-amber-200/60 text-amber-950">
                   <SelectValue placeholder="Filter by type" />
                 </SelectTrigger>
-                <SelectContent className="bg-slate-900 border-white/20">
-                  <SelectItem value="all" className="text-white">All Issues</SelectItem>
-                  <SelectItem value="pwd" className="text-white">Infrastructure Issues ({pwdIssues.length})</SelectItem>
+                <SelectContent className="bg-amber-50/50 border-amber-200/60">
+                  <SelectItem value="all" className="text-amber-950">All Issues</SelectItem>
+                  <SelectItem value="pwd" className="text-amber-950">Infrastructure Issues ({pwdIssues.length})</SelectItem>
                 </SelectContent>
               </Select>
               <Badge className="bg-blue-600/30 text-blue-200">
@@ -371,35 +371,35 @@ export default function InfrastructureDepartmentPage() {
 
             <div className="grid gap-4">
               {loadingIssues ? (
-                <div className="text-center text-white py-8">Loading issues...</div>
+                <div className="text-center text-amber-950 py-8">Loading issues...</div>
               ) : filteredIssues.length === 0 ? (
-                <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+                <Card className="bg-amber-100/50  border-amber-200/60">
                   <CardContent className="p-8 text-center">
-                    <Construction className="h-12 w-12 text-blue-400 mx-auto mb-4" />
-                    <p className="text-white">No issues found</p>
-                    <p className="text-blue-300 text-sm">All issues are assigned or completed</p>
+                    <Construction className="h-12 w-12 text-blue-600 mx-auto mb-4" />
+                    <p className="text-amber-950">No issues found</p>
+                    <p className="text-blue-600 text-sm">All issues are assigned or completed</p>
                   </CardContent>
                 </Card>
               ) : (
                 filteredIssues.map((issue) => (
-                  <Card key={issue.id} className="bg-white/10 backdrop-blur-lg border-white/20 hover:bg-white/15 transition-all">
+                  <Card key={issue.id} className="bg-amber-100/50  border-amber-200/60 hover:bg-white/15 transition-all">
                     <CardContent className="p-6">
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
                           <div className="flex items-center space-x-3 mb-3">
                             {getIssueIcon(issue.category.name)}
-                            <h3 className="text-white font-semibold">{issue.title}</h3>
+                            <h3 className="text-amber-950 font-semibold">{issue.title}</h3>
                             <Badge className={getPriorityColor(issue.priority)}>
                               {issue.priority}
                             </Badge>
-                            <Badge className={`text-xs bg-orange-600 text-white`}>
+                            <Badge className={`text-xs bg-orange-600 text-amber-950`}>
                               INFRASTRUCTURE
                             </Badge>
                           </div>
                           
                           <p className="text-blue-200 text-sm mb-3 line-clamp-2">{issue.description}</p>
                           
-                          <div className="flex items-center space-x-4 text-sm text-blue-300">
+                          <div className="flex items-center space-x-4 text-sm text-blue-600">
                             <div className="flex items-center space-x-1">
                               <MapPin className="h-4 w-4" />
                               <span>{issue.location}</span>
@@ -419,7 +419,7 @@ export default function InfrastructureDepartmentPage() {
                           <Button
                             variant="outline"
                             size="sm"
-                            className="bg-blue-600/20 border-blue-500 text-blue-300 hover:bg-blue-600/30"
+                            className="bg-blue-600/20 border-blue-500 text-blue-600 hover:bg-blue-600/30"
                             onClick={() => handleAssignClick(issue)}
                           >
                             <UserPlus className="h-4 w-4 mr-1" />
@@ -441,7 +441,7 @@ export default function InfrastructureDepartmentPage() {
                 placeholder="Search active work..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="max-w-md bg-white/10 border-white/20 text-white placeholder:text-blue-300"
+                className="max-w-md bg-amber-100/50 border-amber-200/60 text-amber-950 placeholder:text-blue-600"
               />
               <Badge className="bg-orange-600/30 text-orange-200">
                 {filteredInProgress.length} Active Work
@@ -450,25 +450,25 @@ export default function InfrastructureDepartmentPage() {
 
             <div className="grid gap-4">
               {loadingInProgress ? (
-                <div className="text-center text-white py-8">Loading active work...</div>
+                <div className="text-center text-amber-950 py-8">Loading active work...</div>
               ) : filteredInProgress.length === 0 ? (
-                <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+                <Card className="bg-amber-100/50  border-amber-200/60">
                   <CardContent className="p-8 text-center">
-                    <RefreshCw className="h-12 w-12 text-orange-400 mx-auto mb-4" />
-                    <p className="text-white">No active work</p>
-                    <p className="text-blue-300 text-sm">All work is either pending or completed</p>
+                    <RefreshCw className="h-12 w-12 text-orange-600 mx-auto mb-4" />
+                    <p className="text-amber-950">No active work</p>
+                    <p className="text-blue-600 text-sm">All work is either pending or completed</p>
                   </CardContent>
                 </Card>
               ) : (
                 filteredInProgress.map((issue) => (
-                  <Card key={issue.id} className="bg-white/10 backdrop-blur-lg border-white/20 hover:bg-white/15 transition-all">
+                  <Card key={issue.id} className="bg-amber-100/50  border-amber-200/60 hover:bg-white/15 transition-all">
                     <CardContent className="p-6">
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
                           <div className="flex items-center space-x-3 mb-3">
                             {getIssueIcon(issue.category.name)}
-                            <h3 className="text-white font-semibold">{issue.title}</h3>
-                            <Badge className="bg-orange-600 text-white">IN PROGRESS</Badge>
+                            <h3 className="text-amber-950 font-semibold">{issue.title}</h3>
+                            <Badge className="bg-orange-600 text-amber-950">IN PROGRESS</Badge>
                             <Badge className={getPriorityColor(issue.priority)}>
                               {issue.priority}
                             </Badge>
@@ -476,7 +476,7 @@ export default function InfrastructureDepartmentPage() {
                           
                           <p className="text-blue-200 text-sm mb-3 line-clamp-2">{issue.description}</p>
                           
-                          <div className="grid grid-cols-2 gap-4 text-sm text-blue-300">
+                          <div className="grid grid-cols-2 gap-4 text-sm text-blue-600">
                             <div className="flex items-center space-x-1">
                               <MapPin className="h-4 w-4" />
                               <span>{issue.location}</span>
@@ -500,7 +500,7 @@ export default function InfrastructureDepartmentPage() {
                           <Button
                             variant="outline"
                             size="sm"
-                            className="bg-green-600/20 border-green-500 text-green-300 hover:bg-green-600/30"
+                            className="bg-green-600/20 border-green-500 text-green-600 hover:bg-green-600/30"
                           >
                             <Eye className="h-4 w-4 mr-1" />
                             Track Progress
@@ -517,7 +517,7 @@ export default function InfrastructureDepartmentPage() {
           {/* PWD Staff Tab */}
           <TabsContent value="pwd-staff" className="space-y-6">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-white">PWD Engineering Staff</h2>
+              <h2 className="text-xl font-bold text-amber-950">PWD Engineering Staff</h2>
               <Badge className="bg-orange-600/30 text-orange-200">
                 {pwdStaff.length} Engineers
               </Badge>
@@ -525,38 +525,38 @@ export default function InfrastructureDepartmentPage() {
 
             <div className="grid gap-4">
               {loadingStaff ? (
-                <div className="text-center text-white py-8">Loading PWD staff...</div>
+                <div className="text-center text-amber-950 py-8">Loading PWD staff...</div>
               ) : pwdStaff.length === 0 ? (
-                <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+                <Card className="bg-amber-100/50  border-amber-200/60">
                   <CardContent className="p-8 text-center">
-                    <HardHat className="h-12 w-12 text-orange-400 mx-auto mb-4" />
-                    <p className="text-white">No PWD staff members found</p>
+                    <HardHat className="h-12 w-12 text-orange-600 mx-auto mb-4" />
+                    <p className="text-amber-950">No PWD staff members found</p>
                   </CardContent>
                 </Card>
               ) : (
                 pwdStaff.map((staff) => (
-                  <Card key={staff.id} className="bg-white/10 backdrop-blur-lg border-white/20">
+                  <Card key={staff.id} className="bg-amber-100/50  border-amber-200/60">
                     <CardContent className="p-6">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-4">
                           <div className="w-12 h-12 bg-orange-600/30 rounded-full flex items-center justify-center">
-                            <HardHat className="h-6 w-6 text-orange-300" />
+                            <HardHat className="h-6 w-6 text-orange-600" />
                           </div>
                           <div>
-                            <h3 className="text-white font-semibold">{staff.name}</h3>
-                            <p className="text-orange-300 text-sm">{staff.email}</p>
-                            <p className="text-orange-400 text-xs">PWD Engineer</p>
+                            <h3 className="text-amber-950 font-semibold">{staff.name}</h3>
+                            <p className="text-orange-600 text-sm">{staff.email}</p>
+                            <p className="text-orange-600 text-xs">PWD Engineer</p>
                           </div>
                         </div>
                         
                         <div className="flex items-center space-x-3">
                           <div className="text-right">
-                            <p className="text-white text-sm font-medium">{staff.activeIssues} Active Projects</p>
+                            <p className="text-amber-950 text-sm font-medium">{staff.activeIssues} Active Projects</p>
                             <Badge className={`
                               ${staff.workloadStatus === 'available' ? 'bg-green-600' : 
                                 staff.workloadStatus === 'light' ? 'bg-yellow-600' : 
                                 staff.workloadStatus === 'moderate' ? 'bg-orange-600' : 'bg-red-600'}
-                              text-white text-xs
+                              text-amber-950 text-xs
                             `}>
                               {staff.workloadStatus}
                             </Badge>
@@ -573,7 +573,7 @@ export default function InfrastructureDepartmentPage() {
           {/* Infrastructure Control Tab */}
           <TabsContent value="monitoring" className="space-y-6">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-white">Infrastructure Control Center</h2>
+              <h2 className="text-xl font-bold text-amber-950">Infrastructure Control Center</h2>
               <Badge className="bg-green-600/30 text-green-200">Systems Online</Badge>
             </div>
 
@@ -587,29 +587,29 @@ export default function InfrastructureDepartmentPage() {
                 { location: 'Hospital Area Road', type: 'Street Lighting', status: 'Maintenance', lights: 24, working: 20 },
                 { location: 'School Zone', type: 'Road Safety', status: 'Completed', progress: '100%', team: 'Team A' }
               ].map((point, index) => (
-                <Card key={index} className="bg-white/10 backdrop-blur-lg border-white/20">
+                <Card key={index} className="bg-amber-100/50  border-amber-200/60">
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between mb-4">
-                      <Construction className="h-8 w-8 text-orange-400" />
+                      <Construction className="h-8 w-8 text-orange-600" />
                       <Badge className={`
                         ${point.status === 'Completed' ? 'bg-green-600' : 
                           point.status === 'Maintenance' ? 'bg-yellow-600' : 
                           point.status.includes('Progress') || point.status.includes('Construction') ? 'bg-orange-600' : 'bg-blue-600'}
-                        text-white
+                        text-amber-950
                       `}>
                         {point.status}
                       </Badge>
                     </div>
-                    <h3 className="text-white font-semibold mb-2 text-sm">{point.location}</h3>
+                    <h3 className="text-amber-950 font-semibold mb-2 text-sm">{point.location}</h3>
                     <p className="text-blue-200 text-xs mb-4">{point.type}</p>
                     <div className="space-y-2">
                       {point.progress && (
                         <div className="space-y-1">
                           <div className="flex justify-between items-center">
                             <span className="text-blue-200 text-sm">Progress:</span>
-                            <span className="text-white text-sm">{point.progress}</span>
+                            <span className="text-amber-950 text-sm">{point.progress}</span>
                           </div>
-                          <div className="w-full bg-white/10 rounded-full h-2">
+                          <div className="w-full bg-amber-100/50 rounded-full h-2">
                             <div 
                               className="h-2 rounded-full bg-orange-500" 
                               style={{ width: point.progress }}
@@ -620,7 +620,7 @@ export default function InfrastructureDepartmentPage() {
                       {point.team && (
                         <div className="flex justify-between items-center">
                           <span className="text-blue-200 text-sm">Team:</span>
-                          <span className="text-orange-300 text-sm">{point.team}</span>
+                          <span className="text-orange-600 text-sm">{point.team}</span>
                         </div>
                       )}
                     </div>
@@ -633,10 +633,10 @@ export default function InfrastructureDepartmentPage() {
 
         {/* Assignment Dialog */}
         <Dialog open={showAssignDialog} onOpenChange={setShowAssignDialog}>
-          <DialogContent className="bg-slate-900 border border-white/20 text-white">
+          <DialogContent className="bg-amber-50/50 border border-amber-200/60 text-amber-950">
             <DialogHeader>
               <DialogTitle>Assign Issue to Staff Member</DialogTitle>
-              <DialogDescription className="text-blue-300">
+              <DialogDescription className="text-blue-600">
                 Select appropriate staff member based on issue type
               </DialogDescription>
             </DialogHeader>
@@ -645,12 +645,12 @@ export default function InfrastructureDepartmentPage() {
               <div>
                 <label className="text-sm font-medium mb-2 block">Select Staff Member</label>
                 <Select value={selectedStaffId} onValueChange={setSelectedStaffId}>
-                  <SelectTrigger className="bg-white/10 border-white/20">
+                  <SelectTrigger className="bg-amber-100/50 border-amber-200/60">
                     <SelectValue placeholder="Choose staff member..." />
                   </SelectTrigger>
-                  <SelectContent className="bg-slate-900 border-white/20">
+                  <SelectContent className="bg-amber-50/50 border-amber-200/60">
                     {infrastructureStaff.map((staff) => (
-                      <SelectItem key={staff.id} value={staff.id} className="text-white">
+                      <SelectItem key={staff.id} value={staff.id} className="text-amber-950">
                         {staff.name} - {staff.activeIssues} active issues ({staff.workloadStatus})
                       </SelectItem>
                     ))}
@@ -664,7 +664,7 @@ export default function InfrastructureDepartmentPage() {
                   placeholder="Add any specific instructions..."
                   value={assignmentNote}
                   onChange={(e) => setAssignmentNote(e.target.value)}
-                  className="bg-white/10 border-white/20 text-white placeholder:text-blue-300"
+                  className="bg-amber-100/50 border-amber-200/60 text-amber-950 placeholder:text-blue-600"
                   rows={3}
                 />
               </div>
@@ -674,7 +674,7 @@ export default function InfrastructureDepartmentPage() {
               <Button 
                 variant="outline" 
                 onClick={() => setShowAssignDialog(false)}
-                className="border-white/20 text-white"
+                className="border-amber-200/60 text-amber-950"
               >
                 Cancel
               </Button>

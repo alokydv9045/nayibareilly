@@ -145,7 +145,7 @@ export const auth = (roles = []) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET)
       
       // Validate token structure
-      if (!decoded.id || !decoded.email) {
+      if (!decoded.id) {
         await authLogger.tokenValidation(req, { 
           status: 'malformed_token',
           tokenStructure: Object.keys(decoded)

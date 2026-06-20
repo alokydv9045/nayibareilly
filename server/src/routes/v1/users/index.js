@@ -16,7 +16,7 @@ const router = Router();
  * List all users (admin only)
  */
 router.get('/', [
-  auth(['SUPER_ADMIN', 'ADMIN'])
+  auth(['SUPER_ADMIN', 'DEPT_ADMIN', 'MAYOR'])
 ], listUsers);
 
 /**
@@ -45,7 +45,7 @@ router.patch('/profile', [
  * Update user by ID (admin only)
  */
 router.patch('/:id', [
-  auth(['SUPER_ADMIN', 'ADMIN']),
+  auth(['SUPER_ADMIN', 'DEPT_ADMIN', 'MAYOR']),
   body('name').optional().isString().trim().isLength({ min: 2, max: 100 }),
   body('roles').optional().isArray()
 ], async (req, res) => {
@@ -58,7 +58,7 @@ router.patch('/:id', [
  * Delete user (admin only)
  */
 router.delete('/:id', [
-  auth(['SUPER_ADMIN', 'ADMIN'])
+  auth(['SUPER_ADMIN', 'DEPT_ADMIN', 'MAYOR'])
 ], async (req, res) => {
   // This will be implemented in admin.controller.js
   res.status(501).json({ success: false, message: 'Not implemented yet' });

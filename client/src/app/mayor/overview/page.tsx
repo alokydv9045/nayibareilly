@@ -228,7 +228,7 @@ export default function MayorOverviewPage() {
               {Array.from({ length: 5 }, (_, i) => (
                 <Star
                   key={i}
-                  className={`h-3 w-3 ${i < Math.floor(data.summary.citizenSatisfaction) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`}
+                  className={`h-3 w-3 ${i < Math.floor(data.summary.citizenSatisfaction) ? 'fill-yellow-400 text-yellow-600' : 'text-gray-300'}`}
                 />
               ))}
             </div>
@@ -436,7 +436,7 @@ export default function MayorOverviewPage() {
                       </td>
                       <td className="text-center py-3">
                         <div className="flex items-center justify-center gap-1">
-                          <Star className={`h-4 w-4 ${dept.satisfaction >= 4 ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`} />
+                          <Star className={`h-4 w-4 ${dept.satisfaction >= 4 ? 'fill-yellow-400 text-yellow-600' : 'text-gray-300'}`} />
                           <span>{dept.satisfaction.toFixed(1)}</span>
                         </div>
                       </td>

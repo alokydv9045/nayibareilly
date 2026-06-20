@@ -350,7 +350,7 @@ export default function DepartmentAnalyticsPage() {
                       <td className="text-center py-3">{formatTime(staff.avgResolutionTime)}</td>
                       <td className="text-center py-3">
                         <div className="flex items-center justify-center gap-1">
-                          <Star className={`h-4 w-4 ${staff.rating >= 4 ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`} />
+                          <Star className={`h-4 w-4 ${staff.rating >= 4 ? 'fill-yellow-400 text-yellow-600' : 'text-gray-300'}`} />
                           <span>{staff.rating.toFixed(1)}</span>
                         </div>
                       </td>

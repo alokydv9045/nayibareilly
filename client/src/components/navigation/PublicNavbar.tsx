@@ -83,19 +83,11 @@ export function PublicNavbar({ language = 'en', onLanguageChange }: PublicNavbar
             {language === 'en' ? 'हिंदी' : 'English'}
           </Button>
           <Button
-            variant="outline"
             onClick={() => router.push('/login')}
-            className="gap-2 min-h-[44px]"
+            className="gap-2 min-h-[44px] bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold shadow-md transition-all hover:shadow-lg hover:-translate-y-0.5 border-0"
           >
             <LogIn className="h-4 w-4" />
-            {language === 'hi' ? 'लॉगिन' : 'Login'}
-          </Button>
-          <Button
-            onClick={() => router.push('/register')}
-            className="gap-2 min-h-[44px]"
-          >
-            <UserPlus className="h-4 w-4" />
-            {language === 'hi' ? 'रजिस्टर करें' : 'Register'}
+            {language === 'hi' ? 'लॉगिन / रजिस्टर' : 'Login / Register'}
           </Button>
         </div>
       </nav>
@@ -177,12 +169,12 @@ export function PublicNavbar({ language = 'en', onLanguageChange }: PublicNavbar
               <Button
                 onClick={() => {
                   setMobileMenuOpen(false)
-                  router.push('/register')
+                  router.push('/login')
                 }}
-                className="w-full gap-2 min-h-[44px]"
+                className="w-full gap-2 min-h-[44px] bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold shadow-md transition-all border-0"
               >
-                <UserPlus className="h-4 w-4" />
-                {language === 'hi' ? 'रजिस्टर करें' : 'Register'}
+                <LogIn className="h-4 w-4" />
+                {language === 'hi' ? 'लॉगिन / रजिस्टर' : 'Login / Register'}
               </Button>
             </div>
           </div>

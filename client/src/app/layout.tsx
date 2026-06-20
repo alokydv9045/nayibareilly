@@ -1,6 +1,7 @@
 import './globals.css'
 import AppFrame from '@/components/layout/AppFrame'
 import LoginStatePersistence from '@/components/features/auth/LoginStatePersistence'
+import { AuthProvider } from '@/lib/auth/auth-context'
 import SessionProvider from '@/lib/providers/SessionProvider'
 import GlobalErrorHandler from '@/components/GlobalErrorHandler'
 import type { Metadata } from 'next'
@@ -68,15 +69,17 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body suppressHydrationWarning>
+      <body className="bg-blue-50" suppressHydrationWarning>
         {/* Skip link for keyboard users to jump directly to main content */}
         <a href="#main-content" className="skip-link">Skip to main content</a>
         <GlobalErrorHandler />
-        <SessionProvider>
-          <LoginStatePersistence>
-            <AppFrame>{children}</AppFrame>
-          </LoginStatePersistence>
-        </SessionProvider>
+        <AuthProvider>
+          <SessionProvider>
+            <LoginStatePersistence>
+              <AppFrame>{children}</AppFrame>
+            </LoginStatePersistence>
+          </SessionProvider>
+        </AuthProvider>
       </body>
     </html>
   )

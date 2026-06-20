@@ -190,7 +190,7 @@ export default function MayorDepartmentsPage() {
                 <div className="flex items-start justify-between">
                   <CardTitle className="text-lg">{dept.name}</CardTitle>
                   <div className="flex items-center gap-1">
-                    <Star className={`h-4 w-4 ${overallRating >= 80 ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`} />
+                    <Star className={`h-4 w-4 ${overallRating >= 80 ? 'fill-yellow-400 text-yellow-600' : 'text-gray-300'}`} />
                     <span className={`text-sm font-bold ${getPerformanceColor(overallRating)}`}>
                       {overallRating}/100
                     </span>
@@ -342,7 +342,7 @@ export default function MayorDepartmentsPage() {
                           <div className="flex justify-between">
                             <span>Citizen Satisfaction</span>
                             <div className="flex items-center gap-2">
-                              <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                              <Star className="h-4 w-4 fill-yellow-400 text-yellow-600" />
                               <span className="font-bold">{dept.performance.citizenSatisfaction}/5</span>
                             </div>
                           </div>

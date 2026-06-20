@@ -85,16 +85,20 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const refreshToken = useCallback(async (): Promise<boolean> => {
     try {
       const apiUrl = config.api.fullUrl
-      const response = await fetch(`${apiUrl.replace(/\/$/, '')}/auth/logout`, {
+      const response = await fetch(`${apiUrl.replace(/\/$/, '')}/auth/refresh`, {
         method: 'POST',
         credentials: 'include',
       });
 
       if (response.ok) {
         const data = await response.json();
-        setToken(data.data.accessToken);
-        tokenStorage.set(data.data.accessToken);
-        return true;
+        const newToken = data?.data?.accessToken
+        if (newToken) {
+          setToken(newToken);
+          tokenStorage.set(newToken);
+          return true;
+        }
+        return false;
       } else {
         return false;
       }
@@ -104,19 +108,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }
   }, []);
 
-  // Auto refresh token
-  useEffect(() => {
-    if (!token) return;
+  // Note: Token auto-refresh is handled by the SessionProvider (useSession heartbeat).
+  // This context does NOT run a separate refresh interval to avoid race conditions.
 
-    const refreshInterval = setInterval(async () => {
-      const success = await refreshToken();
-      if (!success) {
-        logout();
-      }
-    }, 10 * 60 * 1000); // Refresh every 10 minutes
-
-    return () => clearInterval(refreshInterval);
-  }, [token, logout, refreshToken]);
 
   const login = (userData: User, accessToken: string) => {
     setUser(userData);

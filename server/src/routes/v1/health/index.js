@@ -35,7 +35,7 @@ router.get('/live', livenessProbe());
  * GET /api/v1/health/metrics
  * Get performance metrics (admin only)
  */
-router.get('/metrics', auth(['SUPER_ADMIN', 'ADMIN']), (req, res) => {
+router.get('/metrics', auth(['SUPER_ADMIN', 'DEPT_ADMIN', 'MAYOR']), (req, res) => {
   const metrics = getMetrics();
   const businessMetrics = metricsService.getMetrics();
   
@@ -51,7 +51,7 @@ router.get('/metrics', auth(['SUPER_ADMIN', 'ADMIN']), (req, res) => {
  * GET /api/v1/health/metrics/summary
  * Get metrics summary for time period
  */
-router.get('/metrics/summary', auth(['SUPER_ADMIN', 'ADMIN']), asyncErrorHandler(async (req, res) => {
+router.get('/metrics/summary', auth(['SUPER_ADMIN', 'DEPT_ADMIN', 'MAYOR']), asyncErrorHandler(async (req, res) => {
   const hours = parseInt(req.query.hours) || 1;
   const summary = await metricsService.getMetricsSummary(hours);
   

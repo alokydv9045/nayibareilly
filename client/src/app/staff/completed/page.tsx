@@ -146,7 +146,7 @@ export default function StaffCompletedPage() {
     return Array.from({ length: 5 }, (_, i) => (
       <Star
         key={i}
-        className={`h-4 w-4 ${i < rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`}
+        className={`h-4 w-4 ${i < rating ? 'fill-yellow-400 text-yellow-600' : 'text-gray-300'}`}
       />
     ))
   }
@@ -209,7 +209,7 @@ export default function StaffCompletedPage() {
           <CardContent className="p-4 text-center">
             <div className="text-2xl font-bold text-blue-600 flex items-center justify-center gap-1">
               {getAverageRating().toFixed(1)}
-              <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+              <Star className="h-5 w-5 fill-yellow-400 text-yellow-600" />
             </div>
             <div className="text-sm text-gray-600">Average Rating</div>
           </CardContent>

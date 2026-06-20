@@ -81,7 +81,7 @@ export default function UserManagementPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-indigo-900 to-blue-900">
+    <div className="min-h-screen bg-white text-black">
       <div className="container mx-auto p-6">
         {/* Header */}
         <div className="mb-8">
@@ -90,7 +90,7 @@ export default function UserManagementPage() {
               <Link href="/superadmin">
                 <Button 
                   variant="outline" 
-                  className="bg-white/10 text-white border-white/20 hover:bg-white/20"
+                  className="bg-amber-100/50 text-amber-950 border-amber-200/60 hover:bg-amber-200/50"
                   aria-label="Go back to superadmin dashboard"
                 >
                   <ArrowLeft className="h-4 w-4 mr-2" aria-hidden="true" />
@@ -98,12 +98,12 @@ export default function UserManagementPage() {
                 </Button>
               </Link>
               <div>
-                <h1 className="text-4xl font-bold text-white">User Management</h1>
+                <h1 className="text-4xl font-bold text-amber-950">User Management</h1>
                 <p className="text-purple-200">Create, edit, and manage all user accounts</p>
               </div>
             </div>
             <Button 
-              className="bg-green-600 hover:bg-green-700 text-white"
+              className="bg-green-600 hover:bg-green-700 text-amber-950"
               onClick={() => setShowCreateModal(true)}
               aria-label="Create new user account"
             >
@@ -115,52 +115,52 @@ export default function UserManagementPage() {
 
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8" role="region" aria-label="User statistics">
-          <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+          <Card className="bg-amber-100/50  border-amber-200/60">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-purple-200 text-sm">Total Users</p>
-                  <p className="text-3xl font-bold text-white" aria-label={`${users.length} total users`}>{users.length}</p>
+                  <p className="text-3xl font-bold text-amber-950" aria-label={`${users.length} total users`}>{users.length}</p>
                 </div>
-                <Users className="h-8 w-8 text-blue-300" aria-hidden="true" />
+                <Users className="h-8 w-8 text-blue-600" aria-hidden="true" />
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+          <Card className="bg-amber-100/50  border-amber-200/60">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-purple-200 text-sm">Active Users</p>
-                  <p className="text-3xl font-bold text-white" aria-label={`${users.filter(u => u.isActive).length} active users`}>
+                  <p className="text-3xl font-bold text-amber-950" aria-label={`${users.filter(u => u.isActive).length} active users`}>
                     {users.filter(u => u.isActive).length}
                   </p>
                 </div>
-                <CheckCircle className="h-8 w-8 text-green-300" aria-hidden="true" />
+                <CheckCircle className="h-8 w-8 text-green-600" aria-hidden="true" />
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+          <Card className="bg-amber-100/50  border-amber-200/60">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-purple-200 text-sm">Verified</p>
-                  <p className="text-3xl font-bold text-white" aria-label={`${users.filter(u => u.isVerified).length} verified users`}>
+                  <p className="text-3xl font-bold text-amber-950" aria-label={`${users.filter(u => u.isVerified).length} verified users`}>
                     {users.filter(u => u.isVerified).length}
                   </p>
                 </div>
-                <Shield className="h-8 w-8 text-purple-300" aria-hidden="true" />
+                <Shield className="h-8 w-8 text-purple-600" aria-hidden="true" />
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+          <Card className="bg-amber-100/50  border-amber-200/60">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-purple-200 text-sm">Admins</p>
-                  <p className="text-3xl font-bold text-white" aria-label={`${users.filter(u => 
+                  <p className="text-3xl font-bold text-amber-950" aria-label={`${users.filter(u => 
                       u.roles.includes('super_admin') || 
                       u.roles.includes('mayor') || 
                       u.roles.includes('dept_admin')
@@ -172,30 +172,30 @@ export default function UserManagementPage() {
                     ).length}
                   </p>
                 </div>
-                <Building2 className="h-8 w-8 text-yellow-300" />
+                <Building2 className="h-8 w-8 text-yellow-600" />
               </div>
             </CardContent>
           </Card>
         </div>
 
         {/* Filters */}
-        <Card className="bg-white/10 backdrop-blur-lg border-white/20 mb-6">
+        <Card className="bg-amber-100/50  border-amber-200/60 mb-6">
           <CardContent className="p-4">
             <div className="flex items-center space-x-4">
               <div className="flex-1 relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-purple-300" aria-hidden="true" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-purple-600" aria-hidden="true" />
                 <Input
                   placeholder="Search by name or email..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 bg-white/10 border-white/20 text-white placeholder:text-purple-300"
+                  className="pl-10 bg-amber-100/50 border-amber-200/60 text-amber-950 placeholder:text-purple-600"
                   aria-label="Search users by name or email"
                 />
               </div>
               <select
                 value={filterRole}
                 onChange={(e) => setFilterRole(e.target.value)}
-                className="bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-white"
+                className="bg-amber-100/50 border border-amber-200/60 rounded-lg px-4 py-2 text-amber-950"
                 aria-label="Filter users by role"
               >
                 <option value="all">All Roles</option>
@@ -211,9 +211,9 @@ export default function UserManagementPage() {
         </Card>
 
         {/* Loading Skeleton */}        {/* Users Table */}
-        <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+        <Card className="bg-amber-100/50  border-amber-200/60">
           <CardHeader>
-            <CardTitle className="text-white">All Users ({filteredUsers.length})</CardTitle>
+            <CardTitle className="text-amber-950">All Users ({filteredUsers.length})</CardTitle>
             <CardDescription className="text-purple-200">
               Manage user accounts, roles, and permissions
             </CardDescription>
@@ -222,7 +222,7 @@ export default function UserManagementPage() {
             {loading ? (
               <div className="space-y-3">
                 {[...Array(5)].map((_, i) => (
-                  <div key={i} className="bg-white/5 rounded-lg p-4 border border-white/10 animate-pulse">
+                  <div key={i} className="bg-white rounded-lg p-4 border border-amber-200/60 animate-pulse">
                     <div className="flex items-start justify-between">
                       <div className="flex items-start space-x-4 flex-1">
                         <div className="p-3 bg-blue-500/20 rounded-lg">
@@ -230,13 +230,13 @@ export default function UserManagementPage() {
                         </div>
                         <div className="flex-1 space-y-3">
                           <div className="flex items-center space-x-3">
-                            <div className="h-6 w-32 bg-white/20 rounded" />
+                            <div className="h-6 w-32 bg-amber-200/50 rounded" />
                             <div className="h-5 w-20 bg-purple-500/30 rounded-full" />
                             <div className="h-5 w-16 bg-green-500/30 rounded-full" />
                           </div>
                           <div className="grid grid-cols-2 gap-4">
-                            <div className="h-4 w-48 bg-white/10 rounded" />
-                            <div className="h-4 w-36 bg-white/10 rounded" />
+                            <div className="h-4 w-48 bg-amber-100/50 rounded" />
+                            <div className="h-4 w-36 bg-amber-100/50 rounded" />
                           </div>
                         </div>
                       </div>
@@ -249,7 +249,7 @@ export default function UserManagementPage() {
                 ))}
               </div>
             ) : filteredUsers.length === 0 ? (
-              <div className="text-center py-12 text-purple-300">
+              <div className="text-center py-12 text-purple-600">
                 <Users className="h-12 w-12 mx-auto mb-3 opacity-50" />
                 <p>No users found</p>
               </div>
@@ -258,16 +258,16 @@ export default function UserManagementPage() {
                 {filteredUsers.map((user) => (
                   <div 
                     key={user.id}
-                    className="bg-white/5 rounded-lg p-4 border border-white/10 hover:bg-white/10 transition-all"
+                    className="bg-white rounded-lg p-4 border border-amber-200/60 hover:bg-amber-100/50 transition-all"
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex items-start space-x-4 flex-1">
                         <div className="p-3 bg-blue-500/20 rounded-lg">
-                          <User className="h-6 w-6 text-blue-300" />
+                          <User className="h-6 w-6 text-blue-600" />
                         </div>
                         <div className="flex-1">
                           <div className="flex items-center space-x-3 mb-2">
-                            <h3 className="text-white font-semibold text-lg">{user.name}</h3>
+                            <h3 className="text-amber-950 font-semibold text-lg">{user.name}</h3>
                             {user.roles.map((role, idx) => (
                               <Badge key={idx} className={getRoleBadgeColor(role)}>
                                 {getRoleLabel(role)}
@@ -315,7 +315,7 @@ export default function UserManagementPage() {
                         <Button
                           variant="outline"
                           size="sm"
-                          className="bg-blue-600/20 border-blue-500 text-blue-300 hover:bg-blue-600/30"
+                          className="bg-blue-600/20 border-blue-500 text-blue-600 hover:bg-blue-600/30"
                           onClick={() => setEditingUser(user)}
                           aria-label={`Edit user ${user.name}`}
                         >
@@ -325,7 +325,7 @@ export default function UserManagementPage() {
                         <Button
                           variant="outline"
                           size="sm"
-                          className="bg-red-600/20 border-red-500 text-red-300 hover:bg-red-600/30"
+                          className="bg-red-600/20 border-red-500 text-red-600 hover:bg-red-600/30"
                           onClick={() => handleDeleteUser(user.id)}
                           aria-label={`Delete user ${user.name}`}
                         >
@@ -410,12 +410,12 @@ function UserFormModal({
 
   return (
     <div 
-      className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+      className="fixed inset-0 bg-black/50  flex items-center justify-center z-50 p-4"
       role="dialog"
       aria-modal="true"
       aria-labelledby="user-form-title"
     >
-      <Card className="bg-white/95 backdrop-blur-lg border-white/20 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+      <Card className="bg-white/95  border-amber-200/60 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <CardHeader>
           <CardTitle id="user-form-title" className="text-purple-900">
             {user ? 'Edit User' : 'Create New User'}

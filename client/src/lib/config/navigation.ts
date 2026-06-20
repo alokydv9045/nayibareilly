@@ -102,7 +102,7 @@ export const PUBLIC_AUTH_ACTIONS: NavItem[] = [
   {
     name: 'Register',
     nameHi: 'रजिस्टर',
-    href: '/register',
+    href: '/login',
     icon: UserPlus,
     showInMobile: true,
     priority: 5

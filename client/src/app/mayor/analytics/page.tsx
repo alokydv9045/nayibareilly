@@ -413,7 +413,7 @@ export default function MayorAnalyticsPage() {
                         <Badge variant={resolutionRate >= 80 ? 'default' : 'secondary'}>
                           {resolutionRate}%
                         </Badge>
-                        <Star className={`h-4 w-4 ${dept.satisfaction >= 4 ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`} />
+                        <Star className={`h-4 w-4 ${dept.satisfaction >= 4 ? 'fill-yellow-400 text-yellow-600' : 'text-gray-300'}`} />
                       </div>
                     </div>
                     <div className="grid grid-cols-3 gap-3 text-xs text-gray-600">

@@ -132,25 +132,25 @@ export default function SystemSettingsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-indigo-900 to-blue-900">
+    <div className="min-h-screen bg-white text-black">
       <div className="container mx-auto p-6">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <Link href="/superadmin">
-                <Button variant="outline" className="bg-white/10 text-white border-white/20 hover:bg-white/20">
+                <Button variant="outline" className="bg-amber-100/50 text-amber-950 border-amber-200/60 hover:bg-amber-200/50">
                   <ArrowLeft className="h-4 w-4 mr-2" />
                   Back
                 </Button>
               </Link>
               <div>
-                <h1 className="text-4xl font-bold text-white">System Settings</h1>
+                <h1 className="text-4xl font-bold text-amber-950">System Settings</h1>
                 <p className="text-purple-200">Configure platform-wide settings and preferences</p>
               </div>
             </div>
             <Button 
-              className="bg-green-600 hover:bg-green-700 text-white"
+              className="bg-green-600 hover:bg-green-700 text-amber-950"
               onClick={handleSave}
               disabled={loading}
             >
@@ -163,19 +163,19 @@ export default function SystemSettingsPage() {
         {/* Success Message */}
         {saveSuccess && (
           <div className="mb-6 bg-green-500/20 border border-green-500 rounded-lg p-4 flex items-center space-x-3">
-            <CheckCircle className="h-5 w-5 text-green-300" />
+            <CheckCircle className="h-5 w-5 text-green-600" />
             <p className="text-green-200">Settings saved successfully!</p>
           </div>
         )}
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Platform Settings */}
-          <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+          <Card className="bg-amber-100/50  border-amber-200/60">
             <CardHeader>
               <div className="flex items-center space-x-3">
-                <Globe className="h-6 w-6 text-blue-300" />
+                <Globe className="h-6 w-6 text-blue-600" />
                 <div>
-                  <CardTitle className="text-white">Platform Settings</CardTitle>
+                  <CardTitle className="text-amber-950">Platform Settings</CardTitle>
                   <CardDescription className="text-purple-200">
                     Basic platform configuration
                   </CardDescription>
@@ -188,7 +188,7 @@ export default function SystemSettingsPage() {
                 <Input
                   value={settings.platformName}
                   onChange={(e) => setSettings({...settings, platformName: e.target.value})}
-                  className="bg-white/10 border-white/20 text-white"
+                  className="bg-amber-100/50 border-amber-200/60 text-amber-950"
                 />
               </div>
               <div>
@@ -196,7 +196,7 @@ export default function SystemSettingsPage() {
                 <Input
                   value={settings.platformDescription}
                   onChange={(e) => setSettings({...settings, platformDescription: e.target.value})}
-                  className="bg-white/10 border-white/20 text-white"
+                  className="bg-amber-100/50 border-amber-200/60 text-amber-950"
                 />
               </div>
               <div>
@@ -204,7 +204,7 @@ export default function SystemSettingsPage() {
                 <Input
                   value={settings.platformUrl}
                   onChange={(e) => setSettings({...settings, platformUrl: e.target.value})}
-                  className="bg-white/10 border-white/20 text-white"
+                  className="bg-amber-100/50 border-amber-200/60 text-amber-950"
                 />
               </div>
               <div>
@@ -213,7 +213,7 @@ export default function SystemSettingsPage() {
                   type="email"
                   value={settings.supportEmail}
                   onChange={(e) => setSettings({...settings, supportEmail: e.target.value})}
-                  className="bg-white/10 border-white/20 text-white"
+                  className="bg-amber-100/50 border-amber-200/60 text-amber-950"
                 />
               </div>
               <div>
@@ -221,19 +221,19 @@ export default function SystemSettingsPage() {
                 <Input
                   value={settings.supportPhone}
                   onChange={(e) => setSettings({...settings, supportPhone: e.target.value})}
-                  className="bg-white/10 border-white/20 text-white"
+                  className="bg-amber-100/50 border-amber-200/60 text-amber-950"
                 />
               </div>
             </CardContent>
           </Card>
 
           {/* SLA Settings */}
-          <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+          <Card className="bg-amber-100/50  border-amber-200/60">
             <CardHeader>
               <div className="flex items-center space-x-3">
-                <Clock className="h-6 w-6 text-orange-300" />
+                <Clock className="h-6 w-6 text-orange-600" />
                 <div>
-                  <CardTitle className="text-white">SLA Configuration</CardTitle>
+                  <CardTitle className="text-amber-950">SLA Configuration</CardTitle>
                   <CardDescription className="text-purple-200">
                     Service Level Agreement timeframes
                   </CardDescription>
@@ -248,12 +248,12 @@ export default function SystemSettingsPage() {
                     type="number"
                     value={settings.slaHighPriority}
                     onChange={(e) => setSettings({...settings, slaHighPriority: Number(e.target.value)})}
-                    className="bg-white/10 border-white/20 text-white"
+                    className="bg-amber-100/50 border-amber-200/60 text-amber-950"
                   />
                   <select
                     value={settings.slaUnit}
                     onChange={(e) => setSettings({...settings, slaUnit: e.target.value as 'hours' | 'days'})}
-                    className="bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white"
+                    className="bg-amber-100/50 border border-amber-200/60 rounded-lg px-3 py-2 text-amber-950"
                   >
                     <option value="hours">Hours</option>
                     <option value="days">Days</option>
@@ -267,7 +267,7 @@ export default function SystemSettingsPage() {
                     type="number"
                     value={settings.slaMediumPriority}
                     onChange={(e) => setSettings({...settings, slaMediumPriority: Number(e.target.value)})}
-                    className="bg-white/10 border-white/20 text-white"
+                    className="bg-amber-100/50 border-amber-200/60 text-amber-950"
                   />
                   <span className="text-purple-200">{settings.slaUnit}</span>
                 </div>
@@ -279,7 +279,7 @@ export default function SystemSettingsPage() {
                     type="number"
                     value={settings.slaLowPriority}
                     onChange={(e) => setSettings({...settings, slaLowPriority: Number(e.target.value)})}
-                    className="bg-white/10 border-white/20 text-white"
+                    className="bg-amber-100/50 border-amber-200/60 text-amber-950"
                   />
                   <span className="text-purple-200">{settings.slaUnit}</span>
                 </div>
@@ -288,12 +288,12 @@ export default function SystemSettingsPage() {
           </Card>
 
           {/* Notification Settings */}
-          <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+          <Card className="bg-amber-100/50  border-amber-200/60">
             <CardHeader>
               <div className="flex items-center space-x-3">
-                <Bell className="h-6 w-6 text-yellow-300" />
+                <Bell className="h-6 w-6 text-yellow-600" />
                 <div>
-                  <CardTitle className="text-white">Notification Settings</CardTitle>
+                  <CardTitle className="text-amber-950">Notification Settings</CardTitle>
                   <CardDescription className="text-purple-200">
                     Configure notification channels and triggers
                   </CardDescription>
@@ -331,10 +331,10 @@ export default function SystemSettingsPage() {
                 </label>
               </div>
 
-              <hr className="border-white/20" />
+              <hr className="border-amber-200/60" />
 
               <div className="space-y-3">
-                <p className="text-white font-semibold text-sm">Notification Triggers</p>
+                <p className="text-amber-950 font-semibold text-sm">Notification Triggers</p>
                 <label className="flex items-center space-x-2">
                   <input
                     type="checkbox"
@@ -376,12 +376,12 @@ export default function SystemSettingsPage() {
           </Card>
 
           {/* Email Settings */}
-          <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+          <Card className="bg-amber-100/50  border-amber-200/60">
             <CardHeader>
               <div className="flex items-center space-x-3">
-                <Mail className="h-6 w-6 text-green-300" />
+                <Mail className="h-6 w-6 text-green-600" />
                 <div>
-                  <CardTitle className="text-white">Email Configuration</CardTitle>
+                  <CardTitle className="text-amber-950">Email Configuration</CardTitle>
                   <CardDescription className="text-purple-200">
                     SMTP server settings
                   </CardDescription>
@@ -394,7 +394,7 @@ export default function SystemSettingsPage() {
                 <Input
                   value={settings.smtpHost}
                   onChange={(e) => setSettings({...settings, smtpHost: e.target.value})}
-                  className="bg-white/10 border-white/20 text-white"
+                  className="bg-amber-100/50 border-amber-200/60 text-amber-950"
                   placeholder="smtp.gmail.com"
                 />
               </div>
@@ -404,7 +404,7 @@ export default function SystemSettingsPage() {
                   type="number"
                   value={settings.smtpPort}
                   onChange={(e) => setSettings({...settings, smtpPort: Number(e.target.value)})}
-                  className="bg-white/10 border-white/20 text-white"
+                  className="bg-amber-100/50 border-amber-200/60 text-amber-950"
                 />
               </div>
               <div>
@@ -412,7 +412,7 @@ export default function SystemSettingsPage() {
                 <Input
                   value={settings.smtpUsername}
                   onChange={(e) => setSettings({...settings, smtpUsername: e.target.value})}
-                  className="bg-white/10 border-white/20 text-white"
+                  className="bg-amber-100/50 border-amber-200/60 text-amber-950"
                 />
               </div>
               <div>
@@ -421,7 +421,7 @@ export default function SystemSettingsPage() {
                   type="password"
                   value={settings.smtpPassword}
                   onChange={(e) => setSettings({...settings, smtpPassword: e.target.value})}
-                  className="bg-white/10 border-white/20 text-white"
+                  className="bg-amber-100/50 border-amber-200/60 text-amber-950"
                 />
               </div>
               <div>
@@ -430,7 +430,7 @@ export default function SystemSettingsPage() {
                   type="email"
                   value={settings.emailFromAddress}
                   onChange={(e) => setSettings({...settings, emailFromAddress: e.target.value})}
-                  className="bg-white/10 border-white/20 text-white"
+                  className="bg-amber-100/50 border-amber-200/60 text-amber-950"
                 />
               </div>
               <div>
@@ -438,19 +438,19 @@ export default function SystemSettingsPage() {
                 <Input
                   value={settings.emailFromName}
                   onChange={(e) => setSettings({...settings, emailFromName: e.target.value})}
-                  className="bg-white/10 border-white/20 text-white"
+                  className="bg-amber-100/50 border-amber-200/60 text-amber-950"
                 />
               </div>
             </CardContent>
           </Card>
 
           {/* SMS Settings */}
-          <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+          <Card className="bg-amber-100/50  border-amber-200/60">
             <CardHeader>
               <div className="flex items-center space-x-3">
-                <MessageSquare className="h-6 w-6 text-blue-300" />
+                <MessageSquare className="h-6 w-6 text-blue-600" />
                 <div>
-                  <CardTitle className="text-white">SMS Configuration</CardTitle>
+                  <CardTitle className="text-amber-950">SMS Configuration</CardTitle>
                   <CardDescription className="text-purple-200">
                     SMS provider settings
                   </CardDescription>
@@ -463,7 +463,7 @@ export default function SystemSettingsPage() {
                 <select
                   value={settings.smsProvider}
                   onChange={(e) => setSettings({...settings, smsProvider: e.target.value})}
-                  className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white"
+                  className="w-full bg-amber-100/50 border border-amber-200/60 rounded-lg px-3 py-2 text-amber-950"
                 >
                   <option value="twilio">Twilio</option>
                   <option value="nexmo">Nexmo</option>
@@ -475,7 +475,7 @@ export default function SystemSettingsPage() {
                 <Input
                   value={settings.smsApiKey}
                   onChange={(e) => setSettings({...settings, smsApiKey: e.target.value})}
-                  className="bg-white/10 border-white/20 text-white"
+                  className="bg-amber-100/50 border-amber-200/60 text-amber-950"
                 />
               </div>
               <div>
@@ -484,7 +484,7 @@ export default function SystemSettingsPage() {
                   type="password"
                   value={settings.smsApiSecret}
                   onChange={(e) => setSettings({...settings, smsApiSecret: e.target.value})}
-                  className="bg-white/10 border-white/20 text-white"
+                  className="bg-amber-100/50 border-amber-200/60 text-amber-950"
                 />
               </div>
               <div>
@@ -492,7 +492,7 @@ export default function SystemSettingsPage() {
                 <Input
                   value={settings.smsSenderName}
                   onChange={(e) => setSettings({...settings, smsSenderName: e.target.value})}
-                  className="bg-white/10 border-white/20 text-white"
+                  className="bg-amber-100/50 border-amber-200/60 text-amber-950"
                   maxLength={11}
                 />
               </div>
@@ -500,12 +500,12 @@ export default function SystemSettingsPage() {
           </Card>
 
           {/* Security Settings */}
-          <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+          <Card className="bg-amber-100/50  border-amber-200/60">
             <CardHeader>
               <div className="flex items-center space-x-3">
-                <Shield className="h-6 w-6 text-purple-300" />
+                <Shield className="h-6 w-6 text-purple-600" />
                 <div>
-                  <CardTitle className="text-white">Security Settings</CardTitle>
+                  <CardTitle className="text-amber-950">Security Settings</CardTitle>
                   <CardDescription className="text-purple-200">
                     Authentication and security configuration
                   </CardDescription>
@@ -519,7 +519,7 @@ export default function SystemSettingsPage() {
                   type="number"
                   value={settings.sessionTimeout}
                   onChange={(e) => setSettings({...settings, sessionTimeout: Number(e.target.value)})}
-                  className="bg-white/10 border-white/20 text-white"
+                  className="bg-amber-100/50 border-amber-200/60 text-amber-950"
                 />
               </div>
               <div>
@@ -528,7 +528,7 @@ export default function SystemSettingsPage() {
                   type="number"
                   value={settings.maxLoginAttempts}
                   onChange={(e) => setSettings({...settings, maxLoginAttempts: Number(e.target.value)})}
-                  className="bg-white/10 border-white/20 text-white"
+                  className="bg-amber-100/50 border-amber-200/60 text-amber-950"
                 />
               </div>
               <div>
@@ -537,7 +537,7 @@ export default function SystemSettingsPage() {
                   type="number"
                   value={settings.passwordMinLength}
                   onChange={(e) => setSettings({...settings, passwordMinLength: Number(e.target.value)})}
-                  className="bg-white/10 border-white/20 text-white"
+                  className="bg-amber-100/50 border-amber-200/60 text-amber-950"
                 />
               </div>
               <div className="space-y-3">
@@ -573,12 +573,12 @@ export default function SystemSettingsPage() {
           </Card>
 
           {/* Database Settings */}
-          <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+          <Card className="bg-amber-100/50  border-amber-200/60">
             <CardHeader>
               <div className="flex items-center space-x-3">
-                <Database className="h-6 w-6 text-indigo-300" />
+                <Database className="h-6 w-6 text-indigo-600" />
                 <div>
-                  <CardTitle className="text-white">Database Settings</CardTitle>
+                  <CardTitle className="text-amber-950">Database Settings</CardTitle>
                   <CardDescription className="text-purple-200">
                     Backup and maintenance configuration
                   </CardDescription>
@@ -600,7 +600,7 @@ export default function SystemSettingsPage() {
                 <select
                   value={settings.backupFrequency}
                   onChange={(e) => setSettings({...settings, backupFrequency: e.target.value})}
-                  className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white"
+                  className="w-full bg-amber-100/50 border border-amber-200/60 rounded-lg px-3 py-2 text-amber-950"
                   disabled={!settings.autoBackupEnabled}
                 >
                   <option value="hourly">Hourly</option>
@@ -614,7 +614,7 @@ export default function SystemSettingsPage() {
                   type="number"
                   value={settings.retentionDays}
                   onChange={(e) => setSettings({...settings, retentionDays: Number(e.target.value)})}
-                  className="bg-white/10 border-white/20 text-white"
+                  className="bg-amber-100/50 border-amber-200/60 text-amber-950"
                   disabled={!settings.autoBackupEnabled}
                 />
               </div>
@@ -625,7 +625,7 @@ export default function SystemSettingsPage() {
         {/* Save Button (Bottom) */}
         <div className="mt-8 flex justify-center">
           <Button 
-            className="bg-green-600 hover:bg-green-700 text-white px-12 py-6 text-lg"
+            className="bg-green-600 hover:bg-green-700 text-amber-950 px-12 py-6 text-lg"
             onClick={handleSave}
             disabled={loading}
           >

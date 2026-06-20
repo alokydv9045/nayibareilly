@@ -383,7 +383,7 @@ export const fileUploadRateLimit = rateLimit({
  */
 export const adminRateLimit = rateLimit({
   windowMs: 5 * 60 * 1000, // 5 minutes
-  max: 50, // Reasonable limit for admin operations
+  max: 300, // Increased limit for admin dashboard (accommodates polling and rapid navigation)
   message: {
     success: false,
     message: 'Too many admin operations. Please slow down.',

@@ -299,7 +299,7 @@ export function SimpleLayout({
                   <Link href="/login">Login</Link>
                 </Button>
                 <Button asChild>
-                  <Link href="/register">Sign Up</Link>
+                  <Link href="/login">Sign Up</Link>
                 </Button>
               </div>
             </div>

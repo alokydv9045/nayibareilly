@@ -36,7 +36,7 @@ router.get('/:id', getDepartment);
  * Create new department
  */
 router.post('/', [
-  auth(['SUPER_ADMIN', 'ADMIN']),
+  auth(['SUPER_ADMIN', 'DEPT_ADMIN', 'MAYOR']),
   body('name').isString().trim().isLength({ min: 2, max: 100 }),
   body('description').optional().isString(),
   body('contactEmail').optional().isEmail(),
@@ -48,7 +48,7 @@ router.post('/', [
  * Update department
  */
 router.patch('/:id', [
-  auth(['SUPER_ADMIN', 'ADMIN']),
+  auth(['SUPER_ADMIN', 'DEPT_ADMIN', 'MAYOR']),
   body('name').optional().isString().trim().isLength({ min: 2, max: 100 }),
   body('description').optional().isString(),
   body('contactEmail').optional().isEmail(),
@@ -82,7 +82,7 @@ router.get('/:id/issues', [
  * Get department staff
  */
 router.get('/:id/staff', [
-  auth(['SUPER_ADMIN', 'ADMIN', 'MODERATOR'])
+  auth(['SUPER_ADMIN', 'DEPT_ADMIN', 'MAYOR', 'MODERATOR'])
 ], getDepartmentStaff);
 
 /**
@@ -90,7 +90,7 @@ router.get('/:id/staff', [
  * Assign issue to staff member
  */
 router.post('/:id/assign', [
-  auth(['SUPER_ADMIN', 'ADMIN', 'MODERATOR']),
+  auth(['SUPER_ADMIN', 'DEPT_ADMIN', 'MAYOR', 'MODERATOR']),
   body('issueId').isString().notEmpty(),
   body('staffId').isString().notEmpty()
 ], assignIssueToStaff);

@@ -237,8 +237,9 @@ export const SYSTEM_CONFIG = {
 export const USER_ROLES = {
   CITIZEN: 'citizen',
   MODERATOR: 'moderator',
-  DEPARTMENT_ADMIN: 'department_admin',
+  DEPARTMENT_ADMIN: 'dept_admin',
   STAFF: 'staff',
+  MAYOR: 'mayor',
   SUPER_ADMIN: 'super_admin',
 }
 

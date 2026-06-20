@@ -23,6 +23,12 @@ export type PublicReport = {
   reportId: string
   title: string
   description?: string
+  category?: {
+    id: string
+    name: string
+    icon?: string
+    color?: string
+  }
   categoryName?: string
   status: 'open' | 'in_progress' | 'resolved' | 'closed'
   priority?: 'low' | 'medium' | 'high' | 'critical'
@@ -47,6 +53,23 @@ export type PublicReport = {
     id: string
     name: string
   }
+  timeline?: Array<{
+    status: string
+    createdAt: string
+    note?: string
+    performedById?: string
+  }>
+  comments?: Array<{
+    id: string
+    content: string
+    createdAt: string
+    user?: {
+      id: string
+      name: string
+      roles: string[]
+      avatarUrl?: string
+    }
+  }>
 }
 
 export type PublicReportsParams = {

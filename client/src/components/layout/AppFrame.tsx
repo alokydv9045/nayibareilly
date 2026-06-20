@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 import { ReactNode } from 'react'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
@@ -48,18 +48,14 @@ export default function AppFrame({ children }: { children: ReactNode }) {
   }, [queryClient])
 
   return (
-    <div data-theme={theme} className="min-h-screen">
+    <div data-theme={theme} className="min-h-screen bg-blue-50">
       <QueryClientProvider client={queryClient}>
         {!isAdminRoute && <Navbar />}
         <NotificationProvider>
           {!isAdminRoute && <CitizenRealtimeBridge />}
           <ErrorHandler>
             <main id="main-content" aria-label="Main content" className="min-h-screen">
-              {!isAdminRoute && (
-                <div className="fixed top-3 right-4 z-40">
-                  <NotificationBell />
-                </div>
-              )}
+
               {children}
             </main>
             {!isAdminRoute && <MobileBottomNav />}

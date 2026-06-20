@@ -112,25 +112,25 @@ export interface UpdateDepartmentInput {
 
 // API Functions
 const fetchUsers = async (): Promise<SuperadminUser[]> => {
-  const { data } = await api.request<SuperadminUser[]>({
+  const { data } = await api.request<any>({
     method: 'GET',
-    url: '/api/v1/admin/superadmin/users',
+    url: '/admin/users',
   })
-  return data
+  return data?.data?.users || data?.users || []
 }
 
 const fetchDepartments = async (): Promise<SuperadminDepartment[]> => {
-  const { data } = await api.request<SuperadminDepartment[]>({
+  const { data } = await api.request<any>({
     method: 'GET',
-    url: '/api/v1/admin/superadmin/departments',
+    url: '/departments',
   })
-  return data
+  return data?.data?.items || data?.items || []
 }
 
 const fetchSettings = async (): Promise<SuperadminSettings> => {
   const { data } = await api.request<SuperadminSettings>({
     method: 'GET',
-    url: '/api/v1/admin/superadmin/settings',
+    url: '/admin/system-stats', // mock fallback, no settings endpoint currently exists
   })
   return data
 }
@@ -138,7 +138,7 @@ const fetchSettings = async (): Promise<SuperadminSettings> => {
 const createUser = async (data: CreateUserInput): Promise<SuperadminUser> => {
   const res = await api.request<SuperadminUser>({
     method: 'POST',
-    url: '/api/v1/admin/superadmin/users',
+    url: '/admin/users',
     data,
   })
   return res.data
@@ -147,7 +147,7 @@ const createUser = async (data: CreateUserInput): Promise<SuperadminUser> => {
 const updateUser = async ({ id, data }: { id: string; data: UpdateUserInput }): Promise<SuperadminUser> => {
   const res = await api.request<SuperadminUser>({
     method: 'PUT',
-    url: `/api/v1/admin/superadmin/users/${id}`,
+    url: `/admin/users/${id}`,
     data,
   })
   return res.data
@@ -156,7 +156,7 @@ const updateUser = async ({ id, data }: { id: string; data: UpdateUserInput }): 
 const deleteUser = async (id: string): Promise<void> => {
   await api.request<void>({
     method: 'DELETE',
-    url: `/api/v1/admin/superadmin/users/${id}`,
+    url: `/admin/users/${id}`,
   })
   return
 }
@@ -164,7 +164,7 @@ const deleteUser = async (id: string): Promise<void> => {
 const createDepartment = async (data: CreateDepartmentInput): Promise<SuperadminDepartment> => {
   const res = await api.request<SuperadminDepartment>({
     method: 'POST',
-    url: '/api/v1/admin/superadmin/departments',
+    url: '/departments',
     data,
   })
   return res.data
@@ -173,7 +173,7 @@ const createDepartment = async (data: CreateDepartmentInput): Promise<Superadmin
 const updateDepartment = async ({ id, data }: { id: string; data: UpdateDepartmentInput }): Promise<SuperadminDepartment> => {
   const res = await api.request<SuperadminDepartment>({
     method: 'PUT',
-    url: `/api/v1/admin/superadmin/departments/${id}`,
+    url: `/departments/${id}`,
     data,
   })
   return res.data
@@ -182,7 +182,7 @@ const updateDepartment = async ({ id, data }: { id: string; data: UpdateDepartme
 const deleteDepartment = async (id: string): Promise<void> => {
   await api.request<void>({
     method: 'DELETE',
-    url: `/api/v1/admin/superadmin/departments/${id}`,
+    url: `/departments/${id}`,
   })
   return
 }
@@ -190,7 +190,7 @@ const deleteDepartment = async (id: string): Promise<void> => {
 const updateSettings = async (data: Partial<SuperadminSettings>): Promise<SuperadminSettings> => {
   const res = await api.request<SuperadminSettings>({
     method: 'PUT',
-    url: '/api/v1/admin/superadmin/settings',
+    url: '/admin/system-stats',
     data,
   })
   return res.data

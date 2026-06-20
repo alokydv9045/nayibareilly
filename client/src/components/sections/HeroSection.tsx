@@ -36,7 +36,7 @@ export default function HeroSection() {
   }, [mayorContent.length])
 
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-green-50/30 overflow-hidden">
+    <section className="relative min-h-screen bg-gradient-to-br from-blue-50 via-sky-50 to-blue-100/50 overflow-hidden">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-0 right-0 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl animate-pulse" />

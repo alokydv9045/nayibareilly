@@ -85,11 +85,11 @@ export default function WaterDepartmentPage() {
   // Water-specific priority colors
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'CRITICAL': return 'bg-red-600 text-white'
-      case 'HIGH': return 'bg-orange-500 text-white'
-      case 'MEDIUM': return 'bg-blue-500 text-white'
-      case 'LOW': return 'bg-green-500 text-white'
-      default: return 'bg-gray-500 text-white'
+      case 'CRITICAL': return 'bg-red-600 text-amber-950'
+      case 'HIGH': return 'bg-orange-500 text-amber-950'
+      case 'MEDIUM': return 'bg-blue-500 text-amber-950'
+      case 'LOW': return 'bg-green-500 text-amber-950'
+      default: return 'bg-gray-500 text-amber-950'
     }
   }
 
@@ -105,7 +105,7 @@ export default function WaterDepartmentPage() {
   if (!user) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-900 via-cyan-900 to-blue-900 flex items-center justify-center">
-        <div className="text-white">Loading...</div>
+        <div className="text-amber-950">Loading...</div>
       </div>
     )
   }
@@ -116,65 +116,65 @@ export default function WaterDepartmentPage() {
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center space-x-3 mb-4">
-            <div className="p-3 bg-blue-600/20 rounded-xl border border-blue-500/30">
-              <Droplets className="h-8 w-8 text-blue-400" />
+            <div className="p-3 bg-blue-600/20 rounded-xl border border-blue-200">
+              <Droplets className="h-8 w-8 text-blue-600" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-white">Water Supply & Utilities</h1>
+              <h1 className="text-3xl font-bold text-amber-950">Water Supply & Utilities</h1>
               <p className="text-blue-200">Water Supply, Sewerage, Drainage & Utility Management</p>
             </div>
           </div>
           
           {/* Quick Stats */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-            <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+            <Card className="bg-amber-100/50  border-amber-200/60">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-blue-200 text-sm">Water Connections</p>
-                    <p className="text-2xl font-bold text-white">{stats?.totalIssues || 0}</p>
-                    <p className="text-xs text-blue-400">Active</p>
+                    <p className="text-2xl font-bold text-amber-950">{stats?.totalIssues || 0}</p>
+                    <p className="text-xs text-blue-600">Active</p>
                   </div>
-                  <Droplets className="h-8 w-8 text-blue-400" />
+                  <Droplets className="h-8 w-8 text-blue-600" />
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+            <Card className="bg-amber-100/50  border-amber-200/60">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-cyan-200 text-sm">Under Repair</p>
-                    <p className="text-2xl font-bold text-white">{stats?.inProgressIssues || 0}</p>
-                    <p className="text-xs text-cyan-400">Active Repairs</p>
+                    <p className="text-2xl font-bold text-amber-950">{stats?.inProgressIssues || 0}</p>
+                    <p className="text-xs text-cyan-600">Active Repairs</p>
                   </div>
-                  <RefreshCw className="h-8 w-8 text-cyan-400" />
+                  <RefreshCw className="h-8 w-8 text-cyan-600" />
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+            <Card className="bg-amber-100/50  border-amber-200/60">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-green-200 text-sm">Fixed Today</p>
-                    <p className="text-2xl font-bold text-white">{stats?.resolvedToday || 0}</p>
-                    <p className="text-xs text-green-400">Repairs</p>
+                    <p className="text-2xl font-bold text-amber-950">{stats?.resolvedToday || 0}</p>
+                    <p className="text-xs text-green-600">Repairs</p>
                   </div>
-                  <CheckCircle className="h-8 w-8 text-green-400" />
+                  <CheckCircle className="h-8 w-8 text-green-600" />
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+            <Card className="bg-amber-100/50  border-amber-200/60">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-yellow-200 text-sm">Water Staff</p>
-                    <p className="text-2xl font-bold text-white">{waterStaff.length}</p>
-                    <p className="text-xs text-yellow-400">Technicians</p>
+                    <p className="text-2xl font-bold text-amber-950">{waterStaff.length}</p>
+                    <p className="text-xs text-yellow-600">Technicians</p>
                   </div>
-                  <Users className="h-8 w-8 text-yellow-400" />
+                  <Users className="h-8 w-8 text-yellow-600" />
                 </div>
               </CardContent>
             </Card>
@@ -183,7 +183,7 @@ export default function WaterDepartmentPage() {
 
         {/* Main Content */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="bg-white/10 border border-white/20">
+          <TabsList className="bg-amber-100/50 border border-amber-200/60">
             <TabsTrigger value="dashboard" className="data-[state=active]:bg-blue-600/30">
               Dashboard
             </TabsTrigger>
@@ -205,10 +205,10 @@ export default function WaterDepartmentPage() {
           <TabsContent value="dashboard" className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Issue Distribution */}
-              <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+              <Card className="bg-amber-100/50  border-amber-200/60">
                 <CardHeader>
-                  <CardTitle className="text-white flex items-center space-x-2">
-                    <Activity className="h-5 w-5 text-blue-400" />
+                  <CardTitle className="text-amber-950 flex items-center space-x-2">
+                    <Activity className="h-5 w-5 text-blue-600" />
                     <span>Water Issue Distribution</span>
                   </CardTitle>
                 </CardHeader>
@@ -223,9 +223,9 @@ export default function WaterDepartmentPage() {
                       <div key={index} className="flex items-center justify-between">
                         <div className="flex items-center space-x-3">
                           <div className={`w-3 h-3 rounded-full ${item.color}`}></div>
-                          <span className="text-white text-sm">{item.type}</span>
+                          <span className="text-amber-950 text-sm">{item.type}</span>
                         </div>
-                        <Badge className="bg-white/20 text-white">{item.count}</Badge>
+                        <Badge className="bg-amber-200/50 text-amber-950">{item.count}</Badge>
                       </div>
                     ))}
                   </div>
@@ -233,24 +233,24 @@ export default function WaterDepartmentPage() {
               </Card>
 
               {/* Staff Workload */}
-              <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+              <Card className="bg-amber-100/50  border-amber-200/60">
                 <CardHeader>
-                  <CardTitle className="text-white flex items-center space-x-2">
-                    <Users className="h-5 w-5 text-blue-400" />
+                  <CardTitle className="text-amber-950 flex items-center space-x-2">
+                    <Users className="h-5 w-5 text-blue-600" />
                     <span>Technician Workload</span>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
                     {waterStaff.slice(0, 5).map((staff) => (
-                      <div key={staff.id} className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
+                      <div key={staff.id} className="flex items-center justify-between p-3 bg-white rounded-lg">
                         <div className="flex items-center space-x-3">
                           <div className="w-8 h-8 bg-blue-600/30 rounded-full flex items-center justify-center">
-                            <Droplets className="h-4 w-4 text-blue-300" />
+                            <Droplets className="h-4 w-4 text-blue-600" />
                           </div>
                           <div>
-                            <p className="text-white text-sm font-medium">{staff.name}</p>
-                            <p className="text-blue-300 text-xs">Water Technician</p>
+                            <p className="text-amber-950 text-sm font-medium">{staff.name}</p>
+                            <p className="text-blue-600 text-xs">Water Technician</p>
                           </div>
                         </div>
                         <div className="flex items-center space-x-2">
@@ -258,7 +258,7 @@ export default function WaterDepartmentPage() {
                             ${staff.workloadStatus === 'available' ? 'bg-green-600' : 
                               staff.workloadStatus === 'light' ? 'bg-yellow-600' : 
                               staff.workloadStatus === 'moderate' ? 'bg-orange-600' : 'bg-red-600'}
-                            text-white text-xs
+                            text-amber-950 text-xs
                           `}>
                             {staff.activeIssues} repairs
                           </Badge>
@@ -270,25 +270,25 @@ export default function WaterDepartmentPage() {
               </Card>
 
               {/* Water Quality Monitoring */}
-              <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+              <Card className="bg-amber-100/50  border-amber-200/60">
                 <CardHeader>
-                  <CardTitle className="text-white flex items-center space-x-2">
-                    <Gauge className="h-5 w-5 text-blue-400" />
+                  <CardTitle className="text-amber-950 flex items-center space-x-2">
+                    <Gauge className="h-5 w-5 text-blue-600" />
                     <span>Water Quality Metrics</span>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
                     {[
-                      { metric: 'pH Level', value: '7.2', status: 'Good', color: 'text-green-400' },
-                      { metric: 'Chlorine (mg/L)', value: '0.8', status: 'Normal', color: 'text-blue-400' },
-                      { metric: 'Turbidity (NTU)', value: '0.5', status: 'Excellent', color: 'text-green-400' },
-                      { metric: 'TDS (mg/L)', value: '180', status: 'Good', color: 'text-green-400' }
+                      { metric: 'pH Level', value: '7.2', status: 'Good', color: 'text-green-600' },
+                      { metric: 'Chlorine (mg/L)', value: '0.8', status: 'Normal', color: 'text-blue-600' },
+                      { metric: 'Turbidity (NTU)', value: '0.5', status: 'Excellent', color: 'text-green-600' },
+                      { metric: 'TDS (mg/L)', value: '180', status: 'Good', color: 'text-green-600' }
                     ].map((item, index) => (
-                      <div key={index} className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
+                      <div key={index} className="flex items-center justify-between p-3 bg-white rounded-lg">
                         <div>
-                          <p className="text-white text-sm font-medium">{item.metric}</p>
-                          <p className="text-blue-300 text-xs">{item.status}</p>
+                          <p className="text-amber-950 text-sm font-medium">{item.metric}</p>
+                          <p className="text-blue-600 text-xs">{item.status}</p>
                         </div>
                         <div className="text-right">
                           <p className={`text-lg font-bold ${item.color}`}>{item.value}</p>
@@ -300,10 +300,10 @@ export default function WaterDepartmentPage() {
               </Card>
 
               {/* Emergency Alerts */}
-              <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+              <Card className="bg-amber-100/50  border-amber-200/60">
                 <CardHeader>
-                  <CardTitle className="text-white flex items-center space-x-2">
-                    <AlertTriangle className="h-5 w-5 text-red-400" />
+                  <CardTitle className="text-amber-950 flex items-center space-x-2">
+                    <AlertTriangle className="h-5 w-5 text-red-600" />
                     <span>Emergency Alerts</span>
                   </CardTitle>
                 </CardHeader>
@@ -314,14 +314,14 @@ export default function WaterDepartmentPage() {
                       { area: 'Civil Lines', issue: 'Low water pressure', priority: 'HIGH', time: '1 hour ago' },
                       { area: 'Railway Colony', issue: 'Sewage overflow', priority: 'HIGH', time: '2 hours ago' }
                     ].map((alert, index) => (
-                      <div key={index} className="p-3 bg-red-600/20 border border-red-500/30 rounded-lg">
+                      <div key={index} className="p-3 bg-red-600/20 border border-red-200 rounded-lg">
                         <div className="flex items-center justify-between mb-2">
                           <Badge className={getPriorityColor(alert.priority)}>
                             {alert.priority}
                           </Badge>
-                          <span className="text-red-300 text-xs">{alert.time}</span>
+                          <span className="text-red-600 text-xs">{alert.time}</span>
                         </div>
-                        <p className="text-white text-sm font-medium">{alert.area}</p>
+                        <p className="text-amber-950 text-sm font-medium">{alert.area}</p>
                         <p className="text-red-200 text-xs">{alert.issue}</p>
                       </div>
                     ))}
@@ -338,7 +338,7 @@ export default function WaterDepartmentPage() {
                 placeholder="Search water issues..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="max-w-md bg-white/10 border-white/20 text-white placeholder:text-blue-300"
+                className="max-w-md bg-amber-100/50 border-amber-200/60 text-amber-950 placeholder:text-blue-600"
               />
               <Badge className="bg-blue-600/30 text-blue-200">
                 {filteredWaterIssues.length} New Water Issues
@@ -347,24 +347,24 @@ export default function WaterDepartmentPage() {
 
             <div className="grid gap-4">
               {loadingWaterIssues ? (
-                <div className="text-center text-white py-8">Loading water issues...</div>
+                <div className="text-center text-amber-950 py-8">Loading water issues...</div>
               ) : filteredWaterIssues.length === 0 ? (
-                <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+                <Card className="bg-amber-100/50  border-amber-200/60">
                   <CardContent className="p-8 text-center">
-                    <Droplets className="h-12 w-12 text-blue-400 mx-auto mb-4" />
-                    <p className="text-white">No new water issues found</p>
-                    <p className="text-blue-300 text-sm">All issues are assigned or resolved</p>
+                    <Droplets className="h-12 w-12 text-blue-600 mx-auto mb-4" />
+                    <p className="text-amber-950">No new water issues found</p>
+                    <p className="text-blue-600 text-sm">All issues are assigned or resolved</p>
                   </CardContent>
                 </Card>
               ) : (
                 filteredWaterIssues.map((issue) => (
-                  <Card key={issue.id} className="bg-white/10 backdrop-blur-lg border-white/20 hover:bg-white/15 transition-all">
+                  <Card key={issue.id} className="bg-amber-100/50  border-amber-200/60 hover:bg-white/15 transition-all">
                     <CardContent className="p-6">
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
                           <div className="flex items-center space-x-3 mb-3">
                             {getIssueIcon(issue.category.name)}
-                            <h3 className="text-white font-semibold">{issue.title}</h3>
+                            <h3 className="text-amber-950 font-semibold">{issue.title}</h3>
                             <Badge className={getPriorityColor(issue.priority)}>
                               {issue.priority}
                             </Badge>
@@ -372,7 +372,7 @@ export default function WaterDepartmentPage() {
                           
                           <p className="text-blue-200 text-sm mb-3 line-clamp-2">{issue.description}</p>
                           
-                          <div className="flex items-center space-x-4 text-sm text-blue-300">
+                          <div className="flex items-center space-x-4 text-sm text-blue-600">
                             <div className="flex items-center space-x-1">
                               <MapPin className="h-4 w-4" />
                               <span>{issue.location}</span>
@@ -392,7 +392,7 @@ export default function WaterDepartmentPage() {
                           <Button
                             variant="outline"
                             size="sm"
-                            className="bg-blue-600/20 border-blue-500 text-blue-300 hover:bg-blue-600/30"
+                            className="bg-blue-600/20 border-blue-500 text-blue-600 hover:bg-blue-600/30"
                             onClick={() => handleAssignClick(issue)}
                           >
                             <UserPlus className="h-4 w-4 mr-1" />
@@ -414,7 +414,7 @@ export default function WaterDepartmentPage() {
                 placeholder="Search active repairs..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="max-w-md bg-white/10 border-white/20 text-white placeholder:text-blue-300"
+                className="max-w-md bg-amber-100/50 border-amber-200/60 text-amber-950 placeholder:text-blue-600"
               />
               <Badge className="bg-cyan-600/30 text-cyan-200">
                 {filteredInProgress.length} Active Repairs
@@ -423,25 +423,25 @@ export default function WaterDepartmentPage() {
 
             <div className="grid gap-4">
               {loadingInProgress ? (
-                <div className="text-center text-white py-8">Loading active repairs...</div>
+                <div className="text-center text-amber-950 py-8">Loading active repairs...</div>
               ) : filteredInProgress.length === 0 ? (
-                <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+                <Card className="bg-amber-100/50  border-amber-200/60">
                   <CardContent className="p-8 text-center">
-                    <RefreshCw className="h-12 w-12 text-cyan-400 mx-auto mb-4" />
-                    <p className="text-white">No active repairs</p>
-                    <p className="text-blue-300 text-sm">All issues are either pending or completed</p>
+                    <RefreshCw className="h-12 w-12 text-cyan-600 mx-auto mb-4" />
+                    <p className="text-amber-950">No active repairs</p>
+                    <p className="text-blue-600 text-sm">All issues are either pending or completed</p>
                   </CardContent>
                 </Card>
               ) : (
                 filteredInProgress.map((issue) => (
-                  <Card key={issue.id} className="bg-white/10 backdrop-blur-lg border-white/20 hover:bg-white/15 transition-all">
+                  <Card key={issue.id} className="bg-amber-100/50  border-amber-200/60 hover:bg-white/15 transition-all">
                     <CardContent className="p-6">
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
                           <div className="flex items-center space-x-3 mb-3">
                             {getIssueIcon(issue.category.name)}
-                            <h3 className="text-white font-semibold">{issue.title}</h3>
-                            <Badge className="bg-cyan-600 text-white">IN REPAIR</Badge>
+                            <h3 className="text-amber-950 font-semibold">{issue.title}</h3>
+                            <Badge className="bg-cyan-600 text-amber-950">IN REPAIR</Badge>
                             <Badge className={getPriorityColor(issue.priority)}>
                               {issue.priority}
                             </Badge>
@@ -449,7 +449,7 @@ export default function WaterDepartmentPage() {
                           
                           <p className="text-blue-200 text-sm mb-3 line-clamp-2">{issue.description}</p>
                           
-                          <div className="grid grid-cols-2 gap-4 text-sm text-blue-300">
+                          <div className="grid grid-cols-2 gap-4 text-sm text-blue-600">
                             <div className="flex items-center space-x-1">
                               <MapPin className="h-4 w-4" />
                               <span>{issue.location}</span>
@@ -473,7 +473,7 @@ export default function WaterDepartmentPage() {
                           <Button
                             variant="outline"
                             size="sm"
-                            className="bg-green-600/20 border-green-500 text-green-300 hover:bg-green-600/30"
+                            className="bg-green-600/20 border-green-500 text-green-600 hover:bg-green-600/30"
                           >
                             <Eye className="h-4 w-4 mr-1" />
                             Track Repair
@@ -490,7 +490,7 @@ export default function WaterDepartmentPage() {
           {/* Water Staff Tab */}
           <TabsContent value="staff" className="space-y-6">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-white">Water Department Staff</h2>
+              <h2 className="text-xl font-bold text-amber-950">Water Department Staff</h2>
               <Badge className="bg-blue-600/30 text-blue-200">
                 {waterStaff.length} Technicians
               </Badge>
@@ -498,27 +498,27 @@ export default function WaterDepartmentPage() {
 
             <div className="grid gap-4">
               {loadingStaff ? (
-                <div className="text-center text-white py-8">Loading water staff...</div>
+                <div className="text-center text-amber-950 py-8">Loading water staff...</div>
               ) : waterStaff.length === 0 ? (
-                <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+                <Card className="bg-amber-100/50  border-amber-200/60">
                   <CardContent className="p-8 text-center">
-                    <Users className="h-12 w-12 text-blue-400 mx-auto mb-4" />
-                    <p className="text-white">No water staff members found</p>
+                    <Users className="h-12 w-12 text-blue-600 mx-auto mb-4" />
+                    <p className="text-amber-950">No water staff members found</p>
                   </CardContent>
                 </Card>
               ) : (
                 waterStaff.map((staff) => (
-                  <Card key={staff.id} className="bg-white/10 backdrop-blur-lg border-white/20">
+                  <Card key={staff.id} className="bg-amber-100/50  border-amber-200/60">
                     <CardContent className="p-6">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-4">
                           <div className="w-12 h-12 bg-blue-600/30 rounded-full flex items-center justify-center">
-                            <Droplets className="h-6 w-6 text-blue-300" />
+                            <Droplets className="h-6 w-6 text-blue-600" />
                           </div>
                           <div>
-                            <h3 className="text-white font-semibold">{staff.name}</h3>
-                            <p className="text-blue-300 text-sm">{staff.email}</p>
-                            <p className="text-blue-400 text-xs">
+                            <h3 className="text-amber-950 font-semibold">{staff.name}</h3>
+                            <p className="text-blue-600 text-sm">{staff.email}</p>
+                            <p className="text-blue-600 text-xs">
                               {staff.roles.includes('dept_admin') ? 'Water Supply Engineer' : 'Water Technician'}
                             </p>
                           </div>
@@ -526,12 +526,12 @@ export default function WaterDepartmentPage() {
                         
                         <div className="flex items-center space-x-3">
                           <div className="text-right">
-                            <p className="text-white text-sm font-medium">{staff.activeIssues} Active Repairs</p>
+                            <p className="text-amber-950 text-sm font-medium">{staff.activeIssues} Active Repairs</p>
                             <Badge className={`
                               ${staff.workloadStatus === 'available' ? 'bg-green-600' : 
                                 staff.workloadStatus === 'light' ? 'bg-yellow-600' : 
                                 staff.workloadStatus === 'moderate' ? 'bg-orange-600' : 'bg-red-600'}
-                              text-white text-xs
+                              text-amber-950 text-xs
                             `}>
                               {staff.workloadStatus}
                             </Badge>
@@ -548,7 +548,7 @@ export default function WaterDepartmentPage() {
           {/* Water Quality Monitoring Tab */}
           <TabsContent value="monitoring" className="space-y-6">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-white">Water Quality Monitoring</h2>
+              <h2 className="text-xl font-bold text-amber-950">Water Quality Monitoring</h2>
               <Badge className="bg-green-600/30 text-green-200">All Systems Normal</Badge>
             </div>
 
@@ -561,32 +561,32 @@ export default function WaterDepartmentPage() {
                 { station: 'South Distribution', ph: '7.4', chlorine: '0.9', status: 'Excellent', trend: 'up' },
                 { station: 'Industrial Zone Supply', ph: '6.9', chlorine: '1.0', status: 'Normal', trend: 'stable' }
               ].map((station, index) => (
-                <Card key={index} className="bg-white/10 backdrop-blur-lg border-white/20">
+                <Card key={index} className="bg-amber-100/50  border-amber-200/60">
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between mb-4">
-                      <Gauge className="h-8 w-8 text-blue-400" />
+                      <Gauge className="h-8 w-8 text-blue-600" />
                       <Badge className={`
                         ${station.status === 'Excellent' ? 'bg-green-600' : 
                           station.status === 'Good' ? 'bg-blue-600' : 'bg-yellow-600'}
-                        text-white
+                        text-amber-950
                       `}>
                         {station.status}
                       </Badge>
                     </div>
-                    <h3 className="text-white font-semibold mb-4">{station.station}</h3>
+                    <h3 className="text-amber-950 font-semibold mb-4">{station.station}</h3>
                     <div className="space-y-3">
                       <div className="flex justify-between items-center">
                         <span className="text-blue-200 text-sm">pH Level:</span>
                         <div className="flex items-center space-x-2">
-                          <span className="text-white font-medium">{station.ph}</span>
-                          <TrendingUp className={`h-4 w-4 ${station.trend === 'up' ? 'text-green-400' : station.trend === 'down' ? 'text-red-400' : 'text-gray-400'}`} />
+                          <span className="text-amber-950 font-medium">{station.ph}</span>
+                          <TrendingUp className={`h-4 w-4 ${station.trend === 'up' ? 'text-green-600' : station.trend === 'down' ? 'text-red-600' : 'text-gray-400'}`} />
                         </div>
                       </div>
                       <div className="flex justify-between items-center">
                         <span className="text-blue-200 text-sm">Chlorine:</span>
-                        <span className="text-white font-medium">{station.chlorine} mg/L</span>
+                        <span className="text-amber-950 font-medium">{station.chlorine} mg/L</span>
                       </div>
-                      <div className="w-full bg-white/10 rounded-full h-2 mt-4">
+                      <div className="w-full bg-amber-100/50 rounded-full h-2 mt-4">
                         <div className={`h-2 rounded-full ${
                           station.status === 'Excellent' ? 'bg-green-500' : 
                           station.status === 'Good' ? 'bg-blue-500' : 'bg-yellow-500'
@@ -602,10 +602,10 @@ export default function WaterDepartmentPage() {
 
         {/* Assignment Dialog */}
         <Dialog open={showAssignDialog} onOpenChange={setShowAssignDialog}>
-          <DialogContent className="bg-blue-900 border border-white/20 text-white">
+          <DialogContent className="bg-blue-900 border border-amber-200/60 text-amber-950">
             <DialogHeader>
               <DialogTitle>Assign Water Issue to Technician</DialogTitle>
-              <DialogDescription className="text-blue-300">
+              <DialogDescription className="text-blue-600">
                 Select a water technician to handle this repair
               </DialogDescription>
             </DialogHeader>
@@ -614,12 +614,12 @@ export default function WaterDepartmentPage() {
               <div>
                 <label className="text-sm font-medium mb-2 block">Select Water Technician</label>
                 <Select value={selectedStaffId} onValueChange={setSelectedStaffId}>
-                  <SelectTrigger className="bg-white/10 border-white/20">
+                  <SelectTrigger className="bg-amber-100/50 border-amber-200/60">
                     <SelectValue placeholder="Choose a technician..." />
                   </SelectTrigger>
-                  <SelectContent className="bg-blue-900 border-white/20">
+                  <SelectContent className="bg-blue-900 border-amber-200/60">
                     {waterStaff.map((staff) => (
-                      <SelectItem key={staff.id} value={staff.id} className="text-white">
+                      <SelectItem key={staff.id} value={staff.id} className="text-amber-950">
                         {staff.name} - {staff.activeIssues} active repairs ({staff.workloadStatus})
                       </SelectItem>
                     ))}
@@ -633,7 +633,7 @@ export default function WaterDepartmentPage() {
                   placeholder="Add any specific instructions for the technician..."
                   value={assignmentNote}
                   onChange={(e) => setAssignmentNote(e.target.value)}
-                  className="bg-white/10 border-white/20 text-white placeholder:text-blue-300"
+                  className="bg-amber-100/50 border-amber-200/60 text-amber-950 placeholder:text-blue-600"
                   rows={3}
                 />
               </div>
@@ -643,7 +643,7 @@ export default function WaterDepartmentPage() {
               <Button 
                 variant="outline" 
                 onClick={() => setShowAssignDialog(false)}
-                className="border-white/20 text-white"
+                className="border-amber-200/60 text-amber-950"
               >
                 Cancel
               </Button>

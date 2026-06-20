@@ -35,7 +35,7 @@ const router = Router();
  * Get admin dashboard statistics
  */
 router.get('/dashboard', [
-  auth(['SUPER_ADMIN', 'ADMIN', 'MODERATOR'])
+  auth(['SUPER_ADMIN', 'DEPT_ADMIN', 'MAYOR', 'MODERATOR'])
 ], dashboard);
 
 /**
@@ -43,7 +43,7 @@ router.get('/dashboard', [
  * Get analytics data
  */
 router.get('/analytics', [
-  auth(['SUPER_ADMIN', 'ADMIN']),
+  auth(['SUPER_ADMIN', 'DEPT_ADMIN', 'MAYOR']),
   query('period').optional().isIn(['day', 'week', 'month', 'year']),
   query('departmentId').optional().isString(),
   query('categoryId').optional().isString()
@@ -54,7 +54,7 @@ router.get('/analytics', [
  * Get aggregated issue statistics for frontend dashboard
  */
 router.get('/stats/issues', [
-  auth(['SUPER_ADMIN', 'ADMIN', 'MODERATOR', 'DEPT_ADMIN'])
+  auth(['SUPER_ADMIN', 'DEPT_ADMIN', 'MAYOR', 'MODERATOR'])
 ], async (req, res) => {
   try {
     // Use the existing analytics controller or create a simple stats response
@@ -70,7 +70,7 @@ router.get('/stats/issues', [
  * Get general dashboard statistics (alias for /stats/issues for backward compatibility)
  */
 router.get('/stats', [
-  auth(['SUPER_ADMIN', 'ADMIN', 'MODERATOR', 'DEPT_ADMIN'])
+  auth(['SUPER_ADMIN', 'DEPT_ADMIN', 'MAYOR', 'MODERATOR'])
 ], async (req, res) => {
   try {
     // Use the existing analytics controller or create a simple stats response
@@ -86,7 +86,7 @@ router.get('/stats', [
  * List all users with filters
  */
 router.get('/users', [
-  auth(['SUPER_ADMIN', 'ADMIN']),
+  auth(['SUPER_ADMIN', 'DEPT_ADMIN', 'MAYOR']),
   query('page').optional().isInt({ min: 1 }),
   query('limit').optional().isInt({ min: 1, max: 100 }),
   query('role').optional().isString(),
@@ -107,7 +107,7 @@ router.patch('/users/:userId/roles', [
  * Activate user account
  */
 router.patch('/users/:userId/activate', [
-  auth(['SUPER_ADMIN', 'ADMIN'])
+  auth(['SUPER_ADMIN', 'DEPT_ADMIN', 'MAYOR'])
 ], activateUser);
 
 /**
@@ -115,7 +115,7 @@ router.patch('/users/:userId/activate', [
  * Deactivate user account
  */
 router.patch('/users/:userId/deactivate', [
-  auth(['SUPER_ADMIN', 'ADMIN'])
+  auth(['SUPER_ADMIN', 'DEPT_ADMIN', 'MAYOR'])
 ], deactivateUser);
 
 /**
@@ -123,7 +123,7 @@ router.patch('/users/:userId/deactivate', [
  * Get activity logs
  */
 router.get('/activity-logs', [
-  auth(['SUPER_ADMIN', 'ADMIN']),
+  auth(['SUPER_ADMIN', 'DEPT_ADMIN', 'MAYOR']),
   query('userId').optional().isString(),
   query('issueId').optional().isString(),
   query('page').optional().isInt({ min: 1 }),
@@ -151,7 +151,7 @@ router.get('/categories/:id', [
  * Create new category
  */
 router.post('/categories', [
-  auth(['SUPER_ADMIN', 'ADMIN']),
+  auth(['SUPER_ADMIN', 'DEPT_ADMIN', 'MAYOR']),
   body('name').isString().trim().isLength({ min: 2, max: 100 }),
   body('description').optional().isString(),
   body('icon').optional().isString()
@@ -162,7 +162,7 @@ router.post('/categories', [
  * Update category
  */
 router.patch('/categories/:id', [
-  auth(['SUPER_ADMIN', 'ADMIN']),
+  auth(['SUPER_ADMIN', 'DEPT_ADMIN', 'MAYOR']),
   body('name').optional().isString().trim().isLength({ min: 2, max: 100 }),
   body('description').optional().isString(),
   body('icon').optional().isString()
@@ -197,7 +197,7 @@ router.get('/system-stats', [
  * Get realtime user count
  */
 router.get('/realtime-users', [
-  auth(['SUPER_ADMIN', 'ADMIN'])
+  auth(['SUPER_ADMIN', 'DEPT_ADMIN', 'MAYOR'])
 ], getRealtimeUserCount);
 
 /**
@@ -205,7 +205,7 @@ router.get('/realtime-users', [
  * Get organization statistics
  */
 router.get('/organization-stats', [
-  auth(['SUPER_ADMIN', 'ADMIN'])
+  auth(['SUPER_ADMIN', 'DEPT_ADMIN', 'MAYOR'])
 ], getOrganizationStats);
 
 /**
@@ -237,7 +237,7 @@ router.get('/superadmin/moderator-performance', [
  * Get department assigned issues
  */
 router.get('/department/:departmentId/issues', [
-  auth(['SUPER_ADMIN', 'ADMIN', 'MODERATOR'])
+  auth(['SUPER_ADMIN', 'DEPT_ADMIN', 'MAYOR', 'MODERATOR'])
 ], getDepartmentAssignedIssues);
 
 /**
@@ -245,7 +245,7 @@ router.get('/department/:departmentId/issues', [
  * Get department staff
  */
 router.get('/department/:departmentId/staff', [
-  auth(['SUPER_ADMIN', 'ADMIN'])
+  auth(['SUPER_ADMIN', 'DEPT_ADMIN', 'MAYOR'])
 ], getDepartmentStaff);
 
 /**
@@ -253,7 +253,7 @@ router.get('/department/:departmentId/staff', [
  * Get department statistics
  */
 router.get('/department/:departmentId/stats', [
-  auth(['SUPER_ADMIN', 'ADMIN'])
+  auth(['SUPER_ADMIN', 'DEPT_ADMIN', 'MAYOR'])
 ], getDepartmentStats);
 
 /**
@@ -261,7 +261,7 @@ router.get('/department/:departmentId/stats', [
  * Get department realtime statistics
  */
 router.get('/department/:departmentId/realtime-stats', [
-  auth(['SUPER_ADMIN', 'ADMIN', 'MODERATOR'])
+  auth(['SUPER_ADMIN', 'DEPT_ADMIN', 'MAYOR', 'MODERATOR'])
 ], getDepartmentRealtimeStats);
 
 /**
@@ -269,7 +269,7 @@ router.get('/department/:departmentId/realtime-stats', [
  * Get moderator statistics
  */
 router.get('/moderator/stats', [
-  auth(['MODERATOR', 'ADMIN', 'SUPER_ADMIN'])
+  auth(['MODERATOR', 'DEPT_ADMIN', 'MAYOR', 'SUPER_ADMIN'])
 ], getModeratorStats);
 
 /**
@@ -277,7 +277,7 @@ router.get('/moderator/stats', [
  * Get moderator pending tasks
  */
 router.get('/moderator/pending', [
-  auth(['MODERATOR', 'ADMIN', 'SUPER_ADMIN'])
+  auth(['MODERATOR', 'DEPT_ADMIN', 'MAYOR', 'SUPER_ADMIN'])
 ], getModeratorPending);
 
 export default router;

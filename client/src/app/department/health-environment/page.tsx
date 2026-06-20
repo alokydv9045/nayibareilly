@@ -103,11 +103,11 @@ export default function EnvironmentalServicesPage() {
   // Priority colors
   const getPriorityColor = (priority: string) => {
     switch (priority) {
-      case 'CRITICAL': return 'bg-red-600 text-white'
-      case 'HIGH': return 'bg-orange-500 text-white'
+      case 'CRITICAL': return 'bg-red-600 text-amber-950'
+      case 'HIGH': return 'bg-orange-500 text-amber-950'
       case 'MEDIUM': return 'bg-yellow-500 text-black'
-      case 'LOW': return 'bg-green-500 text-white'
-      default: return 'bg-gray-500 text-white'
+      case 'LOW': return 'bg-green-500 text-amber-950'
+      default: return 'bg-gray-500 text-amber-950'
     }
   }
 
@@ -130,7 +130,7 @@ export default function EnvironmentalServicesPage() {
   if (!user) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-emerald-900 via-green-900 to-emerald-900 flex items-center justify-center">
-        <div className="text-white">Loading...</div>
+        <div className="text-amber-950">Loading...</div>
       </div>
     )
   }
@@ -141,65 +141,65 @@ export default function EnvironmentalServicesPage() {
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center space-x-3 mb-4">
-            <div className="p-3 bg-green-600/20 rounded-xl border border-green-500/30">
-              <Leaf className="h-8 w-8 text-green-400" />
+            <div className="p-3 bg-green-600/20 rounded-xl border border-green-200">
+              <Leaf className="h-8 w-8 text-green-600" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-white">Environmental Services</h1>
+              <h1 className="text-3xl font-bold text-amber-950">Environmental Services</h1>
               <p className="text-green-200">Environmental Protection, Waste Management & Sanitation</p>
             </div>
           </div>
           
           {/* Quick Stats */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-            <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+            <Card className="bg-amber-100/50  border-amber-200/60">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-green-200 text-sm">Total Issues</p>
-                    <p className="text-2xl font-bold text-white">{stats?.totalIssues || 0}</p>
-                    <p className="text-xs text-green-400">Environmental Issues</p>
+                    <p className="text-2xl font-bold text-amber-950">{stats?.totalIssues || 0}</p>
+                    <p className="text-xs text-green-600">Environmental Issues</p>
                   </div>
-                  <Leaf className="h-8 w-8 text-green-400" />
+                  <Leaf className="h-8 w-8 text-green-600" />
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+            <Card className="bg-amber-100/50  border-amber-200/60">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-blue-200 text-sm">Active Cases</p>
-                    <p className="text-2xl font-bold text-white">{stats?.inProgressIssues || 0}</p>
-                    <p className="text-xs text-blue-400">In Treatment</p>
+                    <p className="text-2xl font-bold text-amber-950">{stats?.inProgressIssues || 0}</p>
+                    <p className="text-xs text-blue-600">In Treatment</p>
                   </div>
-                  <Activity className="h-8 w-8 text-blue-400" />
+                  <Activity className="h-8 w-8 text-blue-600" />
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+            <Card className="bg-amber-100/50  border-amber-200/60">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-emerald-200 text-sm">Resolved Today</p>
-                    <p className="text-2xl font-bold text-white">{stats?.resolvedToday || 0}</p>
-                    <p className="text-xs text-emerald-400">Completed</p>
+                    <p className="text-2xl font-bold text-amber-950">{stats?.resolvedToday || 0}</p>
+                    <p className="text-xs text-emerald-600">Completed</p>
                   </div>
-                  <CheckCircle className="h-8 w-8 text-emerald-400" />
+                  <CheckCircle className="h-8 w-8 text-emerald-600" />
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+            <Card className="bg-amber-100/50  border-amber-200/60">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-yellow-200 text-sm">Staff Members</p>
-                    <p className="text-2xl font-bold text-white">{healthEnvStaff.length}</p>
-                    <p className="text-xs text-yellow-400">Medical & Environmental</p>
+                    <p className="text-2xl font-bold text-amber-950">{healthEnvStaff.length}</p>
+                    <p className="text-xs text-yellow-600">Medical & Environmental</p>
                   </div>
-                  <Users className="h-8 w-8 text-yellow-400" />
+                  <Users className="h-8 w-8 text-yellow-600" />
                 </div>
               </CardContent>
             </Card>
@@ -208,7 +208,7 @@ export default function EnvironmentalServicesPage() {
 
         {/* Main Content */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="bg-white/10 border border-white/20">
+          <TabsList className="bg-amber-100/50 border border-amber-200/60">
             <TabsTrigger value="dashboard" className="data-[state=active]:bg-green-600/30">
               Dashboard
             </TabsTrigger>
@@ -230,10 +230,10 @@ export default function EnvironmentalServicesPage() {
           <TabsContent value="dashboard" className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Issue Distribution */}
-              <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+              <Card className="bg-amber-100/50  border-amber-200/60">
                 <CardHeader>
-                  <CardTitle className="text-white flex items-center space-x-2">
-                    <BarChart3 className="h-5 w-5 text-green-400" />
+                  <CardTitle className="text-amber-950 flex items-center space-x-2">
+                    <BarChart3 className="h-5 w-5 text-green-600" />
                     <span>Health & Environment Categories</span>
                   </CardTitle>
                 </CardHeader>
@@ -245,12 +245,12 @@ export default function EnvironmentalServicesPage() {
                       { type: 'Environmental Protection', count: 8, color: 'bg-green-500', icon: Leaf },
                       { type: 'Pollution Control', count: 6, color: 'bg-orange-500', icon: Activity }
                     ].map((item, index) => (
-                      <div key={index} className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
+                      <div key={index} className="flex items-center justify-between p-3 bg-white rounded-lg">
                         <div className="flex items-center space-x-3">
-                          <item.icon className="h-5 w-5 text-green-300" />
-                          <span className="text-white text-sm">{item.type}</span>
+                          <item.icon className="h-5 w-5 text-green-600" />
+                          <span className="text-amber-950 text-sm">{item.type}</span>
                         </div>
-                        <Badge className="bg-white/20 text-white">{item.count}</Badge>
+                        <Badge className="bg-amber-200/50 text-amber-950">{item.count}</Badge>
                       </div>
                     ))}
                   </div>
@@ -258,25 +258,25 @@ export default function EnvironmentalServicesPage() {
               </Card>
 
               {/* Environmental Metrics */}
-              <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+              <Card className="bg-amber-100/50  border-amber-200/60">
                 <CardHeader>
-                  <CardTitle className="text-white flex items-center space-x-2">
-                    <TrendingUp className="h-5 w-5 text-green-400" />
+                  <CardTitle className="text-amber-950 flex items-center space-x-2">
+                    <TrendingUp className="h-5 w-5 text-green-600" />
                     <span>Environmental Metrics</span>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
                     {[
-                      { metric: 'Air Quality Index', value: '42', status: 'Good', color: 'text-green-400' },
-                      { metric: 'Waste Collection Rate', value: '94%', status: 'Excellent', color: 'text-green-400' },
-                      { metric: 'Water Quality Score', value: '87%', status: 'Good', color: 'text-blue-400' },
-                      { metric: 'Green Cover', value: '68%', status: 'Satisfactory', color: 'text-yellow-400' }
+                      { metric: 'Air Quality Index', value: '42', status: 'Good', color: 'text-green-600' },
+                      { metric: 'Waste Collection Rate', value: '94%', status: 'Excellent', color: 'text-green-600' },
+                      { metric: 'Water Quality Score', value: '87%', status: 'Good', color: 'text-blue-600' },
+                      { metric: 'Green Cover', value: '68%', status: 'Satisfactory', color: 'text-yellow-600' }
                     ].map((item, index) => (
-                      <div key={index} className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
+                      <div key={index} className="flex items-center justify-between p-3 bg-white rounded-lg">
                         <div>
-                          <p className="text-white text-sm font-medium">{item.metric}</p>
-                          <p className="text-green-300 text-xs">{item.status}</p>
+                          <p className="text-amber-950 text-sm font-medium">{item.metric}</p>
+                          <p className="text-green-600 text-xs">{item.status}</p>
                         </div>
                         <div className="text-right">
                           <p className={`text-lg font-bold ${item.color}`}>{item.value}</p>
@@ -288,10 +288,10 @@ export default function EnvironmentalServicesPage() {
               </Card>
 
               {/* Environmental Statistics */}
-              <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+              <Card className="bg-amber-100/50  border-amber-200/60">
                 <CardHeader>
-                  <CardTitle className="text-white flex items-center space-x-2">
-                    <Leaf className="h-5 w-5 text-green-400" />
+                  <CardTitle className="text-amber-950 flex items-center space-x-2">
+                    <Leaf className="h-5 w-5 text-green-600" />
                     <span>Environmental Protection Overview</span>
                   </CardTitle>
                 </CardHeader>
@@ -303,12 +303,12 @@ export default function EnvironmentalServicesPage() {
                       { service: 'Disease Surveillance', active: 12, total: 15, coverage: '80%' },
                       { service: 'Immunization Programs', active: 6, total: 8, coverage: '75%' }
                     ].map((item, index) => (
-                      <div key={index} className="p-3 bg-white/5 rounded-lg">
+                      <div key={index} className="p-3 bg-white rounded-lg">
                         <div className="flex justify-between items-center mb-2">
-                          <span className="text-white text-sm font-medium">{item.service}</span>
+                          <span className="text-amber-950 text-sm font-medium">{item.service}</span>
                           <Badge className="bg-red-600/30 text-red-200">{item.coverage}</Badge>
                         </div>
-                        <div className="flex justify-between text-xs text-green-300">
+                        <div className="flex justify-between text-xs text-green-600">
                           <span>{item.active}/{item.total} Active</span>
                           <span>Coverage: {item.coverage}</span>
                         </div>
@@ -319,10 +319,10 @@ export default function EnvironmentalServicesPage() {
               </Card>
 
               {/* Waste Management Overview */}
-              <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+              <Card className="bg-amber-100/50  border-amber-200/60">
                 <CardHeader>
-                  <CardTitle className="text-white flex items-center space-x-2">
-                    <Recycle className="h-5 w-5 text-emerald-400" />
+                  <CardTitle className="text-amber-950 flex items-center space-x-2">
+                    <Recycle className="h-5 w-5 text-emerald-600" />
                     <span>Waste Management</span>
                   </CardTitle>
                 </CardHeader>
@@ -334,17 +334,17 @@ export default function EnvironmentalServicesPage() {
                       { zone: 'Zone C - Industrial', collected: '92%', scheduled: 'Daily', status: 'On Time' },
                       { zone: 'Zone D - Rural Areas', collected: '78%', scheduled: 'Alternate Days', status: 'Needs Attention' }
                     ].map((item, index) => (
-                      <div key={index} className="p-3 bg-white/5 rounded-lg">
+                      <div key={index} className="p-3 bg-white rounded-lg">
                         <div className="flex justify-between items-center mb-2">
-                          <span className="text-white text-sm font-medium">{item.zone}</span>
+                          <span className="text-amber-950 text-sm font-medium">{item.zone}</span>
                           <Badge className={`text-xs ${
                             item.status === 'On Time' ? 'bg-green-600' : 
                             item.status === 'Slight Delay' ? 'bg-yellow-600' : 'bg-red-600'
-                          } text-white`}>
+                          } text-amber-950`}>
                             {item.status}
                           </Badge>
                         </div>
-                        <div className="flex justify-between text-xs text-green-300">
+                        <div className="flex justify-between text-xs text-green-600">
                           <span>Collected: {item.collected}</span>
                           <span>{item.scheduled}</span>
                         </div>
@@ -363,15 +363,15 @@ export default function EnvironmentalServicesPage() {
                 placeholder="Search issues..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="max-w-md bg-white/10 border-white/20 text-white placeholder:text-green-300"
+                className="max-w-md bg-amber-100/50 border-amber-200/60 text-amber-950 placeholder:text-green-600"
               />
               <Select value={issueFilter} onValueChange={setIssueFilter}>
-                <SelectTrigger className="w-48 bg-white/10 border-white/20 text-white">
+                <SelectTrigger className="w-48 bg-amber-100/50 border-amber-200/60 text-amber-950">
                   <SelectValue placeholder="Filter by category" />
                 </SelectTrigger>
-                <SelectContent className="bg-slate-900 border-white/20">
-                  <SelectItem value="all" className="text-white">All Issues</SelectItem>
-                  <SelectItem value="environment" className="text-white">Environment Issues ({environmentIssues.length})</SelectItem>
+                <SelectContent className="bg-amber-50/50 border-amber-200/60">
+                  <SelectItem value="all" className="text-amber-950">All Issues</SelectItem>
+                  <SelectItem value="environment" className="text-amber-950">Environment Issues ({environmentIssues.length})</SelectItem>
                 </SelectContent>
               </Select>
               <Badge className="bg-green-600/30 text-green-200">
@@ -381,35 +381,35 @@ export default function EnvironmentalServicesPage() {
 
             <div className="grid gap-4">
               {loadingIssues ? (
-                <div className="text-center text-white py-8">Loading issues...</div>
+                <div className="text-center text-amber-950 py-8">Loading issues...</div>
               ) : filteredIssues.length === 0 ? (
-                <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+                <Card className="bg-amber-100/50  border-amber-200/60">
                   <CardContent className="p-8 text-center">
-                    <Leaf className="h-12 w-12 text-green-400 mx-auto mb-4" />
-                    <p className="text-white">No issues found</p>
-                    <p className="text-green-300 text-sm">All environmental issues are under control</p>
+                    <Leaf className="h-12 w-12 text-green-600 mx-auto mb-4" />
+                    <p className="text-amber-950">No issues found</p>
+                    <p className="text-green-600 text-sm">All environmental issues are under control</p>
                   </CardContent>
                 </Card>
               ) : (
                 filteredIssues.map((issue) => (
-                  <Card key={issue.id} className="bg-white/10 backdrop-blur-lg border-white/20 hover:bg-white/15 transition-all">
+                  <Card key={issue.id} className="bg-amber-100/50  border-amber-200/60 hover:bg-white/15 transition-all">
                     <CardContent className="p-6">
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
                           <div className="flex items-center space-x-3 mb-3">
                             {getIssueIcon(issue.category.name)}
-                            <h3 className="text-white font-semibold">{issue.title}</h3>
+                            <h3 className="text-amber-950 font-semibold">{issue.title}</h3>
                             <Badge className={getPriorityColor(issue.priority)}>
                               {issue.priority}
                             </Badge>
-                            <Badge className="text-xs bg-emerald-600 text-white">
+                            <Badge className="text-xs bg-emerald-600 text-amber-950">
                               ENVIRONMENT
                             </Badge>
                           </div>
                           
                           <p className="text-green-200 text-sm mb-3 line-clamp-2">{issue.description}</p>
                           
-                          <div className="flex items-center space-x-4 text-sm text-green-300">
+                          <div className="flex items-center space-x-4 text-sm text-green-600">
                             <div className="flex items-center space-x-1">
                               <MapPin className="h-4 w-4" />
                               <span>{issue.location}</span>
@@ -429,7 +429,7 @@ export default function EnvironmentalServicesPage() {
                           <Button
                             variant="outline"
                             size="sm"
-                            className="bg-green-600/20 border-green-500 text-green-300 hover:bg-green-600/30"
+                            className="bg-green-600/20 border-green-500 text-green-600 hover:bg-green-600/30"
                             onClick={() => handleAssignClick(issue)}
                           >
                             <UserPlus className="h-4 w-4 mr-1" />
@@ -451,7 +451,7 @@ export default function EnvironmentalServicesPage() {
                 placeholder="Search active cases..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="max-w-md bg-white/10 border-white/20 text-white placeholder:text-green-300"
+                className="max-w-md bg-amber-100/50 border-amber-200/60 text-amber-950 placeholder:text-green-600"
               />
               <Badge className="bg-blue-600/30 text-blue-200">
                 {filteredInProgress.length} Active Cases
@@ -460,25 +460,25 @@ export default function EnvironmentalServicesPage() {
 
             <div className="grid gap-4">
               {loadingInProgress ? (
-                <div className="text-center text-white py-8">Loading active cases...</div>
+                <div className="text-center text-amber-950 py-8">Loading active cases...</div>
               ) : filteredInProgress.length === 0 ? (
-                <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+                <Card className="bg-amber-100/50  border-amber-200/60">
                   <CardContent className="p-8 text-center">
-                    <Activity className="h-12 w-12 text-blue-400 mx-auto mb-4" />
-                    <p className="text-white">No active cases</p>
-                    <p className="text-green-300 text-sm">All cases are either pending or resolved</p>
+                    <Activity className="h-12 w-12 text-blue-600 mx-auto mb-4" />
+                    <p className="text-amber-950">No active cases</p>
+                    <p className="text-green-600 text-sm">All cases are either pending or resolved</p>
                   </CardContent>
                 </Card>
               ) : (
                 filteredInProgress.map((issue) => (
-                  <Card key={issue.id} className="bg-white/10 backdrop-blur-lg border-white/20 hover:bg-white/15 transition-all">
+                  <Card key={issue.id} className="bg-amber-100/50  border-amber-200/60 hover:bg-white/15 transition-all">
                     <CardContent className="p-6">
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
                           <div className="flex items-center space-x-3 mb-3">
                             {getIssueIcon(issue.category.name)}
-                            <h3 className="text-white font-semibold">{issue.title}</h3>
-                            <Badge className="bg-blue-600 text-white">IN TREATMENT</Badge>
+                            <h3 className="text-amber-950 font-semibold">{issue.title}</h3>
+                            <Badge className="bg-blue-600 text-amber-950">IN TREATMENT</Badge>
                             <Badge className={getPriorityColor(issue.priority)}>
                               {issue.priority}
                             </Badge>
@@ -486,7 +486,7 @@ export default function EnvironmentalServicesPage() {
                           
                           <p className="text-green-200 text-sm mb-3 line-clamp-2">{issue.description}</p>
                           
-                          <div className="grid grid-cols-2 gap-4 text-sm text-green-300">
+                          <div className="grid grid-cols-2 gap-4 text-sm text-green-600">
                             <div className="flex items-center space-x-1">
                               <MapPin className="h-4 w-4" />
                               <span>{issue.location}</span>
@@ -510,7 +510,7 @@ export default function EnvironmentalServicesPage() {
                           <Button
                             variant="outline"
                             size="sm"
-                            className="bg-emerald-600/20 border-emerald-500 text-emerald-300 hover:bg-emerald-600/30"
+                            className="bg-emerald-600/20 border-emerald-500 text-emerald-600 hover:bg-emerald-600/30"
                           >
                             <Eye className="h-4 w-4 mr-1" />
                             Monitor Case
@@ -527,7 +527,7 @@ export default function EnvironmentalServicesPage() {
           {/* Environmental Staff Tab */}
           <TabsContent value="env-staff" className="space-y-6">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-white">Environmental & Sanitation Staff</h2>
+              <h2 className="text-xl font-bold text-amber-950">Environmental & Sanitation Staff</h2>
               <Badge className="bg-emerald-600/30 text-emerald-200">
                 {environmentStaff.length} Environmental Personnel
               </Badge>
@@ -535,38 +535,38 @@ export default function EnvironmentalServicesPage() {
 
             <div className="grid gap-4">
               {loadingStaff ? (
-                <div className="text-center text-white py-8">Loading environmental staff...</div>
+                <div className="text-center text-amber-950 py-8">Loading environmental staff...</div>
               ) : environmentStaff.length === 0 ? (
-                <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+                <Card className="bg-amber-100/50  border-amber-200/60">
                   <CardContent className="p-8 text-center">
-                    <Leaf className="h-12 w-12 text-emerald-400 mx-auto mb-4" />
-                    <p className="text-white">No environmental staff members found</p>
+                    <Leaf className="h-12 w-12 text-emerald-600 mx-auto mb-4" />
+                    <p className="text-amber-950">No environmental staff members found</p>
                   </CardContent>
                 </Card>
               ) : (
                 environmentStaff.map((staff) => (
-                  <Card key={staff.id} className="bg-white/10 backdrop-blur-lg border-white/20">
+                  <Card key={staff.id} className="bg-amber-100/50  border-amber-200/60">
                     <CardContent className="p-6">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-4">
                           <div className="w-12 h-12 bg-emerald-600/30 rounded-full flex items-center justify-center">
-                            <Leaf className="h-6 w-6 text-emerald-300" />
+                            <Leaf className="h-6 w-6 text-emerald-600" />
                           </div>
                           <div>
-                            <h3 className="text-white font-semibold">{staff.name}</h3>
-                            <p className="text-emerald-300 text-sm">{staff.email}</p>
-                            <p className="text-emerald-400 text-xs">Environmental Officer</p>
+                            <h3 className="text-amber-950 font-semibold">{staff.name}</h3>
+                            <p className="text-emerald-600 text-sm">{staff.email}</p>
+                            <p className="text-emerald-600 text-xs">Environmental Officer</p>
                           </div>
                         </div>
                         
                         <div className="flex items-center space-x-3">
                           <div className="text-right">
-                            <p className="text-white text-sm font-medium">{staff.activeIssues} Active Tasks</p>
+                            <p className="text-amber-950 text-sm font-medium">{staff.activeIssues} Active Tasks</p>
                             <Badge className={`
                               ${staff.workloadStatus === 'available' ? 'bg-green-600' : 
                                 staff.workloadStatus === 'light' ? 'bg-yellow-600' : 
                                 staff.workloadStatus === 'moderate' ? 'bg-orange-600' : 'bg-red-600'}
-                              text-white text-xs
+                              text-amber-950 text-xs
                             `}>
                               {staff.workloadStatus}
                             </Badge>
@@ -583,7 +583,7 @@ export default function EnvironmentalServicesPage() {
           {/* Health Monitoring Tab */}
           <TabsContent value="monitoring" className="space-y-6">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-white">Health & Environment Monitoring</h2>
+              <h2 className="text-xl font-bold text-amber-950">Health & Environment Monitoring</h2>
               <Badge className="bg-green-600/30 text-green-200">Real-time Data</Badge>
             </div>
 
@@ -597,67 +597,67 @@ export default function EnvironmentalServicesPage() {
                 { center: 'Waste Treatment Facility', status: 'Operational', capacity: '85%', trucks: 8, staff: 15 },
                 { center: 'Disease Surveillance Unit', status: 'Monitoring', alerts: 2, tracked: 25, staff: 4 }
               ].map((facility, index) => (
-                <Card key={index} className="bg-white/10 backdrop-blur-lg border-white/20">
+                <Card key={index} className="bg-amber-100/50  border-amber-200/60">
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between mb-4">
                       {facility.center.includes('Environmental') ? (
-                        <Activity className="h-8 w-8 text-green-400" />
+                        <Activity className="h-8 w-8 text-green-600" />
                       ) : facility.center.includes('Waste') ? (
-                        <Recycle className="h-8 w-8 text-emerald-400" />
+                        <Recycle className="h-8 w-8 text-emerald-600" />
                       ) : facility.center.includes('Emergency') ? (
-                        <AlertTriangle className="h-8 w-8 text-orange-400" />
+                        <AlertTriangle className="h-8 w-8 text-orange-600" />
                       ) : (
-                        <Shield className="h-8 w-8 text-green-400" />
+                        <Shield className="h-8 w-8 text-green-600" />
                       )}
                       <Badge className={`
                         ${facility.status === 'Operational' || facility.status === 'Active Testing' ? 'bg-green-600' : 
                           facility.status === 'On Standby' || facility.status === 'Monitoring' ? 'bg-yellow-600' : 'bg-blue-600'}
-                        text-white
+                        text-amber-950
                       `}>
                         {facility.status}
                       </Badge>
                     </div>
-                    <h3 className="text-white font-semibold mb-2 text-sm">{facility.center}</h3>
+                    <h3 className="text-amber-950 font-semibold mb-2 text-sm">{facility.center}</h3>
                     <div className="space-y-2">
                       {facility.patients && (
                         <div className="flex justify-between items-center">
                           <span className="text-green-200 text-sm">Patients:</span>
-                          <span className="text-white text-sm">{facility.patients}</span>
+                          <span className="text-amber-950 text-sm">{facility.patients}</span>
                         </div>
                       )}
                       {facility.capacity && (
                         <div className="flex justify-between items-center">
                           <span className="text-green-200 text-sm">Capacity:</span>
-                          <span className="text-white text-sm">{facility.capacity}</span>
+                          <span className="text-amber-950 text-sm">{facility.capacity}</span>
                         </div>
                       )}
                       {facility.samples && (
                         <div className="flex justify-between items-center">
                           <span className="text-green-200 text-sm">Samples:</span>
-                          <span className="text-white text-sm">{facility.processed}/{facility.samples}</span>
+                          <span className="text-amber-950 text-sm">{facility.processed}/{facility.samples}</span>
                         </div>
                       )}
                       {facility.trucks && (
                         <div className="flex justify-between items-center">
                           <span className="text-green-200 text-sm">Trucks Active:</span>
-                          <span className="text-white text-sm">{facility.trucks}</span>
+                          <span className="text-amber-950 text-sm">{facility.trucks}</span>
                         </div>
                       )}
                       {facility.alerts && (
                         <div className="flex justify-between items-center">
                           <span className="text-green-200 text-sm">Active Alerts:</span>
-                          <Badge className="bg-red-600 text-white text-xs">{facility.alerts}</Badge>
+                          <Badge className="bg-red-600 text-amber-950 text-xs">{facility.alerts}</Badge>
                         </div>
                       )}
                       {facility.tracked && (
                         <div className="flex justify-between items-center">
                           <span className="text-green-200 text-sm">Cases Tracked:</span>
-                          <span className="text-white text-sm">{facility.tracked}</span>
+                          <span className="text-amber-950 text-sm">{facility.tracked}</span>
                         </div>
                       )}
-                      <div className="flex justify-between items-center pt-2 border-t border-white/10">
+                      <div className="flex justify-between items-center pt-2 border-t border-amber-200/60">
                         <span className="text-green-200 text-sm">Staff:</span>
-                        <span className="text-green-300 text-sm font-medium">{facility.staff}</span>
+                        <span className="text-green-600 text-sm font-medium">{facility.staff}</span>
                       </div>
                     </div>
                   </CardContent>
@@ -669,10 +669,10 @@ export default function EnvironmentalServicesPage() {
 
         {/* Assignment Dialog */}
         <Dialog open={showAssignDialog} onOpenChange={setShowAssignDialog}>
-          <DialogContent className="bg-slate-900 border border-white/20 text-white">
+          <DialogContent className="bg-amber-50/50 border border-amber-200/60 text-amber-950">
             <DialogHeader>
               <DialogTitle>Assign Issue to Staff Member</DialogTitle>
-              <DialogDescription className="text-green-300">
+              <DialogDescription className="text-green-600">
                 Select appropriate staff member based on issue type (Health or Environmental)
               </DialogDescription>
             </DialogHeader>
@@ -681,12 +681,12 @@ export default function EnvironmentalServicesPage() {
               <div>
                 <label className="text-sm font-medium mb-2 block">Select Staff Member</label>
                 <Select value={selectedStaffId} onValueChange={setSelectedStaffId}>
-                  <SelectTrigger className="bg-white/10 border-white/20">
+                  <SelectTrigger className="bg-amber-100/50 border-amber-200/60">
                     <SelectValue placeholder="Choose staff member..." />
                   </SelectTrigger>
-                  <SelectContent className="bg-slate-900 border-white/20">
+                  <SelectContent className="bg-amber-50/50 border-amber-200/60">
                     {healthEnvStaff.map((staff) => (
-                      <SelectItem key={staff.id} value={staff.id} className="text-white">
+                      <SelectItem key={staff.id} value={staff.id} className="text-amber-950">
                         {staff.name} - {staff.activeIssues} active cases ({staff.workloadStatus})
                       </SelectItem>
                     ))}
@@ -700,7 +700,7 @@ export default function EnvironmentalServicesPage() {
                   placeholder="Add any specific instructions or priority notes..."
                   value={assignmentNote}
                   onChange={(e) => setAssignmentNote(e.target.value)}
-                  className="bg-white/10 border-white/20 text-white placeholder:text-green-300"
+                  className="bg-amber-100/50 border-amber-200/60 text-amber-950 placeholder:text-green-600"
                   rows={3}
                 />
               </div>
@@ -710,7 +710,7 @@ export default function EnvironmentalServicesPage() {
               <Button 
                 variant="outline" 
                 onClick={() => setShowAssignDialog(false)}
-                className="border-white/20 text-white"
+                className="border-amber-200/60 text-amber-950"
               >
                 Cancel
               </Button>

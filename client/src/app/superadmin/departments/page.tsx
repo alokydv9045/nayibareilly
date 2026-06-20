@@ -66,7 +66,7 @@ export default function DepartmentManagementPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-indigo-900 to-blue-900">
+    <div className="min-h-screen bg-white text-black">
       <div className="container mx-auto p-6">
         {/* Header */}
         <div className="mb-8">
@@ -75,7 +75,7 @@ export default function DepartmentManagementPage() {
               <Link href="/superadmin">
                 <Button 
                   variant="outline" 
-                  className="bg-white/10 text-white border-white/20 hover:bg-white/20"
+                  className="bg-amber-100/50 text-amber-950 border-amber-200/60 hover:bg-amber-200/50"
                   aria-label="Go back to superadmin dashboard"
                 >
                   <ArrowLeft className="h-4 w-4 mr-2" aria-hidden="true" />
@@ -83,12 +83,12 @@ export default function DepartmentManagementPage() {
                 </Button>
               </Link>
               <div>
-                <h1 className="text-4xl font-bold text-white">Department Management</h1>
+                <h1 className="text-4xl font-bold text-amber-950">Department Management</h1>
                 <p className="text-purple-200">Create, edit, and manage all departments</p>
               </div>
             </div>
             <Button 
-              className="bg-green-600 hover:bg-green-700 text-white"
+              className="bg-green-600 hover:bg-green-700 text-amber-950"
               onClick={() => setShowCreateModal(true)}
               aria-label="Create new department"
             >
@@ -100,71 +100,71 @@ export default function DepartmentManagementPage() {
 
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8" role="region" aria-label="Department statistics">
-          <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+          <Card className="bg-amber-100/50  border-amber-200/60">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-purple-200 text-sm">Total Departments</p>
-                  <p className="text-3xl font-bold text-white" aria-label={`${departments.length} total departments`}>{departments.length}</p>
+                  <p className="text-3xl font-bold text-amber-950" aria-label={`${departments.length} total departments`}>{departments.length}</p>
                 </div>
-                <Building2 className="h-8 w-8 text-blue-300" aria-hidden="true" />
+                <Building2 className="h-8 w-8 text-blue-600" aria-hidden="true" />
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+          <Card className="bg-amber-100/50  border-amber-200/60">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-purple-200 text-sm">Active Departments</p>
-                  <p className="text-3xl font-bold text-white" aria-label={`${departments.filter(d => d.isActive).length} active departments`}>
+                  <p className="text-3xl font-bold text-amber-950" aria-label={`${departments.filter(d => d.isActive).length} active departments`}>
                     {departments.filter(d => d.isActive).length}
                   </p>
                 </div>
-                <CheckCircle className="h-8 w-8 text-green-300" aria-hidden="true" />
+                <CheckCircle className="h-8 w-8 text-green-600" aria-hidden="true" />
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+          <Card className="bg-amber-100/50  border-amber-200/60">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-purple-200 text-sm">Total Staff</p>
-                  <p className="text-3xl font-bold text-white" aria-label={`${departments.reduce((sum, d) => sum + d.staffCount, 0)} total staff members`}>
-                    {departments.reduce((sum, d) => sum + d.staffCount, 0)}
+                  <p className="text-3xl font-bold text-amber-950" aria-label={`${departments.reduce((sum, d) => sum + (d.staffCount || 0), 0)} total staff members`}>
+                    {departments.reduce((sum, d) => sum + (d.staffCount || 0), 0)}
                   </p>
                 </div>
-                <Users className="h-8 w-8 text-purple-300" aria-hidden="true" />
+                <Users className="h-8 w-8 text-purple-600" aria-hidden="true" />
               </div>
             </CardContent>
           </Card>
 
-          <Card className="bg-white/10 backdrop-blur-lg border-white/20">
+          <Card className="bg-amber-100/50  border-amber-200/60">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-purple-200 text-sm">Avg SLA Compliance</p>
-                  <p className="text-3xl font-bold text-white">
-                    {Math.round(departments.reduce((sum, d) => sum + d.slaCompliance, 0) / (departments.length || 1))}%
+                  <p className="text-3xl font-bold text-amber-950">
+                    {Math.round(departments.reduce((sum, d) => sum + (d.slaCompliance || 0), 0) / (departments.length || 1)) || 0}%
                   </p>
                 </div>
-                <TrendingUp className="h-8 w-8 text-yellow-300" />
+                <TrendingUp className="h-8 w-8 text-yellow-600" />
               </div>
             </CardContent>
           </Card>
         </div>
 
         {/* Search */}
-        <Card className="bg-white/10 backdrop-blur-lg border-white/20 mb-6">
+        <Card className="bg-amber-100/50  border-amber-200/60 mb-6">
           <CardContent className="p-4">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-purple-300" aria-hidden="true" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-purple-600" aria-hidden="true" />
               <Input
                 placeholder="Search departments..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 bg-white/10 border-white/20 text-white placeholder:text-purple-300"
+                className="pl-10 bg-amber-100/50 border-amber-200/60 text-amber-950 placeholder:text-purple-600"
                 aria-label="Search departments by name or description"
               />
             </div>
@@ -175,7 +175,7 @@ export default function DepartmentManagementPage() {
         {loading ? (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {[...Array(4)].map((_, i) => (
-              <Card key={i} className="bg-white/10 backdrop-blur-lg border-white/20 animate-pulse">
+              <Card key={i} className="bg-amber-100/50  border-amber-200/60 animate-pulse">
                 <CardHeader>
                   <div className="flex items-start justify-between">
                     <div className="flex items-center space-x-3 flex-1">
@@ -183,7 +183,7 @@ export default function DepartmentManagementPage() {
                         <div className="h-6 w-6 bg-blue-300/30 rounded" />
                       </div>
                       <div className="flex-1 space-y-2">
-                        <div className="h-6 w-40 bg-white/20 rounded" />
+                        <div className="h-6 w-40 bg-amber-200/50 rounded" />
                         <div className="h-4 w-64 bg-purple-200/20 rounded" />
                       </div>
                     </div>
@@ -195,11 +195,11 @@ export default function DepartmentManagementPage() {
                     {[...Array(4)].map((_, j) => (
                       <div key={j} className="space-y-2">
                         <div className="h-3 w-20 bg-purple-200/20 rounded" />
-                        <div className="h-5 w-12 bg-white/20 rounded" />
+                        <div className="h-5 w-12 bg-amber-200/50 rounded" />
                       </div>
                     ))}
                   </div>
-                  <div className="flex items-center justify-between pt-4 border-t border-white/10">
+                  <div className="flex items-center justify-between pt-4 border-t border-amber-200/60">
                     <div className="h-4 w-32 bg-purple-200/20 rounded" />
                     <div className="flex space-x-2">
                       <div className="h-8 w-16 bg-blue-600/20 rounded" />
@@ -211,22 +211,22 @@ export default function DepartmentManagementPage() {
             ))}
           </div>
         ) : filteredDepartments.length === 0 ? (
-          <div className="text-center py-12 text-purple-300">
+          <div className="text-center py-12 text-purple-600">
             <Building2 className="h-12 w-12 mx-auto mb-3 opacity-50" />
             <p>No departments found</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {filteredDepartments.map((dept) => (
-              <Card key={dept.id} className="bg-white/10 backdrop-blur-lg border-white/20 hover:bg-white/15 transition-all">
+              <Card key={dept.id} className="bg-amber-100/50  border-amber-200/60 hover:bg-white/15 transition-all">
                 <CardHeader>
                   <div className="flex items-start justify-between">
                     <div className="flex items-center space-x-3">
                       <div className="p-3 bg-blue-500/20 rounded-lg">
-                        <Building2 className="h-6 w-6 text-blue-300" />
+                        <Building2 className="h-6 w-6 text-blue-600" />
                       </div>
                       <div>
-                        <CardTitle className="text-white text-xl">{dept.name}</CardTitle>
+                        <CardTitle className="text-amber-950 text-xl">{dept.name}</CardTitle>
                         <CardDescription className="text-purple-200 text-sm mt-1">
                           {dept.description}
                         </CardDescription>
@@ -243,10 +243,10 @@ export default function DepartmentManagementPage() {
                   <div className="space-y-4">
                     {/* Department Head */}
                     {dept.headName && (
-                      <div className="bg-white/5 rounded-lg p-3 border border-white/10">
+                      <div className="bg-white rounded-lg p-3 border border-amber-200/60">
                         <p className="text-purple-200 text-xs mb-2">Department Head</p>
                         <div className="space-y-1">
-                          <div className="flex items-center space-x-2 text-white text-sm">
+                          <div className="flex items-center space-x-2 text-amber-950 text-sm">
                             <User className="h-4 w-4" />
                             <span>{dept.headName}</span>
                           </div>
@@ -280,41 +280,41 @@ export default function DepartmentManagementPage() {
                     <div className="grid grid-cols-2 gap-3">
                       <div className="bg-blue-500/20 rounded-lg p-3">
                         <div className="flex items-center space-x-2 mb-1">
-                          <Users className="h-4 w-4 text-blue-300" />
+                          <Users className="h-4 w-4 text-blue-600" />
                           <span className="text-blue-200 text-xs">Staff Members</span>
                         </div>
-                        <p className="text-white font-bold text-lg">{dept.staffCount}</p>
+                        <p className="text-amber-950 font-bold text-lg">{dept.staffCount || 0}</p>
                       </div>
 
                       <div className="bg-orange-500/20 rounded-lg p-3">
                         <div className="flex items-center space-x-2 mb-1">
-                          <Clock className="h-4 w-4 text-orange-300" />
+                          <Clock className="h-4 w-4 text-orange-600" />
                           <span className="text-orange-200 text-xs">Active Issues</span>
                         </div>
-                        <p className="text-white font-bold text-lg">{dept.activeIssues}</p>
+                        <p className="text-amber-950 font-bold text-lg">{dept.activeIssues || 0}</p>
                       </div>
 
                       <div className="bg-green-500/20 rounded-lg p-3">
                         <div className="flex items-center space-x-2 mb-1">
-                          <CheckCircle className="h-4 w-4 text-green-300" />
+                          <CheckCircle className="h-4 w-4 text-green-600" />
                           <span className="text-green-200 text-xs">Resolved</span>
                         </div>
-                        <p className="text-white font-bold text-lg">{dept.resolvedIssues}</p>
+                        <p className="text-amber-950 font-bold text-lg">{dept.resolvedIssues || 0}</p>
                       </div>
 
                       <div className="bg-purple-500/20 rounded-lg p-3">
                         <div className="flex items-center space-x-2 mb-1">
-                          <TrendingUp className="h-4 w-4 text-purple-300" />
+                          <TrendingUp className="h-4 w-4 text-purple-600" />
                           <span className="text-purple-200 text-xs">SLA Compliance</span>
                         </div>
-                        <p className="text-white font-bold text-lg">{dept.slaCompliance}%</p>
+                        <p className="text-amber-950 font-bold text-lg">{dept.slaCompliance || 0}%</p>
                       </div>
                     </div>
 
                     {/* Avg Resolution Time */}
-                    <div className="bg-white/5 rounded-lg p-3 border border-white/10">
+                    <div className="bg-white rounded-lg p-3 border border-amber-200/60">
                       <p className="text-purple-200 text-xs mb-1">Avg Resolution Time</p>
-                      <p className="text-white font-semibold">{dept.avgResolutionTime} hours</p>
+                      <p className="text-amber-950 font-semibold">{dept.avgResolutionTime || 0} hours</p>
                     </div>
 
                     {/* Actions */}
@@ -322,7 +322,7 @@ export default function DepartmentManagementPage() {
                       <Button
                         variant="outline"
                         size="sm"
-                        className="flex-1 bg-blue-600/20 border-blue-500 text-blue-300 hover:bg-blue-600/30"
+                        className="flex-1 bg-blue-600/20 border-blue-500 text-blue-600 hover:bg-blue-600/30"
                         onClick={() => setEditingDepartment(dept)}
                         aria-label={`Edit ${dept.name} department`}
                       >
@@ -332,7 +332,7 @@ export default function DepartmentManagementPage() {
                       <Button
                         variant="outline"
                         size="sm"
-                        className="flex-1 bg-red-600/20 border-red-500 text-red-300 hover:bg-red-600/30"
+                        className="flex-1 bg-red-600/20 border-red-500 text-red-600 hover:bg-red-600/30"
                         onClick={() => handleDeleteDepartment(dept.id)}
                         aria-label={`Delete ${dept.name} department`}
                       >
@@ -415,12 +415,12 @@ function DepartmentFormModal({
 
   return (
     <div 
-      className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+      className="fixed inset-0 bg-black/50  flex items-center justify-center z-50 p-4"
       role="dialog"
       aria-modal="true"
       aria-labelledby="department-form-title"
     >
-      <Card className="bg-white/95 backdrop-blur-lg border-white/20 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+      <Card className="bg-white/95  border-amber-200/60 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
         <CardHeader>
           <CardTitle id="department-form-title" className="text-purple-900">
             {department ? 'Edit Department' : 'Create New Department'}

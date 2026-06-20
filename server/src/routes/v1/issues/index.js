@@ -58,7 +58,7 @@ router.get('/check-duplicates', [
  * Get current user's issues
  */
 router.get('/my-issues', [
-  auth(['CITIZEN', 'STAFF', 'ADMIN', 'SUPER_ADMIN']),
+  auth(['CITIZEN', 'STAFF', 'DEPT_ADMIN', 'MAYOR', 'SUPER_ADMIN']),
   query('page').optional().isInt({ min: 1 }),
   query('limit').optional().isInt({ min: 1, max: 100 }),
   query('status').optional().isString(),
@@ -77,7 +77,7 @@ router.get('/my-issues', [
  * Create a new issue
  */
 router.post('/', [
-  auth(['CITIZEN', 'STAFF', 'ADMIN', 'SUPER_ADMIN']),
+  auth(['CITIZEN', 'STAFF', 'DEPT_ADMIN', 'MAYOR', 'SUPER_ADMIN']),
   issueCreationRateLimit,
   validateCSRFToken,
   uploadFields.fields([{ name: 'images', maxCount: 5 }]),
@@ -185,7 +185,7 @@ router.patch('/:id', [
  * Delete an issue (soft delete)
  */
 router.delete('/:id', [
-  auth(['ADMIN', 'SUPER_ADMIN']),
+  auth(['DEPT_ADMIN', 'MAYOR', 'SUPER_ADMIN']),
   validateCSRFToken,
   param('id').isString()
 ], async (req, res, next) => {
@@ -236,7 +236,7 @@ router.get('/:id/timeline', [
  * Get issues assigned to current staff member
  */
 router.get('/my-assigned', [
-  auth(['STAFF', 'ADMIN', 'SUPER_ADMIN']),
+  auth(['STAFF', 'DEPT_ADMIN', 'MAYOR', 'SUPER_ADMIN']),
   query('status').optional().isString(),
   query('page').optional().isInt({ min: 1 }),
   query('limit').optional().isInt({ min: 1, max: 100 })
@@ -254,7 +254,7 @@ router.get('/my-assigned', [
  * Start work on an assigned issue (ASSIGNED_TO_STAFF → IN_PROGRESS)
  */
 router.put('/:id/start', [
-  auth(['STAFF', 'ADMIN', 'SUPER_ADMIN']),
+  auth(['STAFF', 'DEPT_ADMIN', 'MAYOR', 'SUPER_ADMIN']),
   validateCSRFToken,
   param('id').isString(),
   body('note').optional().isString()
@@ -272,7 +272,7 @@ router.put('/:id/start', [
  * Resolve an issue with completion photos (IN_PROGRESS → RESOLVED)
  */
 router.put('/:id/resolve', [
-  auth(['STAFF', 'ADMIN', 'SUPER_ADMIN']),
+  auth(['STAFF', 'DEPT_ADMIN', 'MAYOR', 'SUPER_ADMIN']),
   validateCSRFToken,
   uploadFields.fields([{ name: 'media', maxCount: 5 }]),
   handleMulterError,
@@ -310,7 +310,7 @@ router.post('/:id/comments', [
  * Escalate an issue that can't be resolved
  */
 router.post('/:id/escalate', [
-  auth(['STAFF', 'ADMIN', 'SUPER_ADMIN']),
+  auth(['STAFF', 'DEPT_ADMIN', 'MAYOR', 'SUPER_ADMIN']),
   validateCSRFToken,
   param('id').isString(),
   body('reason').isString().isLength({ min: 10, max: 500 })

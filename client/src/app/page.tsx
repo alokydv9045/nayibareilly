@@ -22,7 +22,7 @@ import {
 import { useState, useMemo } from 'react'
 import { ISSUE_CATEGORIES } from '@/lib/validations/reportForm'
 import { toast } from 'react-hot-toast'
-import { usePublicStats, usePublicReports, usePublicCategories } from '@/hooks/api/usePublic'
+import { usePublicStats, usePublicReports, usePublicCategories, useRecentActivity } from '@/hooks/api/usePublic'
 import { formatDistanceToNow } from 'date-fns'
 import HeroSection from '@/components/sections/HeroSection'
 
@@ -49,6 +49,8 @@ export default function LandingPage() {
     search: searchTerm || undefined
   })
   const { data: categories } = usePublicCategories()
+  const { data: recentActivity } = useRecentActivity(5)
+  const { data: topVotedReportsResponse } = usePublicReports({ sort: 'votes', limit: 3, status: 'all' })
 
   // Extract reports from response with useMemo to prevent re-renders
   const reportsData = useMemo(() => reportsResponse?.issues || [], [reportsResponse])
@@ -702,27 +704,28 @@ export default function LandingPage() {
                   </div>
                   
                   <div className="space-y-4">
-                    {[
-                      { action: "Road repair completed", location: "Civil Lines", time: "Just now", type: "completed" },
-                      { action: "Drainage cleaning started", location: "Subhash Nagar", time: "2 min ago", type: "in-progress" },
-                      { action: "New waste report filed", location: "Rampur Garden", time: "5 min ago", type: "new" },
-                      { action: "Street light fixed", location: "City Center", time: "10 min ago", type: "completed" }
-                    ].map((activity, index) => (
-                      <div key={index} className="flex items-center justify-between bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
-                        <div className="flex items-center space-x-3">
-                          <div className={`w-3 h-3 rounded-full animate-pulse ${
-                            activity.type === 'completed' ? 'bg-green-400' :
-                            activity.type === 'in-progress' ? 'bg-yellow-400' :
-                            'bg-blue-400'
-                          }`}></div>
-                          <div>
-                            <div className="text-sm font-medium">{activity.action}</div>
-                            <div className="text-xs text-blue-100">{activity.location}</div>
+                    {recentActivity && recentActivity.length > 0 ? (
+                      recentActivity.map((activity: any, index: number) => (
+                        <div key={activity.id || index} className="flex items-center justify-between bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                          <div className="flex items-center space-x-3">
+                            <div className={`w-3 h-3 rounded-full animate-pulse ${
+                              activity.type === 'resolved' ? 'bg-green-400' :
+                              activity.type === 'in_progress' ? 'bg-yellow-400' :
+                              'bg-blue-400'
+                            }`}></div>
+                            <div>
+                              <div className="text-sm font-medium">{activity.title}</div>
+                              <div className="text-xs text-blue-100">{activity.category || 'Issue'}</div>
+                            </div>
                           </div>
+                          <span className="text-xs text-blue-200 whitespace-nowrap">
+                            {formatDistanceToNow(new Date(activity.timestamp), { addSuffix: true })}
+                          </span>
                         </div>
-                        <span className="text-xs text-blue-200 whitespace-nowrap">{activity.time}</span>
-                      </div>
-                    ))}
+                      ))
+                    ) : (
+                      <div className="text-center py-4 text-blue-100 text-sm">No recent activity</div>
+                    )}
                   </div>
                 </CardContent>
               </Card>
@@ -738,24 +741,20 @@ export default function LandingPage() {
                 <CardContent>
                   <div className="grid grid-cols-2 gap-4">
                     <div className="text-center p-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl border border-blue-200">
-                      <div className="text-3xl font-bold text-blue-600 mb-1">156</div>
-                      <div className="text-xs text-blue-700 font-medium">New Reports</div>
-                      <div className="text-xs text-blue-600 mt-1">+12% from yesterday</div>
+                      <div className="text-3xl font-bold text-blue-600 mb-1">{stats?.issuesToday || 0}</div>
+                      <div className="text-xs text-blue-700 font-medium">New Reports Today</div>
                     </div>
                     <div className="text-center p-4 bg-gradient-to-br from-green-50 to-green-100 rounded-xl border border-green-200">
-                      <div className="text-3xl font-bold text-green-600 mb-1">89</div>
-                      <div className="text-xs text-green-700 font-medium">Resolved</div>
-                      <div className="text-xs text-green-600 mt-1">+18% from yesterday</div>
+                      <div className="text-3xl font-bold text-green-600 mb-1">{stats?.resolvedIssues || 0}</div>
+                      <div className="text-xs text-green-700 font-medium">Total Resolved</div>
                     </div>
                     <div className="text-center p-4 bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl border border-purple-200">
-                      <div className="text-3xl font-bold text-purple-600 mb-1">1.2K</div>
-                      <div className="text-xs text-purple-700 font-medium">Total Votes</div>
-                      <div className="text-xs text-purple-600 mt-1">+25% from yesterday</div>
+                      <div className="text-3xl font-bold text-purple-600 mb-1">{stats?.activeUsers || 0}</div>
+                      <div className="text-xs text-purple-700 font-medium">Active Users</div>
                     </div>
                     <div className="text-center p-4 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl border border-orange-200">
-                      <div className="text-3xl font-bold text-orange-600 mb-1">4.2</div>
-                      <div className="text-xs text-orange-700 font-medium">Avg Rating</div>
-                      <div className="text-xs text-orange-600 mt-1">↑ 0.3 this week</div>
+                      <div className="text-3xl font-bold text-orange-600 mb-1">{stats?.avgResponseDays || 0}</div>
+                      <div className="text-xs text-orange-700 font-medium">Avg Resolution (Days)</div>
                     </div>
                   </div>
                 </CardContent>
@@ -772,31 +771,33 @@ export default function LandingPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    {[
-                      { issue: "Traffic light repair", votes: 234, area: "City Center", trend: "+45" },
-                      { issue: "Park maintenance", votes: 189, area: "Civil Lines", trend: "+23" },
-                      { issue: "Street cleaning", votes: 167, area: "Subhash Nagar", trend: "+18" }
-                    ].map((item, index) => (
-                      <div key={index} className="flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl border border-gray-200 hover:from-blue-50 hover:to-blue-100 hover:border-blue-200 transition-all cursor-pointer">
-                        <div className="flex items-center space-x-3">
-                          <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
-                            index === 0 ? 'bg-yellow-100 text-yellow-700' :
-                            index === 1 ? 'bg-gray-100 text-gray-700' :
-                            'bg-orange-100 text-orange-700'
-                          }`}>
-                            {index + 1}
+                    {topVotedReportsResponse?.issues && topVotedReportsResponse.issues.length > 0 ? (
+                      topVotedReportsResponse.issues.map((item: any, index: number) => (
+                        <Link href={`/reports/${item.id}`} key={item.id}>
+                          <div className="flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl border border-gray-200 hover:from-blue-50 hover:to-blue-100 hover:border-blue-200 transition-all cursor-pointer mb-3">
+                            <div className="flex items-center space-x-3">
+                              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold shrink-0 ${
+                                index === 0 ? 'bg-yellow-100 text-yellow-700' :
+                                index === 1 ? 'bg-gray-100 text-gray-700' :
+                                'bg-orange-100 text-orange-700'
+                              }`}>
+                                {index + 1}
+                              </div>
+                              <div className="min-w-0">
+                                <div className="font-medium text-sm truncate max-w-[150px] sm:max-w-[180px]">{item.title}</div>
+                                <div className="text-xs text-gray-600 truncate">{item.location?.address || 'Unknown area'}</div>
+                              </div>
+                            </div>
+                            <div className="text-right shrink-0">
+                              <div className="text-lg font-bold text-blue-600">{item.votesCount || 0}</div>
+                              <div className="text-xs text-gray-500">votes</div>
+                            </div>
                           </div>
-                          <div>
-                            <div className="font-medium text-sm">{item.issue}</div>
-                            <div className="text-xs text-gray-600">{item.area}</div>
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <div className="text-lg font-bold text-blue-600">{item.votes}</div>
-                          <div className="text-xs text-green-600">+{item.trend} today</div>
-                        </div>
-                      </div>
-                    ))}
+                        </Link>
+                      ))
+                    ) : (
+                      <div className="text-center py-4 text-gray-500 text-sm">No highly voted reports yet</div>
+                    )}
                   </div>
                 </CardContent>
               </Card>
