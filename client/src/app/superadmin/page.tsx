@@ -38,7 +38,7 @@ export default function SuperAdminDashboard() {
   const [realtimeIssues, setRealtimeIssues] = useState<RealtimeIssue[]>([])
   const [moderatorPerformance, setModeratorPerformance] = useState<ModeratorPerformance[]>([])
   const [isRefreshing, setIsRefreshing] = useState(false)
-  const [systemLogs, setSystemLogs] = useState<{ timestamp: string; level: 'INFO'|'WARN'|'ERROR'; message: string; source: string }[]>([])
+  const [systemLogs, setSystemLogs] = useState<{ id?: string; timestamp: string; level: 'INFO'|'WARN'|'ERROR'; message: string; source: string }[]>([])
   const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
@@ -66,12 +66,50 @@ export default function SuperAdminDashboard() {
     } catch { /* silent */ }
   }, [])
 
+  const fetchLogs = useCallback(async () => {
+    try {
+      const res = await api.get('/admin/activity-logs?limit=100')
+      const rawLogs = res.data?.data?.items || res.data?.data?.logs || []
+      const mappedLogs = rawLogs.map((log: any) => {
+        let level: 'INFO' | 'WARN' | 'ERROR' = 'INFO'
+        let source = 'system-service'
+        const actionStr = String(log.action).toUpperCase()
+        const descStr = String(log.description || '').toUpperCase()
+        
+        if (actionStr.includes('FAIL') || descStr.includes('FAIL') || descStr.includes('WARN')) {
+          level = 'WARN'
+        } else if (actionStr.includes('ERROR') || descStr.includes('ERROR') || (actionStr.includes('FAIL') && actionStr.includes('CRITICAL'))) {
+          level = 'ERROR'
+        }
+        
+        if (actionStr.includes('LOGIN') || actionStr.includes('LOGOUT') || actionStr.includes('REGISTER') || actionStr.includes('AUTH') || actionStr.includes('PASSWORD') || actionStr.includes('OTP')) {
+          source = 'auth-service'
+        } else if (log.issueId) {
+          source = 'issue-service'
+        } else if (actionStr.includes('ASSIGN') || actionStr.includes('DEPARTMENT') || descStr.includes('ASSIGN')) {
+          source = 'department-service'
+        } else if (actionStr.includes('AUDIT') || actionStr.includes('TECH_ADMIN') || actionStr.includes('ADMIN')) {
+          source = 'superadmin'
+        }
+
+        return {
+          id: log.id,
+          timestamp: log.createdAt || new Date().toISOString(),
+          level,
+          source,
+          message: log.description || ''
+        }
+      })
+      setSystemLogs(mappedLogs)
+    } catch { /* silent */ }
+  }, [])
+
   const handleRefresh = useCallback(async () => {
     setIsRefreshing(true)
-    await Promise.all([fetchStats(), fetchRealtimeIssues(), fetchModeratorPerformance()])
+    await Promise.all([fetchStats(), fetchRealtimeIssues(), fetchModeratorPerformance(), fetchLogs()])
     setIsRefreshing(false)
     toast.success('Dashboard refreshed')
-  }, [fetchStats, fetchRealtimeIssues, fetchModeratorPerformance])
+  }, [fetchStats, fetchRealtimeIssues, fetchModeratorPerformance, fetchLogs])
 
   const handleLogout = useCallback(() => {
     tokenStorage.remove()
@@ -81,7 +119,7 @@ export default function SuperAdminDashboard() {
   }, [router])
 
   useEffect(() => {
-    fetchStats(); fetchRealtimeIssues(); fetchModeratorPerformance()
+    fetchStats(); fetchRealtimeIssues(); fetchModeratorPerformance(); fetchLogs()
     // Relying on websockets for realtime issues instead of aggressive polling
     const poll = setInterval(fetchRealtimeIssues, 60000) // Backed off to 1 min just as a safety net
     const clock = setInterval(() => setCurrentTime(new Date()), 1000)
@@ -95,45 +133,31 @@ export default function SuperAdminDashboard() {
       socketService.off('issue:update', onIssue)
       socketService.off('issue:status', onIssue)
     }
-  }, [fetchStats, fetchModeratorPerformance, fetchRealtimeIssues])
+  }, [fetchStats, fetchModeratorPerformance, fetchRealtimeIssues, fetchLogs])
 
-  // Mock real-time system logs for Tech Admin
+  // Real-time activity log subscriber
   useEffect(() => {
-    const initialLogs = [
-      { timestamp: new Date(Date.now() - 10000).toISOString(), level: 'INFO' as const, message: '[SYSTEM] API Gateway & Audit Logger connected successfully', source: 'gateway-service' },
-      { timestamp: new Date(Date.now() - 8000).toISOString(), level: 'INFO' as const, message: '[AUTH] Service initialized. RBAC policies loaded.', source: 'auth-service' },
-      { timestamp: new Date(Date.now() - 5000).toISOString(), level: 'WARN' as const, message: '[SYSTEM] High latency detected on /issues endpoint', source: 'issue-service' },
-    ]
-    setSystemLogs(initialLogs)
-
-    const interval = setInterval(() => {
-      const auditEvents = [
-        { source: 'auth-service', message: '[AUTH] Citizen (98xxxxxx45) requested OTP for login', level: 'INFO' },
-        { source: 'issue-service', message: `[CITIZEN] New issue submitted: "Water Leakage" (ID: #ISS-${Math.floor(1000 + Math.random() * 9000)})`, level: 'INFO' },
-        { source: 'moderator-service', message: `[MODERATOR] Alok approved issue #ISS-${Math.floor(1000 + Math.random() * 9000)}, categorized as INFRASTRUCTURE`, level: 'INFO' },
-        { source: 'moderator-service', message: `[MODERATOR] Priya rejected issue #ISS-${Math.floor(1000 + Math.random() * 9000)}: "Spam content detected"`, level: 'WARN' },
-        { source: 'department-service', message: `[DEPT_ADMIN] Auto-assigned issue #ISS-${Math.floor(1000 + Math.random() * 9000)} to field staff (Rahul Kumar)`, level: 'INFO' },
-        { source: 'staff-service', message: `[STAFF] Rahul Kumar started work on #ISS-${Math.floor(1000 + Math.random() * 9000)} (Status: IN_PROGRESS)`, level: 'INFO' },
-        { source: 'staff-service', message: `[STAFF] Rahul Kumar completed #ISS-${Math.floor(1000 + Math.random() * 9000)}, uploaded 2 verification images`, level: 'INFO' },
-        { source: 'notification-service', message: `[SYSTEM] SMS dispatched to citizen for final verification #ISS-${Math.floor(1000 + Math.random() * 9000)}`, level: 'INFO' },
-        { source: 'mayor-dashboard', message: '[MAYOR] Exported City Health Analytics Report PDF', level: 'INFO' },
-        { source: 'auth-service', message: `[AUTH] Failed login attempt for Dept Admin (IP: 192.168.1.${Math.floor(Math.random() * 255)})`, level: 'WARN' },
-        { source: 'database', message: '[SYSTEM] Deadlock prevented during concurrent status update', level: 'ERROR' },
-        { source: 'superadmin', message: '[TECH_ADMIN] Audit log query executed on users table', level: 'INFO' },
-      ]
-      
-      const event = auditEvents[Math.floor(Math.random() * auditEvents.length)]
+    const onActivityLog = (log: any) => {
       const newLog = {
-        timestamp: new Date().toISOString(),
-        level: event.level as 'INFO'|'WARN'|'ERROR',
-        source: event.source,
-        message: event.message
+        id: log.id,
+        timestamp: log.timestamp || new Date().toISOString(),
+        level: (log.level || 'INFO') as 'INFO'|'WARN'|'ERROR',
+        source: log.source || 'system-service',
+        message: log.message || log.details || ''
       }
-      
-      setSystemLogs(prev => [newLog, ...prev].slice(0, 100)) // Keep last 100
-    }, 3500)
+      setSystemLogs(prev => {
+        // Deduplicate logs
+        if (prev.some(item => item.id === newLog.id)) {
+          return prev
+        }
+        return [newLog, ...prev].slice(0, 100)
+      })
+    }
 
-    return () => clearInterval(interval)
+    socketService.on('activity:log', onActivityLog)
+    return () => {
+      socketService.off('activity:log', onActivityLog)
+    }
   }, [])
 
   const statCards = [
@@ -374,7 +398,7 @@ export default function SuperAdminDashboard() {
                     <span className="text-purple-600 shrink-0 w-32 truncate">
                       {log.source}
                     </span>
-                    <span className="text-slate-300 flex-1 break-all">
+                    <span className="text-slate-700 flex-1 break-all">
                       {log.message}
                     </span>
                   </div>

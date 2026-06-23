@@ -15,20 +15,84 @@ const prismaOptions = {
   }
 }
 
-let prisma
-
-if (process.env.NODE_ENV === 'production') {
-  prisma = new PrismaClient(prismaOptions)
-} else {
-  if (!global.prisma) {
-    global.prisma = new PrismaClient(prismaOptions)
-  }
-  prisma = global.prisma
-}
+const basePrisma = process.env.NODE_ENV === 'production'
+  ? new PrismaClient(prismaOptions)
+  : (global.prisma || (global.prisma = new PrismaClient(prismaOptions)))
 
 // Graceful disconnect on process termination
 process.on('beforeExit', async () => {
-  await prisma.$disconnect()
+  await basePrisma.$disconnect()
 })
 
-export default prisma
+const prisma = basePrisma.$extends({
+  query: {
+    activityLog: {
+      async create({ args, query }) {
+        const result = await query(args)
+        try {
+          const { getIO } = await import('./socket.js')
+          const io = getIO()
+          if (io) {
+            let email = 'System'
+            let roles = ['SYSTEM']
+            if (result.userId) {
+              const user = await basePrisma.user.findUnique({
+                where: { id: result.userId },
+                select: { email: true, roles: true }
+              })
+              if (user) {
+                email = user.email
+                roles = user.roles
+              }
+            }
+            
+            let level = 'INFO'
+            let source = 'system-service'
+            const actionStr = String(result.action).toUpperCase()
+            if (actionStr.includes('FAIL') || actionStr.includes('BLOCK') || actionStr.includes('LOCK') || actionStr.includes('DENY')) {
+              level = 'WARN'
+            } else if (actionStr.includes('ERROR') || (actionStr.includes('FAIL') && actionStr.includes('CRITICAL'))) {
+              level = 'ERROR'
+            }
+            
+            if (actionStr.includes('LOGIN') || actionStr.includes('LOGOUT') || actionStr.includes('REGISTER') || actionStr.includes('AUTH') || actionStr.includes('PASSWORD') || actionStr.includes('OTP')) {
+              source = 'auth-service'
+            } else if (result.issueId) {
+              source = 'issue-service'
+            } else if (actionStr.includes('ASSIGN') || actionStr.includes('DEPARTMENT')) {
+              source = 'department-service'
+            } else if (actionStr.includes('AUDIT') || actionStr.includes('TECH_ADMIN') || actionStr.includes('ADMIN')) {
+              source = 'superadmin'
+            }
+
+            const payload = {
+              id: result.id,
+              timestamp: result.createdAt || new Date().toISOString(),
+              userId: result.userId || 'system',
+              userEmail: email,
+              userRole: roles[0] || 'SYSTEM',
+              action: result.action || 'ACTIVITY',
+              resource: result.issueId ? 'Issue' : 'System',
+              details: result.description,
+              ipAddress: result.ipAddress || '127.0.0.1',
+              userAgent: result.userAgent || 'Unknown',
+              outcome: 'SUCCESS',
+              severity: level === 'ERROR' ? 'HIGH' : level === 'WARN' ? 'MEDIUM' : 'LOW',
+              level,
+              source,
+              message: result.description
+            }
+            
+            io.emit('activity:log', payload)
+          }
+        } catch (err) {
+          console.warn('[Prisma Extension] Failed to broadcast activity log:', err.message)
+        }
+        return result
+      }
+    }
+  }
+})
+
+export default prisma;
+

@@ -26,6 +26,7 @@ import {
 import { useToast } from '@/components/ui/use-toast'
 import { tokenStorage } from '@/lib/auth/auth-utils'
 import { api } from '@/lib/api/client'
+import socketService from '@/lib/services/socket-service'
 
 interface AuditLog {
   id: string
@@ -119,10 +120,10 @@ export default function SuperAdminAuditPage() {
       try {
         setLoading(true);
         // We only have activity logs in the backend currently
-        let auditData = { logs: [] as AuditLog[] };
-        let securityData = { events: [] as SecurityEvent[] };
-        let systemData = { activities: [] as SystemActivity[] };
-        let complianceData = { report: null as ComplianceReport | null };
+        const auditData = { logs: [] as AuditLog[] };
+        const securityData = { events: [] as SecurityEvent[] };
+        const systemData = { activities: [] as SystemActivity[] };
+        const complianceData = { report: null as ComplianceReport | null };
 
         const token = tokenStorage.get();
         try {
@@ -131,20 +132,31 @@ export default function SuperAdminAuditPage() {
             console.log("Response status:", auditRes.status);
             
             const json = auditRes.data;
-            auditData.logs = json.data?.logs?.map((l: any) => ({
-                id: l.id,
-                timestamp: l.createdAt,
-                userId: l.userId || 'system',
-                userEmail: l.user?.email || 'System',
-                userRole: l.user?.roles?.[0] || 'SYSTEM',
-                action: l.action,
-                resource: l.issueId ? 'Issue' : 'System',
-                details: l.description,
-                ipAddress: l.ipAddress || '127.0.0.1',
-                userAgent: l.userAgent || 'Unknown',
-                outcome: 'SUCCESS',
-                severity: 'LOW'
-            })) || [];
+            const rawLogs = json.data?.items || json.data?.logs || [];
+            auditData.logs = rawLogs.map((l: any) => {
+                let severity: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL' = 'LOW'
+                const actionStr = String(l.action).toUpperCase()
+                const descStr = String(l.description || '').toUpperCase()
+                if (actionStr.includes('FAIL') || descStr.includes('FAIL') || descStr.includes('WARN')) {
+                  severity = 'MEDIUM'
+                } else if (actionStr.includes('ERROR') || descStr.includes('ERROR') || (actionStr.includes('FAIL') && actionStr.includes('CRITICAL'))) {
+                  severity = 'HIGH'
+                }
+                return {
+                    id: l.id,
+                    timestamp: l.createdAt,
+                    userId: l.userId || 'system',
+                    userEmail: l.user?.email || 'System',
+                    userRole: l.user?.roles?.[0] || 'SYSTEM',
+                    action: l.action,
+                    resource: l.issueId ? 'Issue' : 'System',
+                    details: l.description,
+                    ipAddress: l.ipAddress || '127.0.0.1',
+                    userAgent: l.userAgent || 'Unknown',
+                    outcome: 'SUCCESS',
+                    severity
+                }
+            });
         } catch (e: any) {
             console.error('Failed to fetch activity logs. Status:', e.response?.status, 'Message:', e.message);
         }
@@ -199,6 +211,39 @@ export default function SuperAdminAuditPage() {
     }
     loadData()
   }, [timeRange])
+
+  // Subscribe to real-time activity:log events
+  useEffect(() => {
+    const onActivityLog = (log: any) => {
+      const newAuditLog: AuditLog = {
+        id: log.id || String(Date.now()),
+        timestamp: log.timestamp || new Date().toISOString(),
+        userId: log.userId || 'system',
+        userEmail: log.userEmail || 'System',
+        userRole: log.userRole || 'SYSTEM',
+        action: log.action || 'ACTIVITY',
+        resource: log.resource || 'System',
+        details: log.details || log.message || '',
+        ipAddress: log.ipAddress || '127.0.0.1',
+        userAgent: log.userAgent || 'Unknown',
+        outcome: log.outcome || 'SUCCESS',
+        severity: (log.severity || 'LOW') as 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL'
+      }
+
+      setAuditLogs(prev => {
+        // Deduplicate logs
+        if (prev.some(item => item.id === newAuditLog.id)) {
+          return prev
+        }
+        return [newAuditLog, ...prev]
+      })
+    }
+
+    socketService.on('activity:log', onActivityLog)
+    return () => {
+      socketService.off('activity:log', onActivityLog)
+    }
+  }, [])
 
   const refreshData = async () => {
     setRefreshing(true)

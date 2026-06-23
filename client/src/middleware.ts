@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4001'
+const envApiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4001'
+const apiUrl = envApiUrl.endsWith('/api') ? envApiUrl : `${envApiUrl}/api`
 
 // ============================================================================
 // Route Configuration
@@ -138,40 +139,42 @@ function canAccessRoute(pathname: string, userRoles: string[]): boolean {
 // ============================================================================
 
 async function fetchAccessToken(cookie: string | undefined): Promise<string | null> {
+  console.log(`[MW] fetchAccessToken called, cookie length: ${cookie ? cookie.length : 0}, cookie value: ${cookie}`)
   if (!cookie) return null
   try {
-    const res = await fetch(`${apiUrl}/api/auth/refresh`, {
+    const res = await fetch(`${apiUrl}/auth/refresh`, {
       method: 'POST',
       headers: { cookie },
       credentials: 'include'
     })
+    console.log(`[MW] refresh status: ${res.status}`)
     if (!res.ok) {
-      if (process.env.NODE_ENV !== 'production') {
-        console.warn('[MW] Refresh failed', res.status)
-      }
+      console.warn('[MW] Refresh failed', res.status)
       return null
     }
     const json = (await res.json()) as { data?: { accessToken?: string } }
+    console.log(`[MW] refresh returned accessToken: ${json?.data?.accessToken ? 'YES' : 'NO'}`)
     return json?.data?.accessToken || null
   } catch (err) {
-    if (process.env.NODE_ENV !== 'production') {
-      console.warn('[MW] Refresh fetch error', err)
-    }
+    console.warn('[MW] Refresh fetch error', err)
     return null
   }
 }
 
 async function fetchMe(token: string): Promise<{ roles: string[] } | null> {
   try {
-    const res = await fetch(`${apiUrl}/api/auth/me`, {
+    console.log(`[MW] fetchMe called with token: ${token ? token.substring(0, 15) : 'null'}...`)
+    const res = await fetch(`${apiUrl}/auth/me`, {
       headers: { Authorization: `Bearer ${token}` }
     })
+    console.log(`[MW] fetchMe status: ${res.status}`)
     if (!res.ok) return null
     const json = (await res.json()) as { data?: { user?: { roles?: string[] } } }
-    // Normalize roles to lowercase for consistent checks
     const roles = (json?.data?.user?.roles || []).map(r => String(r).toLowerCase())
+    console.log(`[MW] fetchMe roles: ${JSON.stringify(roles)}`)
     return { roles }
-  } catch {
+  } catch (err) {
+    console.warn('[MW] fetchMe error', err)
     return null
   }
 }
@@ -180,81 +183,127 @@ async function fetchMe(token: string): Promise<{ roles: string[] } | null> {
 // Main Middleware
 // ============================================================================
 
-export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl
-  const url = request.nextUrl.clone()
-
-  // ========================================================================
-  // 1. Check if route is public
-  // ========================================================================
-  if (isPublicRoute(pathname)) {
-    // If user is already authenticated and trying to access login, redirect to dashboard
-    if (pathname === LOGIN_PATH || pathname === REGISTER_PATH) {
-      const incomingCookie = request.headers.get('cookie') || undefined
-      const accessToken = await fetchAccessToken(incomingCookie)
-
-      if (accessToken) {
-        const me = await fetchMe(accessToken)
-        const roles = me?.roles || []
-
-        if (roles.length > 0) {
-          const highestRole = getHighestRole(roles)
-          url.pathname = getRoleDashboard(highestRole)
-          url.search = ''
-          return NextResponse.redirect(url)
-        }
-      }
-    }
-
-    return NextResponse.next()
+/**
+ * Check if the requested route is allowed for the official's highest role.
+ * Officials are strictly isolated to their own modules/panels and shared reports/api/auth.
+ */
+function isRouteAllowedForOfficial(pathname: string, highestRole: string): boolean {
+  if (pathname.startsWith('/_next') || pathname.startsWith('/public') || pathname.startsWith('/api') || pathname === '/favicon.ico') {
+    return true
   }
 
-  // ========================================================================
-  // 2. Check authentication for protected routes
-  // ========================================================================
-  if (!requiresAuth(pathname)) {
+  // Allow reports pages (both the list and specific report details)
+  if (pathname === '/reports' || pathname.startsWith('/reports/')) {
+    return true
+  }
+
+  // Allow login/register (redirect checks are done separately in middleware)
+  if (pathname === LOGIN_PATH || pathname === REGISTER_PATH) {
+    return true
+  }
+
+  const normalized = normalizeRole(highestRole)
+
+  if (normalized === 'super_admin' || normalized === 'developer_admin') {
+    return pathname.startsWith('/superadmin') || 
+           pathname.startsWith('/diagnostic') || 
+           pathname.startsWith('/users') || 
+           pathname.startsWith('/departments') || 
+           pathname.startsWith('/issues')
+  }
+
+  if (normalized === 'mayor') {
+    return pathname.startsWith('/mayor') || 
+           pathname.startsWith('/users') || 
+           pathname.startsWith('/departments') || 
+           pathname.startsWith('/issues')
+  }
+
+  if (normalized === 'dept_admin') {
+    return pathname.startsWith('/department') || 
+           pathname.startsWith('/users') || 
+           pathname.startsWith('/issues')
+  }
+
+  if (normalized === 'moderator') {
+    return pathname.startsWith('/moderator') || 
+           pathname.startsWith('/issues')
+  }
+
+  if (normalized === 'staff') {
+    return pathname.startsWith('/staff')
+  }
+
+  return false
+}
+
+export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl
+  console.log(`[MIDDLEWARE_TRIGGERED] Path: ${pathname}`)
+  const url = request.nextUrl.clone()
+
+  // Skip middleware checks for API, static files, next internals, and icons
+  if (pathname.startsWith('/api') || pathname.startsWith('/_next') || pathname.startsWith('/public') || pathname === '/favicon.ico') {
     return NextResponse.next()
   }
 
   const incomingCookie = request.headers.get('cookie') || undefined
   const accessToken = await fetchAccessToken(incomingCookie)
 
-  // Redirect to login if not authenticated
+  // ========================================================================
+  // 1. Unauthenticated Users
+  // ========================================================================
   if (!accessToken) {
+    if (isPublicRoute(pathname)) {
+      return NextResponse.next()
+    }
     url.pathname = LOGIN_PATH
     url.searchParams.set('redirect', pathname)
     return NextResponse.redirect(url)
   }
 
   // ========================================================================
-  // 3. Fetch user data and validate roles
+  // 2. Authenticated Users - Load user context
   // ========================================================================
   const me = await fetchMe(accessToken)
   const roles = me?.roles || []
 
   if (roles.length === 0) {
-    // No roles assigned, redirect to login
     url.pathname = LOGIN_PATH
     url.search = ''
     return NextResponse.redirect(url)
   }
 
-  // ========================================================================
-  // 4. Check route-specific permissions
-  // ========================================================================
-  if (!canAccessRoute(pathname, roles)) {
-    // User doesn't have permission for this route
-    // Redirect to their appropriate dashboard
-    const highestRole = getHighestRole(roles)
+  const highestRole = getHighestRole(roles)
+
+  // Redirect authenticated users away from Login/Register pages
+  if (pathname === LOGIN_PATH || pathname === REGISTER_PATH) {
     url.pathname = getRoleDashboard(highestRole)
     url.search = ''
     return NextResponse.redirect(url)
   }
 
   // ========================================================================
-  // 5. Allow access
+  // 3. Role-Based Route Isolation
   // ========================================================================
-  return NextResponse.next()
+  if (highestRole === 'citizen') {
+    // Citizens cannot access any official panel route
+    const adminRoutes = ['/superadmin', '/mayor', '/department', '/moderator', '/staff', '/issues', '/users', '/diagnostic']
+    if (adminRoutes.some(route => pathname.startsWith(route))) {
+      url.pathname = '/'
+      url.search = ''
+      return NextResponse.redirect(url)
+    }
+    return NextResponse.next()
+  } else {
+    // Official users (non-citizens) can only access allowed official routes
+    if (!isRouteAllowedForOfficial(pathname, highestRole)) {
+      url.pathname = getRoleDashboard(highestRole)
+      url.search = ''
+      return NextResponse.redirect(url)
+    }
+    return NextResponse.next()
+  }
 }
 
 export const config = {

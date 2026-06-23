@@ -3,7 +3,7 @@
 import { useEffect } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import { useSession } from '@/lib/providers/SessionProvider'
-import { hasAnyAdminRole, isCitizenOnlyRoute, isAdminOnlyRoute, getDefaultRouteForRole, selectPrimaryRole } from '@/lib/constants/roles'
+import { hasAnyAdminRole, isAdminOnlyRoute, getDefaultRouteForRole, selectPrimaryRole } from '@/lib/constants/roles'
 
 interface RouteGuardProps {
   children: React.ReactNode
@@ -56,10 +56,10 @@ export function RouteGuard({ children, requireCitizen, requireAdmin }: RouteGuar
 
     // AUTO-DETECT: If no explicit requirement, check route pattern
     if (!requireCitizen && !requireAdmin) {
-      // Check if admin is trying to access citizen-only route
-      if (isAdmin && isCitizenOnlyRoute(pathname)) {
+      // Check if admin is trying to access citizen-only route or public route (non-admin route)
+      if (isAdmin && !isAdminOnlyRoute(pathname) && !pathname.startsWith('/reports')) {
         const adminDashboard = getDefaultRouteForRole(primaryRole)
-        console.log(`🚫 RouteGuard: Admin ${primaryRole} auto-blocked from citizen route ${pathname}`)
+        console.log(`🚫 RouteGuard: Admin ${primaryRole} auto-blocked from non-admin route ${pathname}`)
         console.log(`↪️ Redirecting to admin dashboard: ${adminDashboard}`)
         router.push(adminDashboard)
         return

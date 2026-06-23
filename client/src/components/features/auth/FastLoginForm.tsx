@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label'
 // Removed Select imports
 import { getCSRFToken } from '@/lib/utils/csrf'
 import { loginRateLimiter } from '@/lib/utils/rate-limiter'
+import { getHomeRoute } from '@/lib/constants/roles'
 import {
   Eye, EyeOff, Lock, User,
   ArrowRight, Loader2, Shield, AlertTriangle, Phone, CheckCircle
@@ -172,12 +173,7 @@ export default function FastLoginForm() {
       handleLoginSuccess(user, token)
       toast.success(role === 'citizen' && needsName ? 'Registration complete! Welcome!' : 'Welcome back!', { duration: 2000 })
 
-      let destination = '/'
-      if (user.roles?.includes('super_admin')) destination = '/superadmin'
-      else if (user.roles?.includes('dept_admin')) destination = '/department'
-      else if (user.roles?.includes('mayor')) destination = '/mayor'
-      else if (user.roles?.includes('moderator')) destination = '/moderator/dashboard'
-      else if (user.roles?.includes('staff')) destination = '/staff'
+      const destination = getHomeRoute(user.roles)
 
       // Use router.push for SPA navigation (preserves React state, avoids hard reload)
       router.push(destination)

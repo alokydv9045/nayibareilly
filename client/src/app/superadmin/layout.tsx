@@ -1,12 +1,20 @@
 'use client'
-import { ReactNode } from 'react'
+import { ReactNode, useEffect } from 'react'
 import { useRouter, usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { Crown, BarChart3, Users, Building2, Shield, Settings, LogOut } from 'lucide-react'
 import { tokenStorage, userStorage } from '@/lib/auth/auth-utils'
 import { toast } from 'react-hot-toast'
+import socketService from '@/lib/services/socket-service'
 
 export default function SuperAdminLayout({ children }: { children: ReactNode }) {
+  useEffect(() => {
+    const token = tokenStorage.get()
+    if (token) {
+      socketService.connect(token)
+    }
+  }, [])
+
   const router = useRouter()
   const pathname = usePathname()
 
