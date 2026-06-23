@@ -10,6 +10,7 @@ import { DataTable, createSelectColumn, createActionsColumn } from '@/components
 import { useAdminIssues, useUpdateIssueStatus, useBulkUpdateIssueStatus, useTriageIssue, useAssignIssueToStaff, useCloseIssue, type AdminIssue } from '@/lib/api/admin-issues'
 import { useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
+import OfficialLayout from '@/components/layout/OfficialLayout'
 import { 
   TriageDialog, 
   AssignStaffDialog, 
@@ -98,7 +99,7 @@ export default function IssuesPage() {
   // Transform to table rows
   const issues: IssueRow[] = useMemo(() => {
     return (data?.items || []).map((i: AdminIssue) => ({
-      id: i._id,
+      id: i.id || i._id || (i as any).id,
       title: i.title,
       description: i.description || '',
       category: i.category?.name?.toUpperCase() || 'OTHER',
@@ -453,17 +454,13 @@ export default function IssuesPage() {
   }
 
   return (
-    <>
+    <OfficialLayout>
       <main className="py-4 sm:py-6 lg:py-8">
         <div className="mx-auto max-w-7xl px-3 sm:px-4 lg:px-8">
-          {/* Page Header */}
-          <div className="mb-4 sm:mb-6">
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900">Issue Management</h1>
-            <p className="mt-1 sm:mt-2 text-sm sm:text-base text-gray-700">
-              Track and manage citizen-reported issues across all departments
-            </p>
+          {/* Page Header (Removed per request) */}
+          <div className="mb-2 sm:mb-4 flex justify-end">
             {data && (
-              <p className="mt-1 text-xs sm:text-sm text-gray-500">
+              <p className="text-xs sm:text-sm text-gray-500">
                 Total Issues: <span className="font-semibold">{data.total || 0}</span>
               </p>
             )}
@@ -478,8 +475,6 @@ export default function IssuesPage() {
             onRefresh={handleRefresh}
             onExport={handleExport}
             loading={isLoading || isRefetching}
-            title="Issue Management"
-            description="Track and manage citizen-reported issues across all departments"
           />
         </div>
       </main>
@@ -535,6 +530,6 @@ export default function IssuesPage() {
         onOpenChange={(open) => setDetailsDialog({ open, issue: null })}
         issue={detailsDialog.issue}
       />
-    </>
+    </OfficialLayout>
   )
 }

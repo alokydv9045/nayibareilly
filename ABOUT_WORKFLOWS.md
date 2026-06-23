@@ -30,7 +30,7 @@ Below is a deep, fully detailed breakdown of every user type in the system, thei
 
 ## 2. 🛡️ Moderator
 **Role:** The frontline gatekeeper and triage specialist.
-**Goal:** Filter out spam, validate legitimate reports, assign appropriate priority, and route issues to the correct municipal department.
+**Goal:** Filter out spam, validate legitimate reports, assign appropriate priority, and route issues to the consolidated municipal department.
 
 ### Deep Workflow:
 1. **Triage & Review:**
@@ -39,19 +39,19 @@ Below is a deep, fully detailed breakdown of every user type in the system, thei
    - If the report is invalid, spam, or a duplicate, the moderator can reject it or merge it.
 2. **Prioritization & Routing:**
    - If valid, the moderator assesses the severity of the issue and assigns a Priority (`LOW`, `MEDIUM`, `HIGH`, `CRITICAL`).
-   - The moderator selects the appropriate Department (e.g., "Public Works", "Water Supply") to handle the fix.
+   - The moderator selects the consolidated department (**NayiBareilly Municipal Corporation**) to handle the fix.
    - They may add internal **Moderator Notes** to give additional context to the field staff.
-   - *System Action:* The issue status updates to `APPROVED` or `ASSIGNED_TO_DEPT`.
+   - *System Action:* The issue status updates to `APPROVED` or `ASSIGNED_TO_DEPARTMENT`.
 
 ---
 
 ## 3. 🏢 Department Admin
-**Role:** The operational manager for a specific municipal sector (e.g., Head of Sanitation).
-**Goal:** Oversee all issues routed to their department, balance staff workloads, and ensure Service Level Agreements (SLAs) are met.
+**Role:** The operational manager for the consolidated department (**NayiBareilly Municipal Corporation**).
+**Goal:** Oversee all issues routed to the department, balance staff workloads, and ensure Service Level Agreements (SLAs) are met.
 
 ### Deep Workflow:
 1. **Queue Management:**
-   - The Dept Admin reviews all issues that the Moderator routed to their specific department (`/department/issues`).
+   - The Dept Admin reviews all issues routed to the department (`/department/issues`).
    - They have a high-level view of their department's analytics (`/department/analytics`)—such as average resolution times and staff performance.
 2. **Staff Delegation:**
    - The admin selects a pending issue and evaluates the current workload of their Field Staff.
@@ -89,32 +89,32 @@ Below is a deep, fully detailed breakdown of every user type in the system, thei
 1. **Executive Dashboarding:**
    - The Mayor accesses the Executive Overview (`/mayor/overview`) to see city-wide analytics, heatmaps of frequent issue zones, and overall citizen satisfaction scores.
 2. **Departmental Auditing:**
-   - The Mayor can drill down into specific department performance metrics (`/mayor/departments`) to identify bottlenecks (e.g., finding out that the Roads department has a massive backlog of `CRITICAL` issues).
+   - The Mayor can drill down into the consolidated department's performance metrics (`/mayor/departments`) to identify bottlenecks (e.g., finding out that the Municipal Corporation has a backlog of `CRITICAL` issues).
 3. **High-Level Interventions:**
    - For major civic works that require budget sign-offs or executive orders, the Mayor reviews and approves them in the `mayor/approvals` queue.
 
 ---
 
-## 6. ⚡ Super Admin
+## 6. ⚡ Tech Admin
 **Role:** The master system controller.
 **Goal:** Manage the software infrastructure, enforce RBAC boundaries, and maintain the integrity of the data.
 
 ### Deep Workflow:
 1. **User & Access Management:**
-   - The Super Admin can create, edit, or disable user accounts (`/superadmin/users`).
+   - The Tech Admin can create, edit, or disable user accounts (`/techadmin/users`).
    - They govern Role Assignments (promoting a Citizen to Staff, or assigning a Dept Admin to a specific branch).
 2. **System Configurations:**
-   - They manage global settings (`/superadmin/departments`), creating new municipal departments, modifying issue categories, and tweaking SLAs.
+   - They manage global settings (`/techadmin/departments`), creating new municipal departments, modifying issue categories, and tweaking SLAs.
 3. **System Audits & Diagnostics:**
-   - They have access to the ultimate Audit Logs (`/superadmin/audit`) to track every single action taken by any user in the system for security and compliance purposes.
+   - They have access to the ultimate Audit Logs (`/techadmin/audit`) to track every single action taken by any user in the system for security and compliance purposes.
 
 ---
 
 ## 🔄 The Complete "Happy Path" Issue Lifecycle
 
 1. **[CITIZEN]** Reports pothole ➔ `Status: PENDING`
-2. **[MODERATOR]** Validates report, sets priority to HIGH, routes to Public Works ➔ `Status: APPROVED`
-3. **[DEPT ADMIN (Public Works)]** Sees issue in queue, assigns to Staff Member "John" ➔ `Status: ASSIGNED_TO_STAFF`
+2. **[MODERATOR]** Validates report, sets priority to HIGH, routes to Municipal Corporation ➔ `Status: APPROVED`
+3. **[DEPT ADMIN (Municipal Corporation)]** Sees issue in queue, assigns to Staff Member "John" ➔ `Status: ASSIGNED_TO_STAFF`
 4. **[STAFF (John)]** Clicks "Start Work" and goes to site ➔ `Status: IN_PROGRESS`
 5. **[STAFF (John)]** Fills pothole, uploads proof photo, marks resolved ➔ `Status: RESOLVED`
 6. **[CITIZEN]** Gets notified, reviews proof, clicks "Verify Resolution" and gives 5 stars ➔ `Status: CLOSED`

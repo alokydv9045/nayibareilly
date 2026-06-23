@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useEffect, useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -31,14 +31,14 @@ interface AssignedIssue {
 const PRIORITY_CONFIG: Record<string, { label: string; color: string; dot: string }> = {
   CRITICAL: { label: 'Critical', color: 'bg-red-500/20 text-red-600 border-red-200', dot: 'bg-red-500' },
   HIGH:     { label: 'High',     color: 'bg-orange-500/20 text-orange-600 border-orange-200', dot: 'bg-orange-500' },
-  MEDIUM:   { label: 'Medium',   color: 'bg-amber-500/20 text-amber-600 border-amber-200', dot: 'bg-amber-500' },
+  MEDIUM:   { label: 'Medium',   color: 'bg-amber-500/20 text-amber-600 border-gray-200', dot: 'bg-amber-500' },
   LOW:      { label: 'Low',      color: 'bg-blue-500/20 text-blue-600 border-blue-200', dot: 'bg-blue-500' },
 }
 
 const STATUS_CONFIG: Record<string, { label: string; color: string; icon: React.ElementType }> = {
   ASSIGNED_TO_STAFF: { label: 'Assigned',    color: 'bg-blue-500/20 text-blue-600 border-blue-200',     icon: Briefcase },
-  STAFF_EN_ROUTE:    { label: 'En Route',    color: 'bg-purple-500/20 text-purple-600 border-purple-200', icon: Navigation },
-  STAFF_ON_SITE:     { label: 'On Site',     color: 'bg-amber-500/20 text-amber-600 border-amber-200',   icon: MapPin },
+  STAFF_EN_ROUTE:    { label: 'En Route',    color: 'bg-purple-500/20 text-blue-600 border-purple-200', icon: Navigation },
+  STAFF_ON_SITE:     { label: 'On Site',     color: 'bg-amber-500/20 text-amber-600 border-gray-200',   icon: MapPin },
   WORK_IN_PROGRESS:  { label: 'Working',     color: 'bg-yellow-500/20 text-yellow-600 border-yellow-200', icon: Wrench },
   IN_PROGRESS:       { label: 'In Progress', color: 'bg-yellow-500/20 text-yellow-600 border-yellow-200', icon: Wrench },
   WORK_COMPLETED:    { label: 'Completed',   color: 'bg-emerald-500/20 text-emerald-600 border-emerald-200', icon: CheckCircle2 },
@@ -122,11 +122,11 @@ export default function StaffPage() {
   const urgent = assignedIssues.filter(i => ['CRITICAL','HIGH'].includes(i.priority?.toUpperCase()))
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-50 text-amber-950 pb-8">
+    <div className="min-h-screen bg-gray-50 text-gray-900 pb-8">
         {/* Topbar */}
-        <header className="sticky top-0 z-40 bg-white border-b border-amber-200/60 px-8 py-4 flex items-center justify-between">
+        <header className="sticky top-0 z-40 bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-amber-950">Staff Dashboard</h1>
+            <h1 className="text-2xl font-bold text-gray-900">Staff Dashboard</h1>
             <p className="text-xs text-teal-300/60 mt-0.5">Manage your assigned issues with real-time updates</p>
           </div>
           <div className="flex items-center gap-3">
@@ -137,11 +137,11 @@ export default function StaffPage() {
               </Badge>
             )}
             <Button size="sm" variant="ghost" onClick={() => void fetchAssignedIssues()} disabled={loading}
-              className="text-amber-800/80 hover:text-amber-950 hover:bg-amber-100/50 border border-amber-200/60">
+              className="text-gray-600 hover:text-gray-900 hover:bg-gray-50 border border-gray-200">
               <RefreshCw className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
               Refresh
             </Button>
-            <Button size="sm" variant="ghost" className="text-amber-800/80 hover:text-amber-950 hover:bg-amber-100/50 border border-amber-200/60">
+            <Button size="sm" variant="ghost" className="text-gray-600 hover:text-gray-900 hover:bg-gray-50 border border-gray-200">
               <Bell className="h-4 w-4" />
             </Button>
           </div>
@@ -154,7 +154,7 @@ export default function StaffPage() {
               { label: 'Active Issues', value: active.length, sub: `${urgent.length} urgent`, icon: AlertCircle, color: 'text-orange-600', bg: 'from-orange-500/20 to-orange-600/10 border-orange-200' },
               { label: 'In Progress', value: assignedIssues.filter(i => ['IN_PROGRESS','WORK_IN_PROGRESS'].includes(i.status)).length, sub: 'Currently working', icon: Wrench, color: 'text-yellow-600', bg: 'from-yellow-500/20 to-yellow-600/10 border-yellow-200' },
               { label: 'Completed', value: completed.length, sub: 'Ready for verification', icon: CheckCircle, color: 'text-emerald-600', bg: 'from-emerald-500/20 to-emerald-600/10 border-emerald-200' },
-              { label: 'My Rating', value: '4.8★', sub: 'Excellent performance', icon: Star, color: 'text-yellow-600', bg: 'from-amber-500/20 to-amber-600/10 border-amber-200' },
+              { label: 'My Rating', value: '4.8★', sub: 'Excellent performance', icon: Star, color: 'text-yellow-600', bg: 'from-amber-500/20 to-amber-600/10 border-gray-200' },
             ].map((card, i) => {
               const Icon = card.icon
               return (
@@ -162,8 +162,8 @@ export default function StaffPage() {
                   <CardContent className="p-5">
                     <div className="flex items-start justify-between">
                       <div>
-                        <p className="text-xs text-amber-800/80 mb-1">{card.label}</p>
-                        <p className="text-3xl font-bold text-amber-950">{card.value}</p>
+                        <p className="text-xs text-gray-600 mb-1">{card.label}</p>
+                        <p className="text-3xl font-bold text-gray-900">{card.value}</p>
                         <p className={`text-xs mt-1 ${card.color}`}>{card.sub}</p>
                       </div>
                       <div className="p-2 bg-amber-100/50 rounded-xl">
@@ -178,17 +178,17 @@ export default function StaffPage() {
 
           {/* Tabs */}
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="bg-white border border-amber-200/60  p-1">
-              <TabsTrigger value="assigned" className="data-[state=active]:bg-teal-600/40 data-[state=active]:text-amber-950 text-amber-800/80 gap-2">
+            <TabsList className="bg-white border border-gray-200  p-1">
+              <TabsTrigger value="assigned" className="data-[state=active]:bg-teal-600/40 data-[state=active]:text-gray-900 text-gray-600 gap-2">
                 <ListChecks className="h-4 w-4" />
                 My Issues
                 {active.length > 0 && <Badge className="bg-teal-600/40 text-teal-200 text-xs ml-1">{active.length}</Badge>}
               </TabsTrigger>
-              <TabsTrigger value="completed" className="data-[state=active]:bg-emerald-600/40 data-[state=active]:text-amber-950 text-amber-800/80 gap-2">
+              <TabsTrigger value="completed" className="data-[state=active]:bg-emerald-600/40 data-[state=active]:text-gray-900 text-gray-600 gap-2">
                 <ClipboardCheck className="h-4 w-4" />
                 Completed
               </TabsTrigger>
-              <TabsTrigger value="profile" className="data-[state=active]:bg-amber-100/50 data-[state=active]:text-amber-950 text-amber-800/80 gap-2">
+              <TabsTrigger value="profile" className="data-[state=active]:bg-amber-100/50 data-[state=active]:text-gray-900 text-gray-600 gap-2">
                 <UserCircle className="h-4 w-4" />
                 Profile
               </TabsTrigger>
@@ -197,42 +197,42 @@ export default function StaffPage() {
             {/* My Issues Tab */}
             <TabsContent value="assigned" className="mt-6 space-y-4">
               {loading ? (
-                <div className="flex flex-col items-center justify-center py-16 text-amber-800/80 gap-3">
+                <div className="flex flex-col items-center justify-center py-16 text-gray-600 gap-3">
                   <Loader2 className="h-10 w-10 animate-spin" />
                   <p className="text-sm">Loading your issues...</p>
                 </div>
               ) : active.length === 0 ? (
-                <div className="flex flex-col items-center justify-center py-16 text-amber-800/80 gap-3">
+                <div className="flex flex-col items-center justify-center py-16 text-gray-600 gap-3">
                   <CheckCircle2 className="h-14 w-14 opacity-30" />
-                  <p className="text-lg font-medium text-amber-800/80">All clear!</p>
+                  <p className="text-lg font-medium text-gray-600">All clear!</p>
                   <p className="text-sm">No active issues assigned to you.</p>
                 </div>
               ) : (
                 active.map((issue) => {
                   const priority = PRIORITY_CONFIG[issue.priority?.toUpperCase()] || PRIORITY_CONFIG.MEDIUM
-                  const statusInfo = STATUS_CONFIG[issue.status] || { label: issue.status, color: 'bg-amber-100/50 text-amber-800/80 border-amber-200/60', icon: AlertCircle }
+                  const statusInfo = STATUS_CONFIG[issue.status] || { label: issue.status, color: 'bg-amber-100/50 text-gray-600 border-gray-200', icon: AlertCircle }
                   const StatusIcon = statusInfo.icon
                   const canStart = issue.status === 'ASSIGNED_TO_STAFF'
                   const canComplete = issue.status === 'IN_PROGRESS' || issue.status === 'WORK_IN_PROGRESS' || issue.status === 'STAFF_ON_SITE'
 
                   return (
-                    <Card key={issue.id} className="bg-white border border-amber-200/60 hover:border-amber-200/60 transition-all ">
+                    <Card key={issue.id} className="bg-white border border-gray-200 hover:border-gray-200 transition-all ">
                       <CardContent className="p-6 space-y-4">
                         {/* Header */}
                         <div className="flex items-start justify-between gap-4">
                           <div className="flex-1 min-w-0">
                             <div className="flex flex-wrap items-center gap-2 mb-2">
-                              <h3 className="text-lg font-semibold text-amber-950">{issue.title}</h3>
+                              <h3 className="text-lg font-semibold text-gray-900">{issue.title}</h3>
                               <Badge className={`border text-xs ${priority.color}`}>
                                 <span className={`w-1.5 h-1.5 rounded-full ${priority.dot} inline-block mr-1`} />
                                 {priority.label}
                               </Badge>
                               {issue.category && (
-                                <Badge className="bg-purple-500/20 text-purple-600 border border-purple-200 text-xs">{issue.category}</Badge>
+                                <Badge className="bg-purple-500/20 text-blue-600 border border-purple-200 text-xs">{issue.category}</Badge>
                               )}
                             </div>
                             {issue.description && (
-                              <p className="text-sm text-amber-800/80 line-clamp-2">{issue.description}</p>
+                              <p className="text-sm text-gray-600 line-clamp-2">{issue.description}</p>
                             )}
                           </div>
                           <Badge className={`border shrink-0 ${statusInfo.color} flex items-center gap-1.5`}>
@@ -242,7 +242,7 @@ export default function StaffPage() {
                         </div>
 
                         {/* Meta */}
-                        <div className="flex flex-wrap gap-4 text-xs text-amber-800/80">
+                        <div className="flex flex-wrap gap-4 text-xs text-gray-600">
                           {issue.citizenName && (
                             <span className="flex items-center gap-1.5"><User className="h-3.5 w-3.5 text-teal-400" />{issue.citizenName}</span>
                           )}
@@ -260,13 +260,13 @@ export default function StaffPage() {
                             <MessageSquare className="h-4 w-4 text-blue-600 shrink-0 mt-0.5" />
                             <div>
                               <p className="text-xs font-semibold text-blue-600 mb-0.5">Assignment Notes</p>
-                              <p className="text-xs text-amber-800/80 italic">&ldquo;{issue.moderatorNotes}&rdquo;</p>
+                              <p className="text-xs text-gray-600 italic">&ldquo;{issue.moderatorNotes}&rdquo;</p>
                             </div>
                           </div>
                         )}
 
                         {/* Actions */}
-                        <div className="flex items-center justify-between pt-2 border-t border-amber-200/60">
+                        <div className="flex items-center justify-between pt-2 border-t border-gray-200">
                           <div className="flex gap-2">
                             {issue.latitude && issue.longitude && (
                               <Button variant="outline" size="sm"
@@ -315,13 +315,13 @@ export default function StaffPage() {
                               <label className="text-xs font-medium text-emerald-200">Work Completion Notes *</label>
                               <Textarea value={completionNotes} onChange={e => setCompletionNotes(e.target.value)}
                                 placeholder="Describe the work completed, parts used, etc."
-                                className="bg-white border-amber-200/60 text-amber-950 placeholder:text-amber-800/80 text-sm" rows={3} />
+                                className="bg-white border-gray-200 text-gray-900 placeholder:text-gray-600 text-sm" rows={3} />
                             </div>
                             <div className="space-y-1">
                               <label className="text-xs font-medium text-emerald-200">After Photos *</label>
                               <Input type="file" accept="image/*" multiple
                                 onChange={e => e.target.files && setAfterPhotos(Array.from(e.target.files))}
-                                className="bg-white border-amber-200/60 text-amber-950 text-sm" />
+                                className="bg-white border-gray-200 text-gray-900 text-sm" />
                               {afterPhotos.length > 0 && (
                                 <p className="text-xs text-emerald-600 flex items-center gap-1">
                                   <FileImage className="h-3.5 w-3.5" />{afterPhotos.length} photo(s) selected
@@ -351,18 +351,18 @@ export default function StaffPage() {
             {/* Completed Tab */}
             <TabsContent value="completed" className="mt-6 space-y-3">
               {completed.length === 0 ? (
-                <div className="flex flex-col items-center justify-center py-16 text-amber-800/80 gap-3">
+                <div className="flex flex-col items-center justify-center py-16 text-gray-600 gap-3">
                   <History className="h-14 w-14 opacity-30" />
                   <p className="text-sm">No completed issues yet</p>
                 </div>
               ) : (
                 completed.map(issue => (
-                  <Card key={issue.id} className="bg-white border border-amber-200/60 ">
+                  <Card key={issue.id} className="bg-white border border-gray-200 ">
                     <CardContent className="p-5">
                       <div className="flex items-center justify-between">
                         <div className="min-w-0 flex-1">
-                          <h3 className="text-sm font-semibold text-amber-950 mb-1">{issue.title}</h3>
-                          <p className="text-xs text-amber-800/80 flex items-center gap-1">
+                          <h3 className="text-sm font-semibold text-gray-900 mb-1">{issue.title}</h3>
+                          <p className="text-xs text-gray-600 flex items-center gap-1">
                             <MapPin className="h-3.5 w-3.5 text-teal-400" />
                             {issue.location || issue.address || 'No location'}
                           </p>
@@ -380,13 +380,13 @@ export default function StaffPage() {
 
             {/* Profile Tab */}
             <TabsContent value="profile" className="mt-6">
-              <Card className="bg-white border border-amber-200/60 ">
+              <Card className="bg-white border border-gray-200 ">
                 <CardHeader>
-                  <CardTitle className="text-amber-950 flex items-center gap-2">
+                  <CardTitle className="text-gray-900 flex items-center gap-2">
                     <Award className="h-5 w-5 text-yellow-600" />
                     Staff Performance
                   </CardTitle>
-                  <CardDescription className="text-amber-800/80">Your work statistics and ratings</CardDescription>
+                  <CardDescription className="text-gray-600">Your work statistics and ratings</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-2 gap-4">
@@ -398,10 +398,10 @@ export default function StaffPage() {
                     ].map((item, i) => {
                       const Icon = item.icon
                       return (
-                        <div key={i} className="bg-white rounded-xl p-4 border border-amber-200/60">
+                        <div key={i} className="bg-white rounded-xl p-4 border border-gray-200">
                           <div className="flex items-center gap-2 mb-2">
                             <Icon className={`h-4 w-4 ${item.color}`} />
-                            <p className="text-xs text-amber-800/80">{item.label}</p>
+                            <p className="text-xs text-gray-600">{item.label}</p>
                           </div>
                           <p className={`text-2xl font-bold ${item.color}`}>{item.value}</p>
                         </div>
@@ -416,3 +416,4 @@ export default function StaffPage() {
     </div>
   )
 }
+

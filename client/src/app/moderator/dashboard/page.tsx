@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useEffect, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
@@ -6,8 +6,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
-  Shield, AlertTriangle, CheckCircle, Clock, FileText, BarChart3,
-  Activity, Eye, ArrowRight, ChevronRight, RefreshCw, LogOut,
+  Shield, CheckCircle, FileText, BarChart3,
+  Eye, ArrowRight, ChevronRight, RefreshCw,
   Inbox, History, TrendingUp, Bell, Flame, XCircle, ListFilter,
   Star
 } from 'lucide-react'
@@ -77,7 +77,7 @@ export default function ModeratorDashboard() {
     {
       title: 'Pending Reviews', value: dashboardStats.pendingReviews,
       icon: Inbox, description: 'Awaiting your moderation',
-      color: 'text-amber-600', bgGradient: 'from-amber-500/20 to-orange-500/10 border-amber-200',
+      color: 'text-amber-600', bgGradient: 'from-amber-500/20 to-orange-500/10 border-gray-200',
       href: '/moderator/pending'
     },
     {
@@ -137,27 +137,27 @@ export default function ModeratorDashboard() {
 
   return (
     <ProtectedRoute requiredRoles={['moderator']}>
-      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 text-amber-950 pb-8">
+      <div className="min-h-screen bg-gray-50 pb-8">
           {/* Topbar */}
-          <header className="sticky top-0 z-40 bg-white border-b border-amber-200/60 px-8 py-4 flex items-center justify-between">
+          <header className="sticky top-0 z-40 bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-amber-950">Moderator Dashboard</h1>
-              <p className="text-xs text-amber-800/80 mt-0.5">Review and manage community reports</p>
+              <h1 className="text-2xl font-bold text-gray-900">Moderator Dashboard</h1>
+              <p className="text-xs text-gray-500 mt-0.5">Review and manage community reports</p>
             </div>
             <div className="flex items-center gap-3">
               {dashboardStats.pendingReviews > 0 && (
-                <Badge className="bg-amber-500/20 text-amber-600 border border-amber-200 gap-1.5">
+                <Badge className="bg-amber-500/20 text-amber-600 border border-gray-200 gap-1.5">
                   <span className="w-1.5 h-1.5 bg-amber-400 rounded-full animate-pulse" />
                   {dashboardStats.pendingReviews} Pending
                 </Badge>
               )}
               <Button size="sm" variant="ghost" onClick={handleRefresh} disabled={isRefreshing}
-                className="text-amber-800/80 hover:text-amber-950 hover:bg-amber-100/50 border border-amber-200/60">
+                className="text-gray-600 hover:text-gray-900 hover:bg-gray-50 border border-gray-200">
                 <RefreshCw className={`h-4 w-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
                 Refresh
               </Button>
               <Button size="sm" variant="ghost"
-                className="text-amber-800/80 hover:text-amber-950 hover:bg-amber-100/50 border border-amber-200/60">
+                className="text-gray-600 hover:text-gray-900 hover:bg-gray-50 border border-gray-200">
                 <Bell className="h-4 w-4" />
               </Button>
             </div>
@@ -176,13 +176,13 @@ export default function ModeratorDashboard() {
                           <div className="p-2.5 bg-amber-100/50 rounded-xl">
                             <Icon className={`h-5 w-5 ${card.color}`} />
                           </div>
-                          <ChevronRight className="h-4 w-4 text-amber-800/80 group-hover:text-amber-950 group-hover:translate-x-0.5 transition-all" />
+                          <ChevronRight className="h-4 w-4 text-gray-600 group-hover:text-gray-900 group-hover:translate-x-0.5 transition-all" />
                         </div>
-                        <p className="text-sm text-amber-800/80 mb-1">{card.title}</p>
-                        <p className="text-4xl font-bold text-amber-950 mb-2">
-                          {isLoading ? <span className="text-amber-800/80">—</span> : card.value.toLocaleString()}
+                        <p className="text-sm text-gray-600 mb-1">{card.title}</p>
+                        <p className="text-4xl font-bold text-gray-900 mb-2">
+                          {isLoading ? <span className="text-gray-600">—</span> : card.value.toLocaleString()}
                         </p>
-                        <p className="text-xs text-amber-800/80">{card.description}</p>
+                        <p className="text-xs text-gray-600">{card.description}</p>
                       </CardContent>
                     </Card>
                   </button>
@@ -192,8 +192,8 @@ export default function ModeratorDashboard() {
 
             {/* Quick Actions */}
             <div>
-              <h2 className="text-base font-semibold text-amber-800/80 mb-4 flex items-center gap-2">
-                <ListFilter className="h-4 w-4 text-orange-600" />
+              <h2 className="text-base font-semibold text-gray-700 mb-4 flex items-center gap-2">
+                <ListFilter className="h-4 w-4 text-blue-600" />
                 Quick Actions
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -202,20 +202,20 @@ export default function ModeratorDashboard() {
                   return (
                     <button key={action.href} onClick={() => router.push(action.href)}
                       className="text-left group">
-                      <Card className="bg-white border border-amber-200/60 hover:border-amber-200/60 hover:bg-amber-50/50 transition-all">
+                      <Card className="bg-white border border-gray-200 hover:border-gray-200 hover:bg-gray-50 transition-all">
                         <CardContent className="p-5">
                           <div className="flex items-start gap-4">
                             <div className={`p-3 bg-gradient-to-br ${action.gradient} rounded-xl shadow-lg shrink-0`}>
-                              <Icon className="h-5 w-5 text-amber-950" />
+                              <Icon className="h-5 w-5 text-gray-900" />
                             </div>
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center justify-between mb-1">
-                                <h3 className="font-semibold text-amber-950 text-sm">{action.title}</h3>
+                                <h3 className="font-semibold text-gray-900 text-sm">{action.title}</h3>
                                 {action.count !== null && action.count > 0 && (
-                                  <Badge className="bg-amber-500/20 text-amber-600 border border-amber-200 text-xs">{action.count}</Badge>
+                                  <Badge className="bg-amber-500/20 text-amber-600 border border-gray-200 text-xs">{action.count}</Badge>
                                 )}
                               </div>
-                              <p className="text-xs text-amber-800/80 mb-3">{action.description}</p>
+                              <p className="text-xs text-gray-600 mb-3">{action.description}</p>
                               <div className="flex items-center text-xs text-blue-600 group-hover:text-blue-600 transition-colors">
                                 <span>Get started</span>
                                 <ArrowRight className="h-3.5 w-3.5 ml-1 group-hover:translate-x-0.5 transition-transform" />
@@ -231,43 +231,43 @@ export default function ModeratorDashboard() {
             </div>
 
             {/* Performance Snapshot */}
-            <Card className="bg-white border border-amber-200/60 ">
+            <Card className="bg-white border border-gray-200 ">
               <CardHeader>
-                <CardTitle className="text-amber-950 flex items-center gap-2 text-base">
+                <CardTitle className="text-gray-900 flex items-center gap-2 text-base">
                   <Star className="h-4 w-4 text-yellow-600" />
-                  Today's Performance
+                  Today&apos;s Performance
                 </CardTitle>
-                <CardDescription className="text-amber-800/80">Your moderation activity in the last 24 hours</CardDescription>
+                <CardDescription className="text-gray-600">Your moderation activity in the last 24 hours</CardDescription>
               </CardHeader>
               <CardContent>
                 {isLoading ? (
-                  <div className="text-center py-8 text-amber-800/80 text-sm">Loading activity...</div>
+                  <div className="text-center py-8 text-gray-600 text-sm">Loading activity...</div>
                 ) : (
                   <div className="grid grid-cols-3 gap-4">
-                    <div className="bg-white rounded-xl p-4 text-center border border-amber-200/60">
+                    <div className="bg-white rounded-xl p-4 text-center border border-gray-200">
                       <CheckCircle className="h-5 w-5 text-emerald-600 mx-auto mb-2" />
-                      <p className="text-2xl font-bold text-amber-950">{dashboardStats.approvedToday}</p>
-                      <p className="text-xs text-amber-800/80 mt-1">Approved</p>
+                      <p className="text-2xl font-bold text-gray-900">{dashboardStats.approvedToday}</p>
+                      <p className="text-xs text-gray-600 mt-1">Approved</p>
                     </div>
-                    <div className="bg-white rounded-xl p-4 text-center border border-amber-200/60">
+                    <div className="bg-white rounded-xl p-4 text-center border border-gray-200">
                       <XCircle className="h-5 w-5 text-red-600 mx-auto mb-2" />
-                      <p className="text-2xl font-bold text-amber-950">{dashboardStats.rejectedToday}</p>
-                      <p className="text-xs text-amber-800/80 mt-1">Rejected</p>
+                      <p className="text-2xl font-bold text-gray-900">{dashboardStats.rejectedToday}</p>
+                      <p className="text-xs text-gray-600 mt-1">Rejected</p>
                     </div>
-                    <div className="bg-white rounded-xl p-4 text-center border border-amber-200/60">
+                    <div className="bg-white rounded-xl p-4 text-center border border-gray-200">
                       <TrendingUp className="h-5 w-5 text-blue-600 mx-auto mb-2" />
-                      <p className="text-2xl font-bold text-amber-950">{dashboardStats.avgResponseTime}%</p>
-                      <p className="text-xs text-amber-800/80 mt-1">Approval Rate</p>
+                      <p className="text-2xl font-bold text-gray-900">{dashboardStats.avgResponseTime}%</p>
+                      <p className="text-xs text-gray-600 mt-1">Approval Rate</p>
                     </div>
                   </div>
                 )}
                 <div className="mt-4 flex gap-3">
-                  <Button className="flex-1 bg-amber-600 hover:bg-amber-700 text-amber-950 text-sm"
+                  <Button className="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-sm"
                     onClick={() => router.push('/moderator/pending')}>
                     <Eye className="h-4 w-4 mr-2" />
                     Start Reviewing
                   </Button>
-                  <Button variant="outline" className="border-amber-200/60 text-amber-800/80 hover:text-amber-950 hover:bg-amber-100/50 text-sm"
+                  <Button variant="outline" className="border-gray-200 text-gray-600 hover:text-gray-900 hover:bg-gray-50 text-sm"
                     onClick={() => router.push('/moderator/analytics')}>
                     <BarChart3 className="h-4 w-4 mr-2" />
                     View Analytics
@@ -280,3 +280,4 @@ export default function ModeratorDashboard() {
     </ProtectedRoute>
   )
 }
+

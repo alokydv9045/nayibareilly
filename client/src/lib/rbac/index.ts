@@ -60,7 +60,7 @@ export {
   combineGuardsOr,
   requireAuth,
   requireAdmin,
-  requireSuperAdmin,
+  requireTechAdmin,
   requireModerator,
   requireStaff,
   requireCitizenOnly,

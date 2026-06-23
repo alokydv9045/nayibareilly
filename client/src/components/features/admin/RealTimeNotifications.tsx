@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
@@ -137,7 +137,7 @@ export function RealTimeNotifications() {
     };
 
     const handleUserLogin = (data: UserEventData) => {
-      if (user.roles.includes('super_admin')) {
+      if (user.roles.includes('tech_admin')) {
         const notification: Notification = {
           id: `login-${data.userId}-${Date.now()}`,
           type: 'info',

@@ -11,6 +11,7 @@ if (process.env.SENTRY_DSN) {
 }
 
 import cluster from 'cluster'
+import 'express-async-errors'
 import os from 'os'
 import path from 'path'
 import fs from 'fs'
@@ -162,6 +163,7 @@ if (!disableClustering && cluster.isPrimary) {
   }
 
   // Configure Redis adapter if available
+  const redisEnabled = Boolean(redisClient)
   if (redisClient) {
     try {
       const subClient = redisClient.duplicate()
@@ -341,47 +343,8 @@ if (!disableClustering && cluster.isPrimary) {
   })
 
   // Backward compatibility: Map frontend expected endpoints to v1 routes
-  // Auth routes - map /api/auth/* to /api/v1/auth/*
-  app.use('/api/auth', (req, res, next) => {
-    req.url = `/auth${req.url}` // Remove leading slash and let v1Routes handle it
-    v1Routes(req, res, next)
-  })
-
-  // Issues routes - map /api/issues/* to /api/v1/issues/*
-  app.use('/api/issues', (req, res, next) => {
-    req.url = `/issues${req.url}` // Map to /v1/issues + original path
-    v1Routes(req, res, next)
-  })
-
-  // Users routes - map /api/users/* to /api/v1/users/*
-  app.use('/api/users', (req, res, next) => {
-    req.url = `/users${req.url}` // Remove leading slash and let v1Routes handle it  
-    v1Routes(req, res, next)
-  })
-
-  // Admin routes - map /api/admin/* to /api/v1/admin/*
-  app.use('/api/admin', (req, res, next) => {
-    req.url = `/admin${req.url}` // Remove leading slash and let v1Routes handle it
-    v1Routes(req, res, next)
-  })
-
-  // Dashboard routes - map /api/dashboard/* to /api/v1/admin/* (dashboard is usually admin)
-  app.use('/api/dashboard', (req, res, next) => {
-    req.url = `/admin${req.url}` // Map dashboard to admin routes
-    v1Routes(req, res, next)
-  })
-
-  // Departments routes - map /api/departments/* to /api/v1/departments/*
-  app.use('/api/departments', (req, res, next) => {
-    req.url = `/departments${req.url}` // Remove leading slash and let v1Routes handle it
-    v1Routes(req, res, next)
-  })
-
-  // Notifications routes - map /api/notifications/* to /api/v1/notifications/*
-  app.use('/api/notifications', (req, res, next) => {
-    req.url = `/notifications${req.url}` // Remove leading slash and let v1Routes handle it
-    v1Routes(req, res, next)
-  })
+  // Mount the entire v1 router at /api so legacy endpoints like /api/auth work without hacks
+  app.use('/api', v1Routes)
 
 
 

@@ -14,6 +14,24 @@ import { issueCreationRateLimit } from '../../../middlewares/rateLimit.js';
 const router = Router();
 
 /**
+ * POST /api/v1/issues/bulk-status
+ * Bulk update issue status (Admin)
+ */
+router.post('/bulk-status', [
+  auth(['SUPER_ADMIN', 'TECH_ADMIN', 'DEPT_ADMIN', 'MAYOR', 'MODERATOR']),
+  validateCSRFToken,
+  body('ids').isArray(),
+  body('status').isString()
+], async (req, res, next) => {
+  try {
+    const { bulkUpdateStatusAdmin } = await import('../../../controllers/admin.controller.js');
+    return bulkUpdateStatusAdmin(req, res, next);
+  } catch (error) {
+    next(error);
+  }
+});
+
+/**
  * GET /api/v1/issues
  * List all issues with filtering and pagination
  */
@@ -130,6 +148,24 @@ router.get('/track/:reportId', [
 });
 
 /**
+ * GET /api/v1/issues/my-assigned
+ * Get issues assigned to current staff member
+ */
+router.get('/my-assigned', [
+  auth(['STAFF', 'DEPT_ADMIN', 'MAYOR', 'SUPER_ADMIN']),
+  query('status').optional().isString(),
+  query('page').optional().isInt({ min: 1 }),
+  query('limit').optional().isInt({ min: 1, max: 100 })
+], async (req, res, next) => {
+  try {
+    const { listAssignedToMe } = await import('../../../controllers/issue.controller.js');
+    return listAssignedToMe(req, res, next);
+  } catch (error) {
+    next(error);
+  }
+});
+
+/**
  * GET /api/v1/issues/:id
  * Get issue details by ID
  */
@@ -231,23 +267,6 @@ router.get('/:id/timeline', [
   }
 });
 
-/**
- * GET /api/v1/issues/my-assigned
- * Get issues assigned to current staff member
- */
-router.get('/my-assigned', [
-  auth(['STAFF', 'DEPT_ADMIN', 'MAYOR', 'SUPER_ADMIN']),
-  query('status').optional().isString(),
-  query('page').optional().isInt({ min: 1 }),
-  query('limit').optional().isInt({ min: 1, max: 100 })
-], async (req, res, next) => {
-  try {
-    const { listAssignedToMe } = await import('../../../controllers/issue.controller.js');
-    return listAssignedToMe(req, res, next);
-  } catch (error) {
-    next(error);
-  }
-});
 
 /**
  * PUT /api/v1/issues/:id/start
@@ -318,6 +337,77 @@ router.post('/:id/escalate', [
   try {
     const { escalateIssue } = await import('../../../controllers/issue.controller.js');
     return escalateIssue(req, res, next);
+  } catch (error) {
+    next(error);
+  }
+});
+
+/**
+ * PUT /api/v1/issues/:id/status
+ * Manually update issue status (Admin)
+ */
+router.put('/:id/status', [
+  auth(['SUPER_ADMIN', 'TECH_ADMIN', 'DEPT_ADMIN', 'MAYOR', 'MODERATOR']),
+  validateCSRFToken,
+  param('id').isString(),
+  body('status').isString()
+], async (req, res, next) => {
+  try {
+    const { updateIssueStatusAdmin } = await import('../../../controllers/admin.controller.js');
+    return updateIssueStatusAdmin(req, res, next);
+  } catch (error) {
+    next(error);
+  }
+});
+
+/**
+ * PUT /api/v1/issues/:id/triage
+ * Assign department and update status to TRIAGED (Admin)
+ */
+router.put('/:id/triage', [
+  auth(['SUPER_ADMIN', 'TECH_ADMIN', 'DEPT_ADMIN', 'MAYOR', 'MODERATOR']),
+  validateCSRFToken,
+  param('id').isString(),
+  body('departmentId').isString()
+], async (req, res, next) => {
+  try {
+    const { triageIssueAdmin } = await import('../../../controllers/admin.controller.js');
+    return triageIssueAdmin(req, res, next);
+  } catch (error) {
+    next(error);
+  }
+});
+
+/**
+ * PUT /api/v1/issues/:id/assign
+ * Assign staff member to issue (Admin)
+ */
+router.put('/:id/assign', [
+  auth(['SUPER_ADMIN', 'TECH_ADMIN', 'DEPT_ADMIN', 'MAYOR', 'MODERATOR']),
+  validateCSRFToken,
+  param('id').isString(),
+  body('staffUserId').isString()
+], async (req, res, next) => {
+  try {
+    const { assignIssueAdmin } = await import('../../../controllers/admin.controller.js');
+    return assignIssueAdmin(req, res, next);
+  } catch (error) {
+    next(error);
+  }
+});
+
+/**
+ * PUT /api/v1/issues/:id/close
+ * Force close an issue (Admin)
+ */
+router.put('/:id/close', [
+  auth(['SUPER_ADMIN', 'TECH_ADMIN', 'DEPT_ADMIN', 'MAYOR', 'MODERATOR']),
+  validateCSRFToken,
+  param('id').isString()
+], async (req, res, next) => {
+  try {
+    const { closeIssueAdmin } = await import('../../../controllers/admin.controller.js');
+    return closeIssueAdmin(req, res, next);
   } catch (error) {
     next(error);
   }

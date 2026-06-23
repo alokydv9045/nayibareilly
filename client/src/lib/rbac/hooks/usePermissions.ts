@@ -359,7 +359,7 @@ export function useResourceOwnership(
 
     // Admins can always modify/delete
     const isAdmin = roles.some((role) =>
-      [UserRole.DEPT_ADMIN, UserRole.MAYOR, UserRole.SUPER_ADMIN].includes(role)
+      [UserRole.DEPT_ADMIN, UserRole.MAYOR, UserRole.TECH_ADMIN].includes(role)
     );
 
     return {

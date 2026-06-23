@@ -25,8 +25,17 @@ import {
   getOrganizationStats,
   getModeratorStats,
   getModeratorPending,
-  getDepartmentRealtimeStats
-, updateUserRoles, activateUser, deactivateUser, getCategory, updateCategory, deleteCategory, getActivityLogs } from '../../../controllers/admin.controller.js';
+  getDepartmentRealtimeStats,
+  updateUserRoles,
+  activateUser,
+  deactivateUser,
+  getCategory,
+  updateCategory,
+  deleteCategory,
+  getActivityLogs
+} from '../../../controllers/admin.controller.js';
+
+import techAdminRoutes from './techadmin.js';
 
 const router = Router();
 
@@ -35,7 +44,7 @@ const router = Router();
  * Get admin dashboard statistics
  */
 router.get('/dashboard', [
-  auth(['SUPER_ADMIN', 'DEPT_ADMIN', 'MAYOR', 'MODERATOR'])
+  auth(['SUPER_ADMIN', 'TECH_ADMIN', 'DEPT_ADMIN', 'MAYOR', 'MODERATOR'])
 ], dashboard);
 
 /**
@@ -43,7 +52,7 @@ router.get('/dashboard', [
  * Get analytics data
  */
 router.get('/analytics', [
-  auth(['SUPER_ADMIN', 'DEPT_ADMIN', 'MAYOR']),
+  auth(['SUPER_ADMIN', 'TECH_ADMIN', 'DEPT_ADMIN', 'MAYOR']),
   query('period').optional().isIn(['day', 'week', 'month', 'year']),
   query('departmentId').optional().isString(),
   query('categoryId').optional().isString()
@@ -54,7 +63,7 @@ router.get('/analytics', [
  * Get aggregated issue statistics for frontend dashboard
  */
 router.get('/stats/issues', [
-  auth(['SUPER_ADMIN', 'DEPT_ADMIN', 'MAYOR', 'MODERATOR'])
+  auth(['SUPER_ADMIN', 'TECH_ADMIN', 'DEPT_ADMIN', 'MAYOR', 'MODERATOR'])
 ], async (req, res) => {
   try {
     // Use the existing analytics controller or create a simple stats response
@@ -70,7 +79,7 @@ router.get('/stats/issues', [
  * Get general dashboard statistics (alias for /stats/issues for backward compatibility)
  */
 router.get('/stats', [
-  auth(['SUPER_ADMIN', 'DEPT_ADMIN', 'MAYOR', 'MODERATOR'])
+  auth(['SUPER_ADMIN', 'TECH_ADMIN', 'DEPT_ADMIN', 'MAYOR', 'MODERATOR'])
 ], async (req, res) => {
   try {
     // Use the existing analytics controller or create a simple stats response
@@ -86,7 +95,7 @@ router.get('/stats', [
  * List all users with filters
  */
 router.get('/users', [
-  auth(['SUPER_ADMIN', 'DEPT_ADMIN', 'MAYOR']),
+  auth(['SUPER_ADMIN', 'TECH_ADMIN', 'DEPT_ADMIN', 'MAYOR']),
   query('page').optional().isInt({ min: 1 }),
   query('limit').optional().isInt({ min: 1, max: 100 }),
   query('role').optional().isString(),
@@ -98,7 +107,7 @@ router.get('/users', [
  * Update user roles
  */
 router.patch('/users/:userId/roles', [
-  auth(['SUPER_ADMIN']),
+  auth(['SUPER_ADMIN', 'TECH_ADMIN']),
   body('roles').isArray().notEmpty()
 ], updateUserRoles);
 
@@ -107,7 +116,7 @@ router.patch('/users/:userId/roles', [
  * Activate user account
  */
 router.patch('/users/:userId/activate', [
-  auth(['SUPER_ADMIN', 'DEPT_ADMIN', 'MAYOR'])
+  auth(['SUPER_ADMIN', 'TECH_ADMIN', 'DEPT_ADMIN', 'MAYOR'])
 ], activateUser);
 
 /**
@@ -115,7 +124,7 @@ router.patch('/users/:userId/activate', [
  * Deactivate user account
  */
 router.patch('/users/:userId/deactivate', [
-  auth(['SUPER_ADMIN', 'DEPT_ADMIN', 'MAYOR'])
+  auth(['SUPER_ADMIN', 'TECH_ADMIN', 'DEPT_ADMIN', 'MAYOR'])
 ], deactivateUser);
 
 /**
@@ -123,7 +132,7 @@ router.patch('/users/:userId/deactivate', [
  * Get activity logs
  */
 router.get('/activity-logs', [
-  auth(['SUPER_ADMIN', 'DEPT_ADMIN', 'MAYOR']),
+  auth(['SUPER_ADMIN', 'TECH_ADMIN', 'DEPT_ADMIN', 'MAYOR']),
   query('userId').optional().isString(),
   query('issueId').optional().isString(),
   query('page').optional().isInt({ min: 1 }),
@@ -233,6 +242,30 @@ router.get('/superadmin/moderator-performance', [
 ], getSuperAdminModeratorPerformance);
 
 /**
+ * GET /api/v1/admin/techadmin/stats
+ * Get techadmin statistics (alias for superadmin stats)
+ */
+router.get('/techadmin/stats', [
+  auth(['TECH_ADMIN', 'SUPER_ADMIN'])
+], getSuperAdminStats);
+
+/**
+ * GET /api/v1/admin/techadmin/realtime-issues
+ * Get realtime issues for techadmin (alias for superadmin realtime issues)
+ */
+router.get('/techadmin/realtime-issues', [
+  auth(['TECH_ADMIN', 'SUPER_ADMIN'])
+], getSuperAdminRealtimeIssues);
+
+/**
+ * GET /api/v1/admin/techadmin/moderator-performance
+ * Get moderator performance metrics for techadmin (alias for superadmin moderator performance)
+ */
+router.get('/techadmin/moderator-performance', [
+  auth(['TECH_ADMIN', 'SUPER_ADMIN'])
+], getSuperAdminModeratorPerformance);
+
+/**
  * GET /api/v1/admin/department/:departmentId/issues
  * Get department assigned issues
  */
@@ -279,5 +312,10 @@ router.get('/moderator/stats', [
 router.get('/moderator/pending', [
   auth(['MODERATOR', 'DEPT_ADMIN', 'MAYOR', 'SUPER_ADMIN'])
 ], getModeratorPending);
+
+/**
+ * Mount Tech Admin specific routes
+ */
+router.use('/techadmin', techAdminRoutes);
 
 export default router;

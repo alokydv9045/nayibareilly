@@ -519,46 +519,46 @@ export const MAYOR_NAV: NavGroup[] = [
   }
 ]
 
-// Super Admin navigation
-export const SUPERADMIN_NAV: NavGroup[] = [
+// Tech Admin navigation
+export const TECHADMIN_NAV: NavGroup[] = [
   {
     items: [
       { 
         name: 'Dashboard', 
         nameHi: 'डैशबोर्ड',
-        href: '/superadmin/dashboard', 
+        href: '/techadmin', 
         icon: LayoutDashboard,
-        roles: [UserRole.SUPER_ADMIN],
+        roles: [UserRole.TECH_ADMIN],
         requireAuth: true,
         showInMobile: true,
         priority: 1
       },
       { 
-        name: 'System Overview', 
-        nameHi: 'सिस्टम अवलोकन',
-        href: '/superadmin/overview', 
+        name: 'System Analytics', 
+        nameHi: 'सिस्टम विश्लेषिकी',
+        href: '/techadmin/analytics', 
         icon: BarChart3,
-        roles: [UserRole.SUPER_ADMIN],
+        roles: [UserRole.TECH_ADMIN],
         requireAuth: true,
         showInMobile: true,
         priority: 2
       },
       { 
-        name: 'All Admins', 
-        nameHi: 'सभी व्यवस्थापक',
-        href: '/superadmin/admins', 
-        icon: Shield,
-        roles: [UserRole.SUPER_ADMIN],
+        name: 'Users', 
+        nameHi: 'उपयोगकर्ता',
+        href: '/techadmin/users', 
+        icon: Users,
+        roles: [UserRole.TECH_ADMIN],
         requireAuth: true,
         showInMobile: true,
         priority: 3
       },
       { 
-        name: 'System Logs', 
-        nameHi: 'सिस्टम लॉग',
-        href: '/superadmin/logs', 
-        icon: Database,
-        roles: [UserRole.SUPER_ADMIN],
+        name: 'Audit Logs', 
+        nameHi: 'ऑडिट लॉग',
+        href: '/techadmin/audit', 
+        icon: Shield,
+        roles: [UserRole.TECH_ADMIN],
         requireAuth: true,
         showInMobile: true,
         priority: 4
@@ -566,9 +566,9 @@ export const SUPERADMIN_NAV: NavGroup[] = [
       { 
         name: 'Global Settings', 
         nameHi: 'वैश्विक सेटिंग्स',
-        href: '/superadmin/settings', 
+        href: '/techadmin/settings', 
         icon: Settings,
-        roles: [UserRole.SUPER_ADMIN],
+        roles: [UserRole.TECH_ADMIN],
         requireAuth: true,
         showInMobile: true,
         priority: 5
@@ -592,8 +592,8 @@ export function getNavigationForRole(role?: UserRole): NavGroup[] {
       return DEPT_ADMIN_NAV
     case UserRole.MAYOR:
       return MAYOR_NAV
-    case UserRole.SUPER_ADMIN:
-      return SUPERADMIN_NAV
+    case UserRole.TECH_ADMIN:
+      return TECHADMIN_NAV
     default:
       return []
   }
@@ -624,7 +624,7 @@ export function getRoleDisplayName(role: UserRole, language: 'en' | 'hi' = 'en')
     [UserRole.STAFF]: { en: 'Staff Portal', hi: 'कर्मचारी पोर्टल' },
     [UserRole.DEPT_ADMIN]: { en: 'Dept Admin Portal', hi: 'विभाग व्यवस्थापक पोर्टल' },
     [UserRole.MAYOR]: { en: 'Mayor Portal', hi: 'मेयर पोर्टल' },
-    [UserRole.SUPER_ADMIN]: { en: 'Super Admin Portal', hi: 'सुपर व्यवस्थापक पोर्टल' },
+    [UserRole.TECH_ADMIN]: { en: 'Tech Admin Portal', hi: 'तकनीकी व्यवस्थापक पोर्टल' },
   }
   
   return roleNames[role]?.[language] || roleNames[role]?.en || 'Portal'

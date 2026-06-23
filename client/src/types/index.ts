@@ -24,7 +24,7 @@ export enum UserRole {
   MODERATOR = 'moderator',
   DEPT_ADMIN = 'dept_admin',
   MAYOR = 'mayor',
-  SUPER_ADMIN = 'super_admin'
+  TECH_ADMIN = 'tech_admin'
 }
 
 export interface AuthUser extends User {

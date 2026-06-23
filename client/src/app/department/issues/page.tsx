@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -244,7 +244,7 @@ export default function DepartmentIssuesPage() {
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-purple-600">{stats.inProgress}</div>
+            <div className="text-2xl font-bold text-blue-600">{stats.inProgress}</div>
             <div className="text-sm text-gray-600">In Progress</div>
           </CardContent>
         </Card>

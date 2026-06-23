@@ -114,7 +114,7 @@ export interface HasRoleProps {
 /**
  * Render children only if user has the specified role(s)
  * @example
- * <HasRole role={UserRole.SUPER_ADMIN}>
+ * <HasRole role={UserRole.TECH_ADMIN}>
  *   <AdminPanel />
  * </HasRole>
  */

@@ -240,7 +240,7 @@ export const USER_ROLES = {
   DEPARTMENT_ADMIN: 'dept_admin',
   STAFF: 'staff',
   MAYOR: 'mayor',
-  SUPER_ADMIN: 'super_admin',
+  TECH_ADMIN: 'tech_admin',
 }
 
 /**

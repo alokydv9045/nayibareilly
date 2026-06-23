@@ -12,6 +12,7 @@ import {
   getDepartment,
   createDepartment,
   updateDepartment,
+  deleteDepartment,
   getDepartmentIssues,
   getDepartmentStaff,
   assignIssueToStaff
@@ -61,10 +62,7 @@ router.patch('/:id', [
  */
 router.delete('/:id', [
   auth(['SUPER_ADMIN'])
-], async (req, res) => {
-  // This will be implemented in department.controller.js
-  res.status(501).json({ success: false, message: 'Not implemented yet' });
-});
+], deleteDepartment);
 
 /**
  * GET /api/v1/departments/:id/issues

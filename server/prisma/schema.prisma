@@ -31,6 +31,7 @@ model User {
   fcmToken          String?         @map("fcm_token")
   fcmTokenUpdatedAt DateTime?       @map("fcm_token_updated_at")
   isFlagged         Boolean         @default(false)
+  communityPoints   Int             @default(0)
   createdAt         DateTime        @default(now())
   updatedAt         DateTime        @updatedAt
   activityLogs      ActivityLog[]
@@ -162,6 +163,7 @@ model Issue {
   resolvedAt          DateTime?
   resolvedById        String?
   resolutionCost      Float?
+  materialsConsumed   Json?
   upvotes             Int             @default(0)
   downvotes           Int             @default(0)
   totalVotes          Int             @default(0)
@@ -382,7 +384,7 @@ enum UserRole {
   staff
   dept_admin
   mayor
-  super_admin
+  tech_admin
 }
 
 enum IssueStatus {
@@ -492,3 +494,58 @@ model SavedSearch {
   @@index([createdAt])
   @@map("saved_searches")
 }
+
+model WebhookConfig {
+  id        String   @id @default(cuid())
+  name      String
+  url       String
+  events    String[] @default([])
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("webhook_configs")
+}
+
+model SystemSetting {
+  key       String   @id
+  value     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("system_settings")
+}
+
+model ArchivedIssue {
+  id                String    @id
+  reportId          String    @unique
+  title             String
+  description       String
+  status            String
+  priority          String
+  ward              String?
+  zone              String?
+  reporterName      String
+  reporterEmail     String
+  resolvedAt        DateTime?
+  resolutionDetails String?
+  resolutionCost    Float?
+  materialsConsumed Json?
+  archivedAt        DateTime  @default(now())
+
+  @@map("archived_issues")
+}
+
+model ApiKey {
+  id         String    @id @default(cuid())
+  key        String    @unique
+  name       String
+  ownerOrg   String
+  isActive   Boolean   @default(true)
+  createdAt  DateTime  @default(now())
+  lastUsedAt DateTime?
+  expiresAt  DateTime?
+
+  @@map("api_keys")
+}
+

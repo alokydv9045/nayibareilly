@@ -62,7 +62,7 @@ const prisma = basePrisma.$extends({
             } else if (actionStr.includes('ASSIGN') || actionStr.includes('DEPARTMENT')) {
               source = 'department-service'
             } else if (actionStr.includes('AUDIT') || actionStr.includes('TECH_ADMIN') || actionStr.includes('ADMIN')) {
-              source = 'superadmin'
+              source = 'techadmin'
             }
 
             const payload = {

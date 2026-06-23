@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -180,7 +180,7 @@ export default function MayorOverviewPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex items-center gap-3 mb-6">
-        <Crown className="h-8 w-8 text-purple-600" />
+        <Crown className="h-8 w-8 text-blue-600" />
         <h1 className="text-3xl font-bold text-gray-900">Mayor Dashboard</h1>
         <Badge variant="outline" className="text-lg px-3 py-1">
           Executive Overview
@@ -276,7 +276,7 @@ export default function MayorOverviewPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 pt-4 border-t">
             <div className="text-center">
-              <div className="text-2xl font-bold text-purple-600">{data.cityMetrics.populationServed.toLocaleString()}</div>
+              <div className="text-2xl font-bold text-blue-600">{data.cityMetrics.populationServed.toLocaleString()}</div>
               <div className="text-sm text-gray-600">Citizens Served</div>
             </div>
             <div className="text-center">

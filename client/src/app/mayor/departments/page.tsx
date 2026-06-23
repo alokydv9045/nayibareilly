@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -163,7 +163,7 @@ export default function MayorDepartmentsPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex items-center gap-3 mb-6">
-        <Building2 className="h-8 w-8 text-purple-600" />
+        <Building2 className="h-8 w-8 text-blue-600" />
         <h1 className="text-3xl font-bold text-gray-900">Department Management</h1>
         <Badge variant="outline" className="text-lg px-3 py-1">
           {departments.length} Departments
@@ -305,7 +305,7 @@ export default function MayorDepartmentsPage() {
                       </Card>
                       <Card>
                         <CardContent className="p-4 text-center">
-                          <DollarSign className="h-6 w-6 text-purple-600 mx-auto mb-2" />
+                          <DollarSign className="h-6 w-6 text-blue-600 mx-auto mb-2" />
                           <div className={`text-xl font-bold ${getPerformanceColor(dept.kpis.budgetCompliance)}`}>
                             {dept.kpis.budgetCompliance}/100
                           </div>

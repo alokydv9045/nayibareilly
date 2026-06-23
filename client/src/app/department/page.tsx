@@ -1,316 +1,493 @@
-"use client"
+﻿'use client'
 
 import { useState, useEffect } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { userStorage, tokenStorage } from '@/lib/auth/auth-utils'
-import { useRouter } from 'next/navigation'
-import {
-  Users, CheckCircle, Clock, Eye, TrendingUp, AlertTriangle, Activity,
-  Construction, Droplets, ArrowRight, Building2, LogOut, RefreshCw,
-  Bell, BarChart3, Leaf, ChevronRight, UserCog, Loader2, Layers, Shield
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog'
+import { Textarea } from '@/components/ui/textarea'
+import { Input } from '@/components/ui/input'
+import { toast } from 'react-hot-toast'
+import { 
+  Users, CheckCircle, Clock, User, MapPin, Calendar, UserPlus,
+  Droplets, Activity, AlertTriangle, Shield, Bell, Loader2
 } from 'lucide-react'
+import { userStorage } from '@/lib/auth/auth-utils'
+import { useDepartmentIssues, useDepartmentStaff, useAssignIssueToStaff, useDepartmentStats, type DepartmentIssue } from '@/hooks/api/useDepartments'
 
-interface DeptUser { id: string; name: string; role?: string }
+export default function UnifiedDepartmentPage() {
+  const [activeTab, setActiveTab] = useState("dashboard")
+  const [user, setUser] = useState<{ id: string; name: string; departmentId?: string; roles?: string[] } | null>(null)
+  const [selectedIssue, setSelectedIssue] = useState<DepartmentIssue | null>(null)
+  const [selectedStaffId, setSelectedStaffId] = useState<string>('')
+  const [assignmentNote, setAssignmentNote] = useState<string>('')
+  const [showAssignDialog, setShowAssignDialog] = useState(false)
+  const [searchTerm, setSearchTerm] = useState('')
 
-const DEPARTMENTS = [
-  {
-    id: 'infrastructure',
-    title: 'Infrastructure & Public Works',
-    subtitle: 'Roads & Construction',
-    icon: Construction,
-    color: 'from-orange-600/20 to-orange-800/20 border-orange-200 hover:border-orange-400/60',
-    iconBg: 'bg-orange-600/20',
-    iconColor: 'text-orange-600',
-    activeProjects: 24,
-    staffCount: 15,
-    extra: [{ label: 'PWD Engineering', value: '15 Engineers' }],
-    path: 'infrastructure'
-  },
-  {
-    id: 'health-environment',
-    title: 'Environmental Services',
-    subtitle: 'Waste Management & Environment',
-    icon: Leaf,
-    color: 'from-emerald-600/20 to-emerald-800/20 border-emerald-200 hover:border-emerald-400/60',
-    iconBg: 'bg-emerald-600/20',
-    iconColor: 'text-emerald-600',
-    activeProjects: 16,
-    staffCount: 18,
-    extra: [{ label: 'Environmental Staff', value: '18 Officers' }],
-    path: 'health-environment'
-  },
-  {
-    id: 'water',
-    title: 'Water Supply & Utilities',
-    subtitle: 'Water, Sewerage & Utilities',
-    icon: Droplets,
-    color: 'from-blue-600/20 to-cyan-800/20 border-blue-200 hover:border-blue-400/60',
-    iconBg: 'bg-blue-600/20',
-    iconColor: 'text-blue-600',
-    activeProjects: 28,
-    staffCount: 15,
-    extra: [
-      { label: 'Water Quality', value: 'Excellent ✓' },
-      { label: 'System Status', value: 'Operational' }
-    ],
-    path: 'water'
-  }
-]
-
-const STAFF_LIST = [
-  { dept: 'Infrastructure & Public Works', total: 15, available: 12, busy: 3, path: 'infrastructure' },
-  { dept: 'Environmental Services', total: 18, available: 14, busy: 4, path: 'health-environment' },
-  { dept: 'Water Supply & Utilities', total: 15, available: 12, busy: 3, path: 'water' }
-]
-
-const PERFORMANCE = [
-  { metric: 'Average Resolution Time', value: '4.2 hours', trend: '+12%', up: true },
-  { metric: 'Citizen Satisfaction', value: '87%', trend: '+5%', up: true },
-  { metric: 'Staff Utilization', value: '78%', trend: '-3%', up: false },
-  { metric: 'Issue Prevention Rate', value: '65%', trend: '+8%', up: true }
-]
-
-const EFFICIENCY = [
-  { dept: 'Infrastructure & Public Works', efficiency: 85, issues: 24, avgTime: '3.5h' },
-  { dept: 'Public Health & Environment', efficiency: 92, issues: 16, avgTime: '2.8h' },
-  { dept: 'Water Supply & Utilities', efficiency: 88, issues: 28, avgTime: '4.1h' }
-]
-
-export default function DepartmentAdminPage() {
-  const [activeTab, setActiveTab] = useState('overview')
-  const [user, setUser] = useState<DeptUser | null>(null)
-  const router = useRouter()
-
+  // Get user info
   useEffect(() => {
     const userData = userStorage.get()
-    if (userData) setUser(userData as DeptUser)
+    if (userData) {
+      setUser(userData as { id: string; name: string; departmentId?: string; roles?: string[] })
+    }
   }, [])
 
-  const logout = () => {
-    tokenStorage.remove(); userStorage.remove()
-    router.push('/login')
+  const departmentId = user?.departmentId || ''
+
+  // Fetch department data
+  const { data: triagedIssues = [], isLoading: loadingTriaged, refetch: refetchTriaged } = useDepartmentIssues(departmentId, 'TRIAGED')
+  const { data: inProgressWork = [], isLoading: loadingInProgress, refetch: refetchInProgress } = useDepartmentIssues(departmentId, 'ASSIGNED_TO_STAFF,IN_PROGRESS')
+  const { data: staffList = [], isLoading: loadingStaff } = useDepartmentStaff(departmentId)
+  const { data: stats, refetch: refetchStats } = useDepartmentStats(departmentId)
+  
+  const assignMutation = useAssignIssueToStaff()
+
+  // Handle issue assignment
+  const handleAssignClick = (issue: DepartmentIssue) => {
+    setSelectedIssue(issue)
+    setSelectedStaffId('')
+    setAssignmentNote('')
+    setShowAssignDialog(true)
+  }
+
+  const handleAssignSubmit = async () => {
+    if (!selectedIssue || !selectedStaffId) return
+
+    try {
+      await assignMutation.mutateAsync({
+        issueId: selectedIssue.id,
+        staffUserId: selectedStaffId,
+        note: assignmentNote
+      })
+      
+      toast.success(`Issue assigned to staff successfully`)
+      setShowAssignDialog(false)
+      refetchTriaged()
+      refetchInProgress()
+      refetchStats()
+    } catch {
+      toast.error('Failed to assign issue')
+    }
+  }
+
+  // Filter issues by search term
+  const filteredTriagedIssues = triagedIssues.filter(issue => 
+    issue.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    issue.location.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+
+  const filteredInProgress = inProgressWork.filter(issue => 
+    issue.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    issue.location.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+
+  const getPriorityColor = (priority: string) => {
+    switch (priority) {
+      case 'CRITICAL': return 'bg-red-600 text-white font-semibold'
+      case 'HIGH': return 'bg-orange-500 text-white font-semibold'
+      case 'MEDIUM': return 'bg-blue-500 text-white font-semibold'
+      case 'LOW': return 'bg-green-500 text-white font-semibold'
+      default: return 'bg-gray-500 text-white font-semibold'
+    }
+  }
+
+  const getIssueIcon = (category: string) => {
+    const cat = category.toLowerCase()
+    if (cat.includes('water') || cat.includes('sewer') || cat.includes('drain')) return <Droplets className="h-4 w-4" />
+    if (cat.includes('road') || cat.includes('light') || cat.includes('street')) return <Activity className="h-4 w-4" />
+    return <AlertTriangle className="h-4 w-4" />
   }
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <Loader2 className="h-8 w-8 text-blue-600 animate-spin" />
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 to-orange-50 text-amber-950 pb-8">
-        {/* Topbar */}
-        <header className="sticky top-0 z-40 bg-white border-b border-amber-200/60 px-8 py-4 flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-bold text-amber-950">Department Administration</h1>
-            <p className="text-xs text-blue-600/60 mt-0.5">Municipal Department Management & Oversight — {user.name}</p>
-          </div>
-          <div className="flex items-center gap-3">
-            <Badge className="bg-blue-500/20 text-blue-600 border border-blue-200 gap-1.5">
-              <Shield className="h-3 w-3" />
-              Dept Admin
-            </Badge>
-            <Button size="sm" variant="ghost"
-              className="text-amber-800/80 hover:text-amber-950 hover:bg-amber-100/50 border border-amber-200/60">
-              <Bell className="h-4 w-4" />
-            </Button>
-          </div>
-        </header>
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100/50 pb-8 text-gray-900">
+      {/* Header */}
+      <header className="sticky top-0 z-40 bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Municipal Department Dashboard</h1>
+          <p className="text-xs text-blue-600/60 mt-0.5">Municipal Corporation — Welcome, {user.name}</p>
+        </div>
+        <div className="flex items-center gap-3">
+          <Badge className="bg-blue-500/20 text-blue-600 border border-blue-200 gap-1.5">
+            <Shield className="h-3 w-3" />
+            Dept Admin
+          </Badge>
+          <Button size="sm" variant="ghost"
+            className="text-gray-600 hover:text-gray-900 hover:bg-gray-50 border border-gray-200">
+            <Bell className="h-4 w-4" />
+          </Button>
+        </div>
+      </header>
 
-        <div className="p-8 space-y-8">
-          {/* Summary Stats */}
-          <div className="grid grid-cols-2 xl:grid-cols-4 gap-5">
-            {[
-              { label: 'Active Issues', value: '68', sub: 'Across all departments', icon: AlertTriangle, color: 'text-amber-600', bg: 'from-amber-500/20 to-amber-600/10 border-amber-200' },
-              { label: 'Resolved Today', value: '12', sub: '94% Resolution Rate', icon: CheckCircle, color: 'text-emerald-600', bg: 'from-emerald-500/20 to-emerald-600/10 border-emerald-200' },
-              { label: 'In Progress', value: '28', sub: 'Active field work', icon: Clock, color: 'text-blue-600', bg: 'from-blue-500/20 to-blue-600/10 border-blue-200' },
-              { label: 'Total Staff', value: '55', sub: 'All departments', icon: Users, color: 'text-purple-600', bg: 'from-purple-500/20 to-purple-600/10 border-purple-200' },
-            ].map((card, i) => {
-              const Icon = card.icon
-              return (
-                <Card key={i} className={`bg-gradient-to-br ${card.bg} border `}>
-                  <CardContent className="p-5">
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <p className="text-xs text-amber-800/80 mb-1">{card.label}</p>
-                        <p className="text-3xl font-bold text-amber-950">{card.value}</p>
-                        <p className={`text-xs mt-1 ${card.color}`}>{card.sub}</p>
-                      </div>
-                      <div className="p-2 bg-amber-100/50 rounded-xl">
-                        <Icon className={`h-5 w-5 ${card.color}`} />
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              )
-            })}
-          </div>
-
-          {/* Tabs */}
-          <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="bg-white border border-amber-200/60 p-1">
-              <TabsTrigger value="overview" className="data-[state=active]:bg-blue-600/40 data-[state=active]:text-amber-950 text-amber-800/80 gap-2">
-                <Layers className="h-4 w-4" />Department Overview
-              </TabsTrigger>
-              <TabsTrigger value="staff" className="data-[state=active]:bg-blue-600/40 data-[state=active]:text-amber-950 text-amber-800/80 gap-2">
-                <UserCog className="h-4 w-4" />Staff Management
-              </TabsTrigger>
-              <TabsTrigger value="analytics" className="data-[state=active]:bg-blue-600/40 data-[state=active]:text-amber-950 text-amber-800/80 gap-2">
-                <BarChart3 className="h-4 w-4" />Analytics
-              </TabsTrigger>
-            </TabsList>
-
-            {/* Department Cards */}
-            <TabsContent value="overview" className="mt-6 space-y-6">
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-                {DEPARTMENTS.map((dept) => {
-                  const Icon = dept.icon
-                  return (
-                    <Card key={dept.id}
-                      className={`bg-gradient-to-br ${dept.color} border  cursor-pointer transition-all hover:scale-[1.02] group`}
-                      onClick={() => router.push(`/department/${dept.path}`)}>
-                      <CardHeader className="pb-3">
-                        <div className="flex items-start justify-between">
-                          <div className="flex items-center gap-3">
-                            <div className={`p-3 ${dept.iconBg} rounded-xl`}>
-                              <Icon className={`h-6 w-6 ${dept.iconColor}`} />
-                            </div>
-                            <div>
-                              <CardTitle className="text-amber-950 text-sm font-semibold">{dept.title}</CardTitle>
-                              <p className={`text-xs ${dept.iconColor} mt-0.5`}>{dept.subtitle}</p>
-                            </div>
-                          </div>
-                          <ChevronRight className="h-5 w-5 text-amber-800/80 group-hover:text-amber-950 group-hover:translate-x-1 transition-all" />
-                        </div>
-                      </CardHeader>
-                      <CardContent className="space-y-4">
-                        <div className="grid grid-cols-2 gap-3">
-                          <div className="bg-amber-100/50 rounded-xl p-3">
-                            <p className={`text-xs ${dept.iconColor} mb-1`}>Active Projects</p>
-                            <p className="text-xl font-bold text-amber-950">{dept.activeProjects}</p>
-                          </div>
-                          <div className="bg-amber-100/50 rounded-xl p-3">
-                            <p className={`text-xs ${dept.iconColor} mb-1`}>Staff Members</p>
-                            <p className="text-xl font-bold text-amber-950">{dept.staffCount}</p>
-                          </div>
-                        </div>
-                        {dept.extra.map((ex, i) => (
-                          <div key={i} className="flex justify-between items-center text-xs">
-                            <span className={dept.iconColor}>{ex.label}</span>
-                            <span className="text-amber-950 font-medium">{ex.value}</span>
-                          </div>
-                        ))}
-                        <Button className={`w-full bg-amber-100/50 hover:bg-amber-200/50 border border-amber-200/60 ${dept.iconColor} text-sm`}
-                          onClick={e => { e.stopPropagation(); router.push(`/department/${dept.path}`) }}>
-                          Access Department
-                          <ArrowRight className="h-4 w-4 ml-2" />
-                        </Button>
-                      </CardContent>
-                    </Card>
-                  )
-                })}
+      <div className="p-8 space-y-8 max-w-7xl mx-auto">
+        {/* Quick Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
+          <Card className="bg-white border-gray-200 shadow-sm">
+            <CardContent className="p-5">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-gray-600 text-xs">Total Issues</p>
+                  <p className="text-3xl font-bold text-gray-900">{stats?.totalIssues || 0}</p>
+                  <p className="text-xs text-blue-600">Assigned & Unassigned</p>
+                </div>
+                <div className="p-2 bg-blue-500/10 rounded-xl">
+                  <Activity className="h-6 w-6 text-blue-600" />
+                </div>
               </div>
-            </TabsContent>
+            </CardContent>
+          </Card>
 
-            {/* Staff Management */}
-            <TabsContent value="staff" className="mt-6">
-              <Card className="bg-white border border-amber-200/60 ">
+          <Card className="bg-white border-gray-200 shadow-sm">
+            <CardContent className="p-5">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-gray-600 text-xs">Unassigned Issues</p>
+                  <p className="text-3xl font-bold text-gray-900">{stats?.unassignedIssues || 0}</p>
+                  <p className="text-xs text-orange-600">Awaiting Triage</p>
+                </div>
+                <div className="p-2 bg-orange-500/10 rounded-xl">
+                  <AlertTriangle className="h-6 w-6 text-orange-600" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-white border-gray-200 shadow-sm">
+            <CardContent className="p-5">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-gray-600 text-xs">Active Repairs</p>
+                  <p className="text-3xl font-bold text-gray-900">{stats?.inProgressIssues || 0}</p>
+                  <p className="text-xs text-cyan-600">Field work in progress</p>
+                </div>
+                <div className="p-2 bg-cyan-500/10 rounded-xl">
+                  <Clock className="h-6 w-6 text-cyan-600" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-white border-gray-200 shadow-sm">
+            <CardContent className="p-5">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-gray-600 text-xs">Total Staff</p>
+                  <p className="text-3xl font-bold text-gray-900">{staffList.length}</p>
+                  <p className="text-xs text-green-600">Active Technicians</p>
+                </div>
+                <div className="p-2 bg-green-500/10 rounded-xl">
+                  <Users className="h-6 w-6 text-green-600" />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Tabs */}
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+          <TabsList className="bg-white border border-gray-200 p-1">
+            <TabsTrigger value="dashboard" className="data-[state=active]:bg-blue-600/20 data-[state=active]:text-gray-900">
+              Overview
+            </TabsTrigger>
+            <TabsTrigger value="new-issues" className="data-[state=active]:bg-blue-600/20 data-[state=active]:text-gray-900">
+              New Issues ({filteredTriagedIssues.length})
+            </TabsTrigger>
+            <TabsTrigger value="ongoing" className="data-[state=active]:bg-blue-600/20 data-[state=active]:text-gray-900">
+              Active Repairs ({filteredInProgress.length})
+            </TabsTrigger>
+            <TabsTrigger value="staff" className="data-[state=active]:bg-blue-600/20 data-[state=active]:text-gray-900">
+              Department Staff ({staffList.length})
+            </TabsTrigger>
+          </TabsList>
+
+          {/* Overview Dashboard Tab */}
+          <TabsContent value="dashboard" className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <Card className="bg-white border-gray-200 shadow-sm">
                 <CardHeader>
-                  <CardTitle className="text-amber-950 flex items-center gap-2">
-                    <Users className="h-5 w-5 text-blue-600" />
-                    Staff Overview by Department
+                  <CardTitle className="text-gray-900 flex items-center space-x-2">
+                    <Activity className="h-5 w-5 text-blue-600" />
+                    <span>Recent Issue Statistics</span>
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-3">
-                  {STAFF_LIST.map((dept, i) => (
-                    <div key={i} className="flex items-center justify-between p-4 bg-white rounded-xl border border-amber-200/60 hover:border-amber-200/60 transition-all">
-                      <div className="flex items-center gap-4">
-                        <div className={`w-2 h-8 rounded-full ${i === 0 ? 'bg-orange-500' : i === 1 ? 'bg-emerald-500' : 'bg-blue-500'}`} />
-                        <div>
-                          <h3 className="text-sm font-medium text-amber-950">{dept.dept}</h3>
-                          <p className="text-xs text-amber-800/80">{dept.total} Total Staff</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-4">
-                        <div className="text-right">
-                          <p className="text-xs text-emerald-600">{dept.available} Available</p>
-                          <p className="text-xs text-amber-600">{dept.busy} On Task</p>
-                        </div>
-                        <Button variant="outline" size="sm"
-                          className="bg-white border-amber-200/60 text-amber-800/80 hover:text-amber-950 hover:bg-amber-100/50 gap-1.5"
-                          onClick={() => router.push(`/department/${dept.path}`)}>
-                          <Eye className="h-3.5 w-3.5" />View
-                        </Button>
-                      </div>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm font-medium text-gray-600">Average Resolution Time:</span>
+                      <span className="text-base font-bold text-gray-900">{stats?.avgResponseTime || 'N/A'}</span>
                     </div>
-                  ))}
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm font-medium text-gray-600">Resolved Today:</span>
+                      <span className="text-base font-bold text-emerald-600">{stats?.resolvedToday || 0} issues</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm font-medium text-gray-600">Active Workload Rate:</span>
+                      <span className="text-base font-bold text-blue-600">
+                        {stats?.totalIssues ? Math.round(((stats.inProgressIssues + stats.unassignedIssues) / stats.totalIssues) * 100) : 0}%
+                      </span>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
-            </TabsContent>
 
-            {/* Analytics */}
-            <TabsContent value="analytics" className="mt-6">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-                <Card className="bg-white border border-amber-200/60 ">
-                  <CardHeader>
-                    <CardTitle className="text-amber-950 flex items-center gap-2 text-base">
-                      <TrendingUp className="h-4 w-4 text-blue-600" />
-                      Performance Metrics
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-3">
-                    {PERFORMANCE.map((item, i) => (
-                      <div key={i} className="flex items-center justify-between p-3 bg-white rounded-xl border border-amber-200/60">
+              <Card className="bg-white border-gray-200 shadow-sm">
+                <CardHeader>
+                  <CardTitle className="text-gray-900 flex items-center space-x-2">
+                    <Users className="h-5 w-5 text-green-600" />
+                    <span>Technician Workload Status</span>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    {staffList.slice(0, 4).map((staff) => (
+                      <div key={staff.id} className="flex items-center justify-between p-3 bg-amber-50/50 border border-amber-100 rounded-lg">
                         <div>
-                          <p className="text-sm text-amber-950 font-medium">{item.metric}</p>
-                          <p className="text-xs text-amber-800/80">Performance indicator</p>
+                          <p className="text-gray-900 text-sm font-medium">{staff.name}</p>
+                          <p className="text-xs text-blue-600">{staff.email}</p>
+                        </div>
+                        <Badge className={`
+                          ${staff.workloadStatus === 'available' ? 'bg-green-500' : 
+                            staff.workloadStatus === 'light' ? 'bg-blue-500' : 
+                            staff.workloadStatus === 'moderate' ? 'bg-yellow-500' : 'bg-red-500'}
+                          text-white font-semibold text-xs
+                        `}>
+                          {staff.activeIssues} tasks ({staff.workloadStatus})
+                        </Badge>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+
+          {/* New Issues Tab */}
+          <TabsContent value="new-issues" className="space-y-6">
+            <div className="flex items-center space-x-4 mb-4">
+              <Input
+                placeholder="Search new issues..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="max-w-md bg-white border-gray-200 text-gray-900"
+              />
+            </div>
+
+            <div className="grid gap-4">
+              {loadingTriaged ? (
+                <div className="text-center text-gray-900 py-8">Loading issues...</div>
+              ) : filteredTriagedIssues.length === 0 ? (
+                <Card className="bg-white border-gray-200">
+                  <CardContent className="p-8 text-center text-gray-600">
+                    <CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-4" />
+                    <p>No new triaged issues waiting for assignment</p>
+                  </CardContent>
+                </Card>
+              ) : (
+                filteredTriagedIssues.map((issue) => (
+                  <Card key={issue.id} className="bg-white border-gray-200 hover:shadow-md transition-all">
+                    <CardContent className="p-6">
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <div className="flex items-center space-x-3 mb-3">
+                            {getIssueIcon(issue.category.name)}
+                            <h3 className="text-gray-900 font-semibold">{issue.title}</h3>
+                            <Badge className={getPriorityColor(issue.priority)}>
+                              {issue.priority}
+                            </Badge>
+                          </div>
+                          <p className="text-gray-600 text-sm mb-3">{issue.description}</p>
+                          <div className="flex items-center space-x-4 text-xs text-amber-600/80">
+                            <span className="flex items-center gap-1"><MapPin className="h-3 w-3" /> {issue.location || 'No Location'}</span>
+                            <span className="flex items-center gap-1"><Calendar className="h-3 w-3" /> {new Date(issue.createdAt).toLocaleDateString()}</span>
+                            <span className="flex items-center gap-1"><User className="h-3 w-3" /> {issue.reporter.name}</span>
+                          </div>
+                        </div>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="bg-blue-600/10 border-blue-500 text-blue-600 hover:bg-blue-600/20"
+                          onClick={() => handleAssignClick(issue)}
+                        >
+                          <UserPlus className="h-4 w-4 mr-1" />
+                          Assign Staff
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))
+              )}
+            </div>
+          </TabsContent>
+
+          {/* Active Repairs Tab */}
+          <TabsContent value="ongoing" className="space-y-6">
+            <div className="flex items-center space-x-4 mb-4">
+              <Input
+                placeholder="Search active repairs..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="max-w-md bg-white border-gray-200 text-gray-900"
+              />
+            </div>
+
+            <div className="grid gap-4">
+              {loadingInProgress ? (
+                <div className="text-center text-gray-900 py-8">Loading repairs...</div>
+              ) : filteredInProgress.length === 0 ? (
+                <Card className="bg-white border-gray-200">
+                  <CardContent className="p-8 text-center text-gray-600">
+                    <Clock className="h-12 w-12 text-cyan-600 mx-auto mb-4" />
+                    <p>No active repairs currently in progress</p>
+                  </CardContent>
+                </Card>
+              ) : (
+                filteredInProgress.map((issue) => (
+                  <Card key={issue.id} className="bg-white border-gray-200 hover:shadow-md transition-all">
+                    <CardContent className="p-6">
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <div className="flex items-center space-x-3 mb-3">
+                            {getIssueIcon(issue.category.name)}
+                            <h3 className="text-gray-900 font-semibold">{issue.title}</h3>
+                            <Badge className="bg-cyan-500 text-white font-semibold">IN REPAIR</Badge>
+                            <Badge className={getPriorityColor(issue.priority)}>
+                              {issue.priority}
+                            </Badge>
+                          </div>
+                          <p className="text-gray-600 text-sm mb-3">{issue.description}</p>
+                          <div className="grid grid-cols-2 gap-2 text-xs text-amber-600/80">
+                            <span className="flex items-center gap-1"><MapPin className="h-3 w-3" /> {issue.location || 'No Location'}</span>
+                            <span className="flex items-center gap-1"><User className="h-3 w-3" /> Technician: {issue.assignedTo?.name || 'Unassigned'}</span>
+                            <span className="flex items-center gap-1"><Calendar className="h-3 w-3" /> Started: {issue.assignedToDepartmentAt ? new Date(issue.assignedToDepartmentAt).toLocaleDateString() : 'N/A'}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))
+              )}
+            </div>
+          </TabsContent>
+
+          {/* Department Staff Tab */}
+          <TabsContent value="staff" className="space-y-6">
+            <div className="grid gap-4">
+              {loadingStaff ? (
+                <div className="text-center text-gray-900 py-8">Loading staff...</div>
+              ) : staffList.length === 0 ? (
+                <Card className="bg-white border-gray-200">
+                  <CardContent className="p-8 text-center text-gray-600">
+                    <Users className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+                    <p>No staff members assigned to this department yet</p>
+                  </CardContent>
+                </Card>
+              ) : (
+                staffList.map((staff) => (
+                  <Card key={staff.id} className="bg-white border-gray-200">
+                    <CardContent className="p-6">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-4">
+                          <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
+                            <span className="font-semibold text-white text-lg">
+                              {staff.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                            </span>
+                          </div>
+                          <div>
+                            <h3 className="font-semibold text-gray-900">{staff.name}</h3>
+                            <p className="text-xs text-blue-600">{staff.email}</p>
+                            <Badge className="bg-teal-500 text-white font-semibold text-xs mt-1">
+                              Technician
+                            </Badge>
+                          </div>
                         </div>
                         <div className="text-right">
-                          <p className="text-lg font-bold text-amber-950">{item.value}</p>
-                          <p className={`text-xs ${item.up ? 'text-emerald-600' : 'text-red-600'}`}>{item.trend}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </CardContent>
-                </Card>
-
-                <Card className="bg-white border border-amber-200/60 ">
-                  <CardHeader>
-                    <CardTitle className="text-amber-950 flex items-center gap-2 text-base">
-                      <Activity className="h-4 w-4 text-emerald-600" />
-                      Department Efficiency
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    {EFFICIENCY.map((dept, i) => (
-                      <div key={i} className="p-3 bg-white rounded-xl border border-amber-200/60">
-                        <div className="flex justify-between items-center mb-2">
-                          <h4 className="text-sm font-medium text-amber-950">{dept.dept}</h4>
-                          <Badge className={`text-xs border ${dept.efficiency >= 90 ? 'bg-emerald-500/20 text-emerald-600 border-emerald-200' : dept.efficiency >= 80 ? 'bg-amber-500/20 text-amber-600 border-amber-200' : 'bg-red-500/20 text-red-600 border-red-200'}`}>
-                            {dept.efficiency}%
+                          <p className="text-sm font-semibold text-gray-900">{staff.activeIssues} Active Tasks</p>
+                          <Badge className={`
+                            ${staff.workloadStatus === 'available' ? 'bg-green-500' : 
+                              staff.workloadStatus === 'light' ? 'bg-blue-500' : 
+                              staff.workloadStatus === 'moderate' ? 'bg-yellow-500' : 'bg-red-500'}
+                            text-white font-semibold text-xs mt-1
+                          `}>
+                            {staff.workloadStatus}
                           </Badge>
                         </div>
-                        <div className="w-full bg-amber-100/50 rounded-full h-1.5 mb-2">
-                          <div className={`h-1.5 rounded-full transition-all ${dept.efficiency >= 90 ? 'bg-emerald-500' : dept.efficiency >= 80 ? 'bg-amber-500' : 'bg-red-500'}`}
-                            style={{ width: `${dept.efficiency}%` }} />
-                        </div>
-                        <div className="flex justify-between text-xs text-amber-800/80">
-                          <span>{dept.issues} Active Issues</span>
-                          <span>Avg: {dept.avgTime}</span>
-                        </div>
                       </div>
-                    ))}
-                  </CardContent>
-                </Card>
-              </div>
-            </TabsContent>
-          </Tabs>
-        </div>
+                    </CardContent>
+                  </Card>
+                ))
+              )}
+            </div>
+          </TabsContent>
+        </Tabs>
+      </div>
+
+      {/* Assignment Dialog */}
+      <Dialog open={showAssignDialog} onOpenChange={setShowAssignDialog}>
+        <DialogContent className="bg-white border border-gray-200 text-gray-900">
+          <DialogHeader>
+            <DialogTitle>Assign Issue to Technician</DialogTitle>
+            <DialogDescription className="text-gray-600">
+              Select an available technician to handle this task
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="space-y-4 py-4">
+            <div>
+              <label className="text-sm font-medium mb-2 block text-gray-900">Select Technician</label>
+              <Select value={selectedStaffId} onValueChange={setSelectedStaffId}>
+                <SelectTrigger className="bg-white border-gray-200 text-gray-900">
+                  <SelectValue placeholder="Choose a technician..." />
+                </SelectTrigger>
+                <SelectContent className="bg-white border-gray-200">
+                  {staffList.map((staff) => (
+                    <SelectItem key={staff.id} value={staff.id} className="text-gray-900 hover:bg-amber-100">
+                      {staff.name} - {staff.activeIssues} active tasks ({staff.workloadStatus})
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div>
+              <label className="text-sm font-medium mb-2 block text-gray-900">Assignment Instructions</label>
+              <Textarea
+                placeholder="Provide instructions for the technician..."
+                value={assignmentNote}
+                onChange={(e) => setAssignmentNote(e.target.value)}
+                className="bg-white border-gray-200 text-gray-900"
+                rows={3}
+              />
+            </div>
+          </div>
+          
+          <DialogFooter>
+            <Button 
+              variant="outline" 
+              onClick={() => setShowAssignDialog(false)}
+              className="border-gray-200 text-gray-900 hover:bg-amber-100"
+            >
+              Cancel
+            </Button>
+            <Button 
+              onClick={handleAssignSubmit}
+              disabled={!selectedStaffId || assignMutation.isPending}
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold"
+            >
+              {assignMutation.isPending ? 'Assigning...' : 'Assign Task'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
+

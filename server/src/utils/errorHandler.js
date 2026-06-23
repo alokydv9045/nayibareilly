@@ -240,6 +240,10 @@ export const errorHandler = async (error, req, res, next) => {
       message = error.message
       type = error.type
       metadata = error.metadata
+    } else if (error.status || error.statusCode) {
+      statusCode = error.status || error.statusCode
+      message = error.message || 'Error'
+      type = statusCode === 404 ? ErrorTypes.NOT_FOUND : statusCode === 401 ? ErrorTypes.AUTHENTICATION : statusCode === 403 ? ErrorTypes.AUTHORIZATION : ErrorTypes.INTERNAL
     } else if (error.name === 'ValidationError') {
       statusCode = 400
       message = error.message

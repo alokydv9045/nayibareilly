@@ -42,7 +42,7 @@ export default function DepartmentStaffPage() {
     
     const config = statusConfig[status as keyof typeof statusConfig] || statusConfig.available
     return (
-      <Badge className={`${config.color} text-amber-950`}>
+      <Badge className={`${config.color} text-gray-900`}>
         {config.text}
       </Badge>
     )
@@ -51,7 +51,7 @@ export default function DepartmentStaffPage() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 flex items-center justify-center">
-        <div className="text-amber-950 text-lg">Loading staff members...</div>
+        <div className="text-gray-900 text-lg">Loading staff members...</div>
       </div>
     )
   }
@@ -72,23 +72,23 @@ export default function DepartmentStaffPage() {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <Link href="/department">
-                <Button variant="outline" className="bg-amber-100/50 text-amber-950 border-amber-200/60 hover:bg-amber-200/50">
+                <Button variant="outline" className="bg-white text-gray-900 border-gray-200 hover:bg-amber-200/50">
                   <ArrowLeft className="h-4 w-4 mr-2" />
                   Back to Dashboard
                 </Button>
               </Link>
               <div className="p-3 bg-green-600 rounded-xl">
-                <Users className="h-8 w-8 text-amber-950" />
+                <Users className="h-8 w-8 text-gray-900" />
               </div>
               <div>
-                <h1 className="text-3xl font-bold text-amber-950">Department Staff Management</h1>
+                <h1 className="text-3xl font-bold text-gray-900">Department Staff Management</h1>
                 <p className="text-blue-200">Manage and monitor your department staff members</p>
                 {user?.name && (
                   <p className="text-sm text-blue-600">Department Admin: {user.name}</p>
                 )}
               </div>
             </div>
-            <Badge variant="secondary" className="bg-orange-600 text-amber-950 px-4 py-2">
+            <Badge variant="secondary" className="bg-orange-600 text-gray-900 px-4 py-2">
               Department Admin
             </Badge>
           </div>
@@ -96,12 +96,12 @@ export default function DepartmentStaffPage() {
 
         {/* Statistics */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <Card className="bg-amber-100/50  border-amber-200/60">
+          <Card className="bg-white border-gray-200">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-blue-200 text-sm">Total Staff</p>
-                  <p className="text-2xl font-bold text-amber-950">{staff.length}</p>
+                  <p className="text-2xl font-bold text-gray-900">{staff.length}</p>
                   <p className="text-xs text-blue-600">Department Members</p>
                 </div>
                 <Users className="h-8 w-8 text-blue-600" />
@@ -109,12 +109,12 @@ export default function DepartmentStaffPage() {
             </CardContent>
           </Card>
 
-          <Card className="bg-amber-100/50  border-amber-200/60">
+          <Card className="bg-white border-gray-200">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-blue-200 text-sm">Available Staff</p>
-                  <p className="text-2xl font-bold text-amber-950">
+                  <p className="text-2xl font-bold text-gray-900">
                     {staff.filter(s => s.workloadStatus === 'available').length}
                   </p>
                   <p className="text-xs text-green-600">Ready for assignments</p>
@@ -124,12 +124,12 @@ export default function DepartmentStaffPage() {
             </CardContent>
           </Card>
 
-          <Card className="bg-amber-100/50  border-amber-200/60">
+          <Card className="bg-white border-gray-200">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-blue-200 text-sm">Busy Staff</p>
-                  <p className="text-2xl font-bold text-amber-950">
+                  <p className="text-2xl font-bold text-gray-900">
                     {staff.filter(s => s.workloadStatus === 'heavy').length}
                   </p>
                   <p className="text-xs text-yellow-600">High workload</p>
@@ -139,12 +139,12 @@ export default function DepartmentStaffPage() {
             </CardContent>
           </Card>
 
-          <Card className="bg-amber-100/50  border-amber-200/60">
+          <Card className="bg-white border-gray-200">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-blue-200 text-sm">Active Issues</p>
-                  <p className="text-2xl font-bold text-amber-950">
+                  <p className="text-2xl font-bold text-gray-900">
                     {staff.reduce((total, s) => total + s.activeIssues, 0)}
                   </p>
                   <p className="text-xs text-orange-600">Total assigned</p>
@@ -156,7 +156,7 @@ export default function DepartmentStaffPage() {
         </div>
 
         {/* Search and Actions */}
-        <Card className="mb-6 bg-amber-100/50  border-amber-200/60">
+        <Card className="mb-6 bg-white border-gray-200">
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div className="relative flex-1 max-w-sm">
@@ -165,7 +165,7 @@ export default function DepartmentStaffPage() {
                   placeholder="Search staff members..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 bg-amber-100/50 border-amber-200/60 text-amber-950 placeholder:text-blue-600"
+                  className="pl-10 bg-white border-gray-200 text-gray-900 placeholder:text-blue-600"
                 />
               </div>
               <Button className="bg-green-600 hover:bg-green-700" disabled>
@@ -177,16 +177,16 @@ export default function DepartmentStaffPage() {
         </Card>
 
         {/* Staff List */}
-        <Card className="bg-amber-100/50  border-amber-200/60">
+        <Card className="bg-white border-gray-200">
           <CardHeader>
-            <CardTitle className="text-amber-950">Department Staff Members</CardTitle>
+            <CardTitle className="text-gray-900">Department Staff Members</CardTitle>
             <CardDescription className="text-blue-200">
               Monitor workload and manage assignments for your department staff
             </CardDescription>
           </CardHeader>
           <CardContent>
             {filteredStaff.length === 0 ? (
-              <div className="text-center py-12 text-amber-950">
+              <div className="text-center py-12 text-gray-900">
                 <Users className="h-16 w-16 mx-auto mb-4 text-gray-400" />
                 <p className="text-lg mb-2">No Staff Members Found</p>
                 <p className="text-blue-200">
@@ -196,15 +196,15 @@ export default function DepartmentStaffPage() {
             ) : (
               <div className="space-y-4">
                 {filteredStaff.map((member) => (
-                  <div key={member.id} className="flex items-center justify-between p-4 bg-white border border-amber-200/60 rounded-lg hover:bg-amber-100/50 transition-colors">
+                  <div key={member.id} className="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
                     <div className="flex items-center space-x-4">
                       <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
-                        <span className="font-semibold text-amber-950 text-lg">
+                        <span className="font-semibold text-gray-900 text-lg">
                           {member.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
                         </span>
                       </div>
                       <div>
-                        <h3 className="font-semibold text-amber-950">{member.name}</h3>
+                        <h3 className="font-semibold text-gray-900">{member.name}</h3>
                         <div className="flex items-center space-x-4 text-sm text-blue-200">
                           <div className="flex items-center space-x-1">
                             <Mail className="h-3 w-3" />
@@ -218,7 +218,7 @@ export default function DepartmentStaffPage() {
                           )}
                         </div>
                         <div className="flex items-center space-x-2 mt-1">
-                          <Badge variant="secondary" className="bg-teal-600 text-amber-950">
+                          <Badge variant="secondary" className="bg-teal-600 text-gray-900">
                             Staff Member
                           </Badge>
                           {getStatusBadge(member.workloadStatus)}
@@ -228,14 +228,14 @@ export default function DepartmentStaffPage() {
                     
                     <div className="flex items-center space-x-4">
                       <div className="text-right">
-                        <p className="text-sm font-medium text-amber-950">{member.activeIssues} Active Issues</p>
+                        <p className="text-sm font-medium text-gray-900">{member.activeIssues} Active Issues</p>
                         <p className="text-xs text-blue-200">Workload: {member.workloadStatus}</p>
                         <p className="text-xs text-gray-400">ID: {member.id}</p>
                       </div>
                       <Button 
                         variant="outline" 
                         size="sm" 
-                        className="border-amber-200/60 text-amber-950 hover:bg-amber-100/50" 
+                        className="border-gray-200 text-gray-900 hover:bg-gray-50" 
                         disabled
                       >
                         Manage

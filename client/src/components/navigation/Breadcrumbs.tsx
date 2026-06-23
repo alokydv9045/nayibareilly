@@ -39,7 +39,7 @@ function generateBreadcrumbs(pathname: string, role: string): BreadcrumbItem[] {
     item.href === '/staff' ||
     item.href === '/department' ||
     item.href === '/mayor' ||
-    item.href === '/superadmin'
+    item.href === '/techadmin'
   );
 
   if (homeItem) {

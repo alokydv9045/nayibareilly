@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 // Types align with existing public issues but include admin-only fields like reporter & assignee
 export interface AdminIssue {
   _id: string
+  id?: string
   title: string
   description?: string
   status: string

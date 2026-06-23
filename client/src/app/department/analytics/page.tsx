@@ -1,7 +1,7 @@
-'use client'
+﻿'use client'
 
 import { useState, useEffect } from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
@@ -57,6 +57,10 @@ interface AnalyticsData {
       issues: number
       resolved: number
       avgResolutionTime: number
+    }>
+    materialConsumption?: Array<{
+      material: string
+      count: number
     }>
   }
   insights: {
@@ -196,15 +200,12 @@ export default function DepartmentAnalyticsPage() {
               <SelectItem value="year">Last Year</SelectItem>
             </SelectContent>
           </Select>
-          <Select value={selectedDepartment} onValueChange={setSelectedDepartment}>
+          <Select value={selectedDepartment} onValueChange={setSelectedDepartment} disabled>
             <SelectTrigger className="w-48">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Departments</SelectItem>
-              <SelectItem value="infrastructure">Infrastructure</SelectItem>
-              <SelectItem value="health-environment">Health & Environment</SelectItem>
-              <SelectItem value="water">Water Department</SelectItem>
+              <SelectItem value="all">Municipal Corporation</SelectItem>
             </SelectContent>
           </Select>
           <Button onClick={downloadReport} className="flex items-center gap-2">
@@ -232,8 +233,8 @@ export default function DepartmentAnalyticsPage() {
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
-            <TrendingUp className="h-8 w-8 text-purple-600 mx-auto mb-2" />
-            <div className="text-2xl font-bold text-purple-600">{getResolutionRate()}%</div>
+            <TrendingUp className="h-8 w-8 text-blue-600 mx-auto mb-2" />
+            <div className="text-2xl font-bold text-blue-600">{getResolutionRate()}%</div>
             <div className="text-sm text-gray-600">Resolution Rate</div>
           </CardContent>
         </Card>
@@ -259,6 +260,38 @@ export default function DepartmentAnalyticsPage() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Material Inventory & Supply Tracking */}
+      <Card className="mb-8">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Building2 className="h-5 w-5 text-indigo-600" />
+            Material Inventory & Supply Consumption Tracker
+          </CardTitle>
+          <CardDescription>
+            Aggregated materials consumed during issue resolutions inside this department
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          {!data.trends.materialConsumption || data.trends.materialConsumption.length === 0 ? (
+            <p className="text-center py-6 text-sm text-gray-500">No materials recorded for task resolutions in this period.</p>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {data.trends.materialConsumption.map((item, index) => (
+                <div key={index} className="border border-indigo-100/60 rounded-xl p-4 bg-indigo-50/10 flex justify-between items-center shadow-sm">
+                  <div className="space-y-0.5">
+                    <p className="text-xs text-slate-500 uppercase tracking-wide">Material</p>
+                    <p className="text-sm font-semibold text-slate-900">{item.material}</p>
+                  </div>
+                  <Badge className="bg-indigo-600 text-white font-bold text-sm px-3 py-1">
+                    {item.count.toLocaleString()}
+                  </Badge>
+                </div>
+              ))}
+            </div>
+          )}
+        </CardContent>
+      </Card>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         {/* Category Breakdown */}

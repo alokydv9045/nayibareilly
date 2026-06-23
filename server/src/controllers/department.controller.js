@@ -71,6 +71,42 @@ export const updateDepartment = async (req, res) => {
 }
 
 /**
+ * Soft delete a department
+ */
+export const deleteDepartment = async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    const department = await prisma.department.findUnique({
+      where: { id }
+    });
+    
+    if (!department) {
+      return fail(res, 404, 'Department not found');
+    }
+    
+    const updated = await prisma.department.update({
+      where: { id },
+      data: { isActive: false }
+    });
+    
+    await prisma.activityLog.create({
+      data: {
+        userId: req.user.id,
+        action: 'DELETED',
+        description: `Department "${department.name}" softly deleted`,
+        metadata: { departmentId: id }
+      }
+    });
+    
+    return ok(res, { message: 'Department successfully deleted', department: updated });
+  } catch (error) {
+    logger.error('Error deleting department', { error: error.message, id: req.params.id });
+    return fail(res, 500, 'Failed to delete department');
+  }
+}
+
+/**
  * Get all issues assigned to a department
  */
 export const getDepartmentIssues = async (req, res) => {

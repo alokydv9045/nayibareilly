@@ -367,27 +367,27 @@ export const NAVIGATION_CONFIG: Record<UserRole, NavigationGroup[]> = {
   ],
 
   // ==========================================================================
-  // SUPER ADMIN NAVIGATION
+  // TECH ADMIN NAVIGATION
   // ==========================================================================
-  [UserRole.SUPER_ADMIN]: [
+  [UserRole.TECH_ADMIN]: [
     {
       title: 'Main',
       items: [
         {
           label: 'Dashboard',
-          href: '/superadmin',
+          href: '/techadmin',
           icon: Home,
           description: 'Admin dashboard',
         },
         {
           label: 'System Overview',
-          href: '/superadmin/overview',
+          href: '/techadmin/overview',
           icon: Eye,
           description: 'System-wide overview',
         },
         {
           label: 'Analytics',
-          href: '/superadmin/analytics',
+          href: '/techadmin/analytics',
           icon: BarChart3,
           description: 'System analytics',
         },
@@ -398,13 +398,13 @@ export const NAVIGATION_CONFIG: Record<UserRole, NavigationGroup[]> = {
       items: [
         {
           label: 'Users',
-          href: '/superadmin/users',
+          href: '/techadmin/users',
           icon: Users,
           description: 'User management',
         },
         {
           label: 'Departments',
-          href: '/superadmin/departments',
+          href: '/techadmin/departments',
           icon: Building2,
           description: 'Department management',
         },
@@ -416,7 +416,7 @@ export const NAVIGATION_CONFIG: Record<UserRole, NavigationGroup[]> = {
         },
         {
           label: 'Categories',
-          href: '/superadmin/categories',
+          href: '/techadmin/categories',
           icon: FolderOpen,
           description: 'Category management',
         },
@@ -427,13 +427,13 @@ export const NAVIGATION_CONFIG: Record<UserRole, NavigationGroup[]> = {
       items: [
         {
           label: 'Settings',
-          href: '/superadmin/settings',
+          href: '/techadmin/settings',
           icon: Settings,
           description: 'System settings',
         },
         {
           label: 'Audit Log',
-          href: '/superadmin/audit',
+          href: '/techadmin/audit',
           icon: Shield,
           description: 'Activity audit log',
         },

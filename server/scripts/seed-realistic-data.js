@@ -41,74 +41,14 @@ async function main() {
   const departments = await Promise.all([
     prisma.department.create({
       data: {
-        name: 'Public Works Department',
-        description: 'Road maintenance, construction, and infrastructure development',
-        code: 'PWD',
-        contactEmail: 'pwd@nayibareilly.gov.in',
-        contactPhone: '+91-581-2234567',
-        slaHours: 72,
-        priority: 1,
-        budget: 15000000
-      }
-    }),
-    prisma.department.create({
-      data: {
-        name: 'Water Supply & Sewerage',
-        description: 'Water supply, drainage, and sewage management services',
-        code: 'WATER',
-        contactEmail: 'water@nayibareilly.gov.in',
-        contactPhone: '+91-581-2234568',
-        slaHours: 48,
-        priority: 2,
-        budget: 8000000
-      }
-    }),
-    prisma.department.create({
-      data: {
-        name: 'Solid Waste Management',
-        description: 'Garbage collection, disposal, and waste management',
-        code: 'SWM',
-        contactEmail: 'swm@nayibareilly.gov.in',
-        contactPhone: '+91-581-2234569',
-        slaHours: 24,
-        priority: 3,
-        budget: 6000000
-      }
-    }),
-    prisma.department.create({
-      data: {
-        name: 'Traffic Police',
-        description: 'Traffic management, parking, and road safety',
-        code: 'TRAFFIC',
-        contactEmail: 'traffic@nayibareilly.gov.in',
-        contactPhone: '+91-581-2234570',
-        slaHours: 12,
-        priority: 4,
-        budget: 4000000
-      }
-    }),
-    prisma.department.create({
-      data: {
-        name: 'Health Department',
-        description: 'Public health services and sanitation monitoring',
-        code: 'HEALTH',
-        contactEmail: 'health@nayibareilly.gov.in',
-        contactPhone: '+91-581-2234571',
-        slaHours: 24,
-        priority: 2,
-        budget: 10000000
-      }
-    }),
-    prisma.department.create({
-      data: {
         name: 'Municipal Corporation',
         description: 'General municipal services and administration',
         code: 'MC',
         contactEmail: 'admin@nayibareilly.gov.in',
         contactPhone: '+91-581-2234500',
-        slaHours: 48,
+        slaHours: 24,
         priority: 1,
-        budget: 20000000
+        budget: 63000000
       }
     })
   ])
@@ -116,7 +56,7 @@ async function main() {
   // 2. Create Issue Categories
   console.log('📋 Creating issue categories...')
   const categories = await Promise.all([
-    // PWD Categories
+    // PWD Categories (Now assigned to Municipal Corporation)
     prisma.issueCategory.create({
       data: {
         name: 'Road Repair',
@@ -142,7 +82,7 @@ async function main() {
         defaultDepartmentId: departments[0].id
       }
     }),
-    // Water Department
+    // Water Department (Now assigned to Municipal Corporation)
     prisma.issueCategory.create({
       data: {
         name: 'Water Supply Issue',
@@ -152,7 +92,7 @@ async function main() {
         priority: 'HIGH',
         slaHours: 24,
         requiresLocation: true,
-        defaultDepartmentId: departments[1].id
+        defaultDepartmentId: departments[0].id
       }
     }),
     prisma.issueCategory.create({
@@ -165,10 +105,10 @@ async function main() {
         slaHours: 12,
         requiresLocation: true,
         requiresImages: true,
-        defaultDepartmentId: departments[1].id
+        defaultDepartmentId: departments[0].id
       }
     }),
-    // Waste Management
+    // Waste Management (Now assigned to Municipal Corporation)
     prisma.issueCategory.create({
       data: {
         name: 'Garbage Collection',
@@ -178,10 +118,10 @@ async function main() {
         priority: 'MEDIUM',
         slaHours: 24,
         requiresLocation: true,
-        defaultDepartmentId: departments[2].id
+        defaultDepartmentId: departments[0].id
       }
     }),
-    // Traffic
+    // Traffic (Now assigned to Municipal Corporation)
     prisma.issueCategory.create({
       data: {
         name: 'Traffic Management',
@@ -191,10 +131,10 @@ async function main() {
         priority: 'MEDIUM',
         slaHours: 12,
         requiresLocation: true,
-        defaultDepartmentId: departments[3].id
+        defaultDepartmentId: departments[0].id
       }
     }),
-    // Health
+    // Health (Now assigned to Municipal Corporation)
     prisma.issueCategory.create({
       data: {
         name: 'Public Health',
@@ -204,10 +144,10 @@ async function main() {
         priority: 'HIGH',
         slaHours: 24,
         requiresLocation: true,
-        defaultDepartmentId: departments[4].id
+        defaultDepartmentId: departments[0].id
       }
     }),
-    // General
+    // General (Now assigned to Municipal Corporation)
     prisma.issueCategory.create({
       data: {
         name: 'Public Safety',
@@ -217,7 +157,7 @@ async function main() {
         priority: 'CRITICAL',
         slaHours: 6,
         requiresLocation: true,
-        defaultDepartmentId: departments[5].id
+        defaultDepartmentId: departments[0].id
       }
     })
   ])
@@ -225,14 +165,14 @@ async function main() {
   // 3. Create Users
   console.log('👥 Creating users...')
   
-  // Admin Users
+  // Admin Users (All assigned to Municipal Corporation)
   const adminUsers = await Promise.all([
     prisma.user.create({
       data: {
         email: 'admin@nayibareilly.gov.in',
         passwordHash,
         name: 'Municipal Commissioner',
-        roles: ['super_admin'],
+        roles: ['tech_admin'],
         isActive: true,
         isVerified: true,
         lastLogin: new Date()
@@ -256,7 +196,7 @@ async function main() {
         passwordHash,
         name: 'Priya Sharma',
         roles: ['dept_admin'],
-        departmentId: departments[1].id,
+        departmentId: departments[0].id,
         isActive: true,
         isVerified: true,
         lastLogin: randomDate(new Date(Date.now() - 24 * 60 * 60 * 1000), new Date())
@@ -264,7 +204,7 @@ async function main() {
     })
   ])
 
-  // Staff Users
+  // Staff Users (All assigned to Municipal Corporation)
   const staffUsers = await Promise.all([
     prisma.user.create({
       data: {
@@ -284,7 +224,7 @@ async function main() {
         passwordHash,
         name: 'Sunita Devi',
         roles: ['staff'],
-        departmentId: departments[1].id,
+        departmentId: departments[0].id,
         isActive: true,
         isVerified: true,
         lastLogin: randomDate(new Date(Date.now() - 3 * 60 * 60 * 1000), new Date())
@@ -439,7 +379,7 @@ async function main() {
           latitude: template.location.lat + (Math.random() * 0.01 - 0.005),
           longitude: template.location.lng + (Math.random() * 0.01 - 0.005),
           address: template.location.address,
-          departmentId: template.categoryId ? undefined : null, // The department is inferred from category mostly, or we could explicitly assign it. Let's let the system handle it or leave it null.
+          departmentId: ['PENDING', 'PENDING_MODERATOR_REVIEW'].includes(status) ? null : departments[0].id,
           isAnonymous: false,
           createdAt: createdDate,
           updatedAt: randomDate(createdDate, new Date()),
@@ -483,7 +423,7 @@ async function main() {
   console.log(`   - Categories: ${categories.length}`) 
   console.log(`   - Users: ${adminUsers.length + staffUsers.length + moderators.length + citizens.length}`)
   console.log(`   - Issues: ${issues.length}`)
-  console.log(`   - Admin login: admin@nayibareilly.gov.in / Admin@123`)
+  console.log(`   - Tech Admin login: admin@nayibareilly.gov.in / Admin@123`)
   console.log(`   - Citizen login: citizen1@gmail.com / Admin@123`)
 }
 

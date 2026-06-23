@@ -59,12 +59,12 @@ export default function Footer() {
         { href: '/moderator/analytics', label: 'Analytics' },
         { href: '/profile', label: 'Profile' },
       )
-    } else if (primaryRole === 'SUPERADMIN') {
+    } else if (primaryRole === 'TECH_ADMIN' || primaryRole === 'TECHADMIN' || primaryRole === 'SUPERADMIN' || primaryRole === 'DEVELOPER_ADMIN') {
       userLinks.push(
-        { href: '/superadmin/dashboard', label: 'Admin Dashboard' },
-        { href: '/superadmin/users', label: 'Manage Users' },
-        { href: '/superadmin/departments', label: 'Departments' },
-        { href: '/superadmin/analytics', label: 'Analytics' },
+        { href: '/techadmin', label: 'Admin Dashboard' },
+        { href: '/techadmin/users', label: 'Manage Users' },
+        { href: '/techadmin/departments', label: 'Departments' },
+        { href: '/techadmin/analytics', label: 'Analytics' },
       )
     }
 

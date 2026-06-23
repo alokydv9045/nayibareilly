@@ -140,9 +140,9 @@ export default function Navbar() {
                     <FileText className="mr-2 h-4 w-4" />
                     My Issues
                   </DropdownMenuItem>
-                  {user.roles && user.roles.some(role => ['super_admin', 'superadmin', 'mayor', 'staff', 'department_admin', 'dept_admin', 'department', 'moderator'].includes(role)) && (
+                  {user.roles && user.roles.some(role => ['tech_admin', 'techadmin', 'super_admin', 'superadmin', 'mayor', 'staff', 'department_admin', 'dept_admin', 'department', 'moderator'].includes(role)) && (
                     <DropdownMenuItem onClick={() => {
-                      if (user.roles.includes('super_admin') || user.roles.includes('superadmin')) return router.push('/superadmin')
+                      if (user.roles.includes('tech_admin') || user.roles.includes('techadmin') || user.roles.includes('super_admin') || user.roles.includes('superadmin')) return router.push('/techadmin')
                       if (user.roles.includes('mayor')) return router.push('/mayor')
                       if (user.roles.includes('department_admin') || user.roles.includes('dept_admin') || user.roles.includes('department')) return router.push('/department')
                       if (user.roles.includes('moderator')) return router.push('/moderator/dashboard')
@@ -257,10 +257,10 @@ export default function Navbar() {
                         <FileText className="mr-3 h-4 w-4" />
                         My Issues
                       </Button>
-                      {user.roles && user.roles.some(role => ['super_admin', 'superadmin', 'mayor', 'staff', 'department_admin', 'dept_admin', 'department', 'moderator'].includes(role)) && (
+                      {user.roles && user.roles.some(role => ['tech_admin', 'techadmin', 'super_admin', 'superadmin', 'mayor', 'staff', 'department_admin', 'dept_admin', 'department', 'moderator'].includes(role)) && (
                         <Button variant="ghost" className="w-full justify-start h-12 touch-manipulation" onClick={() => {
                           setMobileMenuOpen(false)
-                          if (user.roles.includes('super_admin') || user.roles.includes('superadmin')) return router.push('/superadmin')
+                          if (user.roles.includes('tech_admin') || user.roles.includes('techadmin') || user.roles.includes('super_admin') || user.roles.includes('superadmin')) return router.push('/techadmin')
                           if (user.roles.includes('mayor')) return router.push('/mayor')
                           if (user.roles.includes('department_admin') || user.roles.includes('dept_admin') || user.roles.includes('department')) return router.push('/department')
                           if (user.roles.includes('moderator')) return router.push('/moderator/dashboard')

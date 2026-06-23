@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -216,7 +216,7 @@ export default function StaffCompletedPage() {
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-purple-600">
+            <div className="text-2xl font-bold text-blue-600">
               {formatDuration(Math.round(getAverageCompletionTime()))}
             </div>
             <div className="text-sm text-gray-600">Avg. Completion Time</div>

@@ -17,6 +17,7 @@ import notificationsRoutes from './notifications/index.js';
 import sessionsRoutes from './sessions/index.js';
 import moderatorRoutes from './moderator/index.js';
 import voiceNotesRoutes from './voiceNotes.js';
+import mayorRoutes from './mayor/index.js';
 
 const router = Router();
 
@@ -51,6 +52,9 @@ router.use('/sessions', sessionsRoutes);
 // Moderator routes
 router.use('/moderator', moderatorRoutes);
 
+// Mayor routes
+router.use('/mayor', mayorRoutes);
+
 // Voice notes routes
 router.use('/issues', voiceNotesRoutes);
 
@@ -72,6 +76,7 @@ router.get('/', (req, res) => {
       notifications: '/api/v1/notifications',
       sessions: '/api/v1/sessions',
       moderator: '/api/v1/moderator',
+      mayor: '/api/v1/mayor',
       voiceNotes: '/api/v1/issues/:issueId/voice-notes',
       health: '/api/v1/health'
     },

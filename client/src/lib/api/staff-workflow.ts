@@ -51,11 +51,13 @@ export function useResolveIssue() {
     mutationFn: async ({ 
       issueId, 
       photos,
-      note 
+      note,
+      materials
     }: { 
       issueId: string
       photos: File[]
       note?: string 
+      materials?: Array<{ material: string; quantity: number }>
     }) => {
       const formData = new FormData()
       
@@ -67,6 +69,11 @@ export function useResolveIssue() {
       // Append note if provided
       if (note) {
         formData.append('note', note)
+      }
+
+      // Append materials if provided
+      if (materials) {
+        formData.append('materialsConsumed', JSON.stringify(materials))
       }
       
       const { data } = await api.put(`/api/v1/issues/${issueId}/resolve`, formData, {

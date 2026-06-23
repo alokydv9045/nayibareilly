@@ -1,4 +1,4 @@
-﻿import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useState, useEffect } from 'react'
 import { api } from '@/lib/api/client'
 import { isAuthenticated, authEvents } from '@/lib/auth/auth-utils'
@@ -9,6 +9,12 @@ export type Profile = {
   name?: string
   avatarUrl?: string
   roles?: string[]
+  stats?: {
+    issuesReported: number
+    issuesResolved: number
+    communityPoints: number
+    memberSince: string
+  }
 }
 
 const profileKeys = {

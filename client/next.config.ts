@@ -98,6 +98,21 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: '/department/water',
+        destination: '/department',
+        permanent: true,
+      },
+      {
+        source: '/department/health-environment',
+        destination: '/department',
+        permanent: true,
+      },
+      {
+        source: '/department/infrastructure',
+        destination: '/department',
+        permanent: true,
+      },
+      {
         source: '/app/dashboard',
         destination: '/dashboard',
         permanent: true,

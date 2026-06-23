@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { useState } from 'react'
 import { useMyAssignedIssues, useStartWork, useResolveIssue } from '@/lib/api/staff-workflow'
@@ -83,7 +83,7 @@ export default function StaffWorkPage() {
     setResolveDialog(true)
   }
 
-  const handleResolveConfirm = async (photos: File[], note?: string) => {
+  const handleResolveConfirm = async (photos: File[], note?: string, materials?: Array<{ material: string; quantity: number }>) => {
     if (!selectedIssueId) return
 
     try {
@@ -91,6 +91,7 @@ export default function StaffWorkPage() {
         issueId: selectedIssueId,
         photos,
         note,
+        materials,
       })
       alert('Issue resolved successfully with proof photos')
       setResolveDialog(false)

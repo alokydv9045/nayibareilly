@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
@@ -95,7 +95,7 @@ export default function ModeratorAnalyticsPage() {
       value: data?.reviews?.today || 0,
       icon: <Target className="h-4 w-4" />,
       description: "Reviews done today",
-      color: "text-purple-600",
+      color: "text-blue-600",
       bgColor: "bg-purple-50"
     }
   ]

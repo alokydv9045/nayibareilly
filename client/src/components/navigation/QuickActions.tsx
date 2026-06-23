@@ -213,25 +213,25 @@ const QUICK_ACTIONS: Record<UserRole, QuickActionGroup[]> = {
     },
   ],
 
-  [UserRole.SUPER_ADMIN]: [
+  [UserRole.TECH_ADMIN]: [
     {
       label: 'Administration',
       actions: [
         {
           label: 'Add User',
           icon: Plus,
-          href: '/superadmin/users/new',
+          href: '/techadmin/users/new',
           variant: 'default',
         },
         {
           label: 'Manage Users',
           icon: Users,
-          href: '/superadmin/users',
+          href: '/techadmin/users',
         },
         {
           label: 'Manage Departments',
           icon: Building2,
-          href: '/superadmin/departments',
+          href: '/techadmin/departments',
         },
       ],
     },
@@ -241,12 +241,12 @@ const QUICK_ACTIONS: Record<UserRole, QuickActionGroup[]> = {
         {
           label: 'System Settings',
           icon: Settings,
-          href: '/superadmin/settings',
+          href: '/techadmin/settings',
         },
         {
           label: 'View Audit Log',
           icon: FileText,
-          href: '/superadmin/audit',
+          href: '/techadmin/audit',
         },
         {
           label: 'Diagnostics',
