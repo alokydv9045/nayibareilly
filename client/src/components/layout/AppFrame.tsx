@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 import { ReactNode } from 'react'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
@@ -15,12 +15,12 @@ import MobileBottomNav from '@/components/layout/MobileBottomNav'
 export default function AppFrame({ children }: { children: ReactNode }) {
   const [queryClient] = useState(() => new QueryClient())
   const pathname = usePathname()
-  const isAdminRoute = pathname?.startsWith('/superadmin') || pathname?.startsWith('/mayor') || pathname?.startsWith('/department') || pathname?.startsWith('/moderator') || pathname?.startsWith('/issues') || pathname?.startsWith('/users') || pathname?.startsWith('/staff') || false
+  const isAdminRoute = pathname?.startsWith('/techadmin') || pathname?.startsWith('/mayor') || pathname?.startsWith('/department') || pathname?.startsWith('/moderator') || pathname?.startsWith('/issues') || pathname?.startsWith('/users') || pathname?.startsWith('/staff') || false
   const isStaffRoute = pathname?.startsWith('/staff') || false
 
   // Determine theme based on route; admin/staff keep their own, public uses citizen
   const theme = isAdminRoute
-    ? 'superadmin'
+    ? 'techadmin'
     : isStaffRoute
     ? 'staff'
     : 'citizen'
@@ -48,18 +48,14 @@ export default function AppFrame({ children }: { children: ReactNode }) {
   }, [queryClient])
 
   return (
-    <div data-theme={theme} className="min-h-screen">
+    <div data-theme={theme} className="min-h-screen bg-blue-50">
       <QueryClientProvider client={queryClient}>
         {!isAdminRoute && <Navbar />}
         <NotificationProvider>
           {!isAdminRoute && <CitizenRealtimeBridge />}
           <ErrorHandler>
             <main id="main-content" aria-label="Main content" className="min-h-screen">
-              {!isAdminRoute && (
-                <div className="fixed top-3 right-4 z-40">
-                  <NotificationBell />
-                </div>
-              )}
+
               {children}
             </main>
             {!isAdminRoute && <MobileBottomNav />}

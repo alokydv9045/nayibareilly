@@ -1542,6 +1542,97 @@ export const deleteCategory = async (req, res) => {
   }
 };
 
+export const updateIssueStatusAdmin = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status, note } = req.body;
+    const issue = await prisma.issue.update({
+      where: { id },
+      data: { status },
+      include: { reporter: true, assignedTo: true, department: true }
+    });
+    await prisma.issueTimeline.create({
+      data: { issueId: id, status, note, performedById: req.user.id }
+    });
+    return ok(res, { issue });
+  } catch (error) {
+    return fail(res, 500, 'Failed to update issue status', error.message);
+  }
+};
+
+export const triageIssueAdmin = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { departmentId, note } = req.body;
+    const issue = await prisma.issue.update({
+      where: { id },
+      data: { departmentId, status: 'TRIAGED' },
+      include: { reporter: true, assignedTo: true, department: true }
+    });
+    await prisma.issueTimeline.create({
+      data: { issueId: id, status: 'TRIAGED', note, performedById: req.user.id }
+    });
+    return ok(res, { issue });
+  } catch (error) {
+    return fail(res, 500, 'Failed to triage issue', error.message);
+  }
+};
+
+export const assignIssueAdmin = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { staffUserId, note } = req.body;
+    const issue = await prisma.issue.update({
+      where: { id },
+      data: { assignedToId: staffUserId, status: 'ASSIGNED_TO_STAFF' },
+      include: { reporter: true, assignedTo: true, department: true }
+    });
+    await prisma.issueTimeline.create({
+      data: { issueId: id, status: 'ASSIGNED_TO_STAFF', note, performedById: req.user.id }
+    });
+    return ok(res, { issue });
+  } catch (error) {
+    return fail(res, 500, 'Failed to assign issue', error.message);
+  }
+};
+
+export const closeIssueAdmin = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { note } = req.body;
+    const issue = await prisma.issue.update({
+      where: { id },
+      data: { status: 'CLOSED' },
+      include: { reporter: true, assignedTo: true, department: true }
+    });
+    await prisma.issueTimeline.create({
+      data: { issueId: id, status: 'CLOSED', note, performedById: req.user.id }
+    });
+    return ok(res, { issue });
+  } catch (error) {
+    return fail(res, 500, 'Failed to close issue', error.message);
+  }
+};
+
+export const bulkUpdateStatusAdmin = async (req, res) => {
+  try {
+    const { ids, status } = req.body;
+    await prisma.issue.updateMany({
+      where: { id: { in: ids } },
+      data: { status }
+    });
+    for(const id of ids) {
+      await prisma.issueTimeline.create({
+        data: { issueId: id, status, note: 'Bulk status update', performedById: req.user.id }
+      });
+    }
+    const items = await prisma.issue.findMany({ where: { id: { in: ids } }});
+    return ok(res, { items });
+  } catch (error) {
+    return fail(res, 500, 'Failed to bulk update status', error.message);
+  }
+};
+
 export const getActivityLogs = async (req, res) => {
   try {
     const { userId, issueId, page = 1, limit = 20 } = req.query;

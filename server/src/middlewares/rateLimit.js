@@ -145,7 +145,7 @@ export const globalRateLimit = rateLimit({
     // Different limits based on authentication status
     if (req.user) {
       // Authenticated users get higher limits
-      if (req.user.roles?.includes('super_admin')) return 1000
+      if (req.user.roles?.includes('tech_admin')) return 1000
       if (req.user.roles?.includes('staff')) return 500
       return 200
     }
@@ -309,7 +309,7 @@ export const passwordResetRateLimit = rateLimit({
  */
 export const refreshRateLimit = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: process.env.NODE_ENV === 'development' ? 100 : 10, // Higher limit in development
+  max: process.env.NODE_ENV === 'development' ? 500 : 30, // Higher limit in development; middleware calls refresh on every navigation
   message: {
     success: false,
     message: 'Too many token refresh attempts. Please try again in 15 minutes.',
@@ -319,7 +319,9 @@ export const refreshRateLimit = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   keyGenerator: createKeyGenerator(true),
-  handler: rateLimitHandler
+  handler: rateLimitHandler,
+  // Skip rate limiting for server-side middleware calls (no Origin header, called per-navigation)
+  skip: (req) => !req.headers['origin']
 })
 
 /**
@@ -383,7 +385,7 @@ export const fileUploadRateLimit = rateLimit({
  */
 export const adminRateLimit = rateLimit({
   windowMs: 5 * 60 * 1000, // 5 minutes
-  max: 50, // Reasonable limit for admin operations
+  max: 300, // Increased limit for admin dashboard (accommodates polling and rapid navigation)
   message: {
     success: false,
     message: 'Too many admin operations. Please slow down.',

@@ -16,7 +16,6 @@ import {
 } from '../../../middlewares/rateLimit.js';
 import { validateCSRFToken, getCSRFToken } from '../../../middlewares/csrf.js';
 import { 
-  register, 
   login, 
   me, 
   forgotPassword, 
@@ -25,7 +24,9 @@ import {
   refresh, 
   logout, 
   changePassword, 
-  getAuthMetrics 
+  getAuthMetrics,
+  requestOtp,
+  verifyOtp
 } from '../../../controllers/auth.controller.js';
 
 const router = Router();
@@ -36,20 +37,7 @@ const router = Router();
  */
 router.get('/csrf-token', getCSRFToken);
 
-/**
- * POST /api/v1/auth/register
- * Register a new user account
- */
-router.post('/register', [
-  registerRateLimit,
-  validateCSRFToken,
-  body('email').isEmail().withMessage('Valid email is required'),
-  body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
-  body('name').optional().isString().withMessage('Name must be a string'),
-  body('phone').optional().isString().withMessage('Phone must be a string'),
-  body('address').optional().isString().withMessage('Address must be a string'),
-  body('requestedRole').optional().isString().withMessage('Role must be a string')
-], register);
+
 
 /**
  * POST /api/v1/auth/login
@@ -61,6 +49,26 @@ router.post('/login', [
   body('email').isEmail().withMessage('Valid email is required'),
   body('password').isString().withMessage('Password is required')
 ], login);
+
+/**
+ * POST /api/v1/auth/request-otp
+ * Request OTP for phone-based login or registration
+ */
+router.post('/request-otp', [
+  loginRateLimit,
+  body('phone').isString().withMessage('Valid phone number is required'),
+  body('name').optional().isString().withMessage('Name must be a string')
+], requestOtp);
+
+/**
+ * POST /api/v1/auth/verify-otp
+ * Verify OTP and login user
+ */
+router.post('/verify-otp', [
+  loginRateLimit,
+  body('phone').isString().withMessage('Valid phone number is required'),
+  body('otp').isString().withMessage('OTP is required')
+], verifyOtp);
 
 /**
  * GET /api/v1/auth/me
@@ -129,6 +137,6 @@ router.post('/change-password', [
  * GET /api/v1/auth/metrics
  * Get authentication metrics (admin only)
  */
-router.get('/metrics', auth(['SUPER_ADMIN', 'ADMIN']), getAuthMetrics);
+router.get('/metrics', auth(['SUPER_ADMIN', 'DEPT_ADMIN', 'MAYOR']), getAuthMetrics);
 
 export default router;

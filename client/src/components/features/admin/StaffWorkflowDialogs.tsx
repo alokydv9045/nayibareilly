@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
 import {
   Dialog,
   DialogContent,
@@ -88,10 +89,25 @@ export function StartWorkDialog({
 interface ResolveIssueDialogProps {
   open: boolean
   onClose: () => void
-  onConfirm: (photos: File[], note?: string) => void
+  onConfirm: (photos: File[], note?: string, materials?: Array<{ material: string; quantity: number }>) => void
   isLoading?: boolean
   issueTitle?: string
 }
+
+const PRESET_MATERIALS = [
+  "Bags of Concrete (50kg)",
+  "LED Bulbs (30W)",
+  "LED Bulbs (50W)",
+  "Streetlight Fixture",
+  "PVC Pipe (3-inch, 10ft)",
+  "PVC Pipe (4-inch, 10ft)",
+  "Manhole Cover (Standard)",
+  "Asphalt Mix (50kg bags)",
+  "Road Paint (Yellow, 5L)",
+  "Road Paint (White, 5L)",
+  "Gravel (cubic feet)",
+  "Other (Specify)"
+]
 
 export function ResolveIssueDialog({
   open,
@@ -103,6 +119,12 @@ export function ResolveIssueDialog({
   const [note, setNote] = useState('')
   const [photos, setPhotos] = useState<File[]>([])
   const [previews, setPreviews] = useState<string[]>([])
+
+  // Material Tracker state
+  const [materials, setMaterials] = useState<Array<{ material: string; quantity: number }>>([])
+  const [selectedPreset, setSelectedPreset] = useState(PRESET_MATERIALS[0])
+  const [customMaterial, setCustomMaterial] = useState('')
+  const [materialQty, setMaterialQty] = useState('1')
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || [])
@@ -131,17 +153,48 @@ export function ResolveIssueDialog({
     setPreviews(previews.filter((_, i) => i !== index))
   }
 
+  const addMaterial = () => {
+    const name = selectedPreset === 'Other (Specify)' ? customMaterial.trim() : selectedPreset
+    if (!name) {
+      alert('Please select or specify a material name')
+      return
+    }
+    const qty = parseInt(materialQty, 10)
+    if (isNaN(qty) || qty <= 0) {
+      alert('Quantity must be greater than 0')
+      return
+    }
+
+    // If material already exists, merge the quantities
+    const existingIdx = materials.findIndex(m => m.material.toLowerCase() === name.toLowerCase())
+    if (existingIdx !== -1) {
+      const updated = [...materials]
+      updated[existingIdx].quantity += qty
+      setMaterials(updated)
+    } else {
+      setMaterials([...materials, { material: name, quantity: qty }])
+    }
+
+    setCustomMaterial('')
+    setMaterialQty('1')
+  }
+
+  const removeMaterial = (index: number) => {
+    setMaterials(materials.filter((_, i) => i !== index))
+  }
+
   const handleConfirm = () => {
     if (photos.length === 0) {
       alert('At least one after photo is required to resolve the issue')
       return
     }
-    onConfirm(photos, note || undefined)
+    onConfirm(photos, note || undefined, materials.length > 0 ? materials : undefined)
     // Reset state
     setNote('')
     setPhotos([])
     previews.forEach(url => URL.revokeObjectURL(url))
     setPreviews([])
+    setMaterials([])
   }
 
   const handleClose = () => {
@@ -150,21 +203,22 @@ export function ResolveIssueDialog({
     setNote('')
     setPhotos([])
     setPreviews([])
+    setMaterials([])
     onClose()
   }
 
   return (
     <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-2xl">
+      <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Resolve Issue - Upload After Photos</DialogTitle>
+          <DialogTitle>Resolve Issue - Upload Proof & Material Tracking</DialogTitle>
           <DialogDescription>
             {issueTitle && <span className="block font-medium text-foreground mt-2">{issueTitle}</span>}
-            Upload photos showing the completed work. At least one photo is required.
+            Upload photos showing the completed work and select any materials consumed.
           </DialogDescription>
         </DialogHeader>
         
-        <div className="space-y-4 py-4">
+        <div className="space-y-6 py-4">
           {/* Photo Upload Area */}
           <div className="space-y-2">
             <Label>After Photos * (Required)</Label>
@@ -228,6 +282,82 @@ export function ResolveIssueDialog({
               </div>
             </div>
           )}
+
+          {/* Materials Consumed (Inventory Tracking) */}
+          <div className="border border-amber-200/60 rounded-xl p-4 bg-amber-50/15 space-y-4">
+            <Label className="font-semibold text-amber-950 block">Resource & Material Tracking</Label>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <div className="flex-1 space-y-1">
+                <span className="text-xs text-amber-800">Select Material</span>
+                <select 
+                  value={selectedPreset} 
+                  onChange={e => setSelectedPreset(e.target.value)}
+                  className="w-full bg-white border border-amber-200 rounded-lg p-2 text-sm"
+                  disabled={isLoading}
+                >
+                  {PRESET_MATERIALS.map(item => (
+                    <option key={item} value={item}>{item}</option>
+                  ))}
+                </select>
+              </div>
+
+              {selectedPreset === 'Other (Specify)' && (
+                <div className="flex-1 space-y-1">
+                  <span className="text-xs text-amber-800">Specify Custom Name</span>
+                  <Input 
+                    placeholder="e.g. Copper Wire (meters)"
+                    value={customMaterial}
+                    onChange={e => setCustomMaterial(e.target.value)}
+                    className="bg-white border-amber-200"
+                    disabled={isLoading}
+                  />
+                </div>
+              )}
+
+              <div className="w-24 space-y-1">
+                <span className="text-xs text-amber-800">Qty</span>
+                <Input 
+                  type="number"
+                  min="1"
+                  value={materialQty}
+                  onChange={e => setMaterialQty(e.target.value)}
+                  className="bg-white border-amber-200"
+                  disabled={isLoading}
+                />
+              </div>
+
+              <Button 
+                type="button" 
+                onClick={addMaterial} 
+                className="sm:self-end bg-indigo-50/20 text-indigo-600 border border-indigo-200 hover:bg-indigo-50"
+                disabled={isLoading}
+              >
+                Add
+              </Button>
+            </div>
+
+            {/* Added materials list */}
+            {materials.length > 0 && (
+              <div className="space-y-2 pt-2 border-t border-amber-200/50">
+                <span className="text-xs font-semibold text-amber-900 block">Consumed items for this task:</span>
+                <div className="flex flex-wrap gap-2">
+                  {materials.map((item, idx) => (
+                    <Badge key={idx} className="bg-indigo-500/20 text-indigo-600 border border-indigo-200 px-3 py-1 flex items-center gap-1.5 text-xs font-medium">
+                      {item.material} x {item.quantity}
+                      <button 
+                        type="button" 
+                        onClick={() => removeMaterial(idx)} 
+                        className="text-indigo-600 hover:text-red-600 ml-1 font-bold"
+                        disabled={isLoading}
+                      >
+                        ✕
+                      </button>
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
 
           {/* Resolution Notes */}
           <div className="space-y-2">

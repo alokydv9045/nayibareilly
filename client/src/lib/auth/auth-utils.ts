@@ -168,7 +168,7 @@ export const getRoleLevel = (role: string): number => {
     'staff': 2,
     'moderator': 3,
     'org_admin': 4,
-    'super_admin': 5
+    'tech_admin': 5
   }
   return levels[role.toLowerCase()] || 0
 }

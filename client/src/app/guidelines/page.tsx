@@ -236,7 +236,7 @@ export default function GuidelinesPage() {
               <CardDescription>{currentContent.joinCard.description}</CardDescription>
             </CardHeader>
             <CardContent className="text-center">
-              <Link href="/get-started" className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+              <Link href="/login" className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
                 {currentContent.joinCard.button}
               </Link>
             </CardContent>

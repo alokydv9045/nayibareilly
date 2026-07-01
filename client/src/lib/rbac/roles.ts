@@ -13,7 +13,7 @@ export enum UserRole {
   STAFF = 'staff',
   DEPT_ADMIN = 'dept_admin',
   MAYOR = 'mayor',
-  SUPER_ADMIN = 'super_admin',
+  TECH_ADMIN = 'tech_admin',
 }
 
 export const USER_ROLES = Object.values(UserRole);
@@ -78,14 +78,14 @@ export const ROLE_METADATA: Record<UserRole, RoleMetadata> = {
     color: '#EF4444', // red-500
     dashboardPath: '/mayor',
   },
-  [UserRole.SUPER_ADMIN]: {
-    name: UserRole.SUPER_ADMIN,
-    label: 'Super Admin',
-    description: 'Full system administration',
+  [UserRole.TECH_ADMIN]: {
+    name: UserRole.TECH_ADMIN,
+    label: 'Tech Admin',
+    description: 'Full technical system administration',
     level: 6,
     icon: '⚡',
     color: '#DC2626', // red-600
-    dashboardPath: '/superadmin',
+    dashboardPath: '/techadmin',
   },
 };
 
@@ -304,13 +304,13 @@ export const ROLE_ROUTES: Record<UserRole, string[]> = {
     '/profile',
     '/notifications',
   ],
-  [UserRole.SUPER_ADMIN]: [
-    '/superadmin',
-    '/superadmin/users',
-    '/superadmin/departments',
-    '/superadmin/settings',
-    '/superadmin/analytics',
-    '/superadmin/audit',
+  [UserRole.TECH_ADMIN]: [
+    '/techadmin',
+    '/techadmin/users',
+    '/techadmin/departments',
+    '/techadmin/settings',
+    '/techadmin/analytics',
+    '/techadmin/audit',
     '/reports/:id',
     '/profile',
     '/notifications',

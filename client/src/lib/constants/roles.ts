@@ -5,7 +5,7 @@ import { BACKEND_ROLES, ROLE_PERMISSIONS } from './role-map'
 
 // Role to route mapping - updated hierarchy: Developer > Mayor > Department > Moderator > Staff > Citizens
 export const roleToRoute: Record<AdminRole, string> = {
-  DEVELOPER_ADMIN: '/superadmin',           // Developer (Platform Creator & Maintainer)
+  DEVELOPER_ADMIN: '/techadmin',           // Developer (Platform Creator & Maintainer)
   SUPER_ADMIN: '/mayor',                    // Mayor (City-wide Management & Oversight)
   DEPT_ADMIN: '/department',                // Department Admins (5 departments with staff)
   MODERATOR: '/moderator/dashboard',        // Moderator (Content & Issue Review)
@@ -65,11 +65,11 @@ export const selectPrimaryRole = (roles?: string[] | null): AdminRole | null => 
   const r = roles.map((x) => String(x).toLowerCase())
   
   // Check for each role in priority order (highest to lowest)
-  if (r.includes(BACKEND_ROLES.DEVELOPER_ADMIN) || r.includes('dev_admin')) return 'DEVELOPER_ADMIN'
-  if (r.includes(BACKEND_ROLES.SUPER_ADMIN) || r.includes('superadmin') || r.includes('mayor')) return 'SUPER_ADMIN'
-  if (r.includes(BACKEND_ROLES.DEPT_ADMIN) || r.includes('department_admin')) return 'DEPT_ADMIN'
-  if (r.includes(BACKEND_ROLES.MODERATOR) || r.includes('support')) return 'MODERATOR'
-  if (r.includes(BACKEND_ROLES.STAFF) || r.includes('officer')) return 'STAFF'
+  if (r.includes('tech_admin') || r.includes('techadmin') || r.includes('super_admin') || r.includes('superadmin') || r.includes('developer_admin') || r.includes('dev_admin')) return 'DEVELOPER_ADMIN'
+  if (r.includes('mayor')) return 'SUPER_ADMIN'
+  if (r.includes('dept_admin') || r.includes('department_admin')) return 'DEPT_ADMIN'
+  if (r.includes('moderator') || r.includes('support')) return 'MODERATOR'
+  if (r.includes('staff') || r.includes('officer')) return 'STAFF'
   
   return null // No admin role found (could be citizen)
 }
@@ -78,7 +78,7 @@ export const selectPrimaryRole = (roles?: string[] | null): AdminRole | null => 
 export const applyThemeForRole = (role: AdminRole | null) => {
   if (typeof document === 'undefined') return
   
-  const theme = role ? roleToTheme[role] : 'superadmin' // default to superadmin theme
+  const theme = role ? roleToTheme[role] : 'techadmin' // default to techadmin theme
   document.documentElement.setAttribute('data-theme', theme)
 }
 
@@ -114,7 +114,6 @@ export const isCitizenOnlyRoute = (pathname: string): boolean => {
     '/my-issues',
     '/profile',
     '/notifications',
-    '/reports',
     '/issue',
     '/app'
   ]
@@ -123,7 +122,7 @@ export const isCitizenOnlyRoute = (pathname: string): boolean => {
 
 // Check if route should be accessible by admins only
 export const isAdminOnlyRoute = (pathname: string): boolean => {
-  const adminRoutes = ['/superadmin', '/mayor', '/department', '/moderator', '/issues', '/users', '/staff']
+  const adminRoutes = ['/techadmin', '/mayor', '/department', '/moderator', '/issues', '/users', '/staff']
   return adminRoutes.some(route => pathname.startsWith(route))
 }
 

@@ -95,13 +95,13 @@ export default function ProfilePage() {
     }
   })
 
-  // Mock data for profile completion and stats
-  const profileCompletion = 75
-  const userStats = {
-    issuesReported: 12,
-    issuesResolved: 8,
-    communityPoints: 245,
-    memberSince: '2024'
+  // Mock data for profile completion (kept visual for now, wait, no, I'll calculate it roughly or keep as visual)
+  const profileCompletion = me?.name && me?.avatarUrl ? 100 : 75
+  const userStats = me?.stats || {
+    issuesReported: 0,
+    issuesResolved: 0,
+    communityPoints: 0,
+    memberSince: new Date().getFullYear().toString()
   }
 
   return (

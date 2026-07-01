@@ -106,8 +106,6 @@ export function useCreateIssue() {
   const qc = useQueryClient()
   return useMutation({
     mutationFn: async (payload: Partial<Issue> & { title: string; category?: string; categoryName?: string; attachments?: File[]; location?: { latitude: number; longitude: number; address?: string } }) => {
-      console.log('🚀 Creating issue with payload:', payload)
-      
       const hasFiles = Array.isArray(payload.attachments) && payload.attachments.length > 0
       const hasLocation = !!payload.location
       
@@ -120,42 +118,33 @@ export function useCreateIssue() {
         if (payload.location) fd.append('location', JSON.stringify(payload.location))
         for (const f of payload.attachments || []) fd.append('images', f)
         
-        console.log('📤 Sending FormData to /issues')
         const { data } = await api.post('/issues', fd, { headers: { 'Content-Type': 'multipart/form-data' } })
-        console.log('📥 Issue creation response:', data)
         return data?.data?.issue || data?.data || data?.issue || data
       } else {
-        console.log('📤 Sending JSON to /issues')
         const { data } = await api.post('/issues', payload)
-        console.log('📥 Issue creation response:', data)
         return data?.data?.issue || data?.data || data?.issue || data
       }
     },
     onSuccess: (newIssue) => {
-      console.log('✅ Issue created successfully:', newIssue)
-      toast.success('Issue created successfully!')
+      // NOTE: Callers (e.g., report/page.tsx) are responsible for showing success toasts
+      // so we deliberately do NOT fire toast.success here to avoid duplicates.
       
-      // Invalidate all issues queries to refresh lists
+      // Invalidate issues queries to refresh lists
       qc.invalidateQueries({ queryKey: issuesKeys.all })
       
-      // Also update the my-issues cache specifically
+      // Optimistically update caches
       qc.setQueryData(issuesKeys.list({ mine: true }), (oldData: Issue[] | undefined) => {
-        console.log('🔄 Updating my-issues cache with new issue')
         if (!oldData) return [newIssue]
         return [newIssue, ...oldData]
       })
-      
-      // Update general issues list if available
       qc.setQueryData(issuesKeys.list(), (oldData: Issue[] | undefined) => {
-        console.log('🔄 Updating general issues cache with new issue')
         if (!oldData) return [newIssue]
         return [newIssue, ...oldData]
       })
     },
     onError: (error: unknown) => {
-      console.error('❌ Issue creation failed:', error)
       const err = error as { response?: { data?: { message?: string } }; message?: string }
-      const message = err?.response?.data?.message || err?.message || 'Failed to create issue'
+      const message = err?.response?.data?.message || err?.message || 'Failed to submit report'
       toast.error(message)
     }
   })

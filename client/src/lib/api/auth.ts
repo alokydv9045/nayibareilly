@@ -12,14 +12,6 @@ const toMessage = (err: unknown, fallback: string) => {
 }
 
 export type LoginPayload = { email: string; password: string }
-export type RegisterPayload = { 
-  email: string; 
-  password: string; 
-  name?: string; 
-  phone?: string; 
-  address?: string; 
-  requestedRole?: string 
-}
 
 export const login = async (payload: LoginPayload) => {
   try {
@@ -38,23 +30,7 @@ export const login = async (payload: LoginPayload) => {
   }
 }
 
-export const register = async (payload: RegisterPayload) => {
-  try {
-    const { data } = await api.post('/auth/register', payload)
-    const token = data?.data?.token
-    const user = data?.data?.user
-    
-    if (typeof window !== 'undefined' && token && user) {
-      tokenStorage.set(token)
-      userStorage.set(user)
-      emitAuthEvent(authEvents.LOGIN, { token, user })
-    }
-    return data?.data
-  } catch (err: unknown) {
-    // Interceptor already maps server message (e.g., 409 Email already in use) into err.message
-    throw new Error(toMessage(err, 'Signup failed'))
-  }
-}
+
 
 export const me = async () => {
   const { data } = await api.get('/auth/me')

@@ -441,6 +441,7 @@ export default function AboutPage() {
             Be part of the digital transformation. Report issues, track progress, and ensure a cleaner, better environment for everyone.
           </p>
           
+<<<<<<< HEAD
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <motion.div whileHover={{ scale: 1.05, y: -2 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 400, damping: 17 }}>
               <Button asChild size="lg" className="bg-emerald-500 hover:bg-emerald-600 text-white shadow-md border-0 px-8 w-full sm:w-auto">
@@ -457,6 +458,26 @@ export default function AboutPage() {
                 </Link>
               </Button>
             </motion.div>
+=======
+          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fadeInUp animation-delay-600">
+            <Button asChild size="lg" className="bg-white text-blue-900 hover:bg-blue-50 transform hover:scale-105 transition-all duration-300 hover:shadow-2xl group">
+              <Link href="/login">
+                Get Started Today
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-2 transition-transform duration-300" />
+              </Link>
+            </Button>
+            <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-white/10 transform hover:scale-105 transition-all duration-300 hover:shadow-2xl backdrop-blur-sm">
+              <Link href="/help">
+                Learn More
+              </Link>
+            </Button>
+          </div>
+
+          <div className="mt-8 pt-8 border-t border-white/20 animate-fadeInUp animation-delay-800">
+            <p className="text-blue-200 text-sm animate-pulse">
+              &ldquo;हर नागरिक के साथ, नई बरेली की ओर&rdquo; - Together towards a New Bareilly
+            </p>
+>>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
           </div>
         </div>
       </section>

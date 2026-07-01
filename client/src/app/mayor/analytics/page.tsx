@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -20,6 +20,9 @@ import {
   Target
 } from 'lucide-react'
 import { useToast } from '@/components/ui/use-toast'
+import { 
+  ResponsiveContainer, BarChart, Bar, LineChart, Line, AreaChart, Area, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend
+} from 'recharts'
 
 interface CityAnalytics {
   summary: {
@@ -234,8 +237,13 @@ export default function MayorAnalyticsPage() {
     <div className="container mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
+<<<<<<< HEAD
           <BarChart3 className="h-8 w-8 text-slate-800" />
           <h1 className="text-3xl font-bold text-slate-900">City Analytics Dashboard</h1>
+=======
+          <BarChart3 className="h-8 w-8 text-blue-600" />
+          <h1 className="text-3xl font-bold text-gray-900">City Analytics Dashboard</h1>
+>>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
           <Crown className="h-6 w-6 text-yellow-600" />
         </div>
         <div className="flex gap-3">
@@ -310,8 +318,13 @@ export default function MayorAnalyticsPage() {
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
+<<<<<<< HEAD
             <Target className="h-8 w-8 text-slate-800 mx-auto mb-2" />
             <div className="text-2xl font-bold text-slate-800">
+=======
+            <Target className="h-8 w-8 text-blue-600 mx-auto mb-2" />
+            <div className="text-2xl font-bold text-blue-600">
+>>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
               {data.summary.budgetEfficiency}%
             </div>
             <div className="text-sm text-slate-600">Budget Efficiency</div>
@@ -324,6 +337,41 @@ export default function MayorAnalyticsPage() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Monthly Resolution Trends */}
+      <Card className="mb-8">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <TrendingUp className="h-5 w-5 text-indigo-600" />
+            Monthly Issue Resolution Trends
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="pt-4">
+          <div className="h-80 w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={data.timeAnalysis.monthlyData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                <defs>
+                  <linearGradient id="colorMonthIssues" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#818cf8" stopOpacity={0.4}/>
+                    <stop offset="95%" stopColor="#818cf8" stopOpacity={0}/>
+                  </linearGradient>
+                  <linearGradient id="colorMonthResolved" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#34d399" stopOpacity={0.4}/>
+                    <stop offset="95%" stopColor="#34d399" stopOpacity={0}/>
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
+                <XAxis dataKey="month" stroke="#4b5563" fontSize={12} />
+                <YAxis stroke="#4b5563" fontSize={12} />
+                <Tooltip contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px' }} />
+                <Legend />
+                <Area type="monotone" dataKey="issues" name="Total Incoming" stroke="#818cf8" fillOpacity={1} fill="url(#colorMonthIssues)" strokeWidth={2} />
+                <Area type="monotone" dataKey="resolved" name="Resolved" stroke="#34d399" fillOpacity={1} fill="url(#colorMonthResolved)" strokeWidth={2} />
+              </AreaChart>
+            </ResponsiveContainer>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* City KPIs */}
       <Card className="mb-8">
@@ -400,7 +448,19 @@ export default function MayorAnalyticsPage() {
             <CardTitle>Department Performance Comparison</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
+            <div className="h-64 w-full mb-6">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={data.departmentComparison} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
+                  <XAxis dataKey="name" fontSize={10} tickLine={false} />
+                  <YAxis fontSize={10} />
+                  <Tooltip contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px' }} />
+                  <Bar dataKey="issues" name="Assigned" fill="#6366f1" radius={[3, 3, 0, 0]} />
+                  <Bar dataKey="resolved" name="Resolved" fill="#10b981" radius={[3, 3, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="space-y-4 max-h-60 overflow-y-auto pr-1">
               {data.departmentComparison.map((dept) => {
                 const resolutionRate = dept.issues > 0 ? Math.round((dept.resolved / dept.issues) * 100) : 0
                 const budgetEfficiency = dept.budget > 0 ? Math.round((dept.budgetUsed / dept.budget) * 100) : 0
@@ -413,7 +473,11 @@ export default function MayorAnalyticsPage() {
                         <Badge variant={resolutionRate >= 80 ? 'default' : 'secondary'}>
                           {resolutionRate}%
                         </Badge>
+<<<<<<< HEAD
                         <Star className={`h-4 w-4 ${dept.satisfaction >= 4 ? 'fill-yellow-400 text-yellow-400' : 'text-slate-300'}`} />
+=======
+                        <Star className={`h-4 w-4 ${dept.satisfaction >= 4 ? 'fill-yellow-400 text-yellow-600' : 'text-gray-300'}`} />
+>>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
                       </div>
                     </div>
                     <div className="grid grid-cols-3 gap-3 text-xs text-slate-600">
@@ -434,7 +498,19 @@ export default function MayorAnalyticsPage() {
             <CardTitle>Ward Performance Analysis</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
+            <div className="h-64 w-full mb-6">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={data.wardAnalysis.slice(0, 6)} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
+                  <XAxis dataKey="ward" fontSize={10} tickLine={false} />
+                  <YAxis fontSize={10} />
+                  <Tooltip contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px' }} />
+                  <Bar dataKey="issues" name="Issues" fill="#f59e0b" radius={[3, 3, 0, 0]} />
+                  <Bar dataKey="avgResolutionTime" name="Avg SLA (h)" fill="#ef4444" radius={[3, 3, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="space-y-4 max-h-60 overflow-y-auto pr-1">
               {data.wardAnalysis.slice(0, 5).map((ward) => {
                 const resolutionRate = ward.issues > 0 ? Math.round((ward.resolved / ward.issues) * 100) : 0
 
@@ -470,7 +546,28 @@ export default function MayorAnalyticsPage() {
             <CardTitle>Issue Category Analysis</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
+            <div className="h-60 w-full mb-6 flex justify-center">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={data.categoryBreakdown}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={45}
+                    outerRadius={75}
+                    paddingAngle={3}
+                    dataKey="count"
+                    nameKey="category"
+                  >
+                    {data.categoryBreakdown.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={['#6366f1', '#10b981', '#f59e0b', '#ec4899', '#3b82f6', '#8b5cf6', '#06b6d4', '#14b8a6'][index % 8]} />
+                    ))}
+                  </Pie>
+                  <Tooltip contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px' }} />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="space-y-4 max-h-60 overflow-y-auto pr-1">
               {data.categoryBreakdown.map((category) => (
                 <div key={category.category} className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
@@ -535,6 +632,17 @@ export default function MayorAnalyticsPage() {
 
               <div>
                 <h4 className="font-semibold mb-3">Peer City Comparison</h4>
+                <div className="h-48 w-full mb-4">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={data.comparativeAnalysis.peerCities} margin={{ top: 5, right: 5, left: 0, bottom: 0 }}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
+                      <XAxis dataKey="name" fontSize={10} tickLine={false} />
+                      <YAxis fontSize={10} unit="%" />
+                      <Tooltip contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px' }} />
+                      <Bar dataKey="resolutionRate" name="Resolution Rate" fill="#6366f1" radius={[3, 3, 0, 0]} />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
                 <div className="space-y-2">
                   {data.comparativeAnalysis.peerCities.slice(0, 3).map((city) => (
                     <div key={city.name} className="text-sm border rounded p-2">

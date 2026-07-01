@@ -214,7 +214,7 @@ export default function EnhancedReportPage() {
           longitude: Number(locationData.longitude || 0),
           address: locationData.address
         } : undefined,
-        attachments: photos.map(p => p.file)
+        attachments: photos.map(p => p.file).filter(Boolean) as File[]
       };
 
       createIssue(payload, {
@@ -222,9 +222,12 @@ export default function EnhancedReportPage() {
           toast.success(t.submissionSuccess);
           clearDraft();
           
+          // Extract the issue ID from the response (may be nested differently)
+          const issueId = response?.id || response?.issue?.id
+          
           // Store submitted data for review page
           const submittedData = {
-            id: response.id,
+            id: issueId,
             title: String(data.title || ''),
             category: String(data.category || ''),
             description: String(data.description || ''),
@@ -238,10 +241,11 @@ export default function EnhancedReportPage() {
           localStorage.setItem('lastSubmittedReport', JSON.stringify(submittedData));
           
           // Navigate to success page with tracking ID
-          router.push(`/report/success?id=${response.id}`);
+          router.push(issueId ? `/report/success?id=${issueId}` : '/report/success');
         },
-        onError: () => {
-          toast.error(t.submissionError);
+        onError: (err: unknown) => {
+          const error = err as { message?: string };
+          toast.error(error?.message || t.submissionError);
           setIsSubmitting(false);
         }
       });
@@ -583,6 +587,7 @@ export default function EnhancedReportPage() {
                   <Save className="h-4 w-4" />
                   <span className="text-sm sm:text-base">{t.saveDraft}</span>
                 </Button>
+<<<<<<< HEAD
                 <Button
                   type="submit"
                   disabled={!isFormValid || isSubmitting}
@@ -592,9 +597,27 @@ export default function EnhancedReportPage() {
                     <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
                   ) : (
                     <Send className="h-4 w-4" />
+=======
+                <div className="flex flex-col items-stretch sm:items-end gap-1 order-1 sm:order-2">
+                  {!isFormValid && photos.length < 2 && (
+                    <p className="text-xs text-amber-600 text-right">
+                      {photos.length === 0 ? '2–3 photos required' : `${2 - photos.length} more photo${2 - photos.length > 1 ? 's' : ''} required`}
+                    </p>
+>>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
                   )}
-                  <span className="text-sm sm:text-base">{isSubmitting ? t.submitting : t.submitReport}</span>
-                </Button>
+                  <Button
+                    type="submit"
+                    disabled={!isFormValid || isSubmitting}
+                    className="flex items-center gap-2 bg-green-600 hover:bg-green-700 w-full sm:w-auto justify-center min-h-[44px] touch-manipulation"
+                  >
+                    {isSubmitting ? (
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
+                    ) : (
+                      <Send className="h-4 w-4" />
+                    )}
+                    <span className="text-sm sm:text-base">{isSubmitting ? t.submitting : t.submitReport}</span>
+                  </Button>
+                </div>
               </div>
             </form>
           </div>

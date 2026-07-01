@@ -49,10 +49,26 @@ export default function Footer() {
         { href: '/staff/completed', label: 'Completed' },
         { href: '/profile', label: 'Profile' },
       )
+<<<<<<< HEAD
     } else if (primaryRole === 'SUPERADMIN') {
       userLinks.push(
         { href: '/superadmin/dashboard', label: 'Admin Dashboard' },
         { href: '/superadmin/users', label: 'Manage Users' },
+=======
+    } else if (primaryRole === 'MODERATOR') {
+      userLinks.push(
+        { href: '/moderator/dashboard', label: 'Dashboard' },
+        { href: '/moderator/pending', label: 'Pending Reviews' },
+        { href: '/moderator/analytics', label: 'Analytics' },
+        { href: '/profile', label: 'Profile' },
+      )
+    } else if (primaryRole === 'TECH_ADMIN' || primaryRole === 'TECHADMIN' || primaryRole === 'SUPERADMIN' || primaryRole === 'DEVELOPER_ADMIN') {
+      userLinks.push(
+        { href: '/techadmin', label: 'Admin Dashboard' },
+        { href: '/techadmin/users', label: 'Manage Users' },
+        { href: '/techadmin/departments', label: 'Departments' },
+        { href: '/techadmin/analytics', label: 'Analytics' },
+>>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
       )
     }
 

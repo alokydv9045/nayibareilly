@@ -9,6 +9,12 @@ export type Profile = {
   name?: string
   avatarUrl?: string
   roles?: string[]
+  stats?: {
+    issuesReported: number
+    issuesResolved: number
+    communityPoints: number
+    memberSince: string
+  }
 }
 
 const profileKeys = {

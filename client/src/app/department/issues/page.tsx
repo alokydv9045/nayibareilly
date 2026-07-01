@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -244,8 +244,13 @@ export default function DepartmentIssuesPage() {
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
+<<<<<<< HEAD
             <div className="text-2xl font-bold text-slate-800">{stats.inProgress}</div>
             <div className="text-sm text-slate-600">In Progress</div>
+=======
+            <div className="text-2xl font-bold text-blue-600">{stats.inProgress}</div>
+            <div className="text-sm text-gray-600">In Progress</div>
+>>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
           </CardContent>
         </Card>
         <Card>

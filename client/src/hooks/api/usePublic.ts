@@ -23,6 +23,12 @@ export type PublicReport = {
   reportId: string
   title: string
   description?: string
+  category?: {
+    id: string
+    name: string
+    icon?: string
+    color?: string
+  }
   categoryName?: string
   status: 'open' | 'in_progress' | 'resolved' | 'closed'
   priority?: 'low' | 'medium' | 'high' | 'critical'
@@ -47,6 +53,23 @@ export type PublicReport = {
     id: string
     name: string
   }
+  timeline?: Array<{
+    status: string
+    createdAt: string
+    note?: string
+    performedById?: string
+  }>
+  comments?: Array<{
+    id: string
+    content: string
+    createdAt: string
+    user?: {
+      id: string
+      name: string
+      roles: string[]
+      avatarUrl?: string
+    }
+  }>
 }
 
 export type PublicReportsParams = {
@@ -229,7 +252,7 @@ export function usePublicReport(id: string) {
           return null
         }
         
-        return report as any // Let page handle specific structure
+        return report as PublicReport // Let page handle specific structure
       } catch (error) {
         logger.error(`❌ Failed to fetch public report ${id}:`, error)
         throw error
@@ -245,7 +268,7 @@ export function usePublicReport(id: string) {
   useEffect(() => {
     if (!id) return;
     const handleReportUpdate = (updatedReport: any) => {
-      if (updatedReport?.id === id || updatedReport?.reportId === id) {
+      if (updatedReport?.id === id || updatedReport?.reportId === id || updatedReport?.issueId === id) {
         queryClient.invalidateQueries({ queryKey: publicKeys.report(id) })
       }
     }

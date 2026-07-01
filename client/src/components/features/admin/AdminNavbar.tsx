@@ -145,9 +145,9 @@ export function AdminNavbar({ className = '' }: AdminNavbarProps) {
 
     const roleSpecificItems: Partial<Record<AdminRole, NavItem[]>> = {
       SUPER_ADMIN: [
-        { name: 'Super Admin', href: '/superadmin', icon: Shield },
+        { name: 'Tech Admin', href: '/techadmin', icon: Shield },
         { name: 'Mayor Portal', href: '/mayor', icon: Shield },
-        { name: 'System Health', href: '/superadmin/diagnostic', icon: Database },
+        { name: 'System Health', href: '/techadmin/diagnostic', icon: Database },
       ],
       DEPT_ADMIN: [
         { name: 'Department', href: '/department', icon: Building2 },
@@ -160,7 +160,7 @@ export function AdminNavbar({ className = '' }: AdminNavbarProps) {
         { name: 'Staff Portal', href: '/staff', icon: UserCircle },
       ],
       DEVELOPER_ADMIN: [
-        { name: 'Developer', href: '/superadmin/developer', icon: Shield },
+        { name: 'Developer', href: '/techadmin/developer', icon: Shield },
       ]
     }
 
@@ -293,10 +293,15 @@ export function AdminNavbar({ className = '' }: AdminNavbarProps) {
                 <DropdownMenuContent align="end" className="w-56">
                   <DropdownMenuLabel>Choose Theme</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={() => handleThemeChange('superadmin')}>
+                  <DropdownMenuItem onClick={() => handleThemeChange('techadmin')}>
                     <div className="flex items-center space-x-2">
+<<<<<<< HEAD
                       <div className="w-4 h-4 bg-slate-700 rounded"></div>
                       <span>Super Admin (Purple)</span>
+=======
+                      <div className="w-4 h-4 bg-purple-500 rounded"></div>
+                      <span>Tech Admin (Purple)</span>
+>>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
                     </div>
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => handleThemeChange('orgadmin')}>
@@ -412,11 +417,11 @@ export function AdminNavbar({ className = '' }: AdminNavbarProps) {
                     <Users className="mr-2 h-4 w-4" />
                     User Management
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => router.push('/superadmin/diagnostic')}>
+                  <DropdownMenuItem onClick={() => router.push('/techadmin/diagnostic')}>
                     <Activity className="mr-2 h-4 w-4" />
                     System Health
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => router.push('/superadmin/settings')}>
+                  <DropdownMenuItem onClick={() => router.push('/techadmin/settings')}>
                     <Settings className="mr-2 h-4 w-4" />
                     Settings
                   </DropdownMenuItem>

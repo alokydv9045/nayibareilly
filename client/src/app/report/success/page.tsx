@@ -101,7 +101,7 @@ function ReportSuccessContent() {
           setIsLoading(false);
           return;
         }
-      } catch (e) {
+      } catch {
         // ignore parse error
       }
     }

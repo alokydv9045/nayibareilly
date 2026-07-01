@@ -166,20 +166,20 @@ export const requireAuth: GuardFunction = (userRoles) => ({
 });
 
 /**
- * Require admin role (dept_admin, mayor, or super_admin)
+ * Require admin role (dept_admin, mayor, or tech_admin)
  */
 export const requireAdmin: GuardFunction = (userRoles) =>
   requireAnyRole(userRoles, [
     UserRole.DEPT_ADMIN,
     UserRole.MAYOR,
-    UserRole.SUPER_ADMIN,
+    UserRole.TECH_ADMIN,
   ]);
 
 /**
- * Require super admin role only
+ * Require tech admin role only
  */
-export const requireSuperAdmin: GuardFunction = (userRoles) =>
-  requireAnyRole(userRoles, [UserRole.SUPER_ADMIN]);
+export const requireTechAdmin: GuardFunction = (userRoles) =>
+  requireAnyRole(userRoles, [UserRole.TECH_ADMIN]);
 
 /**
  * Require moderator or higher
@@ -190,7 +190,7 @@ export const requireModerator: GuardFunction = (userRoles) =>
     UserRole.STAFF,
     UserRole.DEPT_ADMIN,
     UserRole.MAYOR,
-    UserRole.SUPER_ADMIN,
+    UserRole.TECH_ADMIN,
   ]);
 
 /**
@@ -201,7 +201,7 @@ export const requireStaff: GuardFunction = (userRoles) =>
     UserRole.STAFF,
     UserRole.DEPT_ADMIN,
     UserRole.MAYOR,
-    UserRole.SUPER_ADMIN,
+    UserRole.TECH_ADMIN,
   ]);
 
 /**

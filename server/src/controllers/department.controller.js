@@ -71,6 +71,42 @@ export const updateDepartment = async (req, res) => {
 }
 
 /**
+ * Soft delete a department
+ */
+export const deleteDepartment = async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    const department = await prisma.department.findUnique({
+      where: { id }
+    });
+    
+    if (!department) {
+      return fail(res, 404, 'Department not found');
+    }
+    
+    const updated = await prisma.department.update({
+      where: { id },
+      data: { isActive: false }
+    });
+    
+    await prisma.activityLog.create({
+      data: {
+        userId: req.user.id,
+        action: 'DELETED',
+        description: `Department "${department.name}" softly deleted`,
+        metadata: { departmentId: id }
+      }
+    });
+    
+    return ok(res, { message: 'Department successfully deleted', department: updated });
+  } catch (error) {
+    logger.error('Error deleting department', { error: error.message, id: req.params.id });
+    return fail(res, 500, 'Failed to delete department');
+  }
+}
+
+/**
  * Get all issues assigned to a department
  */
 export const getDepartmentIssues = async (req, res) => {
@@ -92,6 +128,8 @@ export const getDepartmentIssues = async (req, res) => {
     // Check authorization: must be dept head, super_admin, or mayor
     const isAuthorized = 
       department.headId === user.id ||
+      (user.roles.includes('dept_admin') && user.departmentId === departmentId) ||
+      (user.roles.includes('staff') && user.departmentId === departmentId) ||
       user.roles.includes('super_admin') ||
       user.roles.includes('mayor')
     
@@ -167,6 +205,7 @@ export const getDepartmentStaff = async (req, res) => {
     
     const isAuthorized = 
       department.headId === req.user.id ||
+      (req.user.roles.includes('dept_admin') && req.user.departmentId === departmentId) ||
       req.user.roles.includes('super_admin') ||
       req.user.roles.includes('mayor')
     
@@ -253,6 +292,7 @@ export const assignIssueToStaff = async (req, res) => {
     // Verify authorization: must be dept head, super_admin, or mayor
     const isAuthorized = 
       issue.department.headId === deptAdminId ||
+      (req.user.roles.includes('dept_admin') && req.user.departmentId === issue.departmentId) ||
       req.user.roles.includes('super_admin') ||
       req.user.roles.includes('mayor')
     

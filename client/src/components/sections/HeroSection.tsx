@@ -37,6 +37,7 @@ export default function HeroSection() {
   }, [mayorContent.length])
 
   return (
+<<<<<<< HEAD
     <section className="relative z-0 overflow-hidden pt-12 pb-24 min-h-[85vh] flex items-center">
       {/* Enhanced Animated Background similar to AuthLayout */}
       <div className="absolute inset-0 z-[-1] pointer-events-none">
@@ -111,6 +112,13 @@ export default function HeroSection() {
 
         {/* Grid pattern */}
         <div className="absolute inset-0 bg-grid-pattern opacity-[0.03]"></div>
+=======
+    <section className="relative min-h-screen bg-gradient-to-br from-blue-50 via-sky-50 to-blue-100/50 overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-green-400/20 rounded-full blur-3xl animate-pulse" />
+>>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">

@@ -145,7 +145,7 @@ export const auth = (roles = []) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET)
       
       // Validate token structure
-      if (!decoded.id || !decoded.email) {
+      if (!decoded.id) {
         await authLogger.tokenValidation(req, { 
           status: 'malformed_token',
           tokenStructure: Object.keys(decoded)
@@ -235,7 +235,7 @@ export const auth = (roles = []) => {
       }
 
       // Department-based authorization for department-specific endpoints
-      if (req.path.includes('/department/') && !userRoles.includes('super_admin')) {
+      if (req.path.includes('/department/') && !userRoles.includes('tech_admin')) {
         const departmentIdFromPath = req.params.departmentId || req.query.departmentId
         if (departmentIdFromPath && user.departmentId !== departmentIdFromPath) {
           await authLogger.tokenValidation(req, { 
@@ -253,9 +253,9 @@ export const auth = (roles = []) => {
         ...decoded,
         ...user,
         token,
-        isAdmin: userRoles.includes('super_admin') || userRoles.includes('dept_admin'),
-        isModerator: userRoles.includes('moderator') || userRoles.includes('super_admin'),
-        isStaff: userRoles.includes('staff') || userRoles.includes('moderator') || userRoles.includes('super_admin')
+        isAdmin: userRoles.includes('tech_admin') || userRoles.includes('dept_admin'),
+        isModerator: userRoles.includes('moderator') || userRoles.includes('tech_admin'),
+        isStaff: userRoles.includes('staff') || userRoles.includes('moderator') || userRoles.includes('tech_admin')
       }
 
       // Log successful authentication
@@ -334,7 +334,7 @@ export const optionalAuth = async (req, res, next) => {
   try {
     const token = authHeader.slice(7)
     
-    if (isTokenBlacklisted(token)) {
+    if (await isTokenBlacklisted(token)) {
       return next()
     }
 
@@ -364,21 +364,21 @@ export const optionalAuth = async (req, res, next) => {
 }
 
 // Admin role requirement middleware
-export const requireAdmin = auth(['super_admin', 'dept_admin'])
+export const requireAdmin = auth(['tech_admin', 'dept_admin'])
 
 // Moderator role requirement middleware  
-export const requireModerator = auth(['super_admin', 'dept_admin', 'moderator'])
+export const requireModerator = auth(['tech_admin', 'dept_admin', 'moderator'])
 
 // Staff role requirement middleware
-export const requireStaff = auth(['super_admin', 'dept_admin', 'moderator', 'staff'])
+export const requireStaff = auth(['tech_admin', 'dept_admin', 'moderator', 'staff'])
 
 // Self or admin access middleware (for user profile endpoints)
 export const requireSelfOrAdmin = async (req, res, next) => {
-  const auth = auth()
+  const authMiddleware = auth()
   
-  await auth(req, res, () => {
+  await authMiddleware(req, res, () => {
     const targetUserId = req.params.userId || req.params.id
-    const isAdmin = req.user.roles.includes('super_admin') || req.user.roles.includes('dept_admin')
+    const isAdmin = req.user.roles.includes('tech_admin') || req.user.roles.includes('dept_admin')
     const isSelf = req.user.id === targetUserId
     
     if (!isSelf && !isAdmin) {

@@ -16,7 +16,7 @@ const router = Router();
  * Get moderator statistics
  */
 router.get('/stats', [
-  auth(['MODERATOR', 'ADMIN', 'SUPER_ADMIN'])
+  auth(['MODERATOR', 'DEPT_ADMIN', 'MAYOR', 'SUPER_ADMIN'])
 ], async (req, res, next) => {
   try {
     const { getModeratorStats } = await import('../../../controllers/admin.controller.js');
@@ -31,7 +31,7 @@ router.get('/stats', [
  * Get pending issues for moderation
  */
 router.get('/pending', [
-  auth(['MODERATOR', 'ADMIN', 'SUPER_ADMIN']),
+  auth(['MODERATOR', 'DEPT_ADMIN', 'MAYOR', 'SUPER_ADMIN']),
   query('page').optional().isInt({ min: 1 }),
   query('limit').optional().isInt({ min: 1, max: 100 })
 ], async (req, res, next) => {
@@ -48,7 +48,7 @@ router.get('/pending', [
  * Get moderator review history
  */
 router.get('/history', [
-  auth(['MODERATOR', 'ADMIN', 'SUPER_ADMIN']),
+  auth(['MODERATOR', 'DEPT_ADMIN', 'MAYOR', 'SUPER_ADMIN']),
   query('page').optional().isInt({ min: 1 }),
   query('limit').optional().isInt({ min: 1, max: 100 })
 ], async (req, res, next) => {
@@ -65,7 +65,7 @@ router.get('/history', [
  * Get list of departments for assignment
  */
 router.get('/departments', [
-  auth(['MODERATOR', 'ADMIN', 'SUPER_ADMIN'])
+  auth(['MODERATOR', 'DEPT_ADMIN', 'MAYOR', 'SUPER_ADMIN'])
 ], async (req, res, next) => {
   try {
     const { getDepartments } = await import('../../../controllers/moderator.controller.js');
@@ -80,7 +80,7 @@ router.get('/departments', [
  * Get moderator performance metrics
  */
 router.get('/performance', [
-  auth(['MODERATOR', 'ADMIN', 'SUPER_ADMIN'])
+  auth(['MODERATOR', 'DEPT_ADMIN', 'MAYOR', 'SUPER_ADMIN'])
 ], async (req, res, next) => {
   try {
     const { getModeratorPerformance } = await import('../../../controllers/moderator.controller.js');
@@ -95,7 +95,7 @@ router.get('/performance', [
  * Check for duplicate issues
  */
 router.get('/issues/:id/check-duplicates', [
-  auth(['MODERATOR', 'ADMIN', 'SUPER_ADMIN']),
+  auth(['MODERATOR', 'DEPT_ADMIN', 'MAYOR', 'SUPER_ADMIN']),
   param('id').isString()
 ], async (req, res, next) => {
   try {
@@ -111,7 +111,7 @@ router.get('/issues/:id/check-duplicates', [
  * Approve an issue and assign to department
  */
 router.post('/issues/:id/approve', [
-  auth(['MODERATOR', 'ADMIN', 'SUPER_ADMIN']),
+  auth(['MODERATOR', 'DEPT_ADMIN', 'MAYOR', 'SUPER_ADMIN']),
   validateCSRFToken,
   param('id').isString(),
   body('departmentId').isString(),
@@ -131,7 +131,7 @@ router.post('/issues/:id/approve', [
  * Reject an issue
  */
 router.post('/issues/:id/reject', [
-  auth(['MODERATOR', 'ADMIN', 'SUPER_ADMIN']),
+  auth(['MODERATOR', 'DEPT_ADMIN', 'MAYOR', 'SUPER_ADMIN']),
   validateCSRFToken,
   param('id').isString(),
   body('reason').isString().isLength({ min: 10, max: 500 })
@@ -149,7 +149,7 @@ router.post('/issues/:id/reject', [
  * Request more information from reporter
  */
 router.post('/issues/:id/request-info', [
-  auth(['MODERATOR', 'ADMIN', 'SUPER_ADMIN']),
+  auth(['MODERATOR', 'DEPT_ADMIN', 'MAYOR', 'SUPER_ADMIN']),
   validateCSRFToken,
   param('id').isString(),
   body('message').isString().isLength({ min: 10, max: 500 }),
@@ -168,7 +168,7 @@ router.post('/issues/:id/request-info', [
  * Mark an issue as spam
  */
 router.post('/issues/:id/mark-spam', [
-  auth(['MODERATOR', 'ADMIN', 'SUPER_ADMIN']),
+  auth(['MODERATOR', 'DEPT_ADMIN', 'MAYOR', 'SUPER_ADMIN']),
   validateCSRFToken,
   param('id').isString(),
   body('reason').optional().isString()
@@ -187,7 +187,7 @@ router.post('/issues/:id/mark-spam', [
  * Approve and assign issue (legacy)
  */
 router.post('/approve-assign', [
-  auth(['MODERATOR', 'ADMIN', 'SUPER_ADMIN']),
+  auth(['MODERATOR', 'DEPT_ADMIN', 'MAYOR', 'SUPER_ADMIN']),
   validateCSRFToken,
   body('issueId').isString(),
   body('departmentId').isString(),

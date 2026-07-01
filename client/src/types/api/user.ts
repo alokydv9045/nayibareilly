@@ -8,7 +8,7 @@ export type UserRole =
   | 'moderator'
   | 'department_admin'
   | 'org_admin'
-  | 'super_admin'
+  | 'tech_admin'
   | 'mayor'
 
 export type UserStatus = 'active' | 'inactive' | 'suspended' | 'pending_verification'

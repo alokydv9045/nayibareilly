@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Unified Logout Utility
  * 
  * This module provides a centralized logout function that ensures complete
@@ -113,7 +113,7 @@ function clearAuthCookies(): void {
         trimmedName.includes('admin')
       ) {
         // Clear for all possible paths
-        const paths = ['/', '/superadmin', '/mayor', '/department', '/moderator', '/staff', '/app']
+        const paths = ['/', '/techadmin', '/mayor', '/department', '/moderator', '/staff', '/app']
         paths.forEach(path => {
           document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=${path}`
           document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=${path};domain=${window.location.hostname}`

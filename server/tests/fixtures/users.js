@@ -49,14 +49,14 @@ const mockUsers = {
     updatedAt: new Date('2024-01-01T00:00:00Z'),
   },
 
-  superAdmin: {
+  techAdmin: {
     id: 4,
-    name: 'Alice Super Admin',
-    email: 'alice.superadmin@example.com',
+    name: 'Alice Tech Admin',
+    email: 'alice.techadmin@example.com',
     password: 'hashedPassword123',
     phone: '+919876543213',
-    address: '101 Super Admin Street, Test City',
-    role: 'super_admin',
+    address: '101 Tech Admin Street, Test City',
+    role: 'tech_admin',
     isActive: true,
     isVerified: true,
     loginAttempts: 0,

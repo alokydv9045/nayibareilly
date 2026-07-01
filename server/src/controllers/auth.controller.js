@@ -58,9 +58,7 @@ const recordGraceMapping = (oldRt, newRt) => {
     const newKey = hashRefreshToken(newRt)
     graceMap.set(oldKey, { newTokenHash: newKey, expiresAt: Date.now() + GRACE_WINDOW_MS, used: false })
   } catch (error) {
-    logger.warn('Failed to record grace mapping for refresh token', {
-      error: error.message
-    })
+    console.warn('[Auth] Failed to record grace mapping for refresh token:', error.message)
   }
 }
 
@@ -120,10 +118,7 @@ const recordRotationForReuseDetection = (oldRt, userId) => {
     const oldHash = hashRefreshToken(oldRt)
     recentRotations.set(oldHash, { userId, rotatedAt: Date.now() })
   } catch (error) {
-    logger.warn('Failed to record rotation for reuse detection', {
-      userId,
-      error: error.message
-    })
+    console.warn('[Auth] Failed to record rotation for reuse detection:', { userId, error: error.message })
   }
 }
 
@@ -185,157 +180,7 @@ const setRefreshCookie = (res, token) => {
   })
 }
 
-export const register = async (req, res) => {
-  try {
-    // Input validation
-    const errors = validationResult(req)
-    if (!errors.isEmpty()) {
-      await authLogger.registerAttempt(req, { status: 'validation_failed', errors: errors.array() })
-      return fail(res, 400, 'Invalid input', errors.array())
-    }
 
-    const { email, password, name, phone, address, requestedRole } = req.body
-    
-    // Validate input data
-    if (!email || !password || !name) {
-      await authLogger.registerAttempt(req, { status: 'missing_required_fields' })
-      return fail(res, 400, 'Email, password, and name are required')
-    }
-
-    // Email format validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(email)) {
-      await authLogger.registerAttempt(req, { status: 'invalid_email_format', email: email.toLowerCase() })
-      return fail(res, 400, 'Invalid email format')
-    }
-
-    // Password strength validation
-    if (password.length < 8) {
-      await authLogger.registerAttempt(req, { status: 'weak_password' })
-      return fail(res, 400, 'Password must be at least 8 characters long')
-    }
-    
-    // Validate phone if provided
-    if (phone && phone.length < 10) {
-      await authLogger.registerAttempt(req, { status: 'invalid_phone' })
-      return fail(res, 400, 'Phone number must be at least 10 digits')
-    }
-
-    // Check if user already exists
-    const exists = await prisma.user.findUnique({ 
-      where: { email: email.toLowerCase() },
-      select: { id: true, email: true, isActive: true }
-    })
-    
-    if (exists) {
-      await authLogger.registerAttempt(req, { status: 'email_exists', email: email.toLowerCase() })
-      return fail(res, 409, 'Email already in use')
-    }
-
-    // Hash password with higher cost for better security
-    const passwordHash = await bcrypt.hash(password, 12)
-    
-    // Normalize and validate requested role
-    const allowedRequestedRoles = ['staff', 'moderator', 'dept_admin']
-    const normalizedRequestedRole = typeof requestedRole === 'string' && requestedRole.trim() && 
-      allowedRequestedRoles.includes(requestedRole.trim().toLowerCase()) ? requestedRole.trim().toLowerCase() : null
-    
-    // Create user with transaction for atomicity
-    const user = await prisma.$transaction(async (tx) => {
-      const newUser = await tx.user.create({ 
-        data: { 
-          email: email.toLowerCase(), 
-          passwordHash, 
-          name: name.trim(),
-          phone: phone ? phone.trim() : null,
-          address: address ? address.trim() : null,
-          requestedRole: normalizedRequestedRole,
-          isActive: true,
-          isVerified: false
-        }
-      })
-      
-      // Create initial activity log
-      await tx.activityLog.create({
-        data: {
-          action: 'CREATED',
-          description: 'User account created',
-          userId: newUser.id,
-          metadata: { 
-            registrationMethod: 'email',
-            requestedRole: normalizedRequestedRole,
-            hasPhone: !!phone,
-            hasAddress: !!address
-          },
-          ipAddress: req.ip || req.connection?.remoteAddress,
-          userAgent: req.get('User-Agent')
-        }
-      })
-      
-      return newUser
-    })
-    
-    await authLogger.registerSuccess(req, user.id, { 
-      requestedRole: normalizedRequestedRole,
-      userCount: await prisma.user.count() 
-    })
-    
-    // Emit Socket.IO event for real-time user registration
-    const io = req.app.get('io')
-    if (io) {
-      const userStats = {
-        totalUsers: await prisma.user.count(),
-        newUser: {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-          roles: user.roles,
-          createdAt: user.createdAt
-        }
-      }
-      io.emit('user:new', userStats)
-      io.emit('system:stats', userStats)
-    }
-    
-    const token = signToken(user)
-    const { rt } = await createHashedRefreshToken({ userId: user.id, req })
-    setRefreshCookie(res, rt)
-    
-    // Return sanitized user data
-    const userData = {
-      id: user.id,
-      email: user.email,
-      name: user.name,
-      phone: user.phone,
-      address: user.address,
-      roles: user.roles,
-      requestedRole: user.requestedRole,
-      isVerified: user.isVerified,
-      createdAt: user.createdAt
-    }
-    
-    created(res, { 
-      token, 
-      user: userData,
-      message: 'Registration successful. Please check your email for verification.'
-    })
-    
-  } catch (error) {
-    await authLogger.registerAttempt(req, { 
-      status: 'error', 
-      error: error.message, 
-      email: req.body?.email?.toLowerCase() 
-    })
-    
-    // Handle specific database errors
-    if (error.code === 'P2002') {
-      return fail(res, 409, 'Email already in use')
-    }
-    
-    console.error('Registration error:', error)
-    return fail(res, 500, 'Registration failed. Please try again.')
-  }
-}
 
 export const login = async (req, res) => {
   try {
@@ -376,6 +221,11 @@ export const login = async (req, res) => {
       await authLogger.loginAttempt(req, { status: 'user_not_found', email: email.toLowerCase() })
       await securityMonitor.trackFailedLogin(req, email.toLowerCase())
       return fail(res, 401, 'Invalid credentials')
+    }
+
+    // Enforce Staff/Admin only for email login
+    if (user.roles.length === 1 && user.roles.includes('citizen')) {
+      return fail(res, 403, 'Citizens must use mobile number to login')
     }
 
     // Check if account is locked
@@ -424,31 +274,29 @@ export const login = async (req, res) => {
     }
 
     // Successful login - reset login attempts
-    await prisma.$transaction(async (tx) => {
-      await tx.user.update({ 
-        where: { id: user.id }, 
-        data: { 
-          lastLogin: new Date(),
-          loginAttempts: 0,
-          lockUntil: null
-        } 
-      })
+    await prisma.user.update({ 
+      where: { id: user.id }, 
+      data: { 
+        lastLogin: new Date(),
+        loginAttempts: 0,
+        lockUntil: null
+      } 
+    })
 
-      // Log successful login activity
-      await tx.activityLog.create({
-        data: {
-          action: 'LOGIN',
-          description: 'User logged in successfully',
-          userId: user.id,
-          metadata: { 
-            loginMethod: 'email',
-            userAgent: req.get('User-Agent'),
-            previousLogin: user.lastLogin
-          },
-          ipAddress: req.ip || req.connection?.remoteAddress,
-          userAgent: req.get('User-Agent')
-        }
-      })
+    // Log successful login activity
+    await prisma.activityLog.create({
+      data: {
+        action: 'LOGIN',
+        description: 'User logged in successfully',
+        userId: user.id,
+        metadata: { 
+          loginMethod: 'email',
+          userAgent: req.get('User-Agent'),
+          previousLogin: user.lastLogin
+        },
+        ipAddress: req.ip || req.connection?.remoteAddress,
+        userAgent: req.get('User-Agent')
+      }
     })
 
     await authLogger.loginSuccess(req, user.id, { 
@@ -489,6 +337,95 @@ export const login = async (req, res) => {
     return fail(res, 500, 'Login failed. Please try again.')
   }
 }
+
+export const requestOtp = async (req, res) => {
+  try {
+    const { phone, name } = req.body;
+    if (!phone) return fail(res, 400, 'Phone number is required');
+
+    // Generate 6 digit OTP
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    const otpExp = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes
+
+    let user = await prisma.user.findUnique({ where: { phone } });
+
+    if (!user) {
+      if (!name) return fail(res, 400, 'Name is required for new registration');
+      user = await prisma.user.create({
+        data: {
+          phone,
+          name,
+          isActive: true,
+          isVerified: false,
+          verifyToken: otp,
+          verifyTokenExp: otpExp,
+        }
+      });
+    } else {
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { verifyToken: otp, verifyTokenExp: otpExp }
+      });
+    }
+
+    // TODO: Integrate SMS provider (e.g., Twilio, MSG91) here to send OTP to `phone`.
+    // For development/testing, the OTP is logged server-side only.
+    console.log(`[OTP] Dev log — Phone: ${phone}, OTP: ${otp}`);
+
+    const isDev = process.env.NODE_ENV !== 'production'
+    ok(res, { 
+      message: 'OTP sent successfully',
+      // Only expose OTP in non-production environments (for dev/testing)
+      ...(isDev && { otp })
+    });
+  } catch (error) {
+    console.error('requestOtp error:', error);
+    fail(res, 500, 'Failed to send OTP');
+  }
+};
+
+export const verifyOtp = async (req, res) => {
+  try {
+    const { phone, otp } = req.body;
+    if (!phone || !otp) return fail(res, 400, 'Phone and OTP are required');
+
+    const user = await prisma.user.findUnique({ where: { phone } });
+    if (!user) return fail(res, 404, 'User not found');
+
+    // Validate OTP: must match and must not be expired
+    if (!user.verifyToken || user.verifyToken !== otp) {
+      return fail(res, 400, 'Invalid OTP. Please try again.');
+    }
+    if (!user.verifyTokenExp || user.verifyTokenExp < new Date()) {
+      return fail(res, 400, 'OTP has expired. Please request a new one.');
+    }
+
+    // Mark as verified and update lastLogin in one query, then read back fresh data
+    const updatedUser = await prisma.user.update({
+      where: { id: user.id },
+      data: { isVerified: true, verifyToken: null, verifyTokenExp: null, lastLogin: new Date() },
+      select: { id: true, name: true, phone: true, email: true, roles: true, isVerified: true }
+    });
+
+    // Sign token using fresh user data so JWT payload is accurate
+    const token = signToken(updatedUser);
+    const { rt } = await createHashedRefreshToken({ userId: updatedUser.id, req });
+    setRefreshCookie(res, rt);
+
+    const userData = {
+      id: updatedUser.id,
+      name: updatedUser.name,
+      phone: updatedUser.phone,
+      roles: updatedUser.roles,
+      isVerified: updatedUser.isVerified
+    };
+
+    ok(res, { token, user: userData, message: 'OTP verified successfully' });
+  } catch (error) {
+    console.error('verifyOtp error:', error);
+    fail(res, 500, 'Failed to verify OTP');
+  }
+};
 
 export const me = async (req, res) => {
   const user = await prisma.user.findUnique({ where: { id: req.user.id }, select: { id: true, email: true, name: true, roles: true, avatarUrl: true, isVerified: true, createdAt: true, requestedRole: true } })

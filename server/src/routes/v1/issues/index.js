@@ -14,6 +14,24 @@ import { issueCreationRateLimit } from '../../../middlewares/rateLimit.js';
 const router = Router();
 
 /**
+ * POST /api/v1/issues/bulk-status
+ * Bulk update issue status (Admin)
+ */
+router.post('/bulk-status', [
+  auth(['SUPER_ADMIN', 'TECH_ADMIN', 'DEPT_ADMIN', 'MAYOR', 'MODERATOR']),
+  validateCSRFToken,
+  body('ids').isArray(),
+  body('status').isString()
+], async (req, res, next) => {
+  try {
+    const { bulkUpdateStatusAdmin } = await import('../../../controllers/admin.controller.js');
+    return bulkUpdateStatusAdmin(req, res, next);
+  } catch (error) {
+    next(error);
+  }
+});
+
+/**
  * GET /api/v1/issues
  * List all issues with filtering and pagination
  */
@@ -27,8 +45,8 @@ router.get('/', [
 ], async (req, res, next) => {
   try {
     // Import controller dynamically to maintain structure
-    const { getIssues } = await import('../../../controllers/issue.controller.js');
-    return getIssues(req, res, next);
+    const { listIssues } = await import('../../../controllers/issue.controller.js');
+    return listIssues(req, res, next);
   } catch (error) {
     next(error);
   }
@@ -58,7 +76,7 @@ router.get('/check-duplicates', [
  * Get current user's issues
  */
 router.get('/my-issues', [
-  auth(['CITIZEN', 'STAFF', 'ADMIN', 'SUPER_ADMIN']),
+  auth(['CITIZEN', 'STAFF', 'DEPT_ADMIN', 'MAYOR', 'SUPER_ADMIN']),
   query('page').optional().isInt({ min: 1 }),
   query('limit').optional().isInt({ min: 1, max: 100 }),
   query('status').optional().isString(),
@@ -77,7 +95,7 @@ router.get('/my-issues', [
  * Create a new issue
  */
 router.post('/', [
-  auth(['CITIZEN', 'STAFF', 'ADMIN', 'SUPER_ADMIN']),
+  auth(['CITIZEN', 'STAFF', 'DEPT_ADMIN', 'MAYOR', 'SUPER_ADMIN']),
   issueCreationRateLimit,
   validateCSRFToken,
   uploadFields.fields([{ name: 'images', maxCount: 5 }]),
@@ -130,16 +148,34 @@ router.get('/track/:reportId', [
 });
 
 /**
+ * GET /api/v1/issues/my-assigned
+ * Get issues assigned to current staff member
+ */
+router.get('/my-assigned', [
+  auth(['STAFF', 'DEPT_ADMIN', 'MAYOR', 'SUPER_ADMIN']),
+  query('status').optional().isString(),
+  query('page').optional().isInt({ min: 1 }),
+  query('limit').optional().isInt({ min: 1, max: 100 })
+], async (req, res, next) => {
+  try {
+    const { listAssignedToMe } = await import('../../../controllers/issue.controller.js');
+    return listAssignedToMe(req, res, next);
+  } catch (error) {
+    next(error);
+  }
+});
+
+/**
  * GET /api/v1/issues/:id
  * Get issue details by ID
  */
 router.get('/:id', [
   auth(),
-  param('id').isInt()
+  param('id').isString()
 ], async (req, res, next) => {
   try {
-    const { getIssueById } = await import('../../../controllers/issue.controller.js');
-    return getIssueById(req, res, next);
+    const { getIssue } = await import('../../../controllers/issue.controller.js');
+    return getIssue(req, res, next);
   } catch (error) {
     next(error);
   }
@@ -167,7 +203,7 @@ router.get('/track/:reportId', [
 router.patch('/:id', [
   auth(),
   validateCSRFToken,
-  param('id').isInt(),
+  param('id').isString(),
   body('title').optional().isString().isLength({ min: 5, max: 200 }),
   body('description').optional().isString().isLength({ min: 10, max: 2000 }),
   body('status').optional().isString()
@@ -185,9 +221,9 @@ router.patch('/:id', [
  * Delete an issue (soft delete)
  */
 router.delete('/:id', [
-  auth(['ADMIN', 'SUPER_ADMIN']),
+  auth(['DEPT_ADMIN', 'MAYOR', 'SUPER_ADMIN']),
   validateCSRFToken,
-  param('id').isInt()
+  param('id').isString()
 ], async (req, res, next) => {
   try {
     const { deleteIssue } = await import('../../../controllers/issue.controller.js');
@@ -204,7 +240,7 @@ router.delete('/:id', [
 router.post('/:id/vote', [
   auth(),
   validateCSRFToken,
-  param('id').isInt(),
+  param('id').isString(),
   body('type').isIn(['up', 'down'])
 ], async (req, res, next) => {
   try {
@@ -221,7 +257,7 @@ router.post('/:id/vote', [
  */
 router.get('/:id/timeline', [
   auth(),
-  param('id').isInt()
+  param('id').isString()
 ], async (req, res, next) => {
   try {
     const { getIssueTimeline } = await import('../../../controllers/issue.controller.js');
@@ -231,30 +267,13 @@ router.get('/:id/timeline', [
   }
 });
 
-/**
- * GET /api/v1/issues/my-assigned
- * Get issues assigned to current staff member
- */
-router.get('/my-assigned', [
-  auth(['STAFF', 'ADMIN', 'SUPER_ADMIN']),
-  query('status').optional().isString(),
-  query('page').optional().isInt({ min: 1 }),
-  query('limit').optional().isInt({ min: 1, max: 100 })
-], async (req, res, next) => {
-  try {
-    const { listAssignedToMe } = await import('../../../controllers/issue.controller.js');
-    return listAssignedToMe(req, res, next);
-  } catch (error) {
-    next(error);
-  }
-});
 
 /**
  * PUT /api/v1/issues/:id/start
  * Start work on an assigned issue (ASSIGNED_TO_STAFF → IN_PROGRESS)
  */
 router.put('/:id/start', [
-  auth(['STAFF', 'ADMIN', 'SUPER_ADMIN']),
+  auth(['STAFF', 'DEPT_ADMIN', 'MAYOR', 'SUPER_ADMIN']),
   validateCSRFToken,
   param('id').isString(),
   body('note').optional().isString()
@@ -272,7 +291,7 @@ router.put('/:id/start', [
  * Resolve an issue with completion photos (IN_PROGRESS → RESOLVED)
  */
 router.put('/:id/resolve', [
-  auth(['STAFF', 'ADMIN', 'SUPER_ADMIN']),
+  auth(['STAFF', 'DEPT_ADMIN', 'MAYOR', 'SUPER_ADMIN']),
   validateCSRFToken,
   uploadFields.fields([{ name: 'media', maxCount: 5 }]),
   handleMulterError,
@@ -310,7 +329,7 @@ router.post('/:id/comments', [
  * Escalate an issue that can't be resolved
  */
 router.post('/:id/escalate', [
-  auth(['STAFF', 'ADMIN', 'SUPER_ADMIN']),
+  auth(['STAFF', 'DEPT_ADMIN', 'MAYOR', 'SUPER_ADMIN']),
   validateCSRFToken,
   param('id').isString(),
   body('reason').isString().isLength({ min: 10, max: 500 })
@@ -318,6 +337,77 @@ router.post('/:id/escalate', [
   try {
     const { escalateIssue } = await import('../../../controllers/issue.controller.js');
     return escalateIssue(req, res, next);
+  } catch (error) {
+    next(error);
+  }
+});
+
+/**
+ * PUT /api/v1/issues/:id/status
+ * Manually update issue status (Admin)
+ */
+router.put('/:id/status', [
+  auth(['SUPER_ADMIN', 'TECH_ADMIN', 'DEPT_ADMIN', 'MAYOR', 'MODERATOR']),
+  validateCSRFToken,
+  param('id').isString(),
+  body('status').isString()
+], async (req, res, next) => {
+  try {
+    const { updateIssueStatusAdmin } = await import('../../../controllers/admin.controller.js');
+    return updateIssueStatusAdmin(req, res, next);
+  } catch (error) {
+    next(error);
+  }
+});
+
+/**
+ * PUT /api/v1/issues/:id/triage
+ * Assign department and update status to TRIAGED (Admin)
+ */
+router.put('/:id/triage', [
+  auth(['SUPER_ADMIN', 'TECH_ADMIN', 'DEPT_ADMIN', 'MAYOR', 'MODERATOR']),
+  validateCSRFToken,
+  param('id').isString(),
+  body('departmentId').isString()
+], async (req, res, next) => {
+  try {
+    const { triageIssueAdmin } = await import('../../../controllers/admin.controller.js');
+    return triageIssueAdmin(req, res, next);
+  } catch (error) {
+    next(error);
+  }
+});
+
+/**
+ * PUT /api/v1/issues/:id/assign
+ * Assign staff member to issue (Admin)
+ */
+router.put('/:id/assign', [
+  auth(['SUPER_ADMIN', 'TECH_ADMIN', 'DEPT_ADMIN', 'MAYOR', 'MODERATOR']),
+  validateCSRFToken,
+  param('id').isString(),
+  body('staffUserId').isString()
+], async (req, res, next) => {
+  try {
+    const { assignIssueAdmin } = await import('../../../controllers/admin.controller.js');
+    return assignIssueAdmin(req, res, next);
+  } catch (error) {
+    next(error);
+  }
+});
+
+/**
+ * PUT /api/v1/issues/:id/close
+ * Force close an issue (Admin)
+ */
+router.put('/:id/close', [
+  auth(['SUPER_ADMIN', 'TECH_ADMIN', 'DEPT_ADMIN', 'MAYOR', 'MODERATOR']),
+  validateCSRFToken,
+  param('id').isString()
+], async (req, res, next) => {
+  try {
+    const { closeIssueAdmin } = await import('../../../controllers/admin.controller.js');
+    return closeIssueAdmin(req, res, next);
   } catch (error) {
     next(error);
   }

@@ -153,7 +153,7 @@ export const PERMISSION_MATRIX: Permission[] = [
       UserRole.STAFF,
       UserRole.DEPT_ADMIN,
       UserRole.MAYOR,
-      UserRole.SUPER_ADMIN,
+      UserRole.TECH_ADMIN,
     ],
   },
 
@@ -161,7 +161,7 @@ export const PERMISSION_MATRIX: Permission[] = [
   {
     resource: Resource.ISSUE,
     action: Action.CREATE,
-    roles: [UserRole.CITIZEN, UserRole.SUPER_ADMIN],
+    roles: [UserRole.CITIZEN, UserRole.TECH_ADMIN],
   },
 
   // Citizens can update their own issues (when status = PENDING)
@@ -179,19 +179,19 @@ export const PERMISSION_MATRIX: Permission[] = [
   {
     resource: Resource.ISSUE,
     action: Action.APPROVE,
-    roles: [UserRole.MODERATOR, UserRole.SUPER_ADMIN],
+    roles: [UserRole.MODERATOR, UserRole.TECH_ADMIN],
   },
   {
     resource: Resource.ISSUE,
     action: Action.REJECT,
-    roles: [UserRole.MODERATOR, UserRole.SUPER_ADMIN],
+    roles: [UserRole.MODERATOR, UserRole.TECH_ADMIN],
   },
 
   // Department admins can assign issues to staff
   {
     resource: Resource.ISSUE,
     action: Action.ASSIGN,
-    roles: [UserRole.DEPT_ADMIN, UserRole.SUPER_ADMIN],
+    roles: [UserRole.DEPT_ADMIN, UserRole.TECH_ADMIN],
     conditions: [
       (ctx) => isIssueResource(ctx.resource) && ctx.resource.departmentId === ctx.departmentId,
     ],
@@ -211,7 +211,7 @@ export const PERMISSION_MATRIX: Permission[] = [
   {
     resource: Resource.ISSUE,
     action: Action.RESOLVE,
-    roles: [UserRole.STAFF, UserRole.SUPER_ADMIN],
+    roles: [UserRole.STAFF, UserRole.TECH_ADMIN],
     conditions: [
       (ctx) => isIssueResource(ctx.resource) && ctx.resource.assignedToId === ctx.userId,
     ],
@@ -231,14 +231,14 @@ export const PERMISSION_MATRIX: Permission[] = [
   {
     resource: Resource.ISSUE,
     action: Action.ESCALATE,
-    roles: [UserRole.DEPT_ADMIN, UserRole.MAYOR, UserRole.SUPER_ADMIN],
+    roles: [UserRole.DEPT_ADMIN, UserRole.MAYOR, UserRole.TECH_ADMIN],
   },
 
   // Super admin can delete issues
   {
     resource: Resource.ISSUE,
     action: Action.DELETE,
-    roles: [UserRole.SUPER_ADMIN],
+    roles: [UserRole.TECH_ADMIN],
   },
 
   // ========================================================================
@@ -254,7 +254,7 @@ export const PERMISSION_MATRIX: Permission[] = [
       UserRole.STAFF,
       UserRole.DEPT_ADMIN,
       UserRole.MAYOR,
-      UserRole.SUPER_ADMIN,
+      UserRole.TECH_ADMIN,
     ],
   },
 
@@ -267,7 +267,7 @@ export const PERMISSION_MATRIX: Permission[] = [
       UserRole.STAFF,
       UserRole.DEPT_ADMIN,
       UserRole.MAYOR,
-      UserRole.SUPER_ADMIN,
+      UserRole.TECH_ADMIN,
     ],
     conditions: [
       (ctx) => isUserResource(ctx.resource) && ctx.resource.userId === ctx.userId,
@@ -277,7 +277,7 @@ export const PERMISSION_MATRIX: Permission[] = [
   {
     resource: Resource.ISSUE_COMMENT,
     action: Action.DELETE,
-    roles: [UserRole.MODERATOR, UserRole.SUPER_ADMIN],
+    roles: [UserRole.MODERATOR, UserRole.TECH_ADMIN],
   },
 
   // ========================================================================
@@ -294,7 +294,7 @@ export const PERMISSION_MATRIX: Permission[] = [
       UserRole.STAFF,
       UserRole.DEPT_ADMIN,
       UserRole.MAYOR,
-      UserRole.SUPER_ADMIN,
+      UserRole.TECH_ADMIN,
     ],
   },
 
@@ -308,7 +308,7 @@ export const PERMISSION_MATRIX: Permission[] = [
       UserRole.STAFF,
       UserRole.DEPT_ADMIN,
       UserRole.MAYOR,
-      UserRole.SUPER_ADMIN,
+      UserRole.TECH_ADMIN,
     ],
     conditions: [
       (ctx) => isUserResource(ctx.resource) && ctx.resource.id === ctx.userId,
@@ -319,32 +319,32 @@ export const PERMISSION_MATRIX: Permission[] = [
   {
     resource: Resource.USER,
     action: Action.READ,
-    roles: [UserRole.MAYOR, UserRole.SUPER_ADMIN],
+    roles: [UserRole.MAYOR, UserRole.TECH_ADMIN],
   },
   {
     resource: Resource.USER,
     action: Action.CREATE,
-    roles: [UserRole.SUPER_ADMIN],
+    roles: [UserRole.TECH_ADMIN],
   },
   {
     resource: Resource.USER,
     action: Action.UPDATE,
-    roles: [UserRole.SUPER_ADMIN],
+    roles: [UserRole.TECH_ADMIN],
   },
   {
     resource: Resource.USER,
     action: Action.SUSPEND,
-    roles: [UserRole.MAYOR, UserRole.SUPER_ADMIN],
+    roles: [UserRole.MAYOR, UserRole.TECH_ADMIN],
   },
   {
     resource: Resource.USER,
     action: Action.ACTIVATE,
-    roles: [UserRole.MAYOR, UserRole.SUPER_ADMIN],
+    roles: [UserRole.MAYOR, UserRole.TECH_ADMIN],
   },
   {
     resource: Resource.USER,
     action: Action.CHANGE_ROLE,
-    roles: [UserRole.SUPER_ADMIN],
+    roles: [UserRole.TECH_ADMIN],
   },
 
   // ========================================================================
@@ -361,7 +361,7 @@ export const PERMISSION_MATRIX: Permission[] = [
       UserRole.STAFF,
       UserRole.DEPT_ADMIN,
       UserRole.MAYOR,
-      UserRole.SUPER_ADMIN,
+      UserRole.TECH_ADMIN,
     ],
   },
 
@@ -369,29 +369,29 @@ export const PERMISSION_MATRIX: Permission[] = [
   {
     resource: Resource.DEPARTMENT,
     action: Action.CREATE,
-    roles: [UserRole.SUPER_ADMIN],
+    roles: [UserRole.TECH_ADMIN],
   },
   {
     resource: Resource.DEPARTMENT,
     action: Action.UPDATE,
-    roles: [UserRole.SUPER_ADMIN],
+    roles: [UserRole.TECH_ADMIN],
   },
   {
     resource: Resource.DEPARTMENT,
     action: Action.DELETE,
-    roles: [UserRole.SUPER_ADMIN],
+    roles: [UserRole.TECH_ADMIN],
   },
 
   // Department admins can manage their staff
   {
     resource: Resource.STAFF_MEMBER,
     action: Action.READ,
-    roles: [UserRole.DEPT_ADMIN, UserRole.MAYOR, UserRole.SUPER_ADMIN],
+    roles: [UserRole.DEPT_ADMIN, UserRole.MAYOR, UserRole.TECH_ADMIN],
   },
   {
     resource: Resource.STAFF_MEMBER,
     action: Action.INVITE,
-    roles: [UserRole.DEPT_ADMIN, UserRole.SUPER_ADMIN],
+    roles: [UserRole.DEPT_ADMIN, UserRole.TECH_ADMIN],
     conditions: [
       (ctx) => isDepartmentResource(ctx.resource) && ctx.resource.departmentId === ctx.departmentId,
     ],
@@ -399,7 +399,7 @@ export const PERMISSION_MATRIX: Permission[] = [
   {
     resource: Resource.STAFF_MEMBER,
     action: Action.ASSIGN,
-    roles: [UserRole.DEPT_ADMIN, UserRole.SUPER_ADMIN],
+    roles: [UserRole.DEPT_ADMIN, UserRole.TECH_ADMIN],
     conditions: [
       (ctx) => isDepartmentResource(ctx.resource) && ctx.resource.departmentId === ctx.departmentId,
     ],
@@ -418,23 +418,23 @@ export const PERMISSION_MATRIX: Permission[] = [
       UserRole.STAFF,
       UserRole.DEPT_ADMIN,
       UserRole.MAYOR,
-      UserRole.SUPER_ADMIN,
+      UserRole.TECH_ADMIN,
     ],
   },
   {
     resource: Resource.CATEGORY,
     action: Action.CREATE,
-    roles: [UserRole.SUPER_ADMIN],
+    roles: [UserRole.TECH_ADMIN],
   },
   {
     resource: Resource.CATEGORY,
     action: Action.UPDATE,
-    roles: [UserRole.SUPER_ADMIN],
+    roles: [UserRole.TECH_ADMIN],
   },
   {
     resource: Resource.CATEGORY,
     action: Action.DELETE,
-    roles: [UserRole.SUPER_ADMIN],
+    roles: [UserRole.TECH_ADMIN],
   },
 
   // ========================================================================
@@ -447,7 +447,7 @@ export const PERMISSION_MATRIX: Permission[] = [
     roles: [
       UserRole.DEPT_ADMIN,
       UserRole.MAYOR,
-      UserRole.SUPER_ADMIN,
+      UserRole.TECH_ADMIN,
     ],
   },
 
@@ -456,7 +456,7 @@ export const PERMISSION_MATRIX: Permission[] = [
     action: Action.EXPORT_DATA,
     roles: [
       UserRole.MAYOR,
-      UserRole.SUPER_ADMIN,
+      UserRole.TECH_ADMIN,
     ],
   },
 
@@ -467,18 +467,18 @@ export const PERMISSION_MATRIX: Permission[] = [
   {
     resource: Resource.SYSTEM_SETTINGS,
     action: Action.READ,
-    roles: [UserRole.SUPER_ADMIN],
+    roles: [UserRole.TECH_ADMIN],
   },
   {
     resource: Resource.SYSTEM_SETTINGS,
     action: Action.CONFIGURE,
-    roles: [UserRole.SUPER_ADMIN],
+    roles: [UserRole.TECH_ADMIN],
   },
 
   {
     resource: Resource.AUDIT_LOG,
     action: Action.READ,
-    roles: [UserRole.MAYOR, UserRole.SUPER_ADMIN],
+    roles: [UserRole.MAYOR, UserRole.TECH_ADMIN],
   },
 
   // ========================================================================
@@ -494,7 +494,7 @@ export const PERMISSION_MATRIX: Permission[] = [
       UserRole.STAFF,
       UserRole.DEPT_ADMIN,
       UserRole.MAYOR,
-      UserRole.SUPER_ADMIN,
+      UserRole.TECH_ADMIN,
     ],
   },
   {
@@ -506,7 +506,7 @@ export const PERMISSION_MATRIX: Permission[] = [
       UserRole.STAFF,
       UserRole.DEPT_ADMIN,
       UserRole.MAYOR,
-      UserRole.SUPER_ADMIN,
+      UserRole.TECH_ADMIN,
     ],
     conditions: [
       (ctx) => isUserResource(ctx.resource) && ctx.resource.userId === ctx.userId,

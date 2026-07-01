@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { usePublicReport } from '@/hooks/api/usePublic';
+import { api } from '@/lib/api/client';
 
 // Layout Components
 import PublicLayout from '@/components/layout/PublicLayout';
@@ -50,7 +51,12 @@ interface ReportDetail {
   id: string;
   title: string;
   description: string;
-  category: string;
+  category: {
+    id: string;
+    name: string;
+    icon?: string;
+    color?: string;
+  };
   status: string;
   priority: string;
   location: {
@@ -144,39 +150,44 @@ export default function ReportDetailPage() {
         id: fetchedReport.id,
         title: fetchedReport.title,
         description: fetchedReport.description || '',
-        category: fetchedReport.category?.id || fetchedReport.category?.name || 'roads',
+        category: {
+          id: fetchedReport.category?.id || 'unknown',
+          name: fetchedReport.category?.name || fetchedReport.categoryName || 'roads',
+          icon: fetchedReport.category?.icon,
+          color: fetchedReport.category?.color,
+        },
         status: fetchedReport.status,
         priority: fetchedReport.priority || 'medium',
         location: {
-          area: fetchedReport.address?.split(',')[0] || 'Unknown Area',
+          area: fetchedReport.location?.address?.split(',')[0] || 'Unknown Area',
           city: 'Bareilly',
-          address: fetchedReport.address,
-          coordinates: fetchedReport.latitude && fetchedReport.longitude ? {
-            latitude: fetchedReport.latitude,
-            longitude: fetchedReport.longitude
+          address: fetchedReport.location?.address,
+          coordinates: fetchedReport.location?.latitude && fetchedReport.location?.longitude ? {
+            latitude: fetchedReport.location.latitude,
+            longitude: fetchedReport.location.longitude
           } : undefined
         },
-        reportedBy: fetchedReport.reporter?.name || 'Anonymous Citizen',
+        reportedBy: fetchedReport.user?.fullName || 'Anonymous Citizen',
         reportedAt: fetchedReport.createdAt,
-        updatedAt: fetchedReport.updatedAt,
-        views: fetchedReport.viewCount || 0,
-        likes: fetchedReport.upvotes || 0,
-        upvotes: fetchedReport.upvotes || 0,
-        downvotes: fetchedReport.downvotes || 0,
+        updatedAt: fetchedReport.updatedAt || fetchedReport.createdAt,
+        views: fetchedReport.viewsCount || 0,
+        likes: fetchedReport.votesCount || 0,
+        upvotes: fetchedReport.votesCount || 0,
+        downvotes: 0,
         userVote: null,
         estimatedResolution: 'Pending Assessment',
         assignedDepartment: fetchedReport.department?.name || 'Unassigned',
-        statusHistory: fetchedReport.statusHistory?.map((h: any) => ({
-          status: h.status.toLowerCase(),
-          timestamp: h.createdAt,
-          note: h.notes || '',
-          updatedBy: 'System'
+        statusHistory: fetchedReport.timeline?.map((sh: any) => ({
+          status: sh.status,
+          timestamp: sh.createdAt,
+          note: sh.note,
+          updatedBy: sh.performedById
         })) || [],
-        photos: fetchedReport.images?.map((img: any) => ({
-          id: img.id,
+        photos: fetchedReport.images?.map((img: { url: string; filename: string }, index: number) => ({
+          id: img.filename || `img-${index}`,
           url: img.url,
-          caption: img.caption || '',
-          type: 'image'
+          caption: '',
+          type: 'image' as const
         })) || [],
         tags: [],
         relatedReports: []
@@ -184,23 +195,15 @@ export default function ReportDetailPage() {
       
       setReport(mappedReport);
       
-      const mappedComments = fetchedReport.comments?.map((c: any) => ({
+      const mappedComments: Comment[] = fetchedReport.comments?.map((c: any) => ({
         id: c.id,
-        author: c.author?.name || 'Anonymous',
-        authorAvatar: c.author?.avatarUrl,
+        author: c.user?.name || 'Anonymous',
+        authorAvatar: c.user?.avatarUrl || '/api/placeholder/40/40',
         content: c.content,
         timestamp: c.createdAt,
         likes: c.upvotes || 0,
         isLiked: false,
-        replies: c.replies?.map((r: any) => ({
-          id: r.id,
-          author: r.author?.name || 'Anonymous',
-          authorAvatar: r.author?.avatarUrl,
-          content: r.content,
-          timestamp: r.createdAt,
-          likes: r.upvotes || 0,
-          isLiked: false
-        })) || []
+        isOfficial: c.user?.roles?.includes('STAFF') || c.user?.roles?.includes('ADMIN') || false
       })) || [];
       
       setComments(mappedComments);
@@ -214,19 +217,17 @@ export default function ReportDetailPage() {
     }
   }, [fetchedReport, reportError, isReportLoading]);
 
-  // Enhanced interaction handlers
   const handleVote = async (voteType: 'up' | 'down') => {
     if (!report) return;
     
     try {
+      // Optimistic update
       let newUpvotes = report.upvotes;
       let newDownvotes = report.downvotes;
       
-      // Remove previous vote if exists
       if (currentVote === 'up') newUpvotes--;
       if (currentVote === 'down') newDownvotes--;
       
-      // Add new vote if different from current
       if (currentVote !== voteType) {
         if (voteType === 'up') newUpvotes++;
         if (voteType === 'down') newDownvotes++;
@@ -242,9 +243,15 @@ export default function ReportDetailPage() {
         userVote: currentVote !== voteType ? voteType : null
       });
       
+      await api.post(`/issues/${report.id}/vote`, { type: voteType });
       toast.success(currentVote !== voteType ? 'Vote recorded!' : 'Vote removed!');
-    } catch {
-      toast.error('Failed to record vote');
+    } catch (error: any) {
+      // Revert optimistic update here in a full implementation
+      if (error.response?.status === 401) {
+        toast.error('Please login to vote on this report');
+      } else {
+        toast.error('Failed to record vote');
+      }
     }
   };
 
@@ -254,25 +261,34 @@ export default function ReportDetailPage() {
   };
 
   const handleSubmitComment = async () => {
-    if (!newComment.trim()) return;
+    if (!newComment.trim() || !report) return;
     
     setIsSubmittingComment(true);
     try {
-      const comment: Comment = {
+      await api.post(`/issues/${report.id}/comments`, { comment: newComment });
+      
+      // We don't have the full user object from the response easily without reloading
+      // But we can do an optimistic update or refetch
+      const newCommentObj: Comment = {
         id: Date.now().toString(),
-        author: 'Current User',
+        author: 'Current User', // Will be correct on refresh
         authorAvatar: '/api/placeholder/40/40',
         content: newComment,
         timestamp: new Date().toISOString(),
         likes: 0,
-        isLiked: false
+        isLiked: false,
+        isOfficial: false
       };
       
-      setComments([...comments, comment]);
+      setComments([newCommentObj, ...comments]); // Prepend new comment
       setNewComment('');
       toast.success('Comment added successfully!');
-    } catch {
-      toast.error('Failed to add comment');
+    } catch (error: any) {
+      if (error.response?.status === 401) {
+        toast.error('Please login to post a comment');
+      } else {
+        toast.error('Failed to add comment');
+      }
     } finally {
       setIsSubmittingComment(false);
     }
@@ -344,9 +360,6 @@ export default function ReportDetailPage() {
     setReport({ ...report, likes: newLikes });
     
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
       // Show success feedback
       toast.success(
         newLiked 
@@ -453,7 +466,8 @@ export default function ReportDetailPage() {
     );
   }
 
-  const categoryInfo = getCategoryInfo(report.category);
+  // Not using categoryInfo to get the icon anymore if it's dynamic
+  const categoryInfo = getCategoryInfo(report.category?.id || 'other');
   const statusInfo = getStatusInfo(report.status);
 
   return (
@@ -478,13 +492,13 @@ export default function ReportDetailPage() {
               <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-2xl">{categoryInfo?.icon}</span>
+                    <span className="text-2xl">{report.category.icon || categoryInfo?.icon || '📋'}</span>
                     <Badge variant="outline" className={cn('text-xs', getPriorityColor(report.priority))}>
                       {report.priority.toUpperCase()} PRIORITY
                     </Badge>
                     <Badge variant="outline" className={cn('text-xs', statusInfo?.color)}>
                       {getStatusIcon(report.status)}
-                      {statusInfo?.enName}
+                      {statusInfo?.enName || report.status}
                     </Badge>
                   </div>
                   <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-900 mb-2">

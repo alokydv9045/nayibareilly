@@ -4,11 +4,11 @@ export type AdminRole = 'DEVELOPER_ADMIN' | 'SUPER_ADMIN' | 'DEPT_ADMIN' | 'MODE
 
 // Backend API roles mapping (lowercase with underscores) - Updated Hierarchy
 export const BACKEND_ROLES = {
-  DEVELOPER_ADMIN: 'developer_admin', // Platform Developer & Maintainer
-  SUPER_ADMIN: 'mayor',              // Mayor (City-wide Management)
-  DEPT_ADMIN: 'dept_admin',          // Department Administrators (5 departments)
-  MODERATOR: 'moderator',            // Content & Issue Moderators
-  STAFF: 'staff',                    // Field Staff Members
+  DEVELOPER_ADMIN: 'tech_admin',     // Map DEVELOPER_ADMIN to 'tech_admin' (technical tech_admin route)
+  SUPER_ADMIN: 'mayor',               // Map SUPER_ADMIN to 'mayor' (mayor route)
+  DEPT_ADMIN: 'dept_admin',           // Department Administrators (5 departments)
+  MODERATOR: 'moderator',             // Content & Issue Moderators
+  STAFF: 'staff',                     // Field Staff Members
 } as const
 
 // Role hierarchy levels (higher number = higher authority) - New Structure
@@ -78,8 +78,8 @@ export function pickPrimaryRole(
   roles?: unknown
 ): AdminRole | 'CITIZEN' {
   const r = Array.isArray(roles) ? roles.map((x) => String(x).toLowerCase()) : []
-  if (r.includes('developer_admin') || r.includes('dev_admin')) return 'DEVELOPER_ADMIN'
-  if (r.includes('super_admin') || r.includes('superadmin') || r.includes('mayor')) return 'SUPER_ADMIN'
+  if (r.includes('tech_admin') || r.includes('techadmin') || r.includes('super_admin') || r.includes('superadmin') || r.includes('developer_admin') || r.includes('dev_admin')) return 'DEVELOPER_ADMIN'
+  if (r.includes('mayor')) return 'SUPER_ADMIN'
   if (r.includes('dept_admin') || r.includes('department_admin')) return 'DEPT_ADMIN'
   if (r.includes('moderator') || r.includes('support')) return 'MODERATOR'
   if (r.includes('staff') || r.includes('officer')) return 'STAFF'

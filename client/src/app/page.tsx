@@ -15,7 +15,13 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { useState, useMemo } from 'react'
+<<<<<<< HEAD
 import { usePublicStats, usePublicReports } from '@/hooks/api/usePublic'
+=======
+import { ISSUE_CATEGORIES } from '@/lib/validations/reportForm'
+import { toast } from 'react-hot-toast'
+import { usePublicStats, usePublicReports, usePublicCategories, useRecentActivity } from '@/hooks/api/usePublic'
+>>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
 import { formatDistanceToNow } from 'date-fns'
 import HeroSection from '@/components/sections/HeroSection'
 import Image from 'next/image'
@@ -34,6 +40,12 @@ export default function LandingPage() {
     sort: sortBy,
     search: searchTerm || undefined
   })
+<<<<<<< HEAD
+=======
+  const { data: categories } = usePublicCategories()
+  const { data: recentActivity } = useRecentActivity(5)
+  const { data: topVotedReportsResponse } = usePublicReports({ sort: 'votes', limit: 3, status: 'all' })
+>>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
 
   const reportsData = reportsResponse?.issues || []
 
@@ -283,6 +295,7 @@ export default function LandingPage() {
                     <span className="text-slate-500 font-medium">Issues Resolved</span>
                     <span className="font-extrabold text-slate-900 text-xl">{statsLoading ? '...' : stats?.resolvedIssues || 0}</span>
                   </div>
+<<<<<<< HEAD
                   <div className="flex justify-between items-center pb-4 border-b border-slate-100">
                     <span className="text-slate-500 font-medium">Active Citizens</span>
                     <span className="font-extrabold text-slate-900 text-xl">{statsLoading ? '...' : stats?.activeUsers || 0}</span>
@@ -290,6 +303,150 @@ export default function LandingPage() {
                   <div className="flex justify-between items-center">
                     <span className="text-slate-500 font-medium">Avg. Resolution</span>
                     <span className="font-extrabold text-emerald-600 text-xl">48 Hrs</span>
+=======
+                  
+                  <div className="space-y-4">
+                    {recentActivity && recentActivity.length > 0 ? (
+                      recentActivity.map((activity: any, index: number) => (
+                        <div key={activity.id || index} className="flex items-center justify-between bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                          <div className="flex items-center space-x-3">
+                            <div className={`w-3 h-3 rounded-full animate-pulse ${
+                              activity.type === 'resolved' ? 'bg-green-400' :
+                              activity.type === 'in_progress' ? 'bg-yellow-400' :
+                              'bg-blue-400'
+                            }`}></div>
+                            <div>
+                              <div className="text-sm font-medium">{activity.title}</div>
+                              <div className="text-xs text-blue-100">{activity.category || 'Issue'}</div>
+                            </div>
+                          </div>
+                          <span className="text-xs text-blue-200 whitespace-nowrap">
+                            {formatDistanceToNow(new Date(activity.timestamp), { addSuffix: true })}
+                          </span>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="text-center py-4 text-blue-100 text-sm">No recent activity</div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Enhanced Impact Stats */}
+              <Card className="border-0 shadow-lg">
+                <CardHeader>
+                  <CardTitle className="text-xl flex items-center space-x-2">
+                    <TrendingUp className="h-5 w-5 text-blue-600" />
+                    <span>Today&apos;s Impact</span>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="text-center p-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl border border-blue-200">
+                      <div className="text-3xl font-bold text-blue-600 mb-1">{stats?.issuesToday || 0}</div>
+                      <div className="text-xs text-blue-700 font-medium">New Reports Today</div>
+                    </div>
+                    <div className="text-center p-4 bg-gradient-to-br from-green-50 to-green-100 rounded-xl border border-green-200">
+                      <div className="text-3xl font-bold text-green-600 mb-1">{stats?.resolvedIssues || 0}</div>
+                      <div className="text-xs text-green-700 font-medium">Total Resolved</div>
+                    </div>
+                    <div className="text-center p-4 bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl border border-purple-200">
+                      <div className="text-3xl font-bold text-purple-600 mb-1">{stats?.activeUsers || 0}</div>
+                      <div className="text-xs text-purple-700 font-medium">Active Users</div>
+                    </div>
+                    <div className="text-center p-4 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl border border-orange-200">
+                      <div className="text-3xl font-bold text-orange-600 mb-1">{stats?.avgResponseDays || 0}</div>
+                      <div className="text-xs text-orange-700 font-medium">Avg Resolution (Days)</div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Enhanced Top Voted Issues */}
+              <Card className="border-0 shadow-lg">
+                <CardHeader>
+                  <CardTitle className="text-xl flex items-center space-x-2">
+                    <Star className="h-5 w-5 text-yellow-500" />
+                    <span>Most Voted Issues</span>
+                  </CardTitle>
+                  <CardDescription>Issues getting the most community attention</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {topVotedReportsResponse?.issues && topVotedReportsResponse.issues.length > 0 ? (
+                      topVotedReportsResponse.issues.map((item: any, index: number) => (
+                        <Link href={`/reports/${item.id}`} key={item.id}>
+                          <div className="flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl border border-gray-200 hover:from-blue-50 hover:to-blue-100 hover:border-blue-200 transition-all cursor-pointer mb-3">
+                            <div className="flex items-center space-x-3">
+                              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold shrink-0 ${
+                                index === 0 ? 'bg-yellow-100 text-yellow-700' :
+                                index === 1 ? 'bg-gray-100 text-gray-700' :
+                                'bg-orange-100 text-orange-700'
+                              }`}>
+                                {index + 1}
+                              </div>
+                              <div className="min-w-0">
+                                <div className="font-medium text-sm truncate max-w-[150px] sm:max-w-[180px]">{item.title}</div>
+                                <div className="text-xs text-gray-600 truncate">{item.location?.address || 'Unknown area'}</div>
+                              </div>
+                            </div>
+                            <div className="text-right shrink-0">
+                              <div className="text-lg font-bold text-blue-600">{item.votesCount || 0}</div>
+                              <div className="text-xs text-gray-500">votes</div>
+                            </div>
+                          </div>
+                        </Link>
+                      ))
+                    ) : (
+                      <div className="text-center py-4 text-gray-500 text-sm">No highly voted reports yet</div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Community Engagement CTA */}
+              <Card className="shadow-lg bg-gradient-to-br from-green-50 to-blue-50 border border-green-200">
+                <CardContent className="p-6 text-center">
+                  <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Users className="h-8 w-8 text-white" />
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-2">Join the Community</h3>
+                  <p className="text-sm text-gray-600 mb-4">
+                    Help make our city better by reporting issues and voting on solutions.
+                  </p>
+                  <Button className="w-full bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700">
+                    Get Started
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Live Updates */}
+      <section className="py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-gradient-to-r from-blue-600 to-green-600 rounded-3xl p-8 text-white">
+            <div className="grid lg:grid-cols-2 gap-8 items-center">
+              <div>
+                <h2 className="text-3xl font-bold mb-4">Real-time Updates</h2>
+                <p className="text-blue-100 mb-6">
+                  Get instant notifications about your complaints and city development projects
+                </p>
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-3">
+                    <CheckCircle className="h-5 w-5 text-green-300" />
+                    <span>SMS & Email Notifications</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <CheckCircle className="h-5 w-5 text-green-300" />
+                    <span>Real-time Status Tracking</span>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <CheckCircle className="h-5 w-5 text-green-300" />
+                    <span>Community Updates</span>
+>>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
                   </div>
                 </div>
               </div>

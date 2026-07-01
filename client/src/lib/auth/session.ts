@@ -145,7 +145,7 @@ export async function authenticateAndAuthorize(
  * Role constants for easy reference
  */
 export const Roles = {
-  SUPER_ADMIN: 'SUPER_ADMIN',
+  TECH_ADMIN: 'TECH_ADMIN',
   MAYOR: 'MAYOR',
   DEPARTMENT_ADMIN: 'DEPARTMENT_ADMIN',
   MODERATOR: 'MODERATOR',
@@ -157,7 +157,7 @@ export const Roles = {
  * Common role groups
  */
 export const RoleGroups = {
-  ADMIN: [Roles.SUPER_ADMIN, Roles.MAYOR, Roles.DEPARTMENT_ADMIN],
-  STAFF_AND_ADMIN: [Roles.SUPER_ADMIN, Roles.MAYOR, Roles.DEPARTMENT_ADMIN, Roles.MODERATOR, Roles.STAFF],
+  ADMIN: [Roles.TECH_ADMIN, Roles.MAYOR, Roles.DEPARTMENT_ADMIN],
+  STAFF_AND_ADMIN: [Roles.TECH_ADMIN, Roles.MAYOR, Roles.DEPARTMENT_ADMIN, Roles.MODERATOR, Roles.STAFF],
   ALL: Object.values(Roles),
 } as const

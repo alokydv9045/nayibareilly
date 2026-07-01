@@ -16,8 +16,8 @@ const TEST_USERS = [
   {
     email: 'admin@nagarsetu.gov.in',
     password: 'Nagarsetu@Admin2025',
-    name: 'Super Administrator',
-    roles: ['super_admin'],
+    name: 'Tech Administrator',
+    roles: ['tech_admin'],
     isActive: true,
     isVerified: true,
   },
@@ -58,9 +58,15 @@ const TEST_USERS = [
 async function main() {
   console.log('🌱 Seeding test users...\n')
 
+  const defaultDept = await prisma.department.findFirst()
+  const defaultDeptId = defaultDept ? defaultDept.id : null
+
   for (const userData of TEST_USERS) {
     const { password, ...data } = userData
     const passwordHash = await bcrypt.hash(password, 10)
+
+    const needsDept = data.roles.includes('staff') || data.roles.includes('dept_admin') || data.roles.includes('moderator')
+    const departmentId = needsDept ? defaultDeptId : null
 
     let user = await prisma.user.findUnique({ where: { email: data.email } })
 
@@ -70,6 +76,7 @@ async function main() {
           ...data,
           passwordHash,
           roles: { set: data.roles },
+          departmentId,
         },
       })
       console.log(`✅ Created: ${user.email} (${data.roles.join(', ')})`)
@@ -81,6 +88,7 @@ async function main() {
           roles: { set: data.roles },
           isActive: true,
           isVerified: true,
+          departmentId,
         },
       })
       console.log(`♻️  Updated: ${user.email} (${data.roles.join(', ')})`)

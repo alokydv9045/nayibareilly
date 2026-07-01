@@ -18,9 +18,9 @@ function unique(arr) {
 }
 
 async function main() {
-  const email = process.env.SUPER_ADMIN_EMAIL || 'admin@nagarsetu.gov.in'
-  const password = process.env.SUPER_ADMIN_PASSWORD || 'Nagarsetu@Admin2025'
-  const name = process.env.SUPER_ADMIN_NAME || 'Super Administrator'
+  const email = process.env.TECH_ADMIN_EMAIL || process.env.SUPER_ADMIN_EMAIL || 'admin@nagarsetu.gov.in'
+  const password = process.env.TECH_ADMIN_PASSWORD || process.env.SUPER_ADMIN_PASSWORD || 'Nagarsetu@Admin2025'
+  const name = process.env.TECH_ADMIN_NAME || process.env.SUPER_ADMIN_NAME || 'Tech Administrator'
 
   const passwordHash = await bcrypt.hash(password, 10)
 
@@ -32,17 +32,17 @@ async function main() {
         email,
         passwordHash,
         name,
-        roles: { set: [UserRole.super_admin] },
+        roles: { set: [UserRole.tech_admin] },
         isActive: true,
         isVerified: true,
       },
       select: { id: true, email: true, roles: true, isActive: true, isVerified: true }
     })
-    console.log('Created super admin user:', user.email)
+    console.log('Created tech admin user:', user.email)
   } else {
-    const roles = unique([...(user.roles || []), UserRole.super_admin])
+    const roles = unique([...(user.roles || []), UserRole.tech_admin])
     await prisma.user.update({ where: { id: user.id }, data: { roles: { set: roles } } })
-    console.log('Ensured user has super_admin role:', email)
+    console.log('Ensured user has tech_admin role:', email)
   }
 
   console.log('\nAdmin credentials:')

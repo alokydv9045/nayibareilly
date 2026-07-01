@@ -93,7 +93,7 @@ export const WORKFLOW_TRANSITIONS: Record<string, WorkflowTransition> = {
   approve: {
     from: [WORKFLOW_STATES.OPEN, WORKFLOW_STATES.PENDING],
     to: WORKFLOW_STATES.APPROVED,
-    allowedRoles: [UserRole.MODERATOR, UserRole.DEPT_ADMIN, UserRole.MAYOR, UserRole.SUPER_ADMIN],
+    allowedRoles: [UserRole.MODERATOR, UserRole.DEPT_ADMIN, UserRole.MAYOR, UserRole.TECH_ADMIN],
     autoActions: [
       { type: 'notify', target: 'department', params: { message: 'Issue approved and ready for assignment' } },
       { type: 'notify', target: 'reporter', params: { message: 'Your issue has been approved' } },
@@ -105,7 +105,7 @@ export const WORKFLOW_TRANSITIONS: Record<string, WorkflowTransition> = {
   reject: {
     from: [WORKFLOW_STATES.OPEN, WORKFLOW_STATES.PENDING],
     to: WORKFLOW_STATES.REJECTED,
-    allowedRoles: [UserRole.MODERATOR, UserRole.DEPT_ADMIN, UserRole.MAYOR, UserRole.SUPER_ADMIN],
+    allowedRoles: [UserRole.MODERATOR, UserRole.DEPT_ADMIN, UserRole.MAYOR, UserRole.TECH_ADMIN],
     requiresComment: true,
     validations: [
       { field: 'rejectionReason', condition: 'required', message: 'Rejection reason is required' },
@@ -121,7 +121,7 @@ export const WORKFLOW_TRANSITIONS: Record<string, WorkflowTransition> = {
   assign: {
     from: [WORKFLOW_STATES.APPROVED],
     to: WORKFLOW_STATES.APPROVED, // Status stays same, but issue gets assigned
-    allowedRoles: [UserRole.DEPT_ADMIN, UserRole.MAYOR, UserRole.SUPER_ADMIN],
+    allowedRoles: [UserRole.DEPT_ADMIN, UserRole.MAYOR, UserRole.TECH_ADMIN],
     requiresAssignment: true,
     autoActions: [
       { type: 'notify', target: 'assigned_staff', params: { message: 'New issue assigned to you' } },
@@ -134,7 +134,7 @@ export const WORKFLOW_TRANSITIONS: Record<string, WorkflowTransition> = {
   start_work: {
     from: [WORKFLOW_STATES.APPROVED],
     to: WORKFLOW_STATES.IN_PROGRESS,
-    allowedRoles: [UserRole.STAFF, UserRole.DEPT_ADMIN, UserRole.SUPER_ADMIN],
+    allowedRoles: [UserRole.STAFF, UserRole.DEPT_ADMIN, UserRole.TECH_ADMIN],
     requiresAssignment: true,
     autoActions: [
       { type: 'notify', target: 'reporter', params: { message: 'Work has started on your issue' } },
@@ -147,7 +147,7 @@ export const WORKFLOW_TRANSITIONS: Record<string, WorkflowTransition> = {
   hold: {
     from: [WORKFLOW_STATES.IN_PROGRESS],
     to: WORKFLOW_STATES.ON_HOLD,
-    allowedRoles: [UserRole.STAFF, UserRole.DEPT_ADMIN, UserRole.SUPER_ADMIN],
+    allowedRoles: [UserRole.STAFF, UserRole.DEPT_ADMIN, UserRole.TECH_ADMIN],
     requiresComment: true,
     validations: [
       { field: 'holdReason', condition: 'required', message: 'Reason for hold is required' }
@@ -163,7 +163,7 @@ export const WORKFLOW_TRANSITIONS: Record<string, WorkflowTransition> = {
   resume: {
     from: [WORKFLOW_STATES.ON_HOLD],
     to: WORKFLOW_STATES.IN_PROGRESS,
-    allowedRoles: [UserRole.STAFF, UserRole.DEPT_ADMIN, UserRole.SUPER_ADMIN],
+    allowedRoles: [UserRole.STAFF, UserRole.DEPT_ADMIN, UserRole.TECH_ADMIN],
     autoActions: [
       { type: 'notify', target: 'reporter', params: { message: 'Work has resumed on your issue' } },
       { type: 'log', params: { event: 'work_resumed' } }
@@ -174,7 +174,7 @@ export const WORKFLOW_TRANSITIONS: Record<string, WorkflowTransition> = {
   resolve: {
     from: [WORKFLOW_STATES.IN_PROGRESS],
     to: WORKFLOW_STATES.RESOLVED,
-    allowedRoles: [UserRole.STAFF, UserRole.DEPT_ADMIN, UserRole.SUPER_ADMIN],
+    allowedRoles: [UserRole.STAFF, UserRole.DEPT_ADMIN, UserRole.TECH_ADMIN],
     requiresComment: true,
     validations: [
       { field: 'resolutionDetails', condition: 'required', message: 'Resolution details are required' },
@@ -191,7 +191,7 @@ export const WORKFLOW_TRANSITIONS: Record<string, WorkflowTransition> = {
   verify: {
     from: [WORKFLOW_STATES.RESOLVED],
     to: WORKFLOW_STATES.VERIFIED,
-    allowedRoles: [UserRole.CITIZEN, UserRole.DEPT_ADMIN, UserRole.MAYOR, UserRole.SUPER_ADMIN],
+    allowedRoles: [UserRole.CITIZEN, UserRole.DEPT_ADMIN, UserRole.MAYOR, UserRole.TECH_ADMIN],
     requiresVerification: true,
     autoActions: [
       { type: 'notify', target: 'staff', params: { message: 'Resolution verified by citizen' } },
@@ -204,7 +204,7 @@ export const WORKFLOW_TRANSITIONS: Record<string, WorkflowTransition> = {
   reopen: {
     from: [WORKFLOW_STATES.RESOLVED, WORKFLOW_STATES.VERIFIED, WORKFLOW_STATES.CLOSED],
     to: WORKFLOW_STATES.IN_PROGRESS,
-    allowedRoles: [UserRole.CITIZEN, UserRole.STAFF, UserRole.DEPT_ADMIN, UserRole.MAYOR, UserRole.SUPER_ADMIN],
+    allowedRoles: [UserRole.CITIZEN, UserRole.STAFF, UserRole.DEPT_ADMIN, UserRole.MAYOR, UserRole.TECH_ADMIN],
     requiresComment: true,
     validations: [
       { field: 'reopenReason', condition: 'required', message: 'Reason for reopening is required' }
@@ -221,7 +221,7 @@ export const WORKFLOW_TRANSITIONS: Record<string, WorkflowTransition> = {
   close: {
     from: [WORKFLOW_STATES.VERIFIED, WORKFLOW_STATES.RESOLVED],
     to: WORKFLOW_STATES.CLOSED,
-    allowedRoles: [UserRole.DEPT_ADMIN, UserRole.MAYOR, UserRole.SUPER_ADMIN],
+    allowedRoles: [UserRole.DEPT_ADMIN, UserRole.MAYOR, UserRole.TECH_ADMIN],
     autoActions: [
       { type: 'notify', target: 'reporter', params: { message: 'Your issue has been closed' } },
       { type: 'log', params: { event: 'issue_closed' } }
@@ -232,7 +232,7 @@ export const WORKFLOW_TRANSITIONS: Record<string, WorkflowTransition> = {
   archive: {
     from: [WORKFLOW_STATES.CLOSED, WORKFLOW_STATES.REJECTED],
     to: WORKFLOW_STATES.ARCHIVED,
-    allowedRoles: [UserRole.MAYOR, UserRole.SUPER_ADMIN],
+    allowedRoles: [UserRole.MAYOR, UserRole.TECH_ADMIN],
     autoActions: [
       { type: 'log', params: { event: 'issue_archived' } }
     ]

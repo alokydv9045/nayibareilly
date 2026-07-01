@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 import { useState, useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { Card, CardContent } from '@/components/ui/card'
@@ -47,11 +47,11 @@ const fetchSystemStats = async (): Promise<SystemStats> => {
   return data.data
 }
 
-// Check if user has access to system stats (dept_admin, mayor, super_admin)
+// Check if user has access to system stats (dept_admin, mayor, tech_admin)
 const hasSystemStatsAccess = () => {
   const user = userStorage.get()
   if (!user?.roles || !Array.isArray(user.roles)) return false
-  const allowedRoles = ['dept_admin', 'mayor', 'super_admin']
+  const allowedRoles = ['dept_admin', 'mayor', 'tech_admin']
   return user.roles.some(role => allowedRoles.includes(role))
 }
 
@@ -196,7 +196,11 @@ export function AdminFooter({ className = '' }: AdminFooterProps) {
                 </a>
               </li>
               <li>
+<<<<<<< HEAD
                 <a href="/superadmin/logs" className="text-sm text-slate-600 hover:text-emerald-600">
+=======
+                <a href="/techadmin/logs" className="text-sm text-gray-600 hover:text-blue-600">
+>>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
                   System Logs
                 </a>
               </li>
