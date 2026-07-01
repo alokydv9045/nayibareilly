@@ -129,6 +129,16 @@
     font-family: var(--font-sans);
   }
 
+  /* Remove default browser eye icon for password inputs */
+  input[type="password"]::-ms-reveal,
+  input[type="password"]::-ms-clear {
+    display: none;
+  }
+  
+  input[type="password"]::-webkit-credentials-auto-fill-button {
+    visibility: hidden;
+  }
+
   /* Accessible skip link: visually hidden until keyboard focus */
   .skip-link {
     position: absolute;

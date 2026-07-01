@@ -81,7 +81,7 @@ export function WorkloadIndicator({
             <span>{STATUS_LABELS[status]}</span>
           </Badge>
         )}
-        <span className={`font-medium text-gray-700 dark:text-gray-300 ${sizeClasses[size]}`}>
+        <span className={`font-medium text-slate-700 dark:text-slate-300 ${sizeClasses[size]}`}>
           {currentWorkload}/{maxCapacity}
         </span>
       </div>

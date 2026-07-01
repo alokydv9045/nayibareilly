@@ -56,7 +56,7 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-green-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-emerald-50 to-green-50">
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-900 via-blue-800 to-green-800 text-white py-20 relative overflow-hidden">
         {/* Animated background elements */}
@@ -76,10 +76,10 @@ export default function ContactPage() {
             <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fadeInUp animation-delay-200">
               Contact <span className="bg-gradient-to-r from-sky-300 to-green-300 bg-clip-text text-transparent animate-pulse">NayiBareilly</span>
             </h1>
-            <p className="text-xl md:text-2xl text-blue-100 mb-4 animate-fadeInUp animation-delay-400">
+            <p className="text-xl md:text-2xl text-emerald-100 mb-4 animate-fadeInUp animation-delay-400">
               हमसे जुड़ें - आपकी आवाज़ हमारी प्राथमिकता
             </p>
-            <p className="text-lg text-blue-200 max-w-3xl mx-auto mb-8 animate-fadeInUp animation-delay-600">
+            <p className="text-lg text-emerald-200 max-w-3xl mx-auto mb-8 animate-fadeInUp animation-delay-600">
               We&apos;re here to help! Reach out to us for support, feedback, or any inquiries about our civic services.
             </p>
           </div>
@@ -94,8 +94,8 @@ export default function ContactPage() {
             <div className="animate-fadeInLeft">
               <Card className="border-0 shadow-2xl bg-white/80 backdrop-blur-sm">
                 <CardHeader className="text-center">
-                  <CardTitle className="text-2xl text-gray-900 mb-2">Send us a Message</CardTitle>
-                  <CardDescription className="text-gray-600">संदेश भेजें - हम जल्दी जवाब देंगे</CardDescription>
+                  <CardTitle className="text-2xl text-slate-900 mb-2">Send us a Message</CardTitle>
+                  <CardDescription className="text-slate-600">संदेश भेजें - हम जल्दी जवाब देंगे</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={handleSubmit} className="space-y-6">
@@ -147,7 +147,7 @@ export default function ContactPage() {
                           name="category"
                           value={formData.category}
                           onChange={handleInputChange}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300 focus:scale-105 hover:shadow-md"
+                          className="w-full px-3 py-2 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all duration-300 focus:scale-105 hover:shadow-md"
                         >
                           <option value="general">General Inquiry</option>
                           <option value="technical">Technical Support</option>
@@ -189,7 +189,7 @@ export default function ContactPage() {
                       type="submit" 
                       size="lg" 
                       disabled={isSubmitting}
-                      className="w-full bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white transform hover:scale-105 transition-all duration-300 group animate-fadeInUp stagger-7"
+                      className="w-full bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 text-white transform hover:scale-105 transition-all duration-300 group animate-fadeInUp stagger-7"
                     >
                       {isSubmitting ? (
                         <div className="flex items-center">
@@ -211,34 +211,34 @@ export default function ContactPage() {
             {/* Contact Information */}
             <div className="space-y-8 animate-fadeInRight">
               {/* Quick Contact */}
-              <Card className="border-0 shadow-xl bg-gradient-to-br from-blue-50 to-blue-100 group hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-500">
+              <Card className="border-0 shadow-xl bg-gradient-to-br from-emerald-50 to-emerald-100 group hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-500">
                 <CardHeader>
-                  <CardTitle className="flex items-center text-xl text-gray-900">
-                    <Phone className="mr-2 h-6 w-6 text-blue-600 group-hover:rotate-12 transition-transform duration-300" />
+                  <CardTitle className="flex items-center text-xl text-slate-900">
+                    <Phone className="mr-2 h-6 w-6 text-emerald-600 group-hover:rotate-12 transition-transform duration-300" />
                     Quick Contact
                   </CardTitle>
                   <CardDescription>त्वरित संपर्क</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex items-center space-x-3 hover:scale-105 transition-transform duration-300">
-                    <Phone className="h-5 w-5 text-blue-600" />
+                    <Phone className="h-5 w-5 text-emerald-600" />
                     <div>
-                      <p className="font-medium text-gray-900">+91 581 2545 678</p>
-                      <p className="text-sm text-gray-600">Mon-Fri: 9:00 AM - 6:00 PM</p>
+                      <p className="font-medium text-slate-900">+91 581 2545 678</p>
+                      <p className="text-sm text-slate-600">Mon-Fri: 9:00 AM - 6:00 PM</p>
                     </div>
                   </div>
                   <div className="flex items-center space-x-3 hover:scale-105 transition-transform duration-300">
-                    <Mail className="h-5 w-5 text-blue-600" />
+                    <Mail className="h-5 w-5 text-emerald-600" />
                     <div>
-                      <p className="font-medium text-gray-900">support@nayibareilly.gov.in</p>
-                      <p className="text-sm text-gray-600">24/7 Email Support</p>
+                      <p className="font-medium text-slate-900">support@nayibareilly.gov.in</p>
+                      <p className="text-sm text-slate-600">24/7 Email Support</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3 hover:scale-105 transition-transform duration-300">
-                    <MapPin className="h-5 w-5 text-blue-600 mt-1" />
+                    <MapPin className="h-5 w-5 text-emerald-600 mt-1" />
                     <div>
-                      <p className="font-medium text-gray-900">Bareilly Municipal Corporation</p>
-                      <p className="text-sm text-gray-600">Collectorate Compound<br />Bareilly, UP 243001</p>
+                      <p className="font-medium text-slate-900">Bareilly Municipal Corporation</p>
+                      <p className="text-sm text-slate-600">Collectorate Compound<br />Bareilly, UP 243001</p>
                     </div>
                   </div>
                 </CardContent>
@@ -247,7 +247,7 @@ export default function ContactPage() {
               {/* Office Hours */}
               <Card className="border-0 shadow-xl bg-gradient-to-br from-green-50 to-green-100 group hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-500">
                 <CardHeader>
-                  <CardTitle className="flex items-center text-xl text-gray-900">
+                  <CardTitle className="flex items-center text-xl text-slate-900">
                     <Clock className="mr-2 h-6 w-6 text-green-600 group-hover:rotate-12 transition-transform duration-300" />
                     Office Hours
                   </CardTitle>
@@ -255,16 +255,16 @@ export default function ContactPage() {
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <div className="flex justify-between items-center hover:scale-105 transition-transform duration-300">
-                    <span className="text-gray-700">Monday - Friday</span>
-                    <span className="font-medium text-gray-900">9:00 AM - 6:00 PM</span>
+                    <span className="text-slate-700">Monday - Friday</span>
+                    <span className="font-medium text-slate-900">9:00 AM - 6:00 PM</span>
                   </div>
                   <div className="flex justify-between items-center hover:scale-105 transition-transform duration-300">
-                    <span className="text-gray-700">Saturday</span>
-                    <span className="font-medium text-gray-900">9:00 AM - 2:00 PM</span>
+                    <span className="text-slate-700">Saturday</span>
+                    <span className="font-medium text-slate-900">9:00 AM - 2:00 PM</span>
                   </div>
                   <div className="flex justify-between items-center hover:scale-105 transition-transform duration-300">
-                    <span className="text-gray-700">Sunday</span>
-                    <span className="font-medium text-gray-900">Closed</span>
+                    <span className="text-slate-700">Sunday</span>
+                    <span className="font-medium text-slate-900">Closed</span>
                   </div>
                   <div className="pt-3 border-t border-green-200">
                     <div className="flex items-center space-x-2">
@@ -278,7 +278,7 @@ export default function ContactPage() {
               {/* Emergency Contact */}
               <Card className="border-0 shadow-xl bg-gradient-to-br from-red-50 to-red-100 group hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-500">
                 <CardHeader>
-                  <CardTitle className="flex items-center text-xl text-gray-900">
+                  <CardTitle className="flex items-center text-xl text-slate-900">
                     <AlertTriangle className="mr-2 h-6 w-6 text-red-600 group-hover:rotate-12 transition-transform duration-300" />
                     Emergency Contact
                   </CardTitle>
@@ -296,8 +296,8 @@ export default function ContactPage() {
               {/* Social Media */}
               <Card className="border-0 shadow-xl bg-gradient-to-br from-purple-50 to-purple-100 group hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-500">
                 <CardHeader>
-                  <CardTitle className="flex items-center text-xl text-gray-900">
-                    <Users className="mr-2 h-6 w-6 text-purple-600 group-hover:rotate-12 transition-transform duration-300" />
+                  <CardTitle className="flex items-center text-xl text-slate-900">
+                    <Users className="mr-2 h-6 w-6 text-slate-800 group-hover:rotate-12 transition-transform duration-300" />
                     Follow Us
                   </CardTitle>
                   <CardDescription>सोशल मीडिया पर फॉलो करें</CardDescription>
@@ -305,7 +305,7 @@ export default function ContactPage() {
                 <CardContent>
                   <div className="flex space-x-4">
                     <Button variant="outline" size="sm" className="hover:scale-110 transition-transform duration-300 hover:shadow-lg group">
-                      <Facebook className="h-4 w-4 group-hover:text-blue-600" />
+                      <Facebook className="h-4 w-4 group-hover:text-emerald-600" />
                     </Button>
                     <Button variant="outline" size="sm" className="hover:scale-110 transition-transform duration-300 hover:shadow-lg group">
                       <Twitter className="h-4 w-4 group-hover:text-blue-400" />
@@ -314,7 +314,7 @@ export default function ContactPage() {
                       <Instagram className="h-4 w-4 group-hover:text-pink-600" />
                     </Button>
                     <Button variant="outline" size="sm" className="hover:scale-110 transition-transform duration-300 hover:shadow-lg group">
-                      <Linkedin className="h-4 w-4 group-hover:text-blue-700" />
+                      <Linkedin className="h-4 w-4 group-hover:text-emerald-700" />
                     </Button>
                   </div>
                 </CardContent>
@@ -328,8 +328,8 @@ export default function ContactPage() {
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 animate-fadeInUp">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Frequently Asked Questions</h2>
-            <p className="text-gray-600 text-lg">अक्सर पूछे जाने वाले प्रश्न</p>
+            <h2 className="text-3xl font-bold text-slate-900 mb-4">Frequently Asked Questions</h2>
+            <p className="text-slate-600 text-lg">अक्सर पूछे जाने वाले प्रश्न</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
@@ -361,15 +361,15 @@ export default function ContactPage() {
             ].map((faq, index) => (
               <Card key={index} className={`border-0 shadow-lg hover:shadow-xl transition-all duration-500 group transform hover:-translate-y-1 animate-fadeInUp ${faq.delay}`}>
                 <CardHeader>
-                  <CardTitle className="text-lg text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
+                  <CardTitle className="text-lg text-slate-900 group-hover:text-emerald-600 transition-colors duration-300">
                     {faq.question}
                   </CardTitle>
-                  <CardDescription className="text-sm text-gray-600 italic">
+                  <CardDescription className="text-sm text-slate-600 italic">
                     {faq.hindi}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-700 group-hover:text-gray-800 transition-colors duration-300">
+                  <p className="text-slate-700 group-hover:text-slate-800 transition-colors duration-300">
                     {faq.answer}
                   </p>
                 </CardContent>
@@ -388,12 +388,12 @@ export default function ContactPage() {
         
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <h2 className="text-3xl font-bold mb-4 animate-fadeInUp">Ready to Get Started?</h2>
-          <p className="text-blue-100 text-lg mb-8 animate-fadeInUp animation-delay-200">
+          <p className="text-emerald-100 text-lg mb-8 animate-fadeInUp animation-delay-200">
             Join thousands of citizens making Bareilly a better place to live
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fadeInUp animation-delay-400">
-            <Button asChild size="lg" className="bg-white text-blue-900 hover:bg-blue-50 transform hover:scale-105 transition-all duration-300 group">
+            <Button asChild size="lg" className="bg-white text-blue-900 hover:bg-emerald-50 transform hover:scale-105 transition-all duration-300 group">
               <Link href="/report">
                 <MessageSquare className="mr-2 h-5 w-5 group-hover:rotate-12 transition-transform duration-300" />
                 Report an Issue

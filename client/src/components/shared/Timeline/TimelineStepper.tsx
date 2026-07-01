@@ -68,7 +68,7 @@ export default function TimelineStepper({
                   'flex items-center justify-center rounded-full border-2 transition-all',
                   isHorizontal ? 'w-10 h-10' : 'w-8 h-8 shrink-0',
                   isCompleted && 'bg-green-600 border-green-600',
-                  isCurrent && 'bg-blue-600 border-blue-600',
+                  isCurrent && 'bg-emerald-600 border-emerald-600',
                   !isCompleted && !isCurrent && 'bg-background border-muted'
                 )}>
                   {isCompleted ? (
@@ -111,7 +111,7 @@ export default function TimelineStepper({
                     'font-semibold',
                     isHorizontal ? 'text-sm' : 'text-base',
                     isCompleted && 'text-green-700',
-                    isCurrent && 'text-blue-700',
+                    isCurrent && 'text-emerald-700',
                     !isCompleted && !isCurrent && 'text-muted-foreground'
                   )}>
                     {step.label}

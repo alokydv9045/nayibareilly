@@ -132,8 +132,8 @@ function NotificationPreferencesContent() {
 
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="rounded-full bg-blue-500/10 p-2">
-                <Mail className="h-5 w-5 text-blue-500" />
+              <div className="rounded-full bg-emerald-500/10 p-2">
+                <Mail className="h-5 w-5 text-emerald-500" />
               </div>
               <div>
                 <Label htmlFor="email" className="font-medium">

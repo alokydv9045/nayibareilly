@@ -183,10 +183,10 @@ function ReportSuccessContent() {
     return (
       <RequireUser>
         <CitizenLayout>
-          <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+          <div className="min-h-screen bg-slate-50 flex items-center justify-center">
             <div className="text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4" />
-              <p className="text-gray-600">Loading issue details...</p>
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto mb-4" />
+              <p className="text-slate-600">Loading issue details...</p>
             </div>
           </div>
         </CitizenLayout>
@@ -198,14 +198,14 @@ function ReportSuccessContent() {
     return (
       <RequireUser>
         <CitizenLayout>
-          <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+          <div className="min-h-screen bg-slate-50 flex items-center justify-center">
             <Card className="max-w-md w-full mx-4">
               <CardContent className="p-6 text-center">
                 <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-                <h2 className="text-xl font-semibold text-gray-900 mb-2">
+                <h2 className="text-xl font-semibold text-slate-900 mb-2">
                   Unable to Load Issue
                 </h2>
-                <p className="text-gray-600 mb-4">
+                <p className="text-slate-600 mb-4">
                   {error || 'Issue not found'}
                 </p>
                 <Button onClick={() => router.push('/report')}>
@@ -225,7 +225,7 @@ function ReportSuccessContent() {
   return (
     <RequireUser>
       <CitizenLayout>
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-slate-50">
           <div className="max-w-4xl mx-auto px-4 py-8">
             {/* Header */}
             <div className="text-center mb-8">
@@ -235,10 +235,10 @@ function ReportSuccessContent() {
                 </div>
               </div>
               
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+              <h1 className="text-3xl font-bold text-slate-900 mb-2">
                 {t.reportSubmitted}
               </h1>
-              <p className="text-gray-600 max-w-2xl mx-auto">
+              <p className="text-slate-600 max-w-2xl mx-auto">
                 {t.submissionSuccess}
               </p>
 
@@ -266,10 +266,10 @@ function ReportSuccessContent() {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                  <div className="flex items-center justify-between p-4 bg-slate-50 rounded-lg">
                     <div>
-                      <p className="text-sm text-gray-600">Tracking Number</p>
-                      <p className="text-xl font-mono font-semibold text-gray-900">
+                      <p className="text-sm text-slate-600">Tracking Number</p>
+                      <p className="text-xl font-mono font-semibold text-slate-900">
                         {issue.trackingNumber}
                       </p>
                     </div>
@@ -286,9 +286,9 @@ function ReportSuccessContent() {
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                     <div>
-                      <p className="text-gray-600">Status</p>
+                      <p className="text-slate-600">Status</p>
                       <div className="flex items-center gap-2 mt-1">
-                        <div className={cn('w-2 h-2 rounded-full', statusInfo?.color || 'bg-gray-500')} />
+                        <div className={cn('w-2 h-2 rounded-full', statusInfo?.color || 'bg-slate-500')} />
                         <span className="font-medium">
                           {language === 'hi' ? statusInfo?.hiName : statusInfo?.enName}
                         </span>
@@ -296,7 +296,7 @@ function ReportSuccessContent() {
                     </div>
                     
                     <div>
-                      <p className="text-gray-600">Submitted</p>
+                      <p className="text-slate-600">Submitted</p>
                       <p className="font-medium mt-1">
                         {formatDate(issue.createdAt)}
                       </p>
@@ -304,7 +304,7 @@ function ReportSuccessContent() {
                     
                     {issue.estimatedResolution && (
                       <div>
-                        <p className="text-gray-600">Estimated Resolution</p>
+                        <p className="text-slate-600">Estimated Resolution</p>
                         <p className="font-medium mt-1 flex items-center gap-1">
                           <Clock className="h-4 w-4" />
                           {issue.estimatedResolution}
@@ -323,12 +323,12 @@ function ReportSuccessContent() {
               </CardHeader>
               <CardContent className="space-y-6">
                 <div>
-                  <p className="text-sm text-gray-600">Title</p>
-                  <p className="font-medium text-gray-900">{issue.title}</p>
+                  <p className="text-sm text-slate-600">Title</p>
+                  <p className="font-medium text-slate-900">{issue.title}</p>
                 </div>
                 
                 <div>
-                  <p className="text-sm text-gray-600">Category</p>
+                  <p className="text-sm text-slate-600">Category</p>
                   <div className="flex items-center gap-2 mt-1">
                     <span className="text-lg">{categoryInfo?.icon}</span>
                     <span className="font-medium">
@@ -339,14 +339,14 @@ function ReportSuccessContent() {
 
                 {issue.description && (
                   <div>
-                    <p className="text-sm text-gray-600">Description</p>
-                    <p className="text-gray-900 whitespace-pre-wrap mt-1">{issue.description}</p>
+                    <p className="text-sm text-slate-600">Description</p>
+                    <p className="text-slate-900 whitespace-pre-wrap mt-1">{issue.description}</p>
                   </div>
                 )}
 
                 {issue.priority && (
                   <div>
-                    <p className="text-sm text-gray-600">Priority</p>
+                    <p className="text-sm text-slate-600">Priority</p>
                     <span className={cn(
                       'inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium mt-1',
                       issue.priority === 'critical' ? 'bg-red-100 text-red-800' :
@@ -361,16 +361,16 @@ function ReportSuccessContent() {
                 
                 {issue.location && (
                   <div>
-                    <p className="text-sm text-gray-600">Location</p>
+                    <p className="text-sm text-slate-600">Location</p>
                     <div className="flex items-start gap-2 mt-1">
-                      <MapPin className="h-4 w-4 text-gray-400 mt-0.5 flex-shrink-0" />
+                      <MapPin className="h-4 w-4 text-slate-400 mt-0.5 flex-shrink-0" />
                       <div>
-                        <p className="text-gray-900">
+                        <p className="text-slate-900">
                           {issue.location.address || 
                            `${issue.location.latitude.toFixed(6)}, ${issue.location.longitude.toFixed(6)}`}
                         </p>
                         {issue.location.address && (
-                          <p className="text-xs text-gray-500 mt-1">
+                          <p className="text-xs text-slate-500 mt-1">
                             Coordinates: {issue.location.latitude.toFixed(6)}, {issue.location.longitude.toFixed(6)}
                           </p>
                         )}
@@ -381,7 +381,7 @@ function ReportSuccessContent() {
 
                 {issue.photos && issue.photos.length > 0 && (
                   <div>
-                    <p className="text-sm text-gray-600 mb-3">Attached Photos ({issue.photos.length})</p>
+                    <p className="text-sm text-slate-600 mb-3">Attached Photos ({issue.photos.length})</p>
                     <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                       {issue.photos.map((photo, index) => (
                         <div key={photo.id} className="relative aspect-square group">
@@ -390,12 +390,12 @@ function ReportSuccessContent() {
                             alt={`Submitted photo ${index + 1}`}
                             fill
                             sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                            className="object-cover rounded-lg border border-gray-200 shadow-sm group-hover:shadow-md transition-shadow"
+                            className="object-cover rounded-lg border border-slate-200 shadow-sm group-hover:shadow-md transition-shadow"
                             unoptimized
                           />
                           {photo.compressed && (
                             <div className="absolute top-2 right-2">
-                              <span className="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
+                              <span className="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-emerald-100 text-blue-800">
                                 Compressed
                               </span>
                             </div>
@@ -417,32 +417,32 @@ function ReportSuccessContent() {
               <CardContent>
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
-                    <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <span className="text-xs font-medium text-blue-600">1</span>
+                    <div className="w-6 h-6 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span className="text-xs font-medium text-emerald-600">1</span>
                     </div>
                     <div>
-                      <p className="font-medium text-gray-900">Issue Review</p>
-                      <p className="text-sm text-gray-600">Your report will be reviewed by relevant authorities within 24 hours.</p>
+                      <p className="font-medium text-slate-900">Issue Review</p>
+                      <p className="text-sm text-slate-600">Your report will be reviewed by relevant authorities within 24 hours.</p>
                     </div>
                   </div>
                   
                   <div className="flex items-start gap-3">
-                    <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <span className="text-xs font-medium text-blue-600">2</span>
+                    <div className="w-6 h-6 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span className="text-xs font-medium text-emerald-600">2</span>
                     </div>
                     <div>
-                      <p className="font-medium text-gray-900">Assignment</p>
-                      <p className="text-sm text-gray-600">The issue will be assigned to the appropriate department for action.</p>
+                      <p className="font-medium text-slate-900">Assignment</p>
+                      <p className="text-sm text-slate-600">The issue will be assigned to the appropriate department for action.</p>
                     </div>
                   </div>
                   
                   <div className="flex items-start gap-3">
-                    <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <span className="text-xs font-medium text-blue-600">3</span>
+                    <div className="w-6 h-6 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span className="text-xs font-medium text-emerald-600">3</span>
                     </div>
                     <div>
-                      <p className="font-medium text-gray-900">Resolution</p>
-                      <p className="text-sm text-gray-600">You&apos;ll receive updates as work progresses and when the issue is resolved.</p>
+                      <p className="font-medium text-slate-900">Resolution</p>
+                      <p className="text-sm text-slate-600">You&apos;ll receive updates as work progresses and when the issue is resolved.</p>
                     </div>
                   </div>
                 </div>
@@ -485,16 +485,16 @@ function ReportSuccessContent() {
             {/* Contact Information */}
             <Card className="mt-8">
               <CardContent className="p-6 text-center">
-                <p className="text-sm text-gray-600 mb-2">
+                <p className="text-sm text-slate-600 mb-2">
                   Need help or have questions about your report?
                 </p>
                 <p className="text-sm">
                   Contact us at{' '}
-                  <a href="mailto:support@nayibareilly.gov.in" className="text-blue-600 hover:underline">
+                  <a href="mailto:support@nayibareilly.gov.in" className="text-emerald-600 hover:underline">
                     support@nayibareilly.gov.in
                   </a>
                   {' '}or call{' '}
-                  <a href="tel:+911234567890" className="text-blue-600 hover:underline">
+                  <a href="tel:+911234567890" className="text-emerald-600 hover:underline">
                     +91 123 456 7890
                   </a>
                 </p>
@@ -511,7 +511,7 @@ function ReportSuccessContent() {
 export default function ReportSuccessPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-50 flex items-center justify-center">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600" />
       </div>
     }>

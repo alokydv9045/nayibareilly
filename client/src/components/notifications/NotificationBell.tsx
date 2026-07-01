@@ -57,7 +57,7 @@ export function NotificationBell({ className }: NotificationBellProps) {
 
           {/* Connection indicator */}
           {isConnected && (
-            <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-green-500 ring-2 ring-white dark:ring-gray-900" />
+            <span className="absolute bottom-0 right-0 h-2 w-2 rounded-full bg-green-500 ring-2 ring-white dark:ring-slate-900" />
           )}
         </Button>
       </PopoverTrigger>

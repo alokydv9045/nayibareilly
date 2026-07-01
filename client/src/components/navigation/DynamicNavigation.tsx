@@ -43,7 +43,7 @@ export function DynamicNavigation({
             'flex flex-col items-center gap-1 p-2 rounded-lg min-w-[44px] min-h-[44px] justify-center transition-colors',
             isActive 
               ? 'text-sky-600 bg-sky-50' 
-              : 'text-gray-600 hover:text-sky-600 hover:bg-sky-50/50'
+              : 'text-slate-600 hover:text-sky-600 hover:bg-sky-50/50'
           )}
           aria-label={label}
           aria-current={isActive ? 'page' : undefined}

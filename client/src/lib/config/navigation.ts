@@ -526,7 +526,11 @@ export const TECHADMIN_NAV: NavGroup[] = [
       { 
         name: 'Dashboard', 
         nameHi: 'डैशबोर्ड',
+<<<<<<< HEAD
+        href: '/superadmin', 
+=======
         href: '/techadmin', 
+>>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
         icon: LayoutDashboard,
         roles: [UserRole.TECH_ADMIN],
         requireAuth: true,
@@ -534,9 +538,15 @@ export const TECHADMIN_NAV: NavGroup[] = [
         priority: 1
       },
       { 
+<<<<<<< HEAD
+        name: 'System Overview', 
+        nameHi: 'सिस्टम अवलोकन',
+        href: '/superadmin/analytics', 
+=======
         name: 'System Analytics', 
         nameHi: 'सिस्टम विश्लेषिकी',
         href: '/techadmin/analytics', 
+>>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
         icon: BarChart3,
         roles: [UserRole.TECH_ADMIN],
         requireAuth: true,
@@ -544,21 +554,37 @@ export const TECHADMIN_NAV: NavGroup[] = [
         priority: 2
       },
       { 
+<<<<<<< HEAD
+        name: 'All Admins', 
+        nameHi: 'सभी व्यवस्थापक',
+        href: '/superadmin/users', 
+        icon: Shield,
+        roles: [UserRole.SUPER_ADMIN],
+=======
         name: 'Users', 
         nameHi: 'उपयोगकर्ता',
         href: '/techadmin/users', 
         icon: Users,
         roles: [UserRole.TECH_ADMIN],
+>>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
         requireAuth: true,
         showInMobile: true,
         priority: 3
       },
       { 
+<<<<<<< HEAD
+        name: 'System Logs', 
+        nameHi: 'सिस्टम लॉग',
+        href: '/superadmin/audit', 
+        icon: Database,
+        roles: [UserRole.SUPER_ADMIN],
+=======
         name: 'Audit Logs', 
         nameHi: 'ऑडिट लॉग',
         href: '/techadmin/audit', 
         icon: Shield,
         roles: [UserRole.TECH_ADMIN],
+>>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
         requireAuth: true,
         showInMobile: true,
         priority: 4

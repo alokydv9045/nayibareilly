@@ -71,8 +71,8 @@ export default function ModeratorAnalyticsPage() {
       value: data?.reviews?.total || 0,
       icon: <Activity className="h-4 w-4" />,
       description: "Issues reviewed overall",
-      color: "text-blue-600",
-      bgColor: "bg-blue-50"
+      color: "text-emerald-600",
+      bgColor: "bg-emerald-50"
     },
     {
       title: "Approval Rate",
@@ -95,7 +95,11 @@ export default function ModeratorAnalyticsPage() {
       value: data?.reviews?.today || 0,
       icon: <Target className="h-4 w-4" />,
       description: "Reviews done today",
+<<<<<<< HEAD
+      color: "text-slate-800",
+=======
       color: "text-blue-600",
+>>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
       bgColor: "bg-purple-50"
     }
   ]
@@ -115,8 +119,8 @@ export default function ModeratorAnalyticsPage() {
                 Back to Dashboard
               </Button>
               <div>
-                <h1 className="text-3xl font-bold text-gray-900">Analytics & Insights</h1>
-                <p className="text-gray-600 mt-1">Track your moderation performance</p>
+                <h1 className="text-3xl font-bold text-slate-900">Analytics & Insights</h1>
+                <p className="text-slate-600 mt-1">Track your moderation performance</p>
               </div>
             </div>
             <div className="flex items-center space-x-4">
@@ -139,7 +143,7 @@ export default function ModeratorAnalyticsPage() {
           {statCards.map((stat, index) => (
             <Card key={index}>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium text-gray-600">
+                <CardTitle className="text-sm font-medium text-slate-600">
                   {stat.title}
                 </CardTitle>
                 <div className={`p-2 rounded-md ${stat.bgColor}`}>
@@ -152,7 +156,7 @@ export default function ModeratorAnalyticsPage() {
                 <div className="text-2xl font-bold mb-1">
                   {isLoading ? "..." : stat.value}
                 </div>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-slate-500">
                   {stat.description}
                 </p>
               </CardContent>
@@ -177,7 +181,7 @@ export default function ModeratorAnalyticsPage() {
                   { name: 'Approved', count: data?.breakdown?.approved || 0, color: 'bg-green-600' },
                   { name: 'Rejected', count: data?.breakdown?.rejected || 0, color: 'bg-red-600' },
                   { name: 'Spam', count: data?.breakdown?.spam || 0, color: 'bg-yellow-600' },
-                  { name: 'Needs Info', count: data?.breakdown?.needsInfo || 0, color: 'bg-blue-600' },
+                  { name: 'Needs Info', count: data?.breakdown?.needsInfo || 0, color: 'bg-emerald-600' },
                 ].map((item, index) => {
                   const total = (data?.breakdown?.approved || 0) + (data?.breakdown?.rejected || 0) + (data?.breakdown?.spam || 0) + (data?.breakdown?.needsInfo || 0);
                   const percentage = total > 0 ? Math.round((item.count / total) * 100) : 0;
@@ -185,15 +189,15 @@ export default function ModeratorAnalyticsPage() {
                     <div key={index} className="space-y-2">
                       <div className="flex items-center justify-between">
                         <span className="text-sm font-medium">{item.name}</span>
-                        <span className="text-sm text-gray-500">{item.count}</span>
+                        <span className="text-sm text-slate-500">{item.count}</span>
                       </div>
-                      <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div className="w-full bg-slate-200 rounded-full h-2">
                         <div 
                           className={`${item.color} h-2 rounded-full`}
                           style={{ width: `${percentage}%` }}
                         />
                       </div>
-                      <div className="text-xs text-gray-500">
+                      <div className="text-xs text-slate-500">
                         {percentage}% of total reviews
                       </div>
                     </div>
@@ -227,12 +231,12 @@ export default function ModeratorAnalyticsPage() {
                 </p>
               </div>
               
-              <div className="bg-blue-50 p-4 rounded-lg">
+              <div className="bg-emerald-50 p-4 rounded-lg">
                 <div className="flex items-center mb-2">
-                  <Clock className="h-5 w-5 text-blue-600 mr-2" />
+                  <Clock className="h-5 w-5 text-emerald-600 mr-2" />
                   <span className="font-medium text-blue-800">Quick Responses</span>
                 </div>
-                <p className="text-sm text-blue-700">
+                <p className="text-sm text-emerald-700">
                   Your average response time is excellent, helping maintain efficient issue flow.
                 </p>
               </div>

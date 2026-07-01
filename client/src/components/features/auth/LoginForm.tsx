@@ -56,17 +56,17 @@ export default function LoginForm() {
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-2 gap-4">
-        <Button type="button" variant="outline" disabled className="w-full border-gray-300 text-gray-500">
+        <Button type="button" variant="outline" disabled className="w-full border-slate-300 text-slate-500">
           <Github className="mr-2 h-4 w-4" /> GitHub
         </Button>
-        <Button type="button" variant="outline" disabled className="w-full border-gray-300 text-gray-500">
+        <Button type="button" variant="outline" disabled className="w-full border-slate-300 text-slate-500">
           <Mail className="mr-2 h-4 w-4" /> Google
         </Button>
       </div>
 
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t border-gray-200" />
+          <span className="w-full border-t border-slate-200" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
           <span className="bg-white px-2 text-muted-foreground">Or continue with email</span>
@@ -90,7 +90,7 @@ export default function LoginForm() {
             </Button>
           </div>
         </div>
-        <Button type="submit" disabled={loading} className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:opacity-90" size="lg">
+        <Button type="submit" disabled={loading} className="w-full bg-gradient-to-r from-emerald-600 to-slate-800 text-white hover:opacity-90" size="lg">
           {loading ? 'Signing inâ€¦' : 'Sign In'}
         </Button>
       </form>

@@ -180,7 +180,7 @@ export default function VerifyIssuePage({ params }: { params: Promise<{ id: stri
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-white mb-2">Verify Issue Resolution</h1>
-          <p className="text-blue-200">
+          <p className="text-emerald-200">
             Please review the resolution and provide your feedback
           </p>
         </div>
@@ -194,12 +194,12 @@ export default function VerifyIssuePage({ params }: { params: Promise<{ id: stri
                 {issue.status.replace(/_/g, ' ')}
               </Badge>
             </CardTitle>
-            <CardDescription className="text-blue-200">
+            <CardDescription className="text-emerald-200">
               Report ID: {issue.reportId}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="text-blue-200">
+            <div className="text-emerald-200">
               <p className="mb-4">{issue.description}</p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
@@ -208,7 +208,7 @@ export default function VerifyIssuePage({ params }: { params: Promise<{ id: stri
                   <span>Category: {issue.category?.name || 'Uncategorized'}</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Building2 className="h-4 w-4 text-blue-300" />
+                  <Building2 className="h-4 w-4 text-emerald-300" />
                   <span>Department: {issue.department?.name || 'Unassigned'}</span>
                 </div>
                 <div className="flex items-center space-x-2">
@@ -252,7 +252,7 @@ export default function VerifyIssuePage({ params }: { params: Promise<{ id: stri
         <Card className="bg-white/10 backdrop-blur-lg border-white/20 mb-6">
           <CardHeader>
             <CardTitle className="text-white">Your Verification</CardTitle>
-            <CardDescription className="text-blue-200">
+            <CardDescription className="text-emerald-200">
               Was the issue resolved to your satisfaction?
             </CardDescription>
           </CardHeader>
@@ -276,7 +276,7 @@ export default function VerifyIssuePage({ params }: { params: Promise<{ id: stri
                   <CheckCircle className="h-5 w-5 text-green-300" />
                   <div>
                     <p className="text-white font-semibold">Yes, issue is resolved</p>
-                    <p className="text-blue-200 text-sm">The issue has been fixed to my satisfaction</p>
+                    <p className="text-emerald-200 text-sm">The issue has been fixed to my satisfaction</p>
                   </div>
                 </div>
               </button>
@@ -298,7 +298,7 @@ export default function VerifyIssuePage({ params }: { params: Promise<{ id: stri
                   <XCircle className="h-5 w-5 text-red-300" />
                   <div>
                     <p className="text-white font-semibold">No, reopen this issue</p>
-                    <p className="text-blue-200 text-sm">The issue is not resolved or needs more work</p>
+                    <p className="text-emerald-200 text-sm">The issue is not resolved or needs more work</p>
                   </div>
                 </div>
               </button>
@@ -323,7 +323,7 @@ export default function VerifyIssuePage({ params }: { params: Promise<{ id: stri
                           className={`h-10 w-10 ${
                             star <= (hoveredRating || rating)
                               ? 'fill-yellow-400 text-yellow-400'
-                              : 'text-gray-400'
+                              : 'text-slate-400'
                           }`}
                         />
                       </button>
@@ -334,7 +334,7 @@ export default function VerifyIssuePage({ params }: { params: Promise<{ id: stri
                       </span>
                     )}
                   </div>
-                  <p className="text-blue-200 text-sm mt-2">
+                  <p className="text-emerald-200 text-sm mt-2">
                     {rating === 5 && 'â­ Excellent!'}
                     {rating === 4 && 'ðŸ‘ Good'}
                     {rating === 3 && 'ðŸ˜Š Satisfactory'}
@@ -352,9 +352,9 @@ export default function VerifyIssuePage({ params }: { params: Promise<{ id: stri
                     value={feedback}
                     onChange={(e) => setFeedback(e.target.value)}
                     placeholder="Share your experience or suggestions for improvement..."
-                    className="bg-white/10 border-white/20 text-white placeholder:text-blue-300/50 min-h-[120px]"
+                    className="bg-white/10 border-white/20 text-white placeholder:text-emerald-300/50 min-h-[120px]"
                   />
-                  <p className="text-blue-300 text-sm mt-2">
+                  <p className="text-emerald-300 text-sm mt-2">
                     Your feedback helps us improve our services
                   </p>
                 </div>
@@ -373,10 +373,10 @@ export default function VerifyIssuePage({ params }: { params: Promise<{ id: stri
                     value={reopenReason}
                     onChange={(e) => setReopenReason(e.target.value)}
                     placeholder="Please explain why the issue is not resolved (e.g., problem persists, incomplete work, different issue)..."
-                    className="bg-white/10 border-white/20 text-white placeholder:text-blue-300/50 min-h-[120px]"
+                    className="bg-white/10 border-white/20 text-white placeholder:text-emerald-300/50 min-h-[120px]"
                     required
                   />
-                  <p className="text-blue-300 text-sm mt-2">
+                  <p className="text-emerald-300 text-sm mt-2">
                     <AlertCircle className="inline h-4 w-4 mr-1" />
                     Be specific so our team can address your concerns
                   </p>
@@ -402,7 +402,7 @@ export default function VerifyIssuePage({ params }: { params: Promise<{ id: stri
                     ? 'bg-green-600 hover:bg-green-700'
                     : decision === 'reopen'
                     ? 'bg-red-600 hover:bg-red-700'
-                    : 'bg-gray-600'
+                    : 'bg-slate-600'
                 }
               >
                 {submitting ? (
@@ -429,9 +429,9 @@ export default function VerifyIssuePage({ params }: { params: Promise<{ id: stri
         </Card>
 
         {/* Info Card */}
-        <Card className="bg-blue-900/20 border-blue-500/30">
+        <Card className="bg-blue-900/20 border-emerald-500/30">
           <CardContent className="p-4">
-            <div className="flex items-start space-x-3 text-blue-200">
+            <div className="flex items-start space-x-3 text-emerald-200">
               <AlertCircle className="h-5 w-5 mt-0.5 flex-shrink-0" />
               <div className="text-sm">
                 <p className="font-semibold mb-1">Important Information:</p>

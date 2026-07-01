@@ -104,6 +104,31 @@ export default function UsersPage() {
   // Access denied for roles without permission
   if (!canViewAllUsers) {
     return (
+<<<<<<< HEAD
+      <main className="py-8">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <AlertCircle className="h-5 w-5 text-red-500" />
+                Access Denied
+              </CardTitle>
+              <CardDescription>
+                You do not have permission to view user management. Only Mayors and Super Admins can manage users.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-slate-600">
+                Current role: <Badge variant="outline">{currentUserRole}</Badge>
+              </p>
+              <p className="text-xs text-slate-500 mt-2">
+                Contact your system administrator if you believe you should have access.
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      </main>
+=======
       <OfficialLayout>
         <main className="py-8">
           <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
@@ -129,10 +154,24 @@ export default function UsersPage() {
           </div>
         </main>
       </OfficialLayout>
+>>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
     )
   }
 
   return (
+<<<<<<< HEAD
+    <main className="py-8">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        {/* Role-based header */}
+        <div className="mb-6">
+          <div className="flex justify-between items-center">
+            <div>
+              <h1 className="text-2xl font-bold text-slate-900">User Management</h1>
+              <p className="text-sm text-slate-600">
+                {currentUserRole === 'SUPER_ADMIN' && 'Full system control - Mayor level access to all users and administrators'}
+                {currentUserRole === 'DEPT_ADMIN' && 'Department view - Read-only access to staff in your department'}
+              </p>
+=======
     <OfficialLayout>
       <main className="py-8">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
@@ -152,6 +191,7 @@ export default function UsersPage() {
                   Add User
                 </Button>
               )}
+>>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
             </div>
 
             {/* Access level indicator */}
@@ -176,6 +216,28 @@ export default function UsersPage() {
             </Card>
           </div>
 
+<<<<<<< HEAD
+          {/* Access level indicator */}
+          <Card className="mt-4">
+            <CardContent className="p-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Users className="h-5 w-5 text-emerald-500" />
+                  <div>
+                    <p className="font-medium">Access Level: {currentUserRole}</p>
+                    <p className="text-xs text-slate-500">
+                      {currentUserRole === 'SUPER_ADMIN' && 'Full CRUD access to all users (Mayor level)'}
+                      {currentUserRole === 'DEPT_ADMIN' && 'Read-only access to department staff'}
+                    </p>
+                  </div>
+                </div>
+                <Badge variant={canEditUsers ? "default" : "secondary"}>
+                  {canEditUsers ? "Full Access" : "Read Only"}
+                </Badge>
+              </div>
+            </CardContent>
+          </Card>
+=======
           <DataTable
             columns={columns}
             data={users}
@@ -186,6 +248,7 @@ export default function UsersPage() {
             title="All Users"
             description={`${users.length} users found. ${!canEditUsers ? 'Read-only view.' : 'Full management access.'}`}
           />
+>>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
         </div>
       </main>
     </OfficialLayout>

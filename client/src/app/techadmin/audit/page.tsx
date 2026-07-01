@@ -295,7 +295,7 @@ export default function TechAdminAuditPage() {
       case 'SUCCESS': return 'bg-green-100 text-green-800'
       case 'FAILURE': return 'bg-red-100 text-red-800'
       case 'WARNING': return 'bg-yellow-100 text-yellow-800'
-      default: return 'bg-gray-100 text-gray-800'
+      default: return 'bg-slate-100 text-slate-800'
     }
   }
 
@@ -305,7 +305,7 @@ export default function TechAdminAuditPage() {
       case 'HIGH': return 'bg-red-100 text-red-800'
       case 'MEDIUM': return 'bg-yellow-100 text-yellow-800'
       case 'LOW': return 'bg-green-100 text-green-800'
-      default: return 'bg-gray-100 text-gray-800'
+      default: return 'bg-slate-100 text-slate-800'
     }
   }
 
@@ -326,7 +326,7 @@ export default function TechAdminAuditPage() {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="flex items-center justify-center min-h-[400px]">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-emerald-600"></div>
         </div>
       </div>
     )
@@ -337,6 +337,13 @@ export default function TechAdminAuditPage() {
       {/* Topbar */}
       <header className="sticky top-16 lg:top-0 z-40 bg-white border-b border-gray-200 px-4 md:px-8 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
+<<<<<<< HEAD:client/src/app/superadmin/audit/page.tsx
+          <Shield className="h-8 w-8 text-emerald-600" />
+          <h1 className="text-3xl font-bold text-slate-900">System Audit & Security</h1>
+          <Badge variant="outline" className="text-lg px-3 py-1">
+            SuperAdmin
+          </Badge>
+=======
           <div className="p-2 bg-red-50 rounded-lg">
             <Shield className="h-6 w-6 text-red-600" />
           </div>
@@ -347,6 +354,7 @@ export default function TechAdminAuditPage() {
             </h1>
             <p className="text-xs text-gray-500 mt-0.5">Audit trails and security monitoring</p>
           </div>
+>>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9:client/src/app/techadmin/audit/page.tsx
         </div>
         <div className="flex flex-wrap gap-3 w-full md:w-auto">
           <Button
@@ -391,7 +399,7 @@ export default function TechAdminAuditPage() {
             <CardContent className="p-4">
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-4 w-4" />
                   <Input
                     placeholder="Search audit logs..."
                     value={searchTerm}
@@ -443,9 +451,9 @@ export default function TechAdminAuditPage() {
             {filteredAuditLogs.length === 0 ? (
               <Card>
                 <CardContent className="text-center py-12">
-                  <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">No Audit Logs Found</h3>
-                  <p className="text-gray-600">No audit logs match your current filters.</p>
+                  <FileText className="h-12 w-12 text-slate-400 mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold text-slate-900 mb-2">No Audit Logs Found</h3>
+                  <p className="text-slate-600">No audit logs match your current filters.</p>
                 </CardContent>
               </Card>
             ) : (
@@ -467,7 +475,7 @@ export default function TechAdminAuditPage() {
                               {log.severity}
                             </Badge>
                           </div>
-                          <div className="text-sm text-gray-600 mb-2">
+                          <div className="text-sm text-slate-600 mb-2">
                             <span className="font-medium">{log.userEmail}</span> ({log.userRole})
                             {log.cityContext && <span> • {log.cityContext}</span>}
                           </div>
@@ -475,18 +483,18 @@ export default function TechAdminAuditPage() {
                             <span className="font-medium">Resource:</span> {log.resource}
                             {log.resourceId && <span> (ID: {log.resourceId})</span>}
                           </div>
-                          <p className="text-sm text-gray-700">{log.details}</p>
+                          <p className="text-sm text-slate-700">{log.details}</p>
                           {log.metadata && Object.keys(log.metadata).length > 0 && (
                             <details className="mt-2">
-                              <summary className="text-xs text-blue-600 cursor-pointer">View Metadata</summary>
-                              <pre className="text-xs bg-gray-50 p-2 rounded mt-1 overflow-x-auto">
+                              <summary className="text-xs text-emerald-600 cursor-pointer">View Metadata</summary>
+                              <pre className="text-xs bg-slate-50 p-2 rounded mt-1 overflow-x-auto">
                                 {JSON.stringify(log.metadata, null, 2)}
                               </pre>
                             </details>
                           )}
                         </div>
                       </div>
-                      <div className="text-right text-xs text-gray-500 ml-4">
+                      <div className="text-right text-xs text-slate-500 ml-4">
                         <div>{new Date(log.timestamp).toLocaleString()}</div>
                         <div className="mt-1">IP: {log.ipAddress}</div>
                       </div>
@@ -503,9 +511,9 @@ export default function TechAdminAuditPage() {
             {securityEvents.length === 0 ? (
               <Card>
                 <CardContent className="text-center py-12">
-                  <Lock className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">No Security Events</h3>
-                  <p className="text-gray-600">No security events found for the selected time range.</p>
+                  <Lock className="h-12 w-12 text-slate-400 mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold text-slate-900 mb-2">No Security Events</h3>
+                  <p className="text-slate-600">No security events found for the selected time range.</p>
                 </CardContent>
               </Card>
             ) : (
@@ -528,12 +536,12 @@ export default function TechAdminAuditPage() {
                           </Badge>
                         </div>
                         {event.userEmail && (
-                          <div className="text-sm text-gray-600 mb-2">
+                          <div className="text-sm text-slate-600 mb-2">
                             User: {event.userEmail}
                           </div>
                         )}
                         <p className="text-sm mb-2">{event.description}</p>
-                        <div className="text-xs text-gray-500">
+                        <div className="text-xs text-slate-500">
                           IP: {event.ipAddress}
                           {event.location && <span> • Location: {event.location}</span>}
                         </div>
@@ -543,7 +551,7 @@ export default function TechAdminAuditPage() {
                           </div>
                         )}
                       </div>
-                      <div className="text-right text-xs text-gray-500">
+                      <div className="text-right text-xs text-slate-500">
                         {new Date(event.timestamp).toLocaleString()}
                       </div>
                     </div>
@@ -559,9 +567,9 @@ export default function TechAdminAuditPage() {
             {systemActivity.length === 0 ? (
               <Card>
                 <CardContent className="text-center py-12">
-                  <Database className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">No System Activity</h3>
-                  <p className="text-gray-600">No system activity found for the selected time range.</p>
+                  <Database className="h-12 w-12 text-slate-400 mx-auto mb-4" />
+                  <h3 className="text-lg font-semibold text-slate-900 mb-2">No System Activity</h3>
+                  <p className="text-slate-600">No system activity found for the selected time range.</p>
                 </CardContent>
               </Card>
             ) : (
@@ -575,16 +583,16 @@ export default function TechAdminAuditPage() {
                           <Badge className={getOutcomeColor(activity.status)}>
                             {activity.status}
                           </Badge>
-                          <span className="text-sm text-gray-600">
+                          <span className="text-sm text-slate-600">
                             {activity.duration}ms
                           </span>
                         </div>
                         <div className="text-sm mb-2">
                           <span className="font-medium">Operation:</span> {activity.operation}
                         </div>
-                        <p className="text-sm text-gray-700">{activity.details}</p>
+                        <p className="text-sm text-slate-700">{activity.details}</p>
                         {activity.affectedRecords && (
-                          <div className="text-sm text-gray-600 mt-1">
+                          <div className="text-sm text-slate-600 mt-1">
                             Affected records: {activity.affectedRecords}
                           </div>
                         )}
@@ -602,7 +610,7 @@ export default function TechAdminAuditPage() {
                           </details>
                         )}
                       </div>
-                      <div className="text-right text-xs text-gray-500">
+                      <div className="text-right text-xs text-slate-500">
                         {new Date(activity.timestamp).toLocaleString()}
                       </div>
                     </div>
@@ -749,9 +757,9 @@ export default function TechAdminAuditPage() {
           ) : (
             <Card>
               <CardContent className="text-center py-12">
-                <UserCheck className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">No Compliance Data</h3>
-                <p className="text-gray-600">Unable to load compliance information.</p>
+                <UserCheck className="h-12 w-12 text-slate-400 mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-slate-900 mb-2">No Compliance Data</h3>
+                <p className="text-slate-600">Unable to load compliance information.</p>
               </CardContent>
             </Card>
           )}

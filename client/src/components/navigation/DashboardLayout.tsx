@@ -53,7 +53,9 @@ function Logo({ collapsed = false }: { collapsed?: boolean }) {
         N
       </div>
       {!collapsed && (
-        <span className="text-xl font-bold">NayiBareilly</span>
+        <span className="text-2xl font-bold">
+          <span className="text-slate-900">Nayi</span><span className="text-emerald-500">Bareilly</span>
+        </span>
       )}
     </Link>
   );

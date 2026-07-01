@@ -31,15 +31,15 @@ interface UserFormProps {
 
 const roleOptions = [
   { value: 'SUPER_ADMIN', label: 'Super Admin', badge: 'bg-purple-100 text-purple-800' },
-  { value: 'ORG_ADMIN', label: 'Organization Admin', badge: 'bg-blue-100 text-blue-800' },
+  { value: 'ORG_ADMIN', label: 'Organization Admin', badge: 'bg-emerald-100 text-blue-800' },
   { value: 'MODERATOR', label: 'Moderator', badge: 'bg-orange-100 text-orange-800' },
   { value: 'STAFF', label: 'Staff', badge: 'bg-green-100 text-green-800' },
-  { value: 'CITIZEN', label: 'Citizen', badge: 'bg-gray-100 text-gray-800' },
+  { value: 'CITIZEN', label: 'Citizen', badge: 'bg-slate-100 text-slate-800' },
 ] as const
 
 const statusOptions = [
   { value: 'ACTIVE', label: 'Active', badge: 'bg-green-100 text-green-800' },
-  { value: 'INACTIVE', label: 'Inactive', badge: 'bg-gray-100 text-gray-800' },
+  { value: 'INACTIVE', label: 'Inactive', badge: 'bg-slate-100 text-slate-800' },
   { value: 'SUSPENDED', label: 'Suspended', badge: 'bg-red-100 text-red-800' },
 ] as const
 
@@ -149,7 +149,7 @@ export function UserForm({ user, onSave, onCancel, loading = false, currentUserR
           <Shield className="h-5 w-5" />
           <span>{user ? 'Edit User' : 'Add New User'}</span>
         </CardTitle>
-        <div className="text-sm text-gray-600 bg-blue-50 p-3 rounded-lg border border-blue-200">
+        <div className="text-sm text-slate-600 bg-emerald-50 p-3 rounded-lg border border-emerald-200">
           <strong>Role Creation Permissions:</strong>
           <ul className="mt-1 text-xs space-y-1">
             <li>• <strong>Super Admin:</strong> Can create all user types</li>
@@ -306,7 +306,7 @@ export function UserForm({ user, onSave, onCancel, loading = false, currentUserR
 
           {/* Role Description */}
           {formData.role !== 'CITIZEN' && (
-            <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+            <div className="p-4 bg-emerald-50 rounded-lg border border-emerald-200">
               <h4 className="font-medium text-blue-900 mb-2">Role Permissions</h4>
               <div className="text-sm text-blue-800">
                 {formData.role === 'SUPER_ADMIN' && (

@@ -19,8 +19,8 @@ router.get('/stats', [
   auth(['MODERATOR', 'DEPT_ADMIN', 'MAYOR', 'SUPER_ADMIN'])
 ], async (req, res, next) => {
   try {
-    const { getModeratorPerformance } = await import('../../../controllers/moderator.controller.js');
-    return getModeratorPerformance(req, res, next);
+    const { getModeratorStats } = await import('../../../controllers/admin.controller.js');
+    return getModeratorStats(req, res, next);
   } catch (error) {
     next(error);
   }

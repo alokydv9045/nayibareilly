@@ -171,7 +171,7 @@ export function StaffSelector({
 
         {/* Filter Panel */}
         {showFilters && (
-          <div className="p-4 border rounded-lg bg-gray-50 dark:bg-gray-900 space-y-3">
+          <div className="p-4 border rounded-lg bg-slate-50 dark:bg-slate-900 space-y-3">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               {/* Department Filter */}
               <div className="space-y-2">
@@ -249,7 +249,7 @@ export function StaffSelector({
                 id="availableOnly"
                 checked={filters.availableOnly}
                 onChange={(e) => setFilters({ ...filters, availableOnly: e.target.checked })}
-                className="h-4 w-4 rounded border-gray-300"
+                className="h-4 w-4 rounded border-slate-300"
               />
               <Label htmlFor="availableOnly" className="cursor-pointer">
                 Show only available staff
@@ -280,11 +280,11 @@ export function StaffSelector({
       {matchesLoading ? (
         <div className="space-y-3">
           {[1, 2, 3].map(i => (
-            <div key={i} className="h-48 animate-pulse bg-gray-200 dark:bg-gray-800 rounded-lg" />
+            <div key={i} className="h-48 animate-pulse bg-slate-200 dark:bg-slate-800 rounded-lg" />
           ))}
         </div>
       ) : filteredStaff.length === 0 ? (
-        <div className="text-center py-12 border rounded-lg bg-gray-50 dark:bg-gray-900">
+        <div className="text-center py-12 border rounded-lg bg-slate-50 dark:bg-slate-900">
           <Users className="h-12 w-12 mx-auto text-muted-foreground mb-3" />
           <h3 className="font-semibold mb-1">No staff members found</h3>
           <p className="text-sm text-muted-foreground mb-4">

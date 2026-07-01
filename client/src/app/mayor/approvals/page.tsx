@@ -185,7 +185,7 @@ export default function MayorApprovalsPage() {
       case 'HIGH': return 'bg-red-100 text-red-800 border-red-200'
       case 'MEDIUM': return 'bg-yellow-100 text-yellow-800 border-yellow-200'
       case 'LOW': return 'bg-green-100 text-green-800 border-green-200'
-      default: return 'bg-gray-100 text-gray-800 border-gray-200'
+      default: return 'bg-slate-100 text-slate-800 border-slate-200'
     }
   }
 
@@ -212,7 +212,7 @@ export default function MayorApprovalsPage() {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="flex items-center justify-center min-h-[400px]">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-purple-600"></div>
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-slate-800"></div>
         </div>
       </div>
     )
@@ -221,8 +221,13 @@ export default function MayorApprovalsPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex items-center gap-3 mb-6">
+<<<<<<< HEAD
+        <Crown className="h-8 w-8 text-slate-800" />
+        <h1 className="text-3xl font-bold text-slate-900">Mayor Approvals</h1>
+=======
         <Crown className="h-8 w-8 text-blue-600" />
         <h1 className="text-3xl font-bold text-gray-900">Mayor Approvals</h1>
+>>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
         <Badge variant="outline" className="text-lg px-3 py-1">
           {stats.pending} Pending
         </Badge>
@@ -234,42 +239,48 @@ export default function MayorApprovalsPage() {
           <CardContent className="p-4 text-center">
             <Clock className="h-6 w-6 text-orange-600 mx-auto mb-1" />
             <div className="text-xl font-bold text-orange-600">{stats.pending}</div>
-            <div className="text-xs text-gray-600">Pending</div>
+            <div className="text-xs text-slate-600">Pending</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
             <CheckCircle className="h-6 w-6 text-green-600 mx-auto mb-1" />
             <div className="text-xl font-bold text-green-600">{stats.approved}</div>
-            <div className="text-xs text-gray-600">Approved</div>
+            <div className="text-xs text-slate-600">Approved</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
             <XCircle className="h-6 w-6 text-red-600 mx-auto mb-1" />
             <div className="text-xl font-bold text-red-600">{stats.rejected}</div>
-            <div className="text-xs text-gray-600">Rejected</div>
+            <div className="text-xs text-slate-600">Rejected</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
-            <Eye className="h-6 w-6 text-blue-600 mx-auto mb-1" />
-            <div className="text-xl font-bold text-blue-600">{stats.underReview}</div>
-            <div className="text-xs text-gray-600">Under Review</div>
+            <Eye className="h-6 w-6 text-emerald-600 mx-auto mb-1" />
+            <div className="text-xl font-bold text-emerald-600">{stats.underReview}</div>
+            <div className="text-xs text-slate-600">Under Review</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
             <AlertTriangle className="h-6 w-6 text-red-600 mx-auto mb-1" />
             <div className="text-xl font-bold text-red-600">{stats.urgent}</div>
-            <div className="text-xs text-gray-600">Urgent</div>
+            <div className="text-xs text-slate-600">Urgent</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
+<<<<<<< HEAD
+            <Calendar className="h-6 w-6 text-slate-800 mx-auto mb-1" />
+            <div className="text-xl font-bold text-slate-800">{stats.avgProcessingTime}d</div>
+            <div className="text-xs text-slate-600">Avg Time</div>
+=======
             <Calendar className="h-6 w-6 text-blue-600 mx-auto mb-1" />
             <div className="text-xl font-bold text-blue-600">{stats.avgProcessingTime}d</div>
             <div className="text-xs text-gray-600">Avg Time</div>
+>>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
           </CardContent>
         </Card>
       </div>
@@ -279,7 +290,7 @@ export default function MayorApprovalsPage() {
         <CardContent className="p-4">
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-4 w-4" />
               <Input
                 placeholder="Search approvals..."
                 value={searchTerm}
@@ -360,12 +371,12 @@ export default function MayorApprovalsPage() {
                   {approval.priority}
                 </Badge>
               </div>
-              <div className="text-sm text-gray-600">
+              <div className="text-sm text-slate-600">
                 {approval.submittedBy.department} • {approval.submittedBy.name}
               </div>
             </CardHeader>
             <CardContent className="space-y-3">
-              <p className="text-gray-600 line-clamp-3">{approval.description}</p>
+              <p className="text-slate-600 line-clamp-3">{approval.description}</p>
               
               {approval.estimatedCost && (
                 <div className="flex items-center gap-2 text-sm">
@@ -374,13 +385,13 @@ export default function MayorApprovalsPage() {
                 </div>
               )}
 
-              <div className="flex items-center gap-2 text-sm text-gray-600">
+              <div className="flex items-center gap-2 text-sm text-slate-600">
                 <Calendar className="h-4 w-4" />
                 <span>Submitted {getDaysWaiting(approval.submittedAt)} days ago</span>
               </div>
 
               {approval.timeframe && (
-                <div className="text-sm text-gray-600">
+                <div className="text-sm text-slate-600">
                   <span className="font-medium">Timeframe:</span> {approval.timeframe}
                 </div>
               )}
@@ -433,7 +444,7 @@ export default function MayorApprovalsPage() {
                   <div className="space-y-4">
                     <div>
                       <h4 className="font-semibold mb-2">Description</h4>
-                      <p className="text-gray-600">{selectedItem.description}</p>
+                      <p className="text-slate-600">{selectedItem.description}</p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -441,8 +452,8 @@ export default function MayorApprovalsPage() {
                         <h4 className="font-semibold mb-2">Submitted By</h4>
                         <div className="text-sm">
                           <div>{selectedItem.submittedBy.name}</div>
-                          <div className="text-gray-600">{selectedItem.submittedBy.role}</div>
-                          <div className="text-gray-600">{selectedItem.submittedBy.department}</div>
+                          <div className="text-slate-600">{selectedItem.submittedBy.role}</div>
+                          <div className="text-slate-600">{selectedItem.submittedBy.department}</div>
                         </div>
                       </div>
                       <div>
@@ -475,12 +486,12 @@ export default function MayorApprovalsPage() {
                     {selectedItem.estimatedCost && (
                       <div>
                         <h4 className="font-semibold mb-2">Financial Impact</h4>
-                        <div className="bg-blue-50 p-3 rounded">
-                          <div className="text-lg font-bold text-blue-600">
+                        <div className="bg-emerald-50 p-3 rounded">
+                          <div className="text-lg font-bold text-emerald-600">
                             ₹{selectedItem.estimatedCost.toLocaleString()}
                           </div>
                           {selectedItem.budgetImpact && (
-                            <div className="text-sm text-blue-700 mt-1">{selectedItem.budgetImpact}</div>
+                            <div className="text-sm text-emerald-700 mt-1">{selectedItem.budgetImpact}</div>
                           )}
                         </div>
                       </div>
@@ -489,7 +500,7 @@ export default function MayorApprovalsPage() {
                     {selectedItem.publicImpact && (
                       <div>
                         <h4 className="font-semibold mb-2">Public Impact</h4>
-                        <p className="text-gray-600">{selectedItem.publicImpact}</p>
+                        <p className="text-slate-600">{selectedItem.publicImpact}</p>
                       </div>
                     )}
 
@@ -520,17 +531,17 @@ export default function MayorApprovalsPage() {
                 <TabsContent value="documents" className="mt-4">
                   <div className="space-y-3">
                     {selectedItem.documents.length === 0 ? (
-                      <div className="text-center py-8 text-gray-600">
+                      <div className="text-center py-8 text-slate-600">
                         No documents attached
                       </div>
                     ) : (
                       selectedItem.documents.map((doc, index) => (
                         <div key={index} className="flex items-center justify-between p-3 border rounded">
                           <div className="flex items-center gap-3">
-                            <FileText className="h-5 w-5 text-blue-600" />
+                            <FileText className="h-5 w-5 text-emerald-600" />
                             <div>
                               <div className="font-medium">{doc.name}</div>
-                              <div className="text-sm text-gray-600">{doc.type}</div>
+                              <div className="text-sm text-slate-600">{doc.type}</div>
                             </div>
                           </div>
                           <Button variant="outline" size="sm">

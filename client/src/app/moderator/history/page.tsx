@@ -79,7 +79,7 @@ export default function ModeratorHistoryPage() {
       case 'approved': return 'bg-green-100 text-green-800'
       case 'rejected': return 'bg-red-100 text-red-800'
       case 'pending': return 'bg-yellow-100 text-yellow-800'
-      default: return 'bg-gray-100 text-gray-800'
+      default: return 'bg-slate-100 text-slate-800'
     }
   }
 
@@ -106,8 +106,8 @@ export default function ModeratorHistoryPage() {
                 Back to Dashboard
               </Button>
               <div>
-                <h1 className="text-3xl font-bold text-gray-900">Review History</h1>
-                <p className="text-gray-600">Track all your moderation decisions</p>
+                <h1 className="text-3xl font-bold text-slate-900">Review History</h1>
+                <p className="text-slate-600">Track all your moderation decisions</p>
               </div>
             </div>
             <Button variant="outline" disabled={isLoading} onClick={loadHistory}>
@@ -130,7 +130,7 @@ export default function ModeratorHistoryPage() {
               <div className="space-y-2">
                 <label className="text-sm font-medium">Search</label>
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
                   <Input
                     placeholder="Search issues..."
                     value={searchTerm}
@@ -183,8 +183,8 @@ export default function ModeratorHistoryPage() {
           ) : filteredHistory.length === 0 ? (
             <Card>
               <CardContent className="text-center py-8">
-                <History className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-500">No review history found</p>
+                <History className="h-12 w-12 text-slate-400 mx-auto mb-4" />
+                <p className="text-slate-500">No review history found</p>
               </CardContent>
             </Card>
           ) : (
@@ -205,9 +205,9 @@ export default function ModeratorHistoryPage() {
                           <Badge variant="outline">{item.categoryName}</Badge>
                         )}
                       </div>
-                      <p className="text-gray-600 mb-3">{item.description}</p>
+                      <p className="text-slate-600 mb-3">{item.description}</p>
                       
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-500">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-slate-500">
                         <div className="flex items-center space-x-2">
                           <User className="h-4 w-4" />
                           <span>Reporter: {item.reporterName}</span>
@@ -226,7 +226,7 @@ export default function ModeratorHistoryPage() {
                       </div>
                       
                       {item.reason && (
-                        <div className="mt-3 p-3 bg-gray-50 rounded-lg">
+                        <div className="mt-3 p-3 bg-slate-50 rounded-lg">
                           <p className="text-sm"><strong>Reason:</strong> {item.reason}</p>
                         </div>
                       )}

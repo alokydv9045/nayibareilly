@@ -310,16 +310,16 @@ export default function EnhancedReportPage() {
   return (
     <RequireUser>
       <CitizenLayout>
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-slate-50 selection:bg-emerald-500 selection:text-white">
           <div className="max-w-4xl mx-auto px-3 sm:px-4 lg:px-8 py-3 sm:py-4 lg:py-8">
             {/* Header */}
             <div className="mb-4 sm:mb-6">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3 sm:mb-4">
                 <div>
-                  <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-gray-900">
+                  <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-tight text-slate-900">
                     {t.pageTitle}
                   </h1>
-                  <p className="text-gray-600 mt-1 text-sm sm:text-base">
+                  <p className="text-slate-600 font-medium mt-1 text-sm sm:text-base">
                     {t.pageSubtitle}
                   </p>
                 </div>
@@ -327,54 +327,54 @@ export default function EnhancedReportPage() {
                   variant="outline"
                   size="sm"
                   onClick={() => setLanguage(language === 'en' ? 'hi' : 'en')}
-                  className="flex items-center gap-2 self-start sm:self-center min-h-[36px] touch-manipulation"
+                  className="flex items-center gap-2 self-start sm:self-center min-h-[36px] touch-manipulation border-slate-300 text-slate-700 hover:bg-slate-100 hover:text-slate-900 font-medium"
                 >
                   <Languages className="h-4 w-4" />
                   <span className="hidden sm:inline">{language === 'en' ? 'हिंदी' : 'English'}</span>
                   <span className="sm:hidden">{language === 'en' ? 'हिं' : 'EN'}</span>
                 </Button>
               </div>
-              <div className="space-y-2 bg-white rounded-lg p-3 sm:p-4 shadow-sm border">
-                <div className="flex justify-between text-sm text-gray-600">
-                  <span className="font-medium">Progress</span>
+              <div className="space-y-2 bg-white rounded-xl p-4 shadow-sm border border-slate-200">
+                <div className="flex justify-between text-sm text-slate-600 font-medium">
+                  <span>Progress</span>
                   <span>{progress}% complete</span>
                 </div>
-                <Progress value={progress} className="h-2" />
+                <Progress value={progress} className="h-2 bg-slate-100 [&>div]:bg-emerald-500" />
               </div>
               {isDraft && (
-                <div className="flex items-center gap-2 mt-3 text-sm text-gray-600 bg-blue-50 p-2 rounded-lg">
+                <div className="flex items-center gap-2 mt-3 text-sm text-emerald-700 bg-emerald-50 border border-emerald-100 font-medium p-2.5 rounded-lg">
                   <Clock className="h-4 w-4 flex-shrink-0" />
                   <span>Draft saved automatically</span>
                 </div>
               )}
             </div>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <Card className="mb-4 sm:mb-6">
+              <Card className="mb-4 sm:mb-6 border-slate-200 shadow-sm">
                 <CardContent className="p-3 sm:p-4 lg:p-6 space-y-6 sm:space-y-8">
                   {/* Details */}
                   <div className="space-y-4 sm:space-y-6">
                     <div>
-                      <label className="block text-sm font-medium mb-2">
+                      <label className="block text-sm font-bold text-slate-900 mb-2">
                         {t.title} *
                       </label>
                       <Input
                         {...register('title')}
                         placeholder={t.titlePlaceholder}
-                        className={cn('min-h-[44px] text-base', errors.title && 'border-red-500')}
+                        className={cn('min-h-[44px] text-base border-slate-300 focus-visible:ring-emerald-500', errors.title && 'border-red-500')}
                         maxLength={80}
                       />
                       <div className="flex justify-between mt-1">
                         {errors.title && (
-                          <p className="text-sm text-red-500">{errors.title.message}</p>
+                          <p className="text-sm text-red-500 font-medium">{errors.title.message}</p>
                         )}
-                        <p className="text-xs text-gray-500 ml-auto">
+                        <p className="text-xs text-slate-500 font-medium ml-auto">
                           {watchedFields.title?.length || 0}/80
                         </p>
                       </div>
-                      <p className="text-xs text-gray-600 mt-1">{t.titleHelper}</p>
+                      <p className="text-xs text-slate-500 font-medium mt-1">{t.titleHelper}</p>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium mb-2">
+                      <label className="block text-sm font-bold text-slate-900 mb-2">
                         {t.category} *
                       </label>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
@@ -382,10 +382,10 @@ export default function EnhancedReportPage() {
                           <Card
                             key={category.id}
                             className={cn(
-                              'cursor-pointer transition-all hover:shadow-md touch-manipulation',
+                              'cursor-pointer transition-all touch-manipulation border-slate-200 shadow-sm',
                               watchedFields.category === category.id
-                                ? 'border-blue-500 ring-2 ring-blue-200 bg-blue-50'
-                                : 'hover:border-gray-300'
+                                ? 'border-emerald-500 ring-2 ring-emerald-200 bg-emerald-50 shadow-md'
+                                : 'hover:border-slate-300 hover:shadow-md bg-white'
                             )}
                             onClick={() => setValue('category', category.id as ReportFormData['category'], { shouldValidate: true })}
                           >
@@ -395,10 +395,10 @@ export default function EnhancedReportPage() {
                                   {category.icon}
                                 </span>
                                 <div className="flex-1 min-w-0">
-                                  <p className="font-medium text-gray-900 text-sm sm:text-base truncate">
+                                  <p className="font-bold text-slate-900 text-sm sm:text-base truncate">
                                     {language === 'hi' ? category.hiName : category.enName}
                                   </p>
-                                  <p className="text-xs text-gray-500 mt-1 line-clamp-2">
+                                  <p className="text-xs text-slate-500 font-medium mt-1 line-clamp-2">
                                     {category.description}
                                   </p>
                                 </div>
@@ -408,13 +408,13 @@ export default function EnhancedReportPage() {
                         ))}
                       </div>
                       {errors.category && (
-                        <p className="text-sm text-red-500 mt-1">{errors.category.message}</p>
+                        <p className="text-sm text-red-500 font-medium mt-1">{errors.category.message}</p>
                       )}
                     </div>
                   </div>
                   {/* Location */}
                   <div className="space-y-4">
-                    <label className="block text-sm font-medium mb-2">
+                    <label className="block text-sm font-bold text-slate-900 mb-2">
                       {t.location} *
                     </label>
                     <LocationPicker
@@ -429,7 +429,7 @@ export default function EnhancedReportPage() {
                   </div>
                   {/* Description */}
                   <div className="space-y-6">
-                    <label className="block text-sm font-medium mb-2">
+                    <label className="block text-sm font-bold text-slate-900 mb-2">
                       {t.description} *
                     </label>
                     <VoiceInput
@@ -443,22 +443,22 @@ export default function EnhancedReportPage() {
                       {...register('description')}
                       placeholder={t.descriptionPlaceholder}
                       rows={4}
-                      className={cn('min-h-[120px] text-base resize-none', errors.description && 'border-red-500')}
+                      className={cn('min-h-[120px] text-base resize-none border-slate-300 focus-visible:ring-emerald-500', errors.description && 'border-red-500')}
                       maxLength={1000}
                     />
                     <div className="flex justify-between mt-1">
                       {errors.description && (
-                        <p className="text-sm text-red-500">{errors.description.message}</p>
+                        <p className="text-sm text-red-500 font-medium">{errors.description.message}</p>
                       )}
-                      <p className="text-xs text-gray-500 ml-auto">
+                      <p className="text-xs text-slate-500 font-medium ml-auto">
                         {watchedFields.description?.length || 0}/1000
                       </p>
                     </div>
-                    <p className="text-xs text-gray-600 mt-1">{t.descriptionHelper}</p>
+                    <p className="text-xs text-slate-500 font-medium mt-1">{t.descriptionHelper}</p>
                   </div>
                   {/* Photos */}
                   <div className="space-y-4">
-                    <label className="block text-sm font-medium mb-2">
+                    <label className="block text-sm font-bold text-slate-900 mb-2">
                       {t.photos} *
                     </label>
                     <PhotoUpload
@@ -476,30 +476,30 @@ export default function EnhancedReportPage() {
                 </CardContent>
               </Card>
               {/* Review Section */}
-              <Card className="mb-6 sm:mb-8">
+              <Card className="mb-6 sm:mb-8 border-slate-200 shadow-sm">
                 <CardContent className="p-4 sm:p-6 space-y-6">
-                  <Alert>
-                    <CheckCircle className="h-4 w-4" />
-                    <AlertDescription>
+                  <Alert className="bg-emerald-50 border-emerald-200 text-blue-800">
+                    <CheckCircle className="h-4 w-4 text-emerald-600" />
+                    <AlertDescription className="font-medium">
                       Please review your report before submitting. All information will be visible to relevant authorities.
                     </AlertDescription>
                   </Alert>
                   <div className="space-y-4">
-                    <Card>
-                      <CardHeader className="pb-3">
-                        <CardTitle className="text-lg flex items-center gap-2">
-                          <FileText className="h-5 w-5" />
+                    <Card className="border-slate-200">
+                      <CardHeader className="pb-3 bg-slate-50 border-b border-slate-100 rounded-t-xl">
+                        <CardTitle className="text-lg flex items-center gap-2 text-slate-900">
+                          <FileText className="h-5 w-5 text-emerald-500" />
                           {t.issueDetails}
                         </CardTitle>
                       </CardHeader>
-                      <CardContent className="space-y-3">
+                      <CardContent className="space-y-3 pt-4">
                         <div>
-                          <p className="text-sm font-medium text-gray-600">{t.title}</p>
-                          <p className="text-gray-900">{watchedFields.title}</p>
+                          <p className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-1">{t.title}</p>
+                          <p className="text-slate-900 font-medium">{watchedFields.title}</p>
                         </div>
                         <div>
-                          <p className="text-sm font-medium text-gray-600">{t.category}</p>
-                          <div className="flex items-center gap-2">
+                          <p className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-1">{t.category}</p>
+                          <div className="flex items-center gap-2 font-medium text-slate-900">
                             {ISSUE_CATEGORIES.find(c => c.id === watchedFields.category) && (
                               <>
                                 <span className="text-lg">
@@ -516,25 +516,25 @@ export default function EnhancedReportPage() {
                           </div>
                         </div>
                         <div>
-                          <p className="text-sm font-medium text-gray-600">{t.description}</p>
-                          <p className="text-gray-900 whitespace-pre-wrap">{watchedFields.description}</p>
+                          <p className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-1">{t.description}</p>
+                          <p className="text-slate-900 font-medium whitespace-pre-wrap">{watchedFields.description}</p>
                         </div>
                       </CardContent>
                     </Card>
                     {location && (
-                      <Card>
-                        <CardHeader className="pb-3">
-                          <CardTitle className="text-lg flex items-center gap-2">
-                            <MapPin className="h-5 w-5" />
+                      <Card className="border-slate-200">
+                        <CardHeader className="pb-3 bg-slate-50 border-b border-slate-100 rounded-t-xl">
+                          <CardTitle className="text-lg flex items-center gap-2 text-slate-900">
+                            <MapPin className="h-5 w-5 text-emerald-500" />
                             {t.location}
                           </CardTitle>
                         </CardHeader>
-                        <CardContent>
-                          <p className="text-gray-900">
+                        <CardContent className="pt-4">
+                          <p className="text-slate-900 font-medium">
                             {location.address || `${location.latitude.toFixed(6)}, ${location.longitude.toFixed(6)}`}
                           </p>
                           {location.accuracy && (
-                            <Badge variant="outline" className="mt-2">
+                            <Badge variant="outline" className="mt-2 border-emerald-200 text-emerald-700 bg-emerald-50 font-medium">
                               {Math.round(location.accuracy)}m accuracy
                             </Badge>
                           )}
@@ -542,14 +542,14 @@ export default function EnhancedReportPage() {
                       </Card>
                     )}
                     {photos.length > 0 && (
-                      <Card>
-                        <CardHeader className="pb-3">
-                          <CardTitle className="text-lg flex items-center gap-2">
-                            <Camera className="h-5 w-5" />
+                      <Card className="border-slate-200">
+                        <CardHeader className="pb-3 bg-slate-50 border-b border-slate-100 rounded-t-xl">
+                          <CardTitle className="text-lg flex items-center gap-2 text-slate-900">
+                            <Camera className="h-5 w-5 text-emerald-500" />
                             {t.photos} ({photos.length})
                           </CardTitle>
                         </CardHeader>
-                        <CardContent>
+                        <CardContent className="pt-4">
                           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                             {photos.map((photo, index) => (
                               <div key={photo.id} className="relative aspect-square">
@@ -582,16 +582,28 @@ export default function EnhancedReportPage() {
                   type="button"
                   variant="outline"
                   onClick={saveDraft}
-                  className="flex items-center gap-2 justify-center min-h-[44px] touch-manipulation order-2 sm:order-1"
+                  className="flex items-center gap-2 justify-center min-h-[44px] touch-manipulation order-2 sm:order-1 border-slate-300 text-slate-700 hover:bg-slate-100 hover:text-slate-900 font-bold"
                 >
                   <Save className="h-4 w-4" />
                   <span className="text-sm sm:text-base">{t.saveDraft}</span>
                 </Button>
+<<<<<<< HEAD
+                <Button
+                  type="submit"
+                  disabled={!isFormValid || isSubmitting}
+                  className="flex items-center gap-2 bg-emerald-500 hover:bg-emerald-600 text-white font-bold shadow-md w-full sm:w-auto justify-center min-h-[44px] touch-manipulation order-1 sm:order-2 border-0"
+                >
+                  {isSubmitting ? (
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
+                  ) : (
+                    <Send className="h-4 w-4" />
+=======
                 <div className="flex flex-col items-stretch sm:items-end gap-1 order-1 sm:order-2">
                   {!isFormValid && photos.length < 2 && (
                     <p className="text-xs text-amber-600 text-right">
                       {photos.length === 0 ? '2–3 photos required' : `${2 - photos.length} more photo${2 - photos.length > 1 ? 's' : ''} required`}
                     </p>
+>>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
                   )}
                   <Button
                     type="submit"

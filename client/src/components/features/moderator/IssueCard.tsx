@@ -65,7 +65,7 @@ export function IssueCard({
       case 'MEDIUM':
         return 'bg-yellow-600 text-white'
       default:
-        return 'bg-blue-600 text-white'
+        return 'bg-emerald-600 text-white'
     }
   }
 
@@ -188,7 +188,7 @@ export function IssueCard({
               <Button
                 onClick={() => onRequestInfo(issue.id)}
                 disabled={loading}
-                className="bg-blue-600 hover:bg-blue-700 text-white"
+                className="bg-emerald-600 hover:bg-emerald-700 text-white"
                 size="sm"
               >
                 <MessageSquare className="h-4 w-4 mr-2" />

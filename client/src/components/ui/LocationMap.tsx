@@ -343,7 +343,7 @@ export default function LocationMap({
             ${markerData.priority ? `<span class="inline-block px-2 py-1 text-xs rounded ${
               markerData.priority === 'critical' ? 'bg-red-100 text-red-800' :
               markerData.priority === 'high' ? 'bg-yellow-100 text-yellow-800' :
-              markerData.priority === 'medium' ? 'bg-blue-100 text-blue-800' :
+              markerData.priority === 'medium' ? 'bg-emerald-100 text-blue-800' :
               'bg-green-100 text-green-800'
             }">${markerData.priority}</span>` : ''}
           </div>
@@ -421,15 +421,15 @@ export default function LocationMap({
           <div 
             ref={mapContainerRef}
             style={{ height }}
-            className="w-full bg-gray-100"
+            className="w-full bg-slate-100"
           />
 
           {/* Loading overlay */}
           {!isMapLoaded && (
-            <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
+            <div className="absolute inset-0 flex items-center justify-center bg-slate-100">
               <div className="text-center">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-2" />
-                <p className="text-sm text-gray-600">{t.loadingMap}</p>
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600 mx-auto mb-2" />
+                <p className="text-sm text-slate-600">{t.loadingMap}</p>
               </div>
             </div>
           )}
@@ -475,7 +475,7 @@ export default function LocationMap({
                     {selectedLocation && (
                       <div className="flex items-center gap-1 sm:gap-2 mb-1">
                         <MapPin className="h-3 w-3 sm:h-4 sm:w-4 text-red-600 flex-shrink-0" />
-                        <span className="text-xs sm:text-sm font-medium text-gray-900 truncate">
+                        <span className="text-xs sm:text-sm font-medium text-slate-900 truncate">
                           {t.selectedLocation}
                         </span>
                       </div>
@@ -483,8 +483,8 @@ export default function LocationMap({
                     
                     {userLocation && showUserLocation && (
                       <div className="flex items-center gap-1 sm:gap-2 mb-1">
-                        <Crosshair className="h-3 w-3 sm:h-4 sm:w-4 text-blue-600 flex-shrink-0" />
-                        <span className="text-xs sm:text-sm font-medium text-gray-900 truncate">
+                        <Crosshair className="h-3 w-3 sm:h-4 sm:w-4 text-emerald-600 flex-shrink-0" />
+                        <span className="text-xs sm:text-sm font-medium text-slate-900 truncate">
                           {t.yourLocation}
                         </span>
                       </div>

@@ -35,11 +35,11 @@ const typeIcons = {
 };
 
 const typeColors = {
-  INFO: 'text-blue-500 bg-blue-50 dark:bg-blue-950',
+  INFO: 'text-emerald-500 bg-emerald-50 dark:bg-blue-950',
   SUCCESS: 'text-green-500 bg-green-50 dark:bg-green-950',
   WARNING: 'text-yellow-500 bg-yellow-50 dark:bg-yellow-950',
   ERROR: 'text-red-500 bg-red-50 dark:bg-red-950',
-  ANNOUNCEMENT: 'text-purple-500 bg-purple-50 dark:bg-purple-950',
+  ANNOUNCEMENT: 'text-slate-700 bg-purple-50 dark:bg-purple-950',
 };
 
 const categoryIcons = {
@@ -93,7 +93,7 @@ export function NotificationItem({
     <div
       className={cn(
         'group relative flex gap-3 border-b p-4 transition-colors hover:bg-muted/50',
-        !notification.read && 'bg-blue-50/50 dark:bg-blue-950/20',
+        !notification.read && 'bg-emerald-50/50 dark:bg-blue-950/20',
         notification.actionUrl && 'cursor-pointer',
         compact && 'p-3'
       )}
@@ -101,7 +101,7 @@ export function NotificationItem({
     >
       {/* Unread indicator */}
       {!notification.read && (
-        <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-500" />
+        <div className="absolute left-0 top-0 bottom-0 w-1 bg-emerald-500" />
       )}
 
       {/* Icon */}

@@ -152,7 +152,7 @@ export default function StaffWorkPage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">In Progress</CardTitle>
-            <PlayCircle className="h-4 w-4 text-blue-500" />
+            <PlayCircle className="h-4 w-4 text-emerald-500" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.inProgress || 0}</div>

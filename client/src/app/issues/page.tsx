@@ -36,12 +36,12 @@ interface IssueRow {
 }
 
 const statusConfig = {
-  PENDING: { label: 'Submitted', variant: 'default', className: 'bg-blue-100 text-blue-800' },
+  PENDING: { label: 'Submitted', variant: 'default', className: 'bg-emerald-100 text-blue-800' },
   TRIAGED: { label: 'Triaged', variant: 'default', className: 'bg-indigo-100 text-indigo-800' },
   ASSIGNED_TO_STAFF: { label: 'Assigned', variant: 'default', className: 'bg-cyan-100 text-cyan-800' },
   IN_PROGRESS: { label: 'In Progress', variant: 'default', className: 'bg-yellow-100 text-yellow-800' },
   RESOLVED: { label: 'Resolved', variant: 'default', className: 'bg-green-100 text-green-800' },
-  CLOSED: { label: 'Closed', variant: 'secondary', className: 'bg-gray-100 text-gray-800' },
+  CLOSED: { label: 'Closed', variant: 'secondary', className: 'bg-slate-100 text-slate-800' },
   REJECTED: { label: 'Rejected', variant: 'destructive', className: 'bg-red-100 text-red-800' },
 } as const
 
@@ -53,8 +53,8 @@ const priorityConfig = {
 }
 
 const categoryConfig = {
-  WATER: { label: 'Water Supply', variant: 'default', className: 'bg-blue-100 text-blue-800' },
-  ROADS: { label: 'Roads & Transport', variant: 'default', className: 'bg-gray-100 text-gray-800' },
+  WATER: { label: 'Water Supply', variant: 'default', className: 'bg-emerald-100 text-blue-800' },
+  ROADS: { label: 'Roads & Transport', variant: 'default', className: 'bg-slate-100 text-slate-800' },
   ELECTRICITY: { label: 'Electricity', variant: 'default', className: 'bg-yellow-100 text-yellow-800' },
   SANITATION: { label: 'Sanitation', variant: 'default', className: 'bg-green-100 text-green-800' },
   OTHER: { label: 'Other', variant: 'secondary', className: 'bg-purple-100 text-purple-800' },
@@ -457,10 +457,21 @@ export default function IssuesPage() {
     <OfficialLayout>
       <main className="py-4 sm:py-6 lg:py-8">
         <div className="mx-auto max-w-7xl px-3 sm:px-4 lg:px-8">
+<<<<<<< HEAD
+          {/* Page Header */}
+          <div className="mb-4 sm:mb-6">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900">Issue Management</h1>
+            <p className="mt-1 sm:mt-2 text-sm sm:text-base text-slate-700">
+              Track and manage citizen-reported issues across all departments
+            </p>
+            {data && (
+              <p className="mt-1 text-xs sm:text-sm text-slate-500">
+=======
           {/* Page Header (Removed per request) */}
           <div className="mb-2 sm:mb-4 flex justify-end">
             {data && (
               <p className="text-xs sm:text-sm text-gray-500">
+>>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
                 Total Issues: <span className="font-semibold">{data.total || 0}</span>
               </p>
             )}

@@ -480,7 +480,7 @@ export default function VoiceInput({
             {/* Audio Level Indicator */}
             <div className="flex items-center gap-1 w-full sm:w-auto">
               <Volume2 className="h-3 w-3 text-muted-foreground flex-shrink-0" />
-              <div className="w-full sm:w-12 h-2 bg-gray-200 rounded-full overflow-hidden">
+              <div className="w-full sm:w-12 h-2 bg-slate-200 rounded-full overflow-hidden">
                 <div 
                   className="h-full bg-green-500 transition-all duration-100"
                   style={{ width: `${audioLevel * 100}%` }}
@@ -500,14 +500,14 @@ export default function VoiceInput({
 
       {/* Live Transcript */}
       {(currentTranscript || isListening) && (
-        <div className="p-3 bg-gray-50 rounded-lg border">
+        <div className="p-3 bg-slate-50 rounded-lg border">
           <div className="text-sm leading-relaxed">
-            <span className="text-gray-900">{finalTranscript}</span>
+            <span className="text-slate-900">{finalTranscript}</span>
             {interimTranscript && (
-              <span className="text-gray-500 italic">{interimTranscript}</span>
+              <span className="text-slate-500 italic">{interimTranscript}</span>
             )}
             {isListening && !interimTranscript && (
-              <span className="text-gray-400 italic">
+              <span className="text-slate-400 italic">
                 {placeholder || t.tapToSpeak}
               </span>
             )}
@@ -526,7 +526,7 @@ export default function VoiceInput({
       {/* Audio Player for Recorded Audio */}
       {audioBlob && enableAudioRecording && (
         <div className="space-y-2">
-          <div className="text-sm font-medium text-gray-900">Recorded Audio:</div>
+          <div className="text-sm font-medium text-slate-900">Recorded Audio:</div>
           <AudioPlayer
             audioBlob={audioBlob}
             transcript={finalTranscript}

@@ -262,7 +262,7 @@ export default function PhotoUpload({
       <Card 
         className={cn(
           'relative transition-colors cursor-pointer',
-          isDragOver && 'border-blue-500 bg-blue-50',
+          isDragOver && 'border-emerald-500 bg-emerald-50',
           disabled && 'opacity-50 cursor-not-allowed',
           remainingSlots === 0 && 'opacity-50 cursor-not-allowed'
         )}
@@ -276,20 +276,20 @@ export default function PhotoUpload({
           <div className="text-center space-y-3 sm:space-y-4">
             <div className="flex justify-center">
               {isUploading ? (
-                <div className="animate-spin rounded-full h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12 border-b-2 border-blue-600" />
+                <div className="animate-spin rounded-full h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12 border-b-2 border-emerald-600" />
               ) : (
-                <Upload className="h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12 text-gray-400" />
+                <Upload className="h-8 w-8 sm:h-10 sm:w-10 lg:h-12 lg:w-12 text-slate-400" />
               )}
             </div>
             
             <div>
-              <p className="text-base sm:text-lg font-medium text-gray-900 mb-1">
+              <p className="text-base sm:text-lg font-medium text-slate-900 mb-1">
                 {t.addPhotos}
               </p>
-              <p className="text-xs sm:text-sm text-gray-500 mb-2">
+              <p className="text-xs sm:text-sm text-slate-500 mb-2">
                 {t.photosHelper}
               </p>
-              <div className="flex flex-col sm:flex-row justify-center items-center gap-1 sm:gap-2 text-xs text-gray-400">
+              <div className="flex flex-col sm:flex-row justify-center items-center gap-1 sm:gap-2 text-xs text-slate-400">
                 <span>JPG, PNG, HEIC up to {maxFileSize}MB each</span>
                 {enableCompression && (
                   <Badge variant="outline" className="text-xs mt-1 sm:mt-0">
@@ -398,7 +398,7 @@ export default function PhotoUpload({
       <div className="space-y-2">
         {/* Requirements Check */}
         <div className="flex items-center justify-between text-sm">
-          <span className="text-gray-600">
+          <span className="text-slate-600">
             Photos: {value.length} of {minPhotos}-{maxPhotos} required
           </span>
           <div className="flex items-center gap-1">

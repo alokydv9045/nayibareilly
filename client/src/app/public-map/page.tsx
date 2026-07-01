@@ -230,29 +230,29 @@ export default function PublicMapPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-slate-50">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <h2 className="text-xl font-semibold text-gray-900">Loading Public Map...</h2>
-          <p className="text-gray-600">Please wait while we load the city data</p>
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-emerald-600 mx-auto mb-4"></div>
+          <h2 className="text-xl font-semibold text-slate-900">Loading Public Map...</h2>
+          <p className="text-slate-600">Please wait while we load the city data</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-slate-50">
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <MapPin className="h-8 w-8 text-blue-600" />
+              <MapPin className="h-8 w-8 text-emerald-600" />
               <div>
-                <h1 className="text-2xl font-bold text-gray-900">
+                <h1 className="text-2xl font-bold text-slate-900">
                   {cityInfo?.name || 'Nayibareilly'} Public Map
                 </h1>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-slate-600">
                   View civic issues and city information - No login required
                 </p>
               </div>
@@ -319,8 +319,8 @@ export default function PublicMapPage() {
               </CardHeader>
               <CardContent className="space-y-3">
                 <div className="grid grid-cols-2 gap-2">
-                  <div className="text-center p-2 bg-blue-50 rounded">
-                    <div className="text-lg font-bold text-blue-600">{stats.total}</div>
+                  <div className="text-center p-2 bg-emerald-50 rounded">
+                    <div className="text-lg font-bold text-emerald-600">{stats.total}</div>
                     <div className="text-xs text-blue-800">Total</div>
                   </div>
                   <div className="text-center p-2 bg-green-50 rounded">
@@ -343,7 +343,7 @@ export default function PublicMapPage() {
             <Card>
               <CardContent className="p-4 space-y-3">
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-4 w-4" />
                   <Input
                     placeholder="Search location or issue..."
                     value={searchLocation}
@@ -460,7 +460,7 @@ export default function PublicMapPage() {
                     <span>Completed</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Clock className="w-3 h-3 text-blue-600" />
+                    <Clock className="w-3 h-3 text-emerald-600" />
                     <span>In Progress</span>
                   </div>
                   <div className="flex items-center gap-2">
@@ -472,7 +472,7 @@ export default function PublicMapPage() {
             </Card>
 
             {/* Call to Action */}
-            <Card className="bg-gradient-to-r from-blue-500 to-purple-600 text-white">
+            <Card className="bg-gradient-to-r from-emerald-500 to-slate-800 text-white">
               <CardContent className="p-4 text-center">
                 <h3 className="font-semibold mb-2">See an Issue?</h3>
                 <p className="text-sm mb-3 opacity-90">
@@ -480,7 +480,7 @@ export default function PublicMapPage() {
                 </p>
                 <Button 
                   onClick={() => window.location.href = '/report'} 
-                  className="bg-white text-blue-600 hover:bg-gray-100 w-full"
+                  className="bg-white text-emerald-600 hover:bg-slate-100 w-full"
                 >
                   Report an Issue
                 </Button>
@@ -505,7 +505,7 @@ export default function PublicMapPage() {
             <Card className="bg-white/90 backdrop-blur-sm">
               <CardContent className="p-3">
                 <div className="flex items-center space-x-2 text-sm">
-                  <Eye className="h-4 w-4 text-blue-600" />
+                  <Eye className="h-4 w-4 text-emerald-600" />
                   <span className="font-medium">{stats.total} issues visible</span>
                 </div>
               </CardContent>
@@ -517,10 +517,10 @@ export default function PublicMapPage() {
             <Card className="bg-white/90 backdrop-blur-sm">
               <CardContent className="p-3">
                 <div className="text-center text-sm">
-                  <p className="font-medium text-gray-900 mb-1">Public City Map</p>
-                  <p className="text-gray-600">
+                  <p className="font-medium text-slate-900 mb-1">Public City Map</p>
+                  <p className="text-slate-600">
                     Click on markers to view issue details • Use filters to narrow results • 
-                    <span className="text-blue-600 cursor-pointer hover:underline ml-1"
+                    <span className="text-emerald-600 cursor-pointer hover:underline ml-1"
                           onClick={() => window.location.href = '/login'}>
                       Login for full features
                     </span>

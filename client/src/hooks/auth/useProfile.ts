@@ -79,8 +79,8 @@ export function useMe() {
 export function useUpdateProfile() {
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: async (payload: { name?: string; avatarUrl?: string }) => {
-      const { data } = await api.put('/users/profile', payload)
+    mutationFn: async (payload: { name?: string; email?: string; avatarUrl?: string }) => {
+      const { data } = await api.patch('/users/profile', payload)
       return data?.data?.user || data?.data
     },
     onSuccess: () => {

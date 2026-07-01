@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { useEffect, useRef, useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
@@ -164,9 +164,9 @@ export default function useSessionManager(options: SessionOptions = {}) {
       validationInProgressRef.current = true
       console.log('ðŸ” Validating session with /api/auth/me...')
 
-      // Add timeout for faster response (increased to 3 seconds for slower connections)
+      // Add timeout for faster response (increased to 30 seconds for slower connections/development)
       const timeoutPromise = new Promise<null>((_, reject) => 
-        setTimeout(() => reject(new Error('Session validation timeout')), 3000)
+        setTimeout(() => reject(new Error('Session validation timeout')), 30000)
       )
 
       const user = await Promise.race([me(), timeoutPromise])

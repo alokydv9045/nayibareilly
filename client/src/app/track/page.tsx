@@ -50,10 +50,10 @@ export default function TrackIssuePage() {
       <CitizenLayout>
         <div className="max-w-5xl mx-auto px-3 sm:px-4 lg:px-8 py-3 sm:py-4 lg:py-6 space-y-4 sm:space-y-6 lg:space-y-8">
           <div className="text-center space-y-2 sm:space-y-3">
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent tracking-tight">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-emerald-600 to-slate-800 bg-clip-text text-transparent tracking-tight">
               Track Your Issue
             </h1>
-            <p className="text-gray-600 max-w-2xl mx-auto text-sm sm:text-base px-2">
+            <p className="text-slate-600 max-w-2xl mx-auto text-sm sm:text-base px-2">
               Enter your unique Tracking Code (starts with REP-) to check the real-time status and progress of your civic issue report
             </p>
           </div>
@@ -83,7 +83,7 @@ export default function TrackIssuePage() {
                   )}
                 </div>
               </div>
-              <p className="text-xs sm:text-sm text-gray-500 mt-2 px-1">
+              <p className="text-xs sm:text-sm text-slate-500 mt-2 px-1">
                 ðŸ’¡ Tip: Find your tracking code in the confirmation message you received when submitting your issue
               </p>
             </CardContent>
@@ -94,11 +94,11 @@ export default function TrackIssuePage() {
               <CardContent className="p-6 sm:p-8 space-y-4">
                 <div className="text-center">
                   <div className="animate-pulse space-y-4">
-                    <div className="h-6 bg-gray-200 rounded w-1/3 mx-auto"></div>
-                    <div className="h-4 bg-gray-200 rounded w-1/2 mx-auto"></div>
-                    <div className="h-3 bg-gray-200 rounded w-full"></div>
+                    <div className="h-6 bg-slate-200 rounded w-1/3 mx-auto"></div>
+                    <div className="h-4 bg-slate-200 rounded w-1/2 mx-auto"></div>
+                    <div className="h-3 bg-slate-200 rounded w-full"></div>
                   </div>
-                  <p className="text-sm text-gray-500 mt-4">ðŸ” Searching for your issue...</p>
+                  <p className="text-sm text-slate-500 mt-4">ðŸ” Searching for your issue...</p>
                 </div>
               </CardContent>
             </Card>
@@ -120,7 +120,7 @@ export default function TrackIssuePage() {
                   <span className="text-base sm:text-lg md:text-xl leading-tight pr-2">ðŸ“ {tracked.title}</span>
                   <Badge 
                     variant={tracked.status === 'RESOLVED' ? 'default' : 'secondary'}
-                    className={`w-fit text-xs sm:text-sm ${tracked.status === 'RESOLVED' ? 'bg-green-100 text-green-800' : tracked.status === 'IN_PROGRESS' ? 'bg-yellow-100 text-yellow-800' : tracked.status === 'ASSIGNED_TO_STAFF' ? 'bg-cyan-100 text-cyan-800' : tracked.status === 'TRIAGED' ? 'bg-indigo-100 text-indigo-800' : 'bg-blue-100 text-blue-800'}`}
+                    className={`w-fit text-xs sm:text-sm ${tracked.status === 'RESOLVED' ? 'bg-green-100 text-green-800' : tracked.status === 'IN_PROGRESS' ? 'bg-yellow-100 text-yellow-800' : tracked.status === 'ASSIGNED_TO_STAFF' ? 'bg-cyan-100 text-cyan-800' : tracked.status === 'TRIAGED' ? 'bg-indigo-100 text-indigo-800' : 'bg-emerald-100 text-blue-800'}`}
                   >
                     {tracked.status.replace('_', ' ')}
                   </Badge>
@@ -129,12 +129,12 @@ export default function TrackIssuePage() {
               <CardContent className="space-y-4 sm:space-y-6 lg:space-y-8">
                 {/* Progress */}
                 <div className="space-y-2 sm:space-y-3">
-                  <div className="flex items-center justify-between text-[10px] sm:text-xs text-gray-600 overflow-x-auto pb-1">
+                  <div className="flex items-center justify-between text-[10px] sm:text-xs text-slate-600 overflow-x-auto pb-1">
                     <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
                       {steps.map((s, i) => (
                         <div key={s.key} className="flex items-center gap-1 flex-shrink-0">
-                          <span className={`whitespace-nowrap ${i <= (statusToIndex[tracked.status] ?? 0) ? 'text-blue-600 font-medium' : ''}`}>{s.label}</span>
-                          {i < steps.length - 1 && <ChevronRight className="h-3 w-3 text-gray-400 flex-shrink-0" />}
+                          <span className={`whitespace-nowrap ${i <= (statusToIndex[tracked.status] ?? 0) ? 'text-emerald-600 font-medium' : ''}`}>{s.label}</span>
+                          {i < steps.length - 1 && <ChevronRight className="h-3 w-3 text-slate-400 flex-shrink-0" />}
                         </div>
                       ))}
                     </div>
@@ -148,22 +148,22 @@ export default function TrackIssuePage() {
                   <div>
                     <h3 className="font-semibold mb-3 sm:mb-4 text-base sm:text-lg">Status Timeline</h3>
                     <div className="relative pl-3 sm:pl-4 lg:pl-6">
-                      <div className="absolute left-1.5 sm:left-2 lg:left-3 top-0 bottom-0 w-0.5 bg-gray-200" />
+                      <div className="absolute left-1.5 sm:left-2 lg:left-3 top-0 bottom-0 w-0.5 bg-slate-200" />
                       <div className="space-y-3 sm:space-y-4">
                         {(tracked.timeline || []).map((t, idx) => (
                           <div key={idx} className="relative">
-                            <div className={`absolute -left-1 top-1 w-2 h-2 sm:w-3 sm:h-3 rounded-full ${t.status === 'RESOLVED' ? 'bg-green-500' : t.status === 'IN_PROGRESS' ? 'bg-yellow-500' : t.status === 'ASSIGNED_TO_STAFF' ? 'bg-cyan-500' : t.status === 'TRIAGED' ? 'bg-indigo-500' : 'bg-blue-500'}`} />
-                            <div className="bg-gray-50 rounded-lg p-3 sm:p-4 ml-3 sm:ml-4">
+                            <div className={`absolute -left-1 top-1 w-2 h-2 sm:w-3 sm:h-3 rounded-full ${t.status === 'RESOLVED' ? 'bg-green-500' : t.status === 'IN_PROGRESS' ? 'bg-yellow-500' : t.status === 'ASSIGNED_TO_STAFF' ? 'bg-cyan-500' : t.status === 'TRIAGED' ? 'bg-indigo-500' : 'bg-emerald-500'}`} />
+                            <div className="bg-slate-50 rounded-lg p-3 sm:p-4 ml-3 sm:ml-4">
                               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-2">
                                 <span className="font-medium text-sm sm:text-base">{t.status.replace('_', ' ')}</span>
-                                <span className="text-xs text-gray-500">{new Date(t.createdAt || t.at || '').toLocaleString()}</span>
+                                <span className="text-xs text-slate-500">{new Date(t.createdAt || t.at || '').toLocaleString()}</span>
                               </div>
-                              {t.note && <p className="text-xs sm:text-sm text-gray-600 mt-1">{t.note}</p>}
+                              {t.note && <p className="text-xs sm:text-sm text-slate-600 mt-1">{t.note}</p>}
                             </div>
                           </div>
                         ))}
                         {(!tracked.timeline || tracked.timeline.length === 0) && (
-                          <div className="text-sm text-gray-500 bg-gray-50 rounded-lg p-4 sm:p-5 text-center">
+                          <div className="text-sm text-slate-500 bg-slate-50 rounded-lg p-4 sm:p-5 text-center">
                             ðŸ“‹ No timeline events yet - your issue is being processed
                           </div>
                         )}
@@ -175,11 +175,11 @@ export default function TrackIssuePage() {
                   <div className="space-y-2 sm:space-y-3">
                     <h3 className="font-semibold">Location</h3>
                     {showMap ? (
-                      <div className="h-64 sm:h-72 rounded-lg overflow-hidden border border-gray-200">
+                      <div className="h-64 sm:h-72 rounded-lg overflow-hidden border border-slate-200">
                         <LeafletMap center={[details!.latitude!, details!.longitude!]} markers={[{ id: details!.id, name: details!.title, position: [details!.latitude!, details!.longitude!], priority: 'medium' }]} />
                       </div>
                     ) : (
-                      <div className="text-sm text-gray-500 bg-gray-50 rounded-lg p-4 sm:p-5 text-center">
+                      <div className="text-sm text-slate-500 bg-slate-50 rounded-lg p-4 sm:p-5 text-center">
                         ðŸ“ No location information provided for this issue
                       </div>
                     )}

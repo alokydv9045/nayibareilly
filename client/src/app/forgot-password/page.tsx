@@ -36,15 +36,15 @@ export default function ForgotPasswordPage() {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-md">
-      <Link href="/login" className="inline-flex items-center text-sm text-gray-600 hover:text-gray-900 mb-6">
+      <Link href="/login" className="inline-flex items-center text-sm text-slate-600 hover:text-slate-900 mb-6">
         <ArrowLeft className="w-4 h-4 mr-2" />
         Back to Login
       </Link>
 
       <Card>
         <CardHeader className="text-center">
-          <div className="mx-auto w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-            <Mail className="w-6 h-6 text-blue-600" />
+          <div className="mx-auto w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mb-4">
+            <Mail className="w-6 h-6 text-emerald-600" />
           </div>
           <CardTitle>Forgot Password?</CardTitle>
           <CardDescription>
@@ -67,7 +67,7 @@ export default function ForgotPasswordPage() {
             </form>
           ) : (
             <div className="text-center">
-              <p className="text-sm text-gray-600 mb-4">
+              <p className="text-sm text-slate-600 mb-4">
                 We&apos;ve sent a password reset link to <strong>{email}</strong>
               </p>
               <Button asChild variant="outline">

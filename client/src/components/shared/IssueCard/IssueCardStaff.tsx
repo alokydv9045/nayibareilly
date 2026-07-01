@@ -71,8 +71,8 @@ export default function IssueCardStaff({
     <div className="space-y-3">
       {/* Assignment Status */}
       {isAssignedToUser && (
-        <div className="flex items-center gap-2 p-2 bg-blue-50 border border-blue-200 rounded-lg">
-          <Users className="w-4 h-4 text-blue-600" />
+        <div className="flex items-center gap-2 p-2 bg-emerald-50 border border-emerald-200 rounded-lg">
+          <Users className="w-4 h-4 text-emerald-600" />
           <span className="text-sm font-medium text-blue-800">
             Assigned to you
           </span>
@@ -88,7 +88,7 @@ export default function IssueCardStaff({
           </div>
           <div className="h-2 bg-muted rounded-full overflow-hidden">
             <div 
-              className="h-full bg-blue-600 transition-all duration-300"
+              className="h-full bg-emerald-600 transition-all duration-300"
               style={{ width: `${completionPercentage}%` }}
             />
           </div>
@@ -179,7 +179,7 @@ export default function IssueCardStaff({
       variant="detailed"
       className={
         isAssignedToUser 
-          ? 'border-l-4 border-l-blue-500 bg-blue-50/50' 
+          ? 'border-l-4 border-l-emerald-500 bg-emerald-50/50' 
           : ''
       }
       {...props}

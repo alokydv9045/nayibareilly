@@ -3,12 +3,45 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
 model User {
+<<<<<<< HEAD
+  id                      String                  @id @default(cuid())
+  email                   String                  @unique
+  passwordHash            String
+  name                    String
+  phone                   String?
+  address                 String?
+  avatarUrl               String?
+  roles                   UserRole[]              @default([citizen])
+  requestedRole           String?
+  isActive                Boolean                 @default(true)
+  isVerified              Boolean                 @default(false)
+  verifyToken             String?
+  verifyTokenExp          DateTime?
+  resetToken              String?
+  resetTokenExp           DateTime?
+  lastLogin               DateTime?
+  loginAttempts           Int                     @default(0)
+  lockUntil               DateTime?
+  departmentId            String?
+  fcmToken                String?                 @map("fcm_token")
+  fcmTokenUpdatedAt       DateTime?               @map("fcm_token_updated_at")
+  isFlagged               Boolean                 @default(false)
+  createdAt               DateTime                @default(now())
+  updatedAt               DateTime                @updatedAt
+  activityLogs            ActivityLog[]
+  departmentHead          Department[]            @relation("DepartmentHead")
+  comments                IssueComment[]
+  timelineEntries         IssueTimeline[]         @relation("TimelineUser")
+  assignedIssues          Issue[]                 @relation("IssueAssignee")
+  reportedIssues          Issue[]                 @relation("IssueReporter")
+  resolvedIssues          Issue[]                 @relation("IssueResolver")
+=======
   id                String          @id @default(cuid())
   email             String?         @unique
   passwordHash      String?
@@ -42,11 +75,13 @@ model User {
   reportedIssues    Issue[]         @relation("IssueReporter")
   resolvedIssues    Issue[]         @relation("IssueResolver")
   notifications     Notification[]
+>>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
   notificationPreferences NotificationPreference?
-  refreshTokens     RefreshToken[]
-  savedSearches     SavedSearch[]
-  department        Department?     @relation(fields: [departmentId], references: [id])
-  votes             Vote[]
+  notifications           Notification[]
+  refreshTokens           RefreshToken[]
+  savedSearches           SavedSearch[]
+  department              Department?             @relation(fields: [departmentId], references: [id])
+  votes                   Vote[]
 
   @@index([email])
   @@index([departmentId])
@@ -103,6 +138,78 @@ model IssueCategory {
 }
 
 model Issue {
+<<<<<<< HEAD
+  id                    String           @id @default(cuid())
+  reportId              String           @unique
+  title                 String
+  description           String
+  status                IssueStatus      @default(PENDING)
+  priority              IssuePriority    @default(MEDIUM)
+  latitude              Float?
+  longitude             Float?
+  address               String?
+  landmark              String?
+  ward                  String?
+  zone                  String?
+  reporterId            String?
+  reporterName          String
+  reporterEmail         String
+  reporterPhone         String?
+  isAnonymous           Boolean          @default(false)
+  categoryId            String?
+  departmentId          String?
+  assignedToId          String?
+  moderatorId           String?
+  moderatorNotes        String?
+  moderatedAt           DateTime?
+  moderationStatus      ModerationStatus @default(PENDING_REVIEW)
+  qualityScore          Int?
+  isSpam                Boolean          @default(false)
+  isFlagged             Boolean          @default(false)
+  spamReason            String?
+  needsMoreInfo         Boolean          @default(false)
+  infoRequested         String?
+  assignedByModeratorAt DateTime?
+  acceptedByDeptAt      DateTime?
+  assignedToStaffAt     DateTime?
+  staffStartedAt        DateTime?
+  staffArrivedAt        DateTime?
+  staffCompletedAt      DateTime?
+  citizenVerifiedAt     DateTime?
+  citizenRating         Int?
+  citizenFeedback       String?
+  slaDeadline           DateTime?
+  slaBreached           Boolean          @default(false)
+  resolutionTimeHours   Int?
+  isEscalated           Boolean          @default(false)
+  escalatedAt           DateTime?
+  escalationLevel       Int              @default(0)
+  escalationReason      String?
+  resolutionSummary     String?
+  resolutionDetails     String?
+  resolvedAt            DateTime?
+  resolvedById          String?
+  resolutionCost        Float?
+  upvotes               Int              @default(0)
+  downvotes             Int              @default(0)
+  totalVotes            Int              @default(0)
+  viewCount             Int              @default(0)
+  isPublic              Boolean          @default(true)
+  createdAt             DateTime         @default(now())
+  updatedAt             DateTime         @updatedAt
+  activityLogs          ActivityLog[]
+  comments              IssueComment[]
+  images                IssueMedia[]
+  timeline              IssueTimeline[]
+  assignedTo            User?            @relation("IssueAssignee", fields: [assignedToId], references: [id])
+  category              IssueCategory?   @relation(fields: [categoryId], references: [id])
+  department            Department?      @relation(fields: [departmentId], references: [id])
+  reporter              User?            @relation("IssueReporter", fields: [reporterId], references: [id])
+  resolvedBy            User?            @relation("IssueResolver", fields: [resolvedById], references: [id])
+  notifications         Notification[]   @relation("NotificationIssue")
+  voiceNotes            VoiceNote[]
+  votes                 Vote[]
+=======
   id            String        @id @default(cuid())
   reportId      String        @unique
   title         String
@@ -183,6 +290,7 @@ model Issue {
   resolvedBy          User?           @relation("IssueResolver", fields: [resolvedById], references: [id])
   votes               Vote[]
   voiceNotes          VoiceNote[]
+>>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
 
   @@index([status])
   @@index([priority])
@@ -286,23 +394,23 @@ model RefreshToken {
 }
 
 model Notification {
-  id             String             @id @default(cuid())
+  id             String               @id @default(cuid())
   userId         String
   title          String
   message        String?
-  type           NotificationType   @default(INFO)
-  category       String? // issue_status, assignment, comment, escalation, etc.
+  type           NotificationType     @default(INFO)
+  category       String?
   relatedIssueId String?
-  relatedUserId  String? // For user-related notifications
-  actionUrl      String? // Deep link to the relevant page
+  relatedUserId  String?
+  actionUrl      String?
   metadata       Json?
-  read           Boolean            @default(false)
+  read           Boolean              @default(false)
   priority       NotificationPriority @default(NORMAL)
-  expiresAt      DateTime? // For time-sensitive notifications
-  createdAt      DateTime           @default(now())
+  expiresAt      DateTime?
+  createdAt      DateTime             @default(now())
   readAt         DateTime?
-  user           User               @relation(fields: [userId], references: [id], onDelete: Cascade)
-  issue          Issue?             @relation("NotificationIssue", fields: [relatedIssueId], references: [id], onDelete: SetNull)
+  issue          Issue?               @relation("NotificationIssue", fields: [relatedIssueId], references: [id])
+  user           User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, read, createdAt])
   @@index([userId, type])
@@ -312,30 +420,80 @@ model Notification {
 }
 
 model NotificationPreference {
-  id                    String   @id @default(cuid())
-  userId                String   @unique
-  enableInApp           Boolean  @default(true)
-  enableEmail           Boolean  @default(true)
-  enablePush            Boolean  @default(true)
-  
-  // Category preferences
-  issueStatusUpdates    Boolean  @default(true)
-  issueAssignments      Boolean  @default(true)
-  issueComments         Boolean  @default(true)
-  issueEscalations      Boolean  @default(true)
-  issueResolutions      Boolean  @default(true)
-  systemAnnouncements   Boolean  @default(true)
-  
-  // Frequency settings
-  emailDigest           EmailDigestFrequency @default(IMMEDIATE)
-  quietHoursStart       Int?     // Hour of day (0-23)
-  quietHoursEnd         Int?     // Hour of day (0-23)
-  
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
-  user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                  String               @id @default(cuid())
+  userId              String               @unique
+  enableInApp         Boolean              @default(true)
+  enableEmail         Boolean              @default(true)
+  enablePush          Boolean              @default(true)
+  issueStatusUpdates  Boolean              @default(true)
+  issueAssignments    Boolean              @default(true)
+  issueComments       Boolean              @default(true)
+  issueEscalations    Boolean              @default(true)
+  issueResolutions    Boolean              @default(true)
+  systemAnnouncements Boolean              @default(true)
+  emailDigest         EmailDigestFrequency @default(IMMEDIATE)
+  quietHoursStart     Int?
+  quietHoursEnd       Int?
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  user                User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("notification_preferences")
+}
+
+model VoiceNote {
+  id            String   @id @default(cuid())
+  issueId       String
+  audioUrl      String
+  transcription String?
+  duration      Int?
+  fileSize      Int?
+  mimeType      String   @default("audio/webm")
+  fileName      String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  issue         Issue    @relation(fields: [issueId], references: [id], onDelete: Cascade)
+
+  @@index([issueId])
+  @@map("voice_notes")
+}
+
+model AssignmentHistory {
+  id               String         @id @default(cuid())
+  issueId          String
+  issueReportId    String?
+  fromAssigneeId   String?
+  fromAssigneeName String?
+  toAssigneeId     String
+  toAssigneeName   String
+  changedById      String
+  changedByName    String
+  reason           String?
+  type             AssignmentType
+  priority         IssuePriority?
+  notes            String?
+  createdAt        DateTime       @default(now())
+
+  @@index([issueId])
+  @@index([toAssigneeId])
+  @@index([changedById])
+  @@index([createdAt])
+  @@map("assignment_history")
+}
+
+model SavedSearch {
+  id        String   @id @default(cuid())
+  userId    String
+  name      String
+  query     String
+  filters   Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt])
+  @@map("saved_searches")
 }
 
 enum NotificationType {
@@ -361,23 +519,6 @@ enum EmailDigestFrequency {
   NEVER
 }
 
-model VoiceNote {
-  id            String   @id @default(cuid())
-  issueId       String
-  audioUrl      String
-  transcription String?
-  duration      Int? // Duration in seconds
-  fileSize      Int? // File size in bytes
-  mimeType      String   @default("audio/webm")
-  fileName      String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  issue         Issue    @relation(fields: [issueId], references: [id], onDelete: Cascade)
-
-  @@index([issueId])
-  @@map("voice_notes")
-}
-
 enum UserRole {
   citizen
   moderator
@@ -385,6 +526,10 @@ enum UserRole {
   dept_admin
   mayor
   tech_admin
+<<<<<<< HEAD
+  super_admin
+=======
+>>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
 }
 
 enum IssueStatus {
@@ -449,35 +594,13 @@ enum ActivityAction {
   UNASSIGNED
 }
 
-// Assignment History Model
-model AssignmentHistory {
-  id               String         @id @default(cuid())
-  issueId          String
-  issueReportId    String?
-  fromAssigneeId   String?
-  fromAssigneeName String?
-  toAssigneeId     String
-  toAssigneeName   String
-  changedById      String
-  changedByName    String
-  reason           String?
-  type             AssignmentType
-  priority         IssuePriority?
-  notes            String?
-  createdAt        DateTime       @default(now())
-
-  @@index([issueId])
-  @@index([toAssigneeId])
-  @@index([changedById])
-  @@index([createdAt])
-  @@map("assignment_history")
-}
-
 enum AssignmentType {
   INITIAL
   REASSIGNMENT
   UNASSIGNMENT
 }
+<<<<<<< HEAD
+=======
 
 // Saved Search Model
 model SavedSearch {
@@ -549,3 +672,4 @@ model ApiKey {
   @@map("api_keys")
 }
 
+>>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9

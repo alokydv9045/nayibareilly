@@ -239,16 +239,16 @@ class SocketService {
   }
 
   // Join role-specific rooms
-  joinAdminRooms(user: { roles: string[]; departments: string[] }): void {
+  joinAdminRooms(user: { roles: string[]; departmentId?: string }): void {
     // Join role-based rooms
     user.roles.forEach(role => {
       this.joinRoom(`role:${role}`);
     });
 
     // Join department-specific rooms
-    user.departments.forEach(dept => {
-      this.joinRoom(`department:${dept}`);
-    });
+    if (user.departmentId) {
+      this.joinRoom(`department:${user.departmentId}`);
+    }
 
     // Join general admin room
     this.joinRoom('admin');

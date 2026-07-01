@@ -39,7 +39,7 @@ export const ROLE_METADATA: Record<UserRole, RoleMetadata> = {
     description: 'Report and track civic issues',
     level: 1,
     icon: '👤',
-    color: '#3B82F6', // blue-500
+    color: '#3B82F6', // emerald-500
     dashboardPath: '/', // Citizens go to home page, not dashboard
   },
   [UserRole.MODERATOR]: {

@@ -189,8 +189,8 @@ export default function StaffAssignedPage() {
       <div className="mb-8">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Assigned Issues</h1>
-            <p className="text-gray-600 mt-2">
+            <h1 className="text-3xl font-bold text-slate-900">Assigned Issues</h1>
+            <p className="text-slate-600 mt-2">
               Issues assigned to you for resolution
             </p>
           </div>
@@ -203,7 +203,7 @@ export default function StaffAssignedPage() {
       {/* Filters */}
       <div className="mb-6 flex flex-col sm:flex-row gap-4">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-4 w-4" />
           <Input
             placeholder="Search by title, location, or category..."
             value={searchTerm}
@@ -212,11 +212,11 @@ export default function StaffAssignedPage() {
           />
         </div>
         <div className="flex items-center gap-2">
-          <Filter className="h-4 w-4 text-gray-500" />
+          <Filter className="h-4 w-4 text-slate-500" />
           <select
             value={priorityFilter}
             onChange={(e) => setPriorityFilter(e.target.value)}
-            className="border border-gray-300 rounded-md px-3 py-2 bg-white"
+            className="border border-slate-300 rounded-md px-3 py-2 bg-white"
           >
             <option value="all">All Priorities</option>
             <option value="CRITICAL">Critical</option>
@@ -230,13 +230,13 @@ export default function StaffAssignedPage() {
       {/* Issues Grid */}
       {filteredIssues.length === 0 ? (
         <Card className="p-12 text-center">
-          <div className="text-gray-400 mb-4">
+          <div className="text-slate-400 mb-4">
             <Clock className="h-16 w-16 mx-auto" />
           </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">
+          <h3 className="text-lg font-medium text-slate-900 mb-2">
             No assigned issues
           </h3>
-          <p className="text-gray-600">
+          <p className="text-slate-600">
             You don&apos;t have any issues assigned to you at the moment.
           </p>
         </Card>
@@ -281,22 +281,22 @@ export default function StaffAssignedPage() {
                 <CardContent className="space-y-4">
                   {/* Issue Details */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                    <div className="flex items-center gap-2 text-sm text-slate-600">
                       <MapPin className="h-4 w-4" />
                       <span>{issue.location || issue.address || 'Location not specified'}</span>
                     </div>
-                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                    <div className="flex items-center gap-2 text-sm text-slate-600">
                       <Calendar className="h-4 w-4" />
                       <span>Assigned: {formatDate(issue.assignedAt)}</span>
                     </div>
                     {issue.citizenName && (
-                      <div className="flex items-center gap-2 text-sm text-gray-600">
+                      <div className="flex items-center gap-2 text-sm text-slate-600">
                         <User className="h-4 w-4" />
                         <span>{issue.citizenName}</span>
                       </div>
                     )}
                     {issue.category && (
-                      <div className="flex items-center gap-2 text-sm text-gray-600">
+                      <div className="flex items-center gap-2 text-sm text-slate-600">
                         <Star className="h-4 w-4" />
                         <span>{issue.category}</span>
                       </div>
@@ -305,7 +305,7 @@ export default function StaffAssignedPage() {
 
                   {/* Moderator Notes */}
                   {issue.moderatorNotes && (
-                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                    <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3">
                       <h5 className="font-medium text-blue-900 mb-1">Moderator Notes:</h5>
                       <p className="text-blue-800 text-sm">{issue.moderatorNotes}</p>
                     </div>

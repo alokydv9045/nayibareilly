@@ -144,7 +144,7 @@ export default function StaffInProgressPage() {
       case 'HIGH': return 'bg-red-100 text-red-800 border-red-200'
       case 'MEDIUM': return 'bg-yellow-100 text-yellow-800 border-yellow-200'
       case 'LOW': return 'bg-green-100 text-green-800 border-green-200'
-      default: return 'bg-gray-100 text-gray-800 border-gray-200'
+      default: return 'bg-slate-100 text-slate-800 border-slate-200'
     }
   }
 
@@ -159,7 +159,7 @@ export default function StaffInProgressPage() {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="flex items-center justify-center min-h-[400px]">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-emerald-600"></div>
         </div>
       </div>
     )
@@ -168,8 +168,8 @@ export default function StaffInProgressPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex items-center gap-3 mb-6">
-        <Play className="h-8 w-8 text-blue-600" />
-        <h1 className="text-3xl font-bold text-gray-900">In Progress Issues</h1>
+        <Play className="h-8 w-8 text-emerald-600" />
+        <h1 className="text-3xl font-bold text-slate-900">In Progress Issues</h1>
         <Badge variant="secondary" className="text-lg px-3 py-1">
           {filteredIssues.length} Active
         </Badge>
@@ -180,7 +180,7 @@ export default function StaffInProgressPage() {
         <CardContent className="p-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-4 w-4" />
               <Input
                 placeholder="Search issues..."
                 value={searchTerm}
@@ -230,11 +230,11 @@ export default function StaffInProgressPage() {
       {filteredIssues.length === 0 ? (
         <Card>
           <CardContent className="text-center py-12">
-            <Play className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            <Play className="h-12 w-12 text-slate-400 mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-slate-900 mb-2">
               No In-Progress Issues
             </h3>
-            <p className="text-gray-600">
+            <p className="text-slate-600">
               You don&apos;t have any issues currently in progress.
             </p>
           </CardContent>
@@ -250,20 +250,20 @@ export default function StaffInProgressPage() {
                     {issue.priority}
                   </Badge>
                 </div>
-                <div className="flex items-center gap-2 text-sm text-gray-600">
+                <div className="flex items-center gap-2 text-sm text-slate-600">
                   <Clock className="h-4 w-4" />
                   <span>{calculateDaysInProgress(issue.startedAt)} days in progress</span>
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
-                <p className="text-gray-600 line-clamp-2">{issue.description}</p>
+                <p className="text-slate-600 line-clamp-2">{issue.description}</p>
                 
-                <div className="flex items-center gap-2 text-sm text-gray-600">
+                <div className="flex items-center gap-2 text-sm text-slate-600">
                   <MapPin className="h-4 w-4" />
                   <span className="line-clamp-1">{issue.location.address}</span>
                 </div>
 
-                <div className="flex items-center gap-2 text-sm text-gray-600">
+                <div className="flex items-center gap-2 text-sm text-slate-600">
                   <Calendar className="h-4 w-4" />
                   <span>Expected: {new Date(issue.estimatedCompletion).toLocaleDateString()}</span>
                 </div>
@@ -291,7 +291,7 @@ export default function StaffInProgressPage() {
                 {issue.progressNotes && issue.progressNotes.length > 0 && (
                   <div className="border-t pt-3">
                     <h4 className="text-sm font-semibold mb-2">Latest Progress:</h4>
-                    <div className="bg-gray-50 p-2 rounded text-sm">
+                    <div className="bg-slate-50 p-2 rounded text-sm">
                       {issue.progressNotes[issue.progressNotes.length - 1].note}
                     </div>
                   </div>

@@ -195,6 +195,130 @@ export default function FastLoginForm() {
   return (
     <div className="space-y-6">
       <form onSubmit={handleSubmit} className="space-y-5">
+<<<<<<< HEAD
+        {/* Email Field */}
+        <div className="space-y-2">
+          <Label htmlFor="email" className="text-sm font-medium text-slate-700">
+            Email Address
+          </Label>
+          <div className="relative">
+            <Input
+              id="email"
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="pl-10 h-12 text-base"
+              autoComplete="email"
+              autoFocus
+            />
+            <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
+          </div>
+        </div>
+
+        {/* Role Selection */}
+        <div className="space-y-2">
+          <Label htmlFor="role" className="text-sm font-medium text-slate-700">
+            Login As
+          </Label>
+          <div className="relative">
+            <Select value={role} onValueChange={setRole}>
+              <SelectTrigger className="pl-10 h-12 text-base">
+                <SelectValue placeholder="Select your role" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="citizen">
+                  <div className="flex items-center gap-2">
+                    <User className="h-4 w-4" />
+                    Citizen
+                  </div>
+                </SelectItem>
+                <SelectItem value="staff">
+                  <div className="flex items-center gap-2">
+                    <Shield className="h-4 w-4" />
+                    Staff
+                  </div>
+                </SelectItem>
+                <SelectItem value="moderator">
+                  <div className="flex items-center gap-2">
+                    <Shield className="h-4 w-4" />
+                    Moderator
+                  </div>
+                </SelectItem>
+                <SelectItem value="dept_admin">
+                  <div className="flex items-center gap-2">
+                    <Shield className="h-4 w-4" />
+                    Department Admin
+                  </div>
+                </SelectItem>
+                <SelectItem value="mayor">
+                  <div className="flex items-center gap-2">
+                    <Shield className="h-4 w-4" />
+                    Mayor
+                  </div>
+                </SelectItem>
+                <SelectItem value="super_admin">
+                  <div className="flex items-center gap-2">
+                    <Shield className="h-4 w-4" />
+                    Super Admin
+                  </div>
+                </SelectItem>
+              </SelectContent>
+            </Select>
+            <Shield className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
+          </div>
+        </div>
+
+        {/* Password Field */}
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <Label htmlFor="password" className="text-sm font-medium text-slate-700">
+              Password
+            </Label>
+            <Link
+              href="/forgot-password"
+              className="text-sm text-emerald-600 hover:text-emerald-700 hover:underline font-semibold"
+            >
+              Forgot password?
+            </Link>
+          </div>
+          <div className="relative">
+            <Input
+              id="password"
+              type={showPassword ? 'text' : 'password'}
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="pl-10 pr-12 h-12 text-base"
+              autoComplete="current-password"
+            />
+            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-600"
+            >
+              {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+            </button>
+          </div>
+        </div>
+
+        {/* Remember Me */}
+        <div className="flex items-center">
+          <input
+            type="checkbox"
+            id="remember"
+            checked={rememberMe}
+            onChange={(e) => setRememberMe(e.target.checked)}
+            className="h-4 w-4 text-emerald-500 border-slate-300 rounded focus:ring-emerald-500"
+          />
+          <label htmlFor="remember" className="ml-2 text-sm text-slate-700 cursor-pointer font-medium">
+            Remember me
+          </label>
+        </div>
+=======
         
         {/* Role Toggle Tabs */}
         <div className="flex p-1 bg-gray-100 rounded-lg">
@@ -338,11 +462,17 @@ export default function FastLoginForm() {
             </div>
           </>
         )}
+>>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
 
         <Button
           type="submit"
+<<<<<<< HEAD
+          disabled={!canSubmit}
+          className="w-full h-12 bg-emerald-500 hover:bg-emerald-600 shadow-md text-white font-semibold text-base transition-all border-0"
+=======
           disabled={!canSubmit || isLoading}
           className="w-full h-12 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold text-base"
+>>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
         >
           {isLoading ? (
             <div className="flex items-center gap-2">
@@ -367,6 +497,20 @@ export default function FastLoginForm() {
         </Button>
       </form>
 
+<<<<<<< HEAD
+      {/* Register Link */}
+      <div className="text-center pt-4 border-t border-slate-100">
+        <p className="text-sm text-slate-600 font-medium">
+          Don't have an account?{' '}
+          <Link
+            href="/get-started"
+            className="text-emerald-600 hover:text-emerald-700 hover:underline font-bold"
+          >
+            Get started
+          </Link>
+        </p>
+      </div>
+=======
       {/* Register Link (Removed since OTP flow handles new users natively) */}
       {!isCitizen && (
         <div className="text-center pt-4 border-t border-gray-100 space-y-2">
@@ -388,6 +532,7 @@ export default function FastLoginForm() {
           </p>
         </div>
       )}
+>>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
     </div>
   )
 }

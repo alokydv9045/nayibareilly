@@ -103,35 +103,35 @@ export default function AllReportsPage() {
       case 'high': return 'bg-orange-100 text-orange-800 border-orange-200';
       case 'medium': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
       case 'low': return 'bg-green-100 text-green-800 border-green-200';
-      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+      default: return 'bg-slate-100 text-slate-800 border-slate-200';
     }
   };
 
   return (
     <PublicLayout>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Header */}
           <div className="mb-8">
             <div className="text-center mb-6">
-              <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900 mb-2">
+              <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 mb-2">
                 All Public Reports
               </h1>
-              <p className="text-gray-600 max-w-2xl mx-auto">
+              <p className="text-slate-600 max-w-2xl mx-auto">
                 Browse all civic issues reported by citizens. Stay informed about ongoing developments in your city.
               </p>
             </div>
 
             {/* Statistics Cards */}
             <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mb-6">
-              <Card className="bg-white border-l-4 border-l-blue-500">
+              <Card className="bg-white border-l-4 border-l-emerald-500">
                 <CardContent className="p-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-gray-600">Total Reports</p>
-                      <p className="text-2xl font-bold text-gray-900">{displayStats.total}</p>
+                      <p className="text-sm text-slate-600">Total Reports</p>
+                      <p className="text-2xl font-bold text-slate-900">{displayStats.total}</p>
                     </div>
-                    <BarChart3 className="h-8 w-8 text-blue-500" />
+                    <BarChart3 className="h-8 w-8 text-emerald-500" />
                   </div>
                 </CardContent>
               </Card>
@@ -140,8 +140,8 @@ export default function AllReportsPage() {
                 <CardContent className="p-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-gray-600">New</p>
-                      <p className="text-2xl font-bold text-gray-900">{displayStats.new}</p>
+                      <p className="text-sm text-slate-600">New</p>
+                      <p className="text-2xl font-bold text-slate-900">{displayStats.new}</p>
                     </div>
                     <AlertCircle className="h-8 w-8 text-red-500" />
                   </div>
@@ -152,8 +152,8 @@ export default function AllReportsPage() {
                 <CardContent className="p-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-gray-600">In Progress</p>
-                      <p className="text-2xl font-bold text-gray-900">{displayStats.inProgress}</p>
+                      <p className="text-sm text-slate-600">In Progress</p>
+                      <p className="text-2xl font-bold text-slate-900">{displayStats.inProgress}</p>
                     </div>
                     <TrendingUp className="h-8 w-8 text-yellow-500" />
                   </div>
@@ -164,22 +164,22 @@ export default function AllReportsPage() {
                 <CardContent className="p-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-gray-600">Resolved</p>
-                      <p className="text-2xl font-bold text-gray-900">{displayStats.resolved}</p>
+                      <p className="text-sm text-slate-600">Resolved</p>
+                      <p className="text-2xl font-bold text-slate-900">{displayStats.resolved}</p>
                     </div>
                     <CheckCircle className="h-8 w-8 text-green-500" />
                   </div>
                 </CardContent>
               </Card>
 
-              <Card className="bg-white border-l-4 border-l-purple-500">
+              <Card className="bg-white border-l-4 border-l-slate-700">
                 <CardContent className="p-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-gray-600">Total Views</p>
-                      <p className="text-2xl font-bold text-gray-900">{displayStats.totalViews}</p>
+                      <p className="text-sm text-slate-600">Total Views</p>
+                      <p className="text-2xl font-bold text-slate-900">{displayStats.totalViews}</p>
                     </div>
-                    <Eye className="h-8 w-8 text-purple-500" />
+                    <Eye className="h-8 w-8 text-slate-700" />
                   </div>
                 </CardContent>
               </Card>
@@ -188,8 +188,8 @@ export default function AllReportsPage() {
                 <CardContent className="p-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-gray-600">Community Likes</p>
-                      <p className="text-2xl font-bold text-gray-900">{displayStats.totalLikes}</p>
+                      <p className="text-sm text-slate-600">Community Likes</p>
+                      <p className="text-2xl font-bold text-slate-900">{displayStats.totalLikes}</p>
                     </div>
                     <Users className="h-8 w-8 text-indigo-500" />
                   </div>
@@ -210,7 +210,7 @@ export default function AllReportsPage() {
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 {/* Search */}
                 <div className="relative">
-                  <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                  <Search className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
                   <Input
                     placeholder="Search reports..."
                     value={searchTerm}
@@ -268,11 +268,11 @@ export default function AllReportsPage() {
 
           {/* Results */}
           <div className="mb-4 flex items-center justify-between">
-            <p className="text-gray-600">
+            <p className="text-slate-600">
               Showing {filteredReports.length} of {reports.length} reports
             </p>
             {isLoading && (
-              <span className="text-sm text-gray-500">Loading...</span>
+              <span className="text-sm text-slate-500">Loading...</span>
             )}
           </div>
 
@@ -304,24 +304,24 @@ export default function AllReportsPage() {
                     </div>
 
                     {/* Title */}
-                    <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
+                    <h3 className="font-semibold text-slate-900 mb-2 line-clamp-2 group-hover:text-emerald-600 transition-colors">
                       {report.title}
                     </h3>
 
                     {/* Description */}
-                    <p className="text-sm text-gray-600 mb-4 line-clamp-2">
+                    <p className="text-sm text-slate-600 mb-4 line-clamp-2">
                       {report.description}
                     </p>
 
                     {/* Location */}
-                    <div className="flex items-center gap-1 text-sm text-gray-500 mb-4">
+                    <div className="flex items-center gap-1 text-sm text-slate-500 mb-4">
                       <MapPin className="h-4 w-4" />
                       <span>{report.location?.address || 'Location not specified'}</span>
                     </div>
 
                     {/* Meta Info */}
                     <div className="space-y-2">
-                      <div className="flex items-center justify-between text-xs text-gray-500">
+                      <div className="flex items-center justify-between text-xs text-slate-500">
                         <div className="flex items-center gap-1">
                           <User className="h-3 w-3" />
                           <span>{report.user?.fullName || 'Anonymous'}</span>
@@ -332,7 +332,7 @@ export default function AllReportsPage() {
                         </div>
                       </div>
 
-                      <div className="flex items-center justify-between text-xs text-gray-500">
+                      <div className="flex items-center justify-between text-xs text-slate-500">
                         <div className="flex items-center gap-1">
                           <Eye className="h-3 w-3" />
                           <span>{report.viewsCount || 0} views</span>
@@ -345,12 +345,12 @@ export default function AllReportsPage() {
                     </div>
 
                     {/* View Details Button */}
-                    <div className="mt-4 pt-4 border-t border-gray-100">
+                    <div className="mt-4 pt-4 border-t border-slate-100">
                       <Button
                         asChild
                         variant="ghost"
                         size="sm"
-                        className="w-full group-hover:bg-blue-50 group-hover:text-blue-600"
+                        className="w-full group-hover:bg-emerald-50 group-hover:text-emerald-600"
                       >
                         <Link href={`/reports/${report.id}`}>
                           View Details
@@ -367,15 +367,15 @@ export default function AllReportsPage() {
           {/* No Results */}
           {filteredReports.length === 0 && (
             <div className="text-center py-12">
-              <AlertCircle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">No reports found</h3>
-              <p className="text-gray-600">Try adjusting your search criteria or filters.</p>
+              <AlertCircle className="h-12 w-12 text-slate-400 mx-auto mb-4" />
+              <h3 className="text-lg font-medium text-slate-900 mb-2">No reports found</h3>
+              <p className="text-slate-600">Try adjusting your search criteria or filters.</p>
             </div>
           )}
 
           {/* Call to Action */}
           <div className="mt-12 text-center">
-            <Card className="bg-gradient-to-r from-blue-600 to-green-600 text-white">
+            <Card className="bg-gradient-to-r from-emerald-600 to-green-600 text-white">
               <CardContent className="p-8">
                 <h2 className="text-2xl font-bold mb-4">Want to Report an Issue?</h2>
                 <p className="mb-6 opacity-90">
@@ -384,7 +384,7 @@ export default function AllReportsPage() {
                 <Button 
                   asChild 
                   size="lg" 
-                  className="bg-white text-blue-600 hover:bg-gray-100"
+                  className="bg-white text-emerald-600 hover:bg-slate-100"
                 >
                   <Link href="/report">
                     Report New Issue

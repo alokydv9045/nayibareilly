@@ -72,12 +72,12 @@ const EVENT_CONFIG: Record<TimelineEventType, {
 }> = {
   created: {
     icon: FileText,
-    iconColor: 'text-blue-600',
-    bgColor: 'bg-blue-100'
+    iconColor: 'text-emerald-600',
+    bgColor: 'bg-emerald-100'
   },
   status_change: {
     icon: Clock,
-    iconColor: 'text-purple-600',
+    iconColor: 'text-slate-800',
     bgColor: 'bg-purple-100'
   },
   assigned: {
@@ -112,8 +112,8 @@ const EVENT_CONFIG: Record<TimelineEventType, {
   },
   archived: {
     icon: Archive,
-    iconColor: 'text-gray-600',
-    bgColor: 'bg-gray-100'
+    iconColor: 'text-slate-600',
+    bgColor: 'bg-slate-100'
   },
   verified: {
     icon: CheckCircle2,

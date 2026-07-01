@@ -95,7 +95,7 @@ export function IssueActions({
     <>
       {/* Approve Modal */}
       <Dialog open={isOpen && action === 'approve'} onOpenChange={handleClose}>
-        <DialogContent className="bg-gray-900 border-orange-500/20 text-white">
+        <DialogContent className="bg-slate-900 border-orange-500/20 text-white">
           <DialogHeader>
             <DialogTitle>Approve & Assign Issue</DialogTitle>
             <DialogDescription className="text-orange-200">
@@ -166,7 +166,7 @@ export function IssueActions({
 
       {/* Reject Modal */}
       <Dialog open={isOpen && action === 'reject'} onOpenChange={handleClose}>
-        <DialogContent className="bg-gray-900 border-orange-500/20 text-white">
+        <DialogContent className="bg-slate-900 border-orange-500/20 text-white">
           <DialogHeader>
             <DialogTitle>Reject Issue</DialogTitle>
             <DialogDescription className="text-orange-200">
@@ -204,7 +204,7 @@ export function IssueActions({
 
       {/* Request Info Modal */}
       <Dialog open={isOpen && action === 'request-info'} onOpenChange={handleClose}>
-        <DialogContent className="bg-gray-900 border-orange-500/20 text-white">
+        <DialogContent className="bg-slate-900 border-orange-500/20 text-white">
           <DialogHeader>
             <DialogTitle>Request More Information</DialogTitle>
             <DialogDescription className="text-orange-200">
@@ -231,7 +231,7 @@ export function IssueActions({
             <Button
               onClick={handleSubmit}
               disabled={!message.trim() || loading}
-              className="bg-blue-600 hover:bg-blue-700"
+              className="bg-emerald-600 hover:bg-emerald-700"
             >
               {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               Send Request
@@ -242,7 +242,7 @@ export function IssueActions({
 
       {/* Mark Spam Modal */}
       <Dialog open={isOpen && action === 'mark-spam'} onOpenChange={handleClose}>
-        <DialogContent className="bg-gray-900 border-orange-500/20 text-white">
+        <DialogContent className="bg-slate-900 border-orange-500/20 text-white">
           <DialogHeader>
             <DialogTitle>Mark as Spam</DialogTitle>
             <DialogDescription className="text-orange-200">
