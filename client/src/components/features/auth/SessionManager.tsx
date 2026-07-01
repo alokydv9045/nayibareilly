@@ -179,7 +179,7 @@ export function SessionManager() {
             <CardDescription>Total Sessions</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-blue-600">
+            <div className="text-2xl font-bold text-emerald-600">
               {stats.totalSessions}
             </div>
           </CardContent>
@@ -190,7 +190,7 @@ export function SessionManager() {
             <CardDescription>Revoked Sessions</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-gray-500">
+            <div className="text-2xl font-bold text-slate-500">
               {stats.revokedSessions}
             </div>
           </CardContent>

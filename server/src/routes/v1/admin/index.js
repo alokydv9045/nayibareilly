@@ -25,7 +25,11 @@ import {
   getOrganizationStats,
   getModeratorStats,
   getModeratorPending,
-  getDepartmentRealtimeStats
+  getDepartmentRealtimeStats,
+  getSuperAdminUsers,
+  createSuperAdminUser,
+  updateSuperAdminUser,
+  deleteSuperAdminUser
 , updateUserRoles, activateUser, deactivateUser, getCategory, updateCategory, deleteCategory, getActivityLogs } from '../../../controllers/admin.controller.js';
 
 const router = Router();
@@ -231,6 +235,38 @@ router.get('/superadmin/realtime-issues', [
 router.get('/superadmin/moderator-performance', [
   auth(['SUPER_ADMIN'])
 ], getSuperAdminModeratorPerformance);
+
+/**
+ * GET /api/v1/admin/superadmin/users
+ * Get all users for superadmin
+ */
+router.get('/superadmin/users', [
+  auth(['SUPER_ADMIN'])
+], getSuperAdminUsers);
+
+/**
+ * POST /api/v1/admin/superadmin/users
+ * Create a new user from superadmin dashboard
+ */
+router.post('/superadmin/users', [
+  auth(['SUPER_ADMIN'])
+], createSuperAdminUser);
+
+/**
+ * PUT /api/v1/admin/superadmin/users/:userId
+ * Update a user from superadmin dashboard
+ */
+router.put('/superadmin/users/:userId', [
+  auth(['SUPER_ADMIN'])
+], updateSuperAdminUser);
+
+/**
+ * DELETE /api/v1/admin/superadmin/users/:userId
+ * Delete a user from superadmin dashboard
+ */
+router.delete('/superadmin/users/:userId', [
+  auth(['SUPER_ADMIN'])
+], deleteSuperAdminUser);
 
 /**
  * GET /api/v1/admin/department/:departmentId/issues

@@ -28,10 +28,10 @@ export function NextActionCard({
   const { action, reason } = nextActionData
 
   return (
-    <Card className={`border-l-4 border-l-blue-500 ${className}`}>
+    <Card className={`border-l-4 border-l-emerald-500 ${className}`}>
       <CardHeader className="pb-3">
         <div className="flex items-center gap-2">
-          <Lightbulb className="h-5 w-5 text-blue-500" />
+          <Lightbulb className="h-5 w-5 text-emerald-500" />
           <CardTitle className="text-lg">Recommended Next Action</CardTitle>
         </div>
         <CardDescription>

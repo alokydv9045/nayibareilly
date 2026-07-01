@@ -166,16 +166,16 @@ export default function MayorDashboard() {
         <div className="mb-8">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center space-x-4">
-              <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl shadow-lg">
+              <div className="p-3 bg-gradient-to-r from-emerald-500 to-indigo-500 rounded-xl shadow-lg">
                 <Building className="h-10 w-10 text-white" />
               </div>
               <div>
                 <h1 className="text-4xl font-bold text-white">Mayor Dashboard</h1>
-                <p className="text-blue-200">City-wide oversight and performance monitoring</p>
+                <p className="text-emerald-200">City-wide oversight and performance monitoring</p>
               </div>
             </div>
             <div className="flex items-center space-x-3">
-              <Badge className="bg-blue-500 text-white">
+              <Badge className="bg-emerald-500 text-white">
                 <Eye className="h-3 w-3 mr-1" />
                 Read-Only Access
               </Badge>
@@ -219,7 +219,7 @@ export default function MayorDashboard() {
                     <span className="text-2xl font-bold text-white">{stats.cityHealthScore}%</span>
                   </div>
                 </div>
-                <p className="text-sm text-blue-200">
+                <p className="text-sm text-emerald-200">
                   {stats.cityHealthScore >= 80 ? 'Excellent' : stats.cityHealthScore >= 60 ? 'Good' : 'Needs Attention'}
                 </p>
               </div>
@@ -239,7 +239,7 @@ export default function MayorDashboard() {
                 <Bell className="h-4 w-4 mr-2" />
                 Emergency Alert
               </Button>
-              <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+              <Button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white">
                 <Users className="h-4 w-4 mr-2" />
                 Deploy Staff
               </Button>
@@ -291,20 +291,20 @@ export default function MayorDashboard() {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-blue-200 text-sm font-medium">Total Issues</p>
+                    <p className="text-emerald-200 text-sm font-medium">Total Issues</p>
                     <p className="text-3xl font-bold text-white mt-2">{stats.totalIssues}</p>
                     <p className="text-xs text-blue-400 mt-1">
                       <TrendingUp className="h-3 w-3 inline mr-1" />
                       All time reports
                     </p>
                   </div>
-                  <div className="p-3 bg-blue-500/20 rounded-lg">
-                    <FileText className="h-8 w-8 text-blue-300" />
+                  <div className="p-3 bg-emerald-500/20 rounded-lg">
+                    <FileText className="h-8 w-8 text-emerald-300" />
                   </div>
                 </div>
                 <div className="mt-4">
                   <Progress value={(stats.resolvedIssues / Math.max(stats.totalIssues, 1)) * 100} className="h-2" />
-                  <p className="text-xs text-blue-300 mt-1">
+                  <p className="text-xs text-emerald-300 mt-1">
                     {Math.round((stats.resolvedIssues / Math.max(stats.totalIssues, 1)) * 100)}% resolved
                   </p>
                 </div>
@@ -317,7 +317,7 @@ export default function MayorDashboard() {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-blue-200 text-sm font-medium">Resolved Issues</p>
+                    <p className="text-emerald-200 text-sm font-medium">Resolved Issues</p>
                     <p className="text-3xl font-bold text-white mt-2">{stats.resolvedIssues}</p>
                     <p className="text-xs text-green-400 mt-1">
                       <CheckCircle className="h-3 w-3 inline mr-1" />
@@ -343,7 +343,7 @@ export default function MayorDashboard() {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-blue-200 text-sm font-medium">Response Time</p>
+                    <p className="text-emerald-200 text-sm font-medium">Response Time</p>
                     <p className="text-3xl font-bold text-white mt-2">{stats.averageResolutionTime}h</p>
                     <p className="text-xs text-yellow-400 mt-1">
                       <Clock className="h-3 w-3 inline mr-1" />
@@ -369,7 +369,7 @@ export default function MayorDashboard() {
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-blue-200 text-sm font-medium">Citizen Satisfaction</p>
+                    <p className="text-emerald-200 text-sm font-medium">Citizen Satisfaction</p>
                     <p className="text-3xl font-bold text-white mt-2">{stats.citizenSatisfaction}%</p>
                     <p className="text-xs text-green-400 mt-1">
                       <Star className="h-3 w-3 inline mr-1" />
@@ -377,7 +377,7 @@ export default function MayorDashboard() {
                       +5% from last month
                     </p>
                   </div>
-                  <div className="p-3 bg-purple-500/20 rounded-lg">
+                  <div className="p-3 bg-slate-700/20 rounded-lg">
                     <ThumbsUp className="h-8 w-8 text-purple-300" />
                   </div>
                 </div>
@@ -412,7 +412,7 @@ export default function MayorDashboard() {
                   <div key={index} className="flex items-center space-x-3 p-3 bg-white/5 rounded-lg border border-white/10">
                     <div className={`p-2 rounded-full ${
                       activity.type === 'success' ? 'bg-green-500/20' :
-                      activity.type === 'warning' ? 'bg-yellow-500/20' : 'bg-blue-500/20'
+                      activity.type === 'warning' ? 'bg-yellow-500/20' : 'bg-emerald-500/20'
                     }`}>
                       {activity.type === 'success' ? <CheckCircle className="h-4 w-4 text-green-400" /> :
                        activity.type === 'warning' ? <AlertTriangle className="h-4 w-4 text-yellow-400" /> :
@@ -420,7 +420,7 @@ export default function MayorDashboard() {
                     </div>
                     <div className="flex-1">
                       <p className="text-white text-sm">{activity.action}</p>
-                      <p className="text-blue-300 text-xs">{activity.department} • {activity.time}</p>
+                      <p className="text-emerald-300 text-xs">{activity.department} • {activity.time}</p>
                     </div>
                   </div>
                 ))}
@@ -439,23 +439,23 @@ export default function MayorDashboard() {
             <CardContent className="space-y-4">
               <div className="text-center">
                 <p className="text-4xl font-bold text-white">{stats.activeStaff}</p>
-                <p className="text-blue-200 text-sm">Active Staff Members</p>
+                <p className="text-emerald-200 text-sm">Active Staff Members</p>
               </div>
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
-                  <span className="text-blue-200 text-sm">On Duty</span>
+                  <span className="text-emerald-200 text-sm">On Duty</span>
                   <Badge className="bg-green-500">{Math.floor(stats.activeStaff * 0.8)}</Badge>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-blue-200 text-sm">Field Work</span>
-                  <Badge className="bg-blue-500">{Math.floor(stats.activeStaff * 0.6)}</Badge>
+                  <span className="text-emerald-200 text-sm">Field Work</span>
+                  <Badge className="bg-emerald-500">{Math.floor(stats.activeStaff * 0.6)}</Badge>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-blue-200 text-sm">Available</span>
+                  <span className="text-emerald-200 text-sm">Available</span>
                   <Badge className="bg-yellow-500">{Math.floor(stats.activeStaff * 0.2)}</Badge>
                 </div>
               </div>
-              <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+              <Button className="w-full bg-emerald-600 hover:bg-emerald-700 text-white">
                 <Phone className="h-4 w-4 mr-2" />
                 Contact Staff
               </Button>
@@ -509,7 +509,7 @@ export default function MayorDashboard() {
                         <Map className="h-5 w-5 mr-2" />
                         City Overview
                       </CardTitle>
-                      <CardDescription className="text-blue-200">
+                      <CardDescription className="text-emerald-200">
                         Geographic distribution and heat maps
                       </CardDescription>
                     </CardHeader>
@@ -528,7 +528,7 @@ export default function MayorDashboard() {
                         <BarChart3 className="h-5 w-5 mr-2" />
                         Analytics & Reports
                       </CardTitle>
-                      <CardDescription className="text-blue-200">
+                      <CardDescription className="text-emerald-200">
                         Comprehensive analytics and insights
                       </CardDescription>
                     </CardHeader>
@@ -547,14 +547,14 @@ export default function MayorDashboard() {
               <Card className="bg-white/10 backdrop-blur-lg border-white/20">
                 <CardHeader>
                   <CardTitle className="text-white">Department Performance Comparison</CardTitle>
-                  <CardDescription className="text-blue-200">
+                  <CardDescription className="text-emerald-200">
                     Real-time department efficiency metrics
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
                     {departmentPerformance.length === 0 ? (
-                      <div className="text-center py-8 text-blue-300">
+                      <div className="text-center py-8 text-emerald-300">
                         <Building className="h-12 w-12 mx-auto mb-3 opacity-50" />
                         <p>Loading department data...</p>
                       </div>
@@ -571,7 +571,7 @@ export default function MayorDashboard() {
                               </div>
                               <div>
                                 <h4 className="text-white font-semibold">{dept.name}</h4>
-                                <p className="text-sm text-blue-200">{dept.issuesAssigned} issues assigned</p>
+                                <p className="text-sm text-emerald-200">{dept.issuesAssigned} issues assigned</p>
                               </div>
                             </div>
                             <Badge className={
@@ -583,19 +583,19 @@ export default function MayorDashboard() {
                           </div>
                           <div className="grid grid-cols-4 gap-4 text-sm mt-3">
                             <div>
-                              <p className="text-blue-300">Resolved</p>
+                              <p className="text-emerald-300">Resolved</p>
                               <p className="text-white font-bold">{dept.resolved}</p>
                             </div>
                             <div>
-                              <p className="text-blue-300">In Progress</p>
+                              <p className="text-emerald-300">In Progress</p>
                               <p className="text-white font-bold">{dept.inProgress}</p>
                             </div>
                             <div>
-                              <p className="text-blue-300">Avg Time</p>
+                              <p className="text-emerald-300">Avg Time</p>
                               <p className="text-white font-bold">{dept.avgTime}h</p>
                             </div>
                             <div>
-                              <p className="text-blue-300">SLA Compliance</p>
+                              <p className="text-emerald-300">SLA Compliance</p>
                               <p className="text-white font-bold">{dept.slaCompliance}%</p>
                             </div>
                           </div>
@@ -616,14 +616,14 @@ export default function MayorDashboard() {
                     Real-time Issue Tracking
                     <Badge className="ml-3 bg-red-500 animate-pulse">LIVE</Badge>
                   </CardTitle>
-                  <CardDescription className="text-blue-200">
+                  <CardDescription className="text-emerald-200">
                     Complete visibility from moderator assignment to citizen verification
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
                     {recentIssues.length === 0 ? (
-                      <div className="text-center py-8 text-blue-300">
+                      <div className="text-center py-8 text-emerald-300">
                         <Activity className="h-12 w-12 mx-auto mb-3 opacity-50" />
                         <p>No recent issues to display</p>
                       </div>
@@ -633,16 +633,16 @@ export default function MayorDashboard() {
                           <div className="flex items-start justify-between mb-3">
                             <div>
                               <div className="flex items-center space-x-2 mb-2">
-                                <Badge className="bg-blue-500">#{issue.reportId}</Badge>
+                                <Badge className="bg-emerald-500">#{issue.reportId}</Badge>
                                 <h4 className="text-white font-semibold">{issue.title}</h4>
                               </div>
-                              <p className="text-sm text-blue-200 mb-2">{issue.description}</p>
+                              <p className="text-sm text-emerald-200 mb-2">{issue.description}</p>
                             </div>
                             <div className="flex items-center gap-2">
                               <Badge className={
                               issue.status.includes('VERIFIED') ? 'bg-green-500' :
-                              issue.status.includes('PROGRESS') ? 'bg-blue-500' :
-                              issue.status.includes('PENDING') ? 'bg-yellow-500' : 'bg-gray-500'
+                              issue.status.includes('PROGRESS') ? 'bg-emerald-500' :
+                              issue.status.includes('PENDING') ? 'bg-yellow-500' : 'bg-slate-500'
                             }>
                               {issue.status}
                             </Badge>
@@ -657,16 +657,16 @@ export default function MayorDashboard() {
                             {issue.timeline?.map((event: IssueTimeline, idx: number) => (
                               <div key={idx} className="flex items-start space-x-3">
                                 <div className={`p-1 rounded-full ${
-                                  event.completed ? 'bg-green-500' : 'bg-gray-500'
+                                  event.completed ? 'bg-green-500' : 'bg-slate-500'
                                 }`}>
                                   {event.completed ? <CheckCircle className="h-3 w-3 text-white" /> : 
                                   <Clock className="h-3 w-3 text-white" />}
                                 </div>
                                 <div className="flex-1">
                                   <p className="text-sm text-white">{event.stage}</p>
-                                  <p className="text-xs text-blue-300">{event.actor} • {event.time}</p>
+                                  <p className="text-xs text-emerald-300">{event.actor} • {event.time}</p>
                                   {event.notes && (
-                                    <p className="text-xs text-blue-200 mt-1 italic">&ldquo;{event.notes}&rdquo;</p>
+                                    <p className="text-xs text-emerald-200 mt-1 italic">&ldquo;{event.notes}&rdquo;</p>
                                   )}
                                 </div>
                               </div>
@@ -676,16 +676,16 @@ export default function MayorDashboard() {
                           {/* Performance Metrics */}
                           <div className="mt-4 pt-4 border-t border-white/10 grid grid-cols-3 gap-4 text-sm">
                             <div>
-                              <p className="text-blue-300">Total Time</p>
+                              <p className="text-emerald-300">Total Time</p>
                               <p className="text-white font-bold">{issue.totalTime}</p>
                             </div>
                             <div>
-                              <p className="text-blue-300">Response Time</p>
+                              <p className="text-emerald-300">Response Time</p>
                               <p className="text-white font-bold">{issue.responseTime}</p>
                             </div>
                             {issue.citizenRating && (
                               <div>
-                                <p className="text-blue-300">Citizen Rating</p>
+                                <p className="text-emerald-300">Citizen Rating</p>
                                 <p className="text-white font-bold">
                                   {'â­'.repeat(issue.citizenRating)} {issue.citizenRating}/5
                                 </p>
@@ -709,7 +709,7 @@ export default function MayorDashboard() {
                       <TrendingUp className="h-5 w-5 mr-2" />
                       Issue Trends & Patterns
                     </CardTitle>
-                    <CardDescription className="text-blue-200">
+                    <CardDescription className="text-emerald-200">
                       Identify recurring problems and seasonal patterns
                     </CardDescription>
                   </CardHeader>

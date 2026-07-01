@@ -1,4 +1,4 @@
-﻿import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useState, useEffect } from 'react'
 import { api } from '@/lib/api/client'
 import { isAuthenticated, authEvents } from '@/lib/auth/auth-utils'
@@ -73,8 +73,8 @@ export function useMe() {
 export function useUpdateProfile() {
   const qc = useQueryClient()
   return useMutation({
-    mutationFn: async (payload: { name?: string; avatarUrl?: string }) => {
-      const { data } = await api.put('/users/profile', payload)
+    mutationFn: async (payload: { name?: string; email?: string; avatarUrl?: string }) => {
+      const { data } = await api.patch('/users/profile', payload)
       return data?.data?.user || data?.data
     },
     onSuccess: () => {

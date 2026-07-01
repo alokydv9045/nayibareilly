@@ -213,7 +213,7 @@ export default function IssueCardAdmin({
       expandable
       defaultExpanded
       variant="detailed"
-      className="border-l-4 border-l-purple-500"
+      className="border-l-4 border-l-slate-700"
       {...props}
     />
   )

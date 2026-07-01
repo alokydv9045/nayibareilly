@@ -36,8 +36,9 @@ router.get('/:id', [
  */
 router.patch('/profile', [
   auth(),
-  body('name').optional().isString().trim().isLength({ min: 2, max: 100 }),
-  body('avatarUrl').optional().isURL()
+  body('name').optional({ checkFalsy: true }).isString().trim().isLength({ min: 2, max: 100 }),
+  body('avatarUrl').optional({ checkFalsy: true }).isURL(),
+  body('email').optional({ checkFalsy: true }).isEmail()
 ], updateProfile);
 
 /**

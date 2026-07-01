@@ -526,7 +526,7 @@ export const SUPERADMIN_NAV: NavGroup[] = [
       { 
         name: 'Dashboard', 
         nameHi: 'डैशबोर्ड',
-        href: '/superadmin/dashboard', 
+        href: '/superadmin', 
         icon: LayoutDashboard,
         roles: [UserRole.SUPER_ADMIN],
         requireAuth: true,
@@ -536,7 +536,7 @@ export const SUPERADMIN_NAV: NavGroup[] = [
       { 
         name: 'System Overview', 
         nameHi: 'सिस्टम अवलोकन',
-        href: '/superadmin/overview', 
+        href: '/superadmin/analytics', 
         icon: BarChart3,
         roles: [UserRole.SUPER_ADMIN],
         requireAuth: true,
@@ -546,7 +546,7 @@ export const SUPERADMIN_NAV: NavGroup[] = [
       { 
         name: 'All Admins', 
         nameHi: 'सभी व्यवस्थापक',
-        href: '/superadmin/admins', 
+        href: '/superadmin/users', 
         icon: Shield,
         roles: [UserRole.SUPER_ADMIN],
         requireAuth: true,
@@ -556,7 +556,7 @@ export const SUPERADMIN_NAV: NavGroup[] = [
       { 
         name: 'System Logs', 
         nameHi: 'सिस्टम लॉग',
-        href: '/superadmin/logs', 
+        href: '/superadmin/audit', 
         icon: Database,
         roles: [UserRole.SUPER_ADMIN],
         requireAuth: true,

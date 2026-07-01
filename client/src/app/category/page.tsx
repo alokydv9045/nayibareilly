@@ -40,14 +40,14 @@ function CategoryContent() {
             <button
               key={c}
               onClick={() => changeCategory(c)}
-              className={`px-3 py-1 rounded border text-sm transition ${c===category ? 'bg-blue-600 text-white border-blue-600' : 'bg-white hover:bg-blue-50'}`}
+              className={`px-3 py-1 rounded border text-sm transition ${c===category ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-white hover:bg-emerald-50'}`}
             >
               {c}
             </button>
           ))}
           <button
             onClick={() => changeCategory('')}
-            className={`px-3 py-1 rounded border text-sm transition ${category==='' ? 'bg-gray-800 text-white border-gray-800' : 'bg-white hover:bg-gray-50'}`}
+            className={`px-3 py-1 rounded border text-sm transition ${category==='' ? 'bg-slate-800 text-white border-slate-800' : 'bg-white hover:bg-slate-50'}`}
           >All</button>
         </div>
       </div>

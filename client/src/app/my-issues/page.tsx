@@ -1,9 +1,10 @@
-﻿"use client"
+"use client"
 import RequireUser from '@/components/features/auth/RequireUser'
 import CitizenLayout from '@/components/layout/CitizenLayout'
 import IssueCard from '@/components/features/citizen/IssueCard'
 import { useMyIssues } from '@/hooks/api/useIssues'
 import { useState, useMemo } from 'react'
+import Link from 'next/link'
 import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -58,10 +59,10 @@ export default function MyIssuesPage() {
   <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 space-y-8">
           {/* Header */}
           <div className="text-center space-y-2 sm:space-y-3 animate-fadeInUp">
-            <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent tracking-tight">
+            <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
               My Issues
             </h1>
-            <p className="text-gray-600 max-w-2xl mx-auto text-sm sm:text-base">
+            <p className="text-slate-600 max-w-2xl mx-auto text-sm sm:text-base">
               Track and manage all your reported issues in one place. Monitor progress and stay updated on resolutions.
             </p>
           </div>
@@ -71,12 +72,12 @@ export default function MyIssuesPage() {
             <Card className="group hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
               <CardContent className="p-4 text-center">
                 <div className="flex items-center justify-center mb-2">
-                  <div className="bg-blue-100 rounded-full p-2 group-hover:scale-110 transition-transform duration-300">
-                    <FileText className="h-5 w-5 text-blue-600" />
+                  <div className="bg-emerald-100 rounded-full p-2 group-hover:scale-110 transition-transform duration-300">
+                    <FileText className="h-5 w-5 text-emerald-600" />
                   </div>
                 </div>
-                <p className="text-2xl font-bold text-gray-900">{stats.total}</p>
-                <p className="text-sm text-gray-600">Total Issues</p>
+                <p className="text-2xl font-bold text-slate-900">{stats.total}</p>
+                <p className="text-sm text-slate-600">Total Issues</p>
               </CardContent>
             </Card>
 
@@ -88,7 +89,7 @@ export default function MyIssuesPage() {
                   </div>
                 </div>
                 <p className="text-2xl font-bold text-red-600">{stats.open}</p>
-                <p className="text-sm text-gray-600">Open</p>
+                <p className="text-sm text-slate-600">Open</p>
               </CardContent>
             </Card>
 
@@ -100,7 +101,7 @@ export default function MyIssuesPage() {
                   </div>
                 </div>
                 <p className="text-2xl font-bold text-yellow-600">{stats.inProgress}</p>
-                <p className="text-sm text-gray-600">In Progress</p>
+                <p className="text-sm text-slate-600">In Progress</p>
               </CardContent>
             </Card>
 
@@ -112,19 +113,19 @@ export default function MyIssuesPage() {
                   </div>
                 </div>
                 <p className="text-2xl font-bold text-green-600">{stats.resolved}</p>
-                <p className="text-sm text-gray-600">Resolved</p>
+                <p className="text-sm text-slate-600">Resolved</p>
               </CardContent>
             </Card>
 
             <Card className="group hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
               <CardContent className="p-4 text-center">
                 <div className="flex items-center justify-center mb-2">
-                  <div className="bg-gray-100 rounded-full p-2 group-hover:scale-110 transition-transform duration-300">
-                    <XCircle className="h-5 w-5 text-gray-600" />
+                  <div className="bg-slate-100 rounded-full p-2 group-hover:scale-110 transition-transform duration-300">
+                    <XCircle className="h-5 w-5 text-slate-600" />
                   </div>
                 </div>
-                <p className="text-2xl font-bold text-gray-600">{stats.closed}</p>
-                <p className="text-sm text-gray-600">Closed</p>
+                <p className="text-2xl font-bold text-slate-600">{stats.closed}</p>
+                <p className="text-sm text-slate-600">Closed</p>
               </CardContent>
             </Card>
           </div>
@@ -135,7 +136,7 @@ export default function MyIssuesPage() {
               <div className="flex flex-col lg:flex-row gap-3 sm:gap-4">
                 {/* Search */}
                 <div className="flex-1 relative group">
-                  <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400 group-hover:text-blue-600 transition-colors duration-300" />
+                  <Search className="absolute left-3 top-3 h-4 w-4 text-slate-400 group-hover:text-emerald-600 transition-colors duration-300" />
                   <Input
                     placeholder="Search issues by title or category..."
                     value={searchTerm}
@@ -194,7 +195,7 @@ export default function MyIssuesPage() {
               {/* Active Filters */}
               {(searchTerm || selectedCategory !== 'all' || selectedStatus !== 'all') && (
                 <div className="flex items-center gap-2 mt-4 flex-wrap animate-fadeInUp">
-                  <span className="text-sm text-gray-600">Active filters:</span>
+                  <span className="text-sm text-slate-600">Active filters:</span>
                   {searchTerm && (
                     <Badge variant="secondary" className="group cursor-pointer hover:bg-red-100 transition-colors duration-300">
                       Search: &ldquo;{searchTerm}&rdquo;
@@ -244,8 +245,8 @@ export default function MyIssuesPage() {
             {isLoading ? (
               <div className="text-center py-10 sm:py-12">
                 <div className="inline-flex items-center space-x-2">
-                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
-                  <span className="text-gray-600">Loading your issues...</span>
+                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-emerald-500"></div>
+                  <span className="text-slate-600 font-medium">Loading your issues...</span>
                 </div>
               </div>
             ) : error ? (
@@ -257,23 +258,25 @@ export default function MyIssuesPage() {
                 </CardContent>
               </Card>
             ) : processedIssues.length === 0 ? (
-              <Card className="border-gray-200 bg-gray-50">
+              <Card className="border-slate-200 bg-slate-50">
                 <CardContent className="p-10 sm:p-12 text-center">
-                  <FileText className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                  <FileText className="h-16 w-16 text-slate-400 mx-auto mb-4" />
+                  <h3 className="text-xl font-semibold text-slate-900 mb-2">
                     {Array.isArray(items) && items.length === 0 
                       ? "No Issues Found" 
                       : "No Matching Issues"}
                   </h3>
-                  <p className="text-gray-600 mb-6">
+                  <p className="text-slate-600 mb-6">
                     {Array.isArray(items) && items.length === 0 
                       ? "You haven't reported any issues yet. Start by reporting your first issue to help improve your community."
                       : "Try adjusting your search criteria or filters to find the issues you're looking for."}
                   </p>
                   {Array.isArray(items) && items.length === 0 && (
-                    <Button className="transform hover:scale-105 transition-all duration-300 hover:shadow-lg group">
-                      <Plus className="h-4 w-4 mr-2 group-hover:rotate-90 transition-transform duration-300" />
-                      Report New Issue
+                    <Button asChild className="transform hover:scale-105 transition-all duration-300 hover:shadow-lg group bg-emerald-500 hover:bg-emerald-600 text-white font-semibold border-0">
+                      <Link href="/report">
+                        <Plus className="h-4 w-4 mr-2 group-hover:rotate-90 transition-transform duration-300" />
+                        Report New Issue
+                      </Link>
                     </Button>
                   )}
                 </CardContent>
@@ -296,7 +299,7 @@ export default function MyIssuesPage() {
           {/* Results Summary */}
           {processedIssues.length > 0 && (
             <div className="text-center animate-fadeInUp animation-delay-800">
-              <p className="text-gray-600">
+              <p className="text-slate-600">
                 Showing {processedIssues.length} of {Array.isArray(items) ? items.length : 0} issues
               </p>
             </div>

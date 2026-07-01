@@ -106,7 +106,7 @@ export default function InfrastructureDepartmentPage() {
       case 'HIGH': return 'bg-orange-500 text-white'
       case 'MEDIUM': return 'bg-yellow-500 text-black'
       case 'LOW': return 'bg-green-500 text-white'
-      default: return 'bg-gray-500 text-white'
+      default: return 'bg-slate-500 text-white'
     }
   }
 
@@ -138,12 +138,12 @@ export default function InfrastructureDepartmentPage() {
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center space-x-3 mb-4">
-            <div className="p-3 bg-blue-600/20 rounded-xl border border-blue-500/30">
+            <div className="p-3 bg-emerald-600/20 rounded-xl border border-emerald-500/30">
               <Construction className="h-8 w-8 text-blue-400" />
             </div>
             <div>
               <h1 className="text-3xl font-bold text-white">Infrastructure & Public Works</h1>
-              <p className="text-blue-200">Roads, Construction & Public Infrastructure Development</p>
+              <p className="text-emerald-200">Roads, Construction & Public Infrastructure Development</p>
             </div>
           </div>
           
@@ -153,7 +153,7 @@ export default function InfrastructureDepartmentPage() {
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-blue-200 text-sm">Total Issues</p>
+                    <p className="text-emerald-200 text-sm">Total Issues</p>
                     <p className="text-2xl font-bold text-white">{stats?.totalIssues || 0}</p>
                     <p className="text-xs text-blue-400">PWD + Traffic</p>
                   </div>
@@ -206,19 +206,19 @@ export default function InfrastructureDepartmentPage() {
         {/* Main Content */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="bg-white/10 border border-white/20">
-            <TabsTrigger value="dashboard" className="data-[state=active]:bg-blue-600/30">
+            <TabsTrigger value="dashboard" className="data-[state=active]:bg-emerald-600/30">
               Dashboard
             </TabsTrigger>
-            <TabsTrigger value="new-issues" className="data-[state=active]:bg-blue-600/30">
+            <TabsTrigger value="new-issues" className="data-[state=active]:bg-emerald-600/30">
               New Issues ({filteredIssues.length})
             </TabsTrigger>
-            <TabsTrigger value="ongoing" className="data-[state=active]:bg-blue-600/30">
+            <TabsTrigger value="ongoing" className="data-[state=active]:bg-emerald-600/30">
               Active Work ({filteredInProgress.length})
             </TabsTrigger>
-            <TabsTrigger value="pwd-staff" className="data-[state=active]:bg-blue-600/30">
+            <TabsTrigger value="pwd-staff" className="data-[state=active]:bg-emerald-600/30">
               PWD Staff ({pwdStaff.length})
             </TabsTrigger>
-            <TabsTrigger value="monitoring" className="data-[state=active]:bg-blue-600/30">
+            <TabsTrigger value="monitoring" className="data-[state=active]:bg-emerald-600/30">
               Infrastructure Control
             </TabsTrigger>
           </TabsList>
@@ -238,13 +238,13 @@ export default function InfrastructureDepartmentPage() {
                   <div className="space-y-4">
                     {[
                       { type: 'Road Infrastructure', count: pwdIssues.length, color: 'bg-orange-500', icon: Construction },
-                      { type: 'Bridge & Drainage', count: 8, color: 'bg-blue-500', icon: Wrench },
+                      { type: 'Bridge & Drainage', count: 8, color: 'bg-emerald-500', icon: Wrench },
                       { type: 'Street Lighting', count: 5, color: 'bg-yellow-500', icon: Zap },
                       { type: 'Construction Projects', count: 12, color: 'bg-green-500', icon: HardHat }
                     ].map((item, index) => (
                       <div key={index} className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
                         <div className="flex items-center space-x-3">
-                          <item.icon className="h-5 w-5 text-blue-300" />
+                          <item.icon className="h-5 w-5 text-emerald-300" />
                           <span className="text-white text-sm">{item.type}</span>
                         </div>
                         <Badge className="bg-white/20 text-white">{item.count}</Badge>
@@ -301,7 +301,7 @@ export default function InfrastructureDepartmentPage() {
                             {activity.type.toUpperCase()}
                           </Badge>
                         </div>
-                        <div className="flex items-center justify-between text-blue-300 text-xs">
+                        <div className="flex items-center justify-between text-emerald-300 text-xs">
                           <span>{activity.location}</span>
                           <span>{activity.time}</span>
                         </div>
@@ -330,11 +330,11 @@ export default function InfrastructureDepartmentPage() {
                       <div key={index} className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
                         <div>
                           <p className="text-white text-sm font-medium">{item.equipment}</p>
-                          <p className="text-blue-300 text-xs">{item.available}/{item.total} Available</p>
+                          <p className="text-emerald-300 text-xs">{item.available}/{item.total} Available</p>
                         </div>
                         <Badge className={`text-xs ${
                           item.status === 'Excellent' ? 'bg-green-600' : 
-                          item.status === 'Good' ? 'bg-blue-600' : 'bg-yellow-600'
+                          item.status === 'Good' ? 'bg-emerald-600' : 'bg-yellow-600'
                         } text-white`}>
                           {item.status}
                         </Badge>
@@ -353,7 +353,7 @@ export default function InfrastructureDepartmentPage() {
                 placeholder="Search issues..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="max-w-md bg-white/10 border-white/20 text-white placeholder:text-blue-300"
+                className="max-w-md bg-white/10 border-white/20 text-white placeholder:text-emerald-300"
               />
               <Select value={issueFilter} onValueChange={setIssueFilter}>
                 <SelectTrigger className="w-48 bg-white/10 border-white/20 text-white">
@@ -364,7 +364,7 @@ export default function InfrastructureDepartmentPage() {
                   <SelectItem value="pwd" className="text-white">Infrastructure Issues ({pwdIssues.length})</SelectItem>
                 </SelectContent>
               </Select>
-              <Badge className="bg-blue-600/30 text-blue-200">
+              <Badge className="bg-emerald-600/30 text-emerald-200">
                 {filteredIssues.length} Issues
               </Badge>
             </div>
@@ -377,7 +377,7 @@ export default function InfrastructureDepartmentPage() {
                   <CardContent className="p-8 text-center">
                     <Construction className="h-12 w-12 text-blue-400 mx-auto mb-4" />
                     <p className="text-white">No issues found</p>
-                    <p className="text-blue-300 text-sm">All issues are assigned or completed</p>
+                    <p className="text-emerald-300 text-sm">All issues are assigned or completed</p>
                   </CardContent>
                 </Card>
               ) : (
@@ -397,9 +397,9 @@ export default function InfrastructureDepartmentPage() {
                             </Badge>
                           </div>
                           
-                          <p className="text-blue-200 text-sm mb-3 line-clamp-2">{issue.description}</p>
+                          <p className="text-emerald-200 text-sm mb-3 line-clamp-2">{issue.description}</p>
                           
-                          <div className="flex items-center space-x-4 text-sm text-blue-300">
+                          <div className="flex items-center space-x-4 text-sm text-emerald-300">
                             <div className="flex items-center space-x-1">
                               <MapPin className="h-4 w-4" />
                               <span>{issue.location}</span>
@@ -419,7 +419,7 @@ export default function InfrastructureDepartmentPage() {
                           <Button
                             variant="outline"
                             size="sm"
-                            className="bg-blue-600/20 border-blue-500 text-blue-300 hover:bg-blue-600/30"
+                            className="bg-emerald-600/20 border-emerald-500 text-emerald-300 hover:bg-emerald-600/30"
                             onClick={() => handleAssignClick(issue)}
                           >
                             <UserPlus className="h-4 w-4 mr-1" />
@@ -441,7 +441,7 @@ export default function InfrastructureDepartmentPage() {
                 placeholder="Search active work..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="max-w-md bg-white/10 border-white/20 text-white placeholder:text-blue-300"
+                className="max-w-md bg-white/10 border-white/20 text-white placeholder:text-emerald-300"
               />
               <Badge className="bg-orange-600/30 text-orange-200">
                 {filteredInProgress.length} Active Work
@@ -456,7 +456,7 @@ export default function InfrastructureDepartmentPage() {
                   <CardContent className="p-8 text-center">
                     <RefreshCw className="h-12 w-12 text-orange-400 mx-auto mb-4" />
                     <p className="text-white">No active work</p>
-                    <p className="text-blue-300 text-sm">All work is either pending or completed</p>
+                    <p className="text-emerald-300 text-sm">All work is either pending or completed</p>
                   </CardContent>
                 </Card>
               ) : (
@@ -474,9 +474,9 @@ export default function InfrastructureDepartmentPage() {
                             </Badge>
                           </div>
                           
-                          <p className="text-blue-200 text-sm mb-3 line-clamp-2">{issue.description}</p>
+                          <p className="text-emerald-200 text-sm mb-3 line-clamp-2">{issue.description}</p>
                           
-                          <div className="grid grid-cols-2 gap-4 text-sm text-blue-300">
+                          <div className="grid grid-cols-2 gap-4 text-sm text-emerald-300">
                             <div className="flex items-center space-x-1">
                               <MapPin className="h-4 w-4" />
                               <span>{issue.location}</span>
@@ -594,19 +594,19 @@ export default function InfrastructureDepartmentPage() {
                       <Badge className={`
                         ${point.status === 'Completed' ? 'bg-green-600' : 
                           point.status === 'Maintenance' ? 'bg-yellow-600' : 
-                          point.status.includes('Progress') || point.status.includes('Construction') ? 'bg-orange-600' : 'bg-blue-600'}
+                          point.status.includes('Progress') || point.status.includes('Construction') ? 'bg-orange-600' : 'bg-emerald-600'}
                         text-white
                       `}>
                         {point.status}
                       </Badge>
                     </div>
                     <h3 className="text-white font-semibold mb-2 text-sm">{point.location}</h3>
-                    <p className="text-blue-200 text-xs mb-4">{point.type}</p>
+                    <p className="text-emerald-200 text-xs mb-4">{point.type}</p>
                     <div className="space-y-2">
                       {point.progress && (
                         <div className="space-y-1">
                           <div className="flex justify-between items-center">
-                            <span className="text-blue-200 text-sm">Progress:</span>
+                            <span className="text-emerald-200 text-sm">Progress:</span>
                             <span className="text-white text-sm">{point.progress}</span>
                           </div>
                           <div className="w-full bg-white/10 rounded-full h-2">
@@ -619,7 +619,7 @@ export default function InfrastructureDepartmentPage() {
                       )}
                       {point.team && (
                         <div className="flex justify-between items-center">
-                          <span className="text-blue-200 text-sm">Team:</span>
+                          <span className="text-emerald-200 text-sm">Team:</span>
                           <span className="text-orange-300 text-sm">{point.team}</span>
                         </div>
                       )}
@@ -636,7 +636,7 @@ export default function InfrastructureDepartmentPage() {
           <DialogContent className="bg-slate-900 border border-white/20 text-white">
             <DialogHeader>
               <DialogTitle>Assign Issue to Staff Member</DialogTitle>
-              <DialogDescription className="text-blue-300">
+              <DialogDescription className="text-emerald-300">
                 Select appropriate staff member based on issue type
               </DialogDescription>
             </DialogHeader>
@@ -664,7 +664,7 @@ export default function InfrastructureDepartmentPage() {
                   placeholder="Add any specific instructions..."
                   value={assignmentNote}
                   onChange={(e) => setAssignmentNote(e.target.value)}
-                  className="bg-white/10 border-white/20 text-white placeholder:text-blue-300"
+                  className="bg-white/10 border-white/20 text-white placeholder:text-emerald-300"
                   rows={3}
                 />
               </div>
@@ -681,7 +681,7 @@ export default function InfrastructureDepartmentPage() {
               <Button 
                 onClick={handleAssignSubmit}
                 disabled={!selectedStaffId || assignMutation.isPending}
-                className="bg-blue-600 hover:bg-blue-700"
+                className="bg-emerald-600 hover:bg-emerald-700"
               >
                 {assignMutation.isPending ? 'Assigning...' : 'Assign Issue'}
               </Button>

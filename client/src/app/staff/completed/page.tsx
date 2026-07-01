@@ -138,7 +138,7 @@ export default function StaffCompletedPage() {
       case 'HIGH': return 'bg-red-100 text-red-800 border-red-200'
       case 'MEDIUM': return 'bg-yellow-100 text-yellow-800 border-yellow-200'
       case 'LOW': return 'bg-green-100 text-green-800 border-green-200'
-      default: return 'bg-gray-100 text-gray-800 border-gray-200'
+      default: return 'bg-slate-100 text-slate-800 border-slate-200'
     }
   }
 
@@ -146,7 +146,7 @@ export default function StaffCompletedPage() {
     return Array.from({ length: 5 }, (_, i) => (
       <Star
         key={i}
-        className={`h-4 w-4 ${i < rating ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`}
+        className={`h-4 w-4 ${i < rating ? 'fill-yellow-400 text-yellow-400' : 'text-slate-300'}`}
       />
     ))
   }
@@ -186,7 +186,7 @@ export default function StaffCompletedPage() {
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
           <CheckCircle className="h-8 w-8 text-green-600" />
-          <h1 className="text-3xl font-bold text-gray-900">Completed Issues</h1>
+          <h1 className="text-3xl font-bold text-slate-900">Completed Issues</h1>
           <Badge variant="secondary" className="text-lg px-3 py-1">
             {filteredIssues.length} Completed
           </Badge>
@@ -202,24 +202,24 @@ export default function StaffCompletedPage() {
         <Card>
           <CardContent className="p-4 text-center">
             <div className="text-2xl font-bold text-green-600">{filteredIssues.length}</div>
-            <div className="text-sm text-gray-600">Issues Completed</div>
+            <div className="text-sm text-slate-600">Issues Completed</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-blue-600 flex items-center justify-center gap-1">
+            <div className="text-2xl font-bold text-emerald-600 flex items-center justify-center gap-1">
               {getAverageRating().toFixed(1)}
               <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
             </div>
-            <div className="text-sm text-gray-600">Average Rating</div>
+            <div className="text-sm text-slate-600">Average Rating</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
-            <div className="text-2xl font-bold text-purple-600">
+            <div className="text-2xl font-bold text-slate-800">
               {formatDuration(Math.round(getAverageCompletionTime()))}
             </div>
-            <div className="text-sm text-gray-600">Avg. Completion Time</div>
+            <div className="text-sm text-slate-600">Avg. Completion Time</div>
           </CardContent>
         </Card>
       </div>
@@ -229,7 +229,7 @@ export default function StaffCompletedPage() {
         <CardContent className="p-4">
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-4 w-4" />
               <Input
                 placeholder="Search issues..."
                 value={searchTerm}
@@ -291,11 +291,11 @@ export default function StaffCompletedPage() {
       {filteredIssues.length === 0 ? (
         <Card>
           <CardContent className="text-center py-12">
-            <CheckCircle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            <CheckCircle className="h-12 w-12 text-slate-400 mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-slate-900 mb-2">
               No Completed Issues
             </h3>
-            <p className="text-gray-600">
+            <p className="text-slate-600">
               No completed issues found matching your criteria.
             </p>
           </CardContent>
@@ -311,20 +311,20 @@ export default function StaffCompletedPage() {
                     {issue.priority}
                   </Badge>
                 </div>
-                <div className="flex items-center gap-2 text-sm text-gray-600">
+                <div className="flex items-center gap-2 text-sm text-slate-600">
                   <Clock className="h-4 w-4" />
                   <span>Completed in {formatDuration(issue.timeTaken)}</span>
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
-                <p className="text-gray-600 line-clamp-2">{issue.description}</p>
+                <p className="text-slate-600 line-clamp-2">{issue.description}</p>
                 
-                <div className="flex items-center gap-2 text-sm text-gray-600">
+                <div className="flex items-center gap-2 text-sm text-slate-600">
                   <MapPin className="h-4 w-4" />
                   <span className="line-clamp-1">{issue.location.address}</span>
                 </div>
 
-                <div className="flex items-center gap-2 text-sm text-gray-600">
+                <div className="flex items-center gap-2 text-sm text-slate-600">
                   <Calendar className="h-4 w-4" />
                   <span>Completed: {new Date(issue.completedAt).toLocaleDateString()}</span>
                 </div>
@@ -388,7 +388,7 @@ export default function StaffCompletedPage() {
                       <div className="flex">{getRatingStars(issue.rating)}</div>
                     </div>
                     {issue.feedback && (
-                      <p className="text-sm text-gray-600 italic">&quot;{issue.feedback}&quot;</p>
+                      <p className="text-sm text-slate-600 italic">&quot;{issue.feedback}&quot;</p>
                     )}
                   </div>
                 )}

@@ -36,8 +36,12 @@ export function PublicNavbar({ language = 'en', onLanguageChange }: PublicNavbar
         <Link href="/" className="flex items-center gap-2">
           <div className="text-2xl">🏛️</div>
           <div>
-            <div className="font-bold text-lg">
-              {language === 'hi' ? 'नयी बरेली' : 'Nayi Bareilly'}
+            <div className="text-2xl font-bold">
+              {language === 'hi' ? (
+                <><span className="text-slate-900">नयी </span><span className="text-emerald-500">बरेली</span></>
+              ) : (
+                <><span className="text-slate-900">Nayi</span><span className="text-emerald-500">Bareilly</span></>
+              )}
             </div>
             <div className="text-xs text-muted-foreground">
               {language === 'hi' ? 'स्मार्ट सिटी' : 'Smart City'}
@@ -60,7 +64,7 @@ export function PublicNavbar({ language = 'en', onLanguageChange }: PublicNavbar
                   'flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors min-h-[44px]',
                   isActive
                     ? 'text-sky-600 bg-sky-50'
-                    : 'text-gray-700 hover:text-sky-600 hover:bg-sky-50/50'
+                    : 'text-slate-700 hover:text-sky-600 hover:bg-sky-50/50'
                 )}
               >
                 <Icon className="h-4 w-4" />
@@ -106,8 +110,12 @@ export function PublicNavbar({ language = 'en', onLanguageChange }: PublicNavbar
         <Link href="/" className="flex items-center gap-2">
           <div className="text-xl">🏛️</div>
           <div>
-            <div className="font-bold text-sm">
-              {language === 'hi' ? 'नयी बरेली' : 'Nayi Bareilly'}
+            <div className="text-2xl font-bold">
+              {language === 'hi' ? (
+                <><span className="text-slate-900">नयी </span><span className="text-emerald-500">बरेली</span></>
+              ) : (
+                <><span className="text-slate-900">Nayi</span><span className="text-emerald-500">Bareilly</span></>
+              )}
             </div>
             <div className="text-[10px] text-muted-foreground">
               {language === 'hi' ? 'स्मार्ट सिटी' : 'Smart City'}
@@ -165,7 +173,7 @@ export function PublicNavbar({ language = 'en', onLanguageChange }: PublicNavbar
                     'flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors min-h-[44px]',
                     isActive
                       ? 'text-sky-600 bg-sky-50'
-                      : 'text-gray-700 hover:text-sky-600 hover:bg-sky-50/50'
+                      : 'text-slate-700 hover:text-sky-600 hover:bg-sky-50/50'
                   )}
                 >
                   <Icon className="h-5 w-5" />

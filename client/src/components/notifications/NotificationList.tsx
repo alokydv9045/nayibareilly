@@ -40,7 +40,7 @@ export function NotificationList({
         <div className="flex items-center gap-2">
           <h3 className="font-semibold text-lg">Notifications</h3>
           {unreadCount > 0 && (
-            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-blue-500 text-xs font-bold text-white">
+            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500 text-xs font-bold text-white">
               {unreadCount}
             </span>
           )}

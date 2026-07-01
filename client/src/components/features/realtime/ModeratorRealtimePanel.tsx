@@ -159,7 +159,7 @@ export function ModeratorRealtimePanel() {
       case 'critical': return 'bg-red-600'
       case 'high': return 'bg-orange-600'
       case 'medium': return 'bg-yellow-600'
-      default: return 'bg-blue-600'
+      default: return 'bg-emerald-600'
     }
   }
 

@@ -95,8 +95,8 @@ export default function ModeratorDashboard() {
       value: dashboardStats.totalReviewed,
       icon: <FileText className="h-4 w-4" />,
       description: "All-time moderated issues",
-      color: "text-blue-600",
-      bgColor: "bg-blue-50",
+      color: "text-emerald-600",
+      bgColor: "bg-emerald-50",
       href: "/moderator/history"
     }
   ]
@@ -114,14 +114,14 @@ export default function ModeratorDashboard() {
       description: "Check moderation statistics and trends",
       icon: <BarChart3 className="h-5 w-5" />,
       href: "/moderator/analytics",
-      color: "bg-blue-500 hover:bg-blue-600"
+      color: "bg-emerald-500 hover:bg-emerald-600"
     },
     {
       title: "Issue Categories",
       description: "Manage issue categories and priorities",
       icon: <FileText className="h-5 w-5" />,
       href: "/moderator/categories",
-      color: "bg-purple-500 hover:bg-purple-600"
+      color: "bg-slate-700 hover:bg-slate-800"
     },
     {
       title: "Quality Control",
@@ -139,8 +139,8 @@ export default function ModeratorDashboard() {
         <div className="mb-8">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Moderator Dashboard</h1>
-              <p className="text-gray-600 mt-1">Manage and review community reports</p>
+              <h1 className="text-3xl font-bold text-slate-900">Moderator Dashboard</h1>
+              <p className="text-slate-600 mt-1">Manage and review community reports</p>
             </div>
             <div className="flex items-center space-x-4">
               <Badge variant="outline" className="text-sm">
@@ -162,10 +162,10 @@ export default function ModeratorDashboard() {
         {/* Stats Overview */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {statCards.map((stat, index) => (
-            <Card key={index} className="hover:shadow-md transition-shadow cursor-pointer"
+            <Card key={index} className="hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer border-slate-200 bg-white"
                   onClick={() => router.push(stat.href)}>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium text-gray-600">
+                <CardTitle className="text-sm font-medium text-slate-600">
                   {stat.title}
                 </CardTitle>
                 <div className={`p-2 rounded-md ${stat.bgColor}`}>
@@ -178,7 +178,7 @@ export default function ModeratorDashboard() {
                 <div className="text-2xl font-bold mb-1">
                   {isLoading ? "..." : stat.value.toLocaleString()}
                 </div>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-slate-500">
                   {stat.description}
                 </p>
               </CardContent>
@@ -188,10 +188,10 @@ export default function ModeratorDashboard() {
 
         {/* Quick Actions */}
         <div className="mb-8">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Quick Actions</h2>
+          <h2 className="text-xl font-semibold text-slate-900 mb-4">Quick Actions</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {quickActions.map((action, index) => (
-              <Card key={index} className="hover:shadow-md transition-shadow cursor-pointer"
+              <Card key={index} className="hover:shadow-lg hover:-translate-y-1 transition-all duration-300 cursor-pointer border-slate-200 bg-white"
                     onClick={() => router.push(action.href)}>
                 <CardContent className="p-6">
                   <div className="flex items-start space-x-4">
@@ -199,13 +199,13 @@ export default function ModeratorDashboard() {
                       {action.icon}
                     </div>
                     <div className="flex-1">
-                      <h3 className="font-semibold text-gray-900 mb-1">
+                      <h3 className="font-semibold text-slate-900 mb-1">
                         {action.title}
                       </h3>
-                      <p className="text-sm text-gray-600 mb-3">
+                      <p className="text-sm text-slate-600 mb-3">
                         {action.description}
                       </p>
-                      <div className="flex items-center text-sm text-blue-600">
+                      <div className="flex items-center text-sm text-emerald-600">
                         <span>Get started</span>
                         <ArrowRight className="h-4 w-4 ml-1" />
                       </div>
@@ -230,12 +230,12 @@ export default function ModeratorDashboard() {
           </CardHeader>
           <CardContent>
             {isLoading ? (
-              <div className="text-center py-8 text-gray-500">
+              <div className="text-center py-8 text-slate-500">
                 Loading recent activity...
               </div>
             ) : (
               <div className="space-y-4">
-                <div className="text-sm text-gray-500 text-center py-8">
+                <div className="text-sm text-slate-500 text-center py-8">
                   Recent activity will appear here once you start moderating issues.
                 </div>
                 <div className="text-center">

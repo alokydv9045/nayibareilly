@@ -154,7 +154,7 @@ export default function MayorDepartmentsPage() {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="flex items-center justify-center min-h-[400px]">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-purple-600"></div>
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-slate-800"></div>
         </div>
       </div>
     )
@@ -163,8 +163,8 @@ export default function MayorDepartmentsPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex items-center gap-3 mb-6">
-        <Building2 className="h-8 w-8 text-purple-600" />
-        <h1 className="text-3xl font-bold text-gray-900">Department Management</h1>
+        <Building2 className="h-8 w-8 text-slate-800" />
+        <h1 className="text-3xl font-bold text-slate-900">Department Management</h1>
         <Badge variant="outline" className="text-lg px-3 py-1">
           {departments.length} Departments
         </Badge>
@@ -182,7 +182,7 @@ export default function MayorDepartmentsPage() {
             <Card 
               key={dept.id} 
               className={`hover:shadow-lg transition-shadow cursor-pointer ${
-                selectedDepartment === dept.id ? 'ring-2 ring-purple-500' : ''
+                selectedDepartment === dept.id ? 'ring-2 ring-slate-700' : ''
               }`}
               onClick={() => setSelectedDepartment(selectedDepartment === dept.id ? null : dept.id)}
             >
@@ -190,13 +190,13 @@ export default function MayorDepartmentsPage() {
                 <div className="flex items-start justify-between">
                   <CardTitle className="text-lg">{dept.name}</CardTitle>
                   <div className="flex items-center gap-1">
-                    <Star className={`h-4 w-4 ${overallRating >= 80 ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`} />
+                    <Star className={`h-4 w-4 ${overallRating >= 80 ? 'fill-yellow-400 text-yellow-400' : 'text-slate-300'}`} />
                     <span className={`text-sm font-bold ${getPerformanceColor(overallRating)}`}>
                       {overallRating}/100
                     </span>
                   </div>
                 </div>
-                <div className="text-sm text-gray-600">
+                <div className="text-sm text-slate-600">
                   Head: {dept.head.name} ({dept.head.experience}y exp)
                 </div>
               </CardHeader>
@@ -204,7 +204,7 @@ export default function MayorDepartmentsPage() {
                 {/* Staff Info */}
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Users className="h-4 w-4 text-blue-600" />
+                    <Users className="h-4 w-4 text-emerald-600" />
                     <span className="text-sm">Staff</span>
                   </div>
                   <Badge variant="outline">
@@ -240,9 +240,9 @@ export default function MayorDepartmentsPage() {
                     <div className="font-bold text-orange-600">{dept.currentIssues.pending}</div>
                     <div className="text-orange-600">Pending</div>
                   </div>
-                  <div className="text-center p-2 bg-blue-50 rounded">
-                    <div className="font-bold text-blue-600">{dept.currentIssues.inProgress}</div>
-                    <div className="text-blue-600">In Progress</div>
+                  <div className="text-center p-2 bg-emerald-50 rounded">
+                    <div className="font-bold text-emerald-600">{dept.currentIssues.inProgress}</div>
+                    <div className="text-emerald-600">In Progress</div>
                   </div>
                 </div>
 
@@ -287,11 +287,11 @@ export default function MayorDepartmentsPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                       <Card>
                         <CardContent className="p-4 text-center">
-                          <Zap className="h-6 w-6 text-blue-600 mx-auto mb-2" />
+                          <Zap className="h-6 w-6 text-emerald-600 mx-auto mb-2" />
                           <div className={`text-xl font-bold ${getPerformanceColor(dept.kpis.responseTime)}`}>
                             {dept.kpis.responseTime}/100
                           </div>
-                          <div className="text-sm text-gray-600">Response Time</div>
+                          <div className="text-sm text-slate-600">Response Time</div>
                         </CardContent>
                       </Card>
                       <Card>
@@ -300,16 +300,16 @@ export default function MayorDepartmentsPage() {
                           <div className={`text-xl font-bold ${getPerformanceColor(dept.kpis.resolutionRate)}`}>
                             {dept.kpis.resolutionRate}/100
                           </div>
-                          <div className="text-sm text-gray-600">Resolution Rate</div>
+                          <div className="text-sm text-slate-600">Resolution Rate</div>
                         </CardContent>
                       </Card>
                       <Card>
                         <CardContent className="p-4 text-center">
-                          <DollarSign className="h-6 w-6 text-purple-600 mx-auto mb-2" />
+                          <DollarSign className="h-6 w-6 text-slate-800 mx-auto mb-2" />
                           <div className={`text-xl font-bold ${getPerformanceColor(dept.kpis.budgetCompliance)}`}>
                             {dept.kpis.budgetCompliance}/100
                           </div>
-                          <div className="text-sm text-gray-600">Budget Compliance</div>
+                          <div className="text-sm text-slate-600">Budget Compliance</div>
                         </CardContent>
                       </Card>
                       <Card>
@@ -318,7 +318,7 @@ export default function MayorDepartmentsPage() {
                           <div className={`text-xl font-bold ${getPerformanceColor(dept.kpis.staffProductivity)}`}>
                             {dept.kpis.staffProductivity}/100
                           </div>
-                          <div className="text-sm text-gray-600">Staff Productivity</div>
+                          <div className="text-sm text-slate-600">Staff Productivity</div>
                         </CardContent>
                       </Card>
                     </div>
@@ -380,10 +380,10 @@ export default function MayorDepartmentsPage() {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                       <Card>
                         <CardContent className="p-4 text-center">
-                          <div className="text-2xl font-bold text-blue-600">
+                          <div className="text-2xl font-bold text-emerald-600">
                             ₹{dept.budget.allocated.toLocaleString()}
                           </div>
-                          <div className="text-sm text-gray-600">Allocated Budget</div>
+                          <div className="text-sm text-slate-600">Allocated Budget</div>
                         </CardContent>
                       </Card>
                       <Card>
@@ -391,7 +391,7 @@ export default function MayorDepartmentsPage() {
                           <div className="text-2xl font-bold text-orange-600">
                             ₹{dept.budget.used.toLocaleString()}
                           </div>
-                          <div className="text-sm text-gray-600">Budget Used</div>
+                          <div className="text-sm text-slate-600">Budget Used</div>
                         </CardContent>
                       </Card>
                       <Card>
@@ -399,7 +399,7 @@ export default function MayorDepartmentsPage() {
                           <div className="text-2xl font-bold text-green-600">
                             ₹{dept.budget.remaining.toLocaleString()}
                           </div>
-                          <div className="text-sm text-gray-600">Remaining Budget</div>
+                          <div className="text-sm text-slate-600">Remaining Budget</div>
                         </CardContent>
                       </Card>
                     </div>
@@ -410,7 +410,7 @@ export default function MayorDepartmentsPage() {
                           <span className="font-medium">Budget Utilization</span>
                           <span className="font-bold">{dept.budget.utilizationRate}%</span>
                         </div>
-                        <div className="w-full bg-gray-200 rounded-full h-4">
+                        <div className="w-full bg-slate-200 rounded-full h-4">
                           <div 
                             className={`h-4 rounded-full ${getBudgetUtilizationColor(dept.budget.utilizationRate)}`}
                             style={{ width: `${Math.min(dept.budget.utilizationRate, 100)}%` }}
@@ -444,23 +444,23 @@ export default function MayorDepartmentsPage() {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                       <Card>
                         <CardContent className="p-4 text-center">
-                          <Users className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-                          <div className="text-2xl font-bold text-blue-600">{dept.staff.total}</div>
-                          <div className="text-sm text-gray-600">Total Staff</div>
+                          <Users className="h-8 w-8 text-emerald-600 mx-auto mb-2" />
+                          <div className="text-2xl font-bold text-emerald-600">{dept.staff.total}</div>
+                          <div className="text-sm text-slate-600">Total Staff</div>
                         </CardContent>
                       </Card>
                       <Card>
                         <CardContent className="p-4 text-center">
                           <CheckCircle className="h-8 w-8 text-green-600 mx-auto mb-2" />
                           <div className="text-2xl font-bold text-green-600">{dept.staff.active}</div>
-                          <div className="text-sm text-gray-600">Active Staff</div>
+                          <div className="text-sm text-slate-600">Active Staff</div>
                         </CardContent>
                       </Card>
                       <Card>
                         <CardContent className="p-4 text-center">
                           <Clock className="h-8 w-8 text-orange-600 mx-auto mb-2" />
                           <div className="text-2xl font-bold text-orange-600">{dept.staff.onLeave}</div>
-                          <div className="text-sm text-gray-600">On Leave</div>
+                          <div className="text-sm text-slate-600">On Leave</div>
                         </CardContent>
                       </Card>
                     </div>
@@ -469,19 +469,19 @@ export default function MayorDepartmentsPage() {
                       <h4 className="font-semibold mb-3">Department Head</h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                          <div className="text-sm text-gray-600">Name</div>
+                          <div className="text-sm text-slate-600">Name</div>
                           <div className="font-medium">{dept.head.name}</div>
                         </div>
                         <div>
-                          <div className="text-sm text-gray-600">Email</div>
+                          <div className="text-sm text-slate-600">Email</div>
                           <div className="font-medium">{dept.head.email}</div>
                         </div>
                         <div>
-                          <div className="text-sm text-gray-600">Experience</div>
+                          <div className="text-sm text-slate-600">Experience</div>
                           <div className="font-medium">{dept.head.experience} years</div>
                         </div>
                         <div>
-                          <div className="text-sm text-gray-600">Staff Efficiency</div>
+                          <div className="text-sm text-slate-600">Staff Efficiency</div>
                           <div className="font-medium">{dept.staff.active > 0 ? Math.round((dept.staff.active / dept.staff.total) * 100) : 0}%</div>
                         </div>
                       </div>
@@ -491,7 +491,7 @@ export default function MayorDepartmentsPage() {
                   <TabsContent value="achievements" className="mt-6">
                     <div className="space-y-4">
                       {dept.recentAchievements.length === 0 ? (
-                        <div className="text-center py-8 text-gray-600">
+                        <div className="text-center py-8 text-slate-600">
                           No recent achievements recorded
                         </div>
                       ) : (
@@ -502,9 +502,9 @@ export default function MayorDepartmentsPage() {
                                 <Award className="h-6 w-6 text-yellow-600 mt-1" />
                                 <div className="flex-1">
                                   <h4 className="font-semibold">{achievement.title}</h4>
-                                  <p className="text-gray-600 text-sm mt-1">{achievement.description}</p>
+                                  <p className="text-slate-600 text-sm mt-1">{achievement.description}</p>
                                   <div className="flex items-center justify-between mt-3">
-                                    <span className="text-xs text-gray-500">
+                                    <span className="text-xs text-slate-500">
                                       {new Date(achievement.date).toLocaleDateString()}
                                     </span>
                                     <Badge variant="outline">

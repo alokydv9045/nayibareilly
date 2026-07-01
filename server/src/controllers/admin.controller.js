@@ -1,5 +1,6 @@
 import prisma from '../config/prisma.js'
 import { ok, created, fail } from '../utils/apiResponse.js'
+import bcrypt from 'bcryptjs'
 
 export const dashboard = async (req, res) => {
   try {
@@ -503,21 +504,52 @@ export const getSuperAdminStats = async (_req, res) => {
     const now = new Date()
     const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate())
 
-    const [totalUsers, totalDepartments, totalIssues, activeUsers, pendingApprovals] = await Promise.all([
+    const [
+      totalUsers, 
+      totalDepartments, 
+      totalIssues, 
+      activeUsers, 
+      pendingApprovals,
+      criticalUnresolved,
+      slaBreached,
+      announcements,
+      criticalAlerts
+    ] = await Promise.all([
       prisma.user.count(),
       prisma.department.count(),
       prisma.issue.count(),
       prisma.user.count({ where: { isActive: true } }),
-      prisma.issue.count({ where: { OR: [ { status: 'PENDING' }, { moderationStatus: 'PENDING_REVIEW' } ], createdAt: { gte: startOfDay } } })
+      prisma.issue.count({ where: { OR: [ { status: 'PENDING' }, { moderationStatus: 'PENDING_REVIEW' } ], createdAt: { gte: startOfDay } } }),
+      prisma.issue.count({ where: { priority: 'CRITICAL', status: { notIn: ['RESOLVED', 'CLOSED', 'REJECTED', 'SPAM'] } } }),
+      prisma.issue.count({ where: { slaBreached: true, status: { notIn: ['RESOLVED', 'CLOSED', 'REJECTED', 'SPAM'] } } }),
+      prisma.notification.findMany({ where: { type: 'ANNOUNCEMENT' }, take: 3, orderBy: { createdAt: 'desc' }, select: { message: true } }),
+      prisma.issue.findMany({ where: { priority: 'CRITICAL', status: { notIn: ['RESOLVED', 'CLOSED', 'REJECTED', 'SPAM'] } }, take: 3, orderBy: { createdAt: 'desc' }, select: { title: true, address: true } })
     ])
+
+    const systemHealth = Math.max(0, 100 - (criticalUnresolved * 5) - (slaBreached * 2))
+    
+    // Format alerts
+    const alerts = []
+    announcements.forEach(a => {
+      alerts.push({ type: 'INFO', message: a.message })
+    })
+    criticalAlerts.forEach(c => {
+      alerts.push({ type: 'CRITICAL', message: `CRITICAL ISSUE: ${c.title} ${c.address ? `at ${c.address}` : ''}` })
+    })
+    
+    // Fallback if no alerts exist
+    if (alerts.length === 0) {
+      alerts.push({ type: 'INFO', message: 'ALL SYSTEMS OPERATIONAL: No critical issues or announcements.' })
+    }
 
     return ok(res, {
       totalUsers,
       totalDepartments,
       totalIssues,
-      systemHealth: 100,
+      systemHealth,
       activeUsers,
-      pendingApprovals
+      pendingApprovals,
+      alerts
     })
   } catch (error) {
     console.error('SuperAdmin stats error:', error)
@@ -623,6 +655,182 @@ export const getSuperAdminModeratorPerformance = async (_req, res) => {
   } catch (error) {
     console.error('SuperAdmin moderator performance error:', error)
     return fail(res, 500, 'Failed to load moderator performance')
+  }
+}
+
+// =====================
+// Superadmin User Management Endpoints
+// =====================
+
+export const getSuperAdminUsers = async (req, res) => {
+  try {
+    const users = await prisma.user.findMany({
+      orderBy: { createdAt: 'desc' },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        roles: true,
+        departmentId: true,
+        department: { select: { name: true } },
+        isActive: true,
+        isVerified: true,
+        lastLogin: true,
+        createdAt: true
+      }
+    })
+
+    const formattedUsers = users.map(u => ({
+      ...u,
+      departmentName: u.department?.name,
+      department: undefined
+    }))
+
+    return ok(res, formattedUsers)
+  } catch (error) {
+    console.error('getSuperAdminUsers error:', error)
+    return fail(res, 500, 'Failed to fetch users')
+  }
+}
+
+export const createSuperAdminUser = async (req, res) => {
+  try {
+    const { email, name, password, roles, departmentId, isActive, isVerified } = req.body
+
+    if (!email || !password || !name) {
+      return fail(res, 400, 'Email, password, and name are required')
+    }
+
+    const existing = await prisma.user.findUnique({ where: { email: email.toLowerCase() } })
+    if (existing) {
+      return fail(res, 409, 'Email already in use')
+    }
+
+    const passwordHash = await bcrypt.hash(password, 12)
+    const validRoles = roles && roles.length ? roles : ['citizen']
+
+    const user = await prisma.user.create({
+      data: {
+        email: email.toLowerCase(),
+        name: name.trim(),
+        passwordHash,
+        roles: validRoles,
+        departmentId: departmentId || null,
+        isActive: isActive !== undefined ? isActive : true,
+        isVerified: isVerified !== undefined ? isVerified : true
+      },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        roles: true,
+        departmentId: true,
+        department: { select: { name: true } },
+        isActive: true,
+        isVerified: true,
+        lastLogin: true,
+        createdAt: true
+      }
+    })
+
+    const formattedUser = {
+      ...user,
+      departmentName: user.department?.name,
+      department: undefined
+    }
+
+    return created(res, formattedUser)
+  } catch (error) {
+    console.error('createSuperAdminUser error:', error)
+    return fail(res, 500, 'Failed to create user')
+  }
+}
+
+export const updateSuperAdminUser = async (req, res) => {
+  try {
+    const { userId } = req.params
+    const { email, name, password, roles, departmentId, isActive, isVerified } = req.body
+
+    const existing = await prisma.user.findUnique({ where: { id: userId } })
+    if (!existing) {
+      return fail(res, 404, 'User not found')
+    }
+
+    const updateData = {}
+    if (email) {
+      if (email.toLowerCase() !== existing.email.toLowerCase()) {
+        const emailCheck = await prisma.user.findUnique({ where: { email: email.toLowerCase() } })
+        if (emailCheck) return fail(res, 409, 'Email already in use')
+      }
+      updateData.email = email.toLowerCase()
+    }
+    if (name) updateData.name = name.trim()
+    if (password) updateData.passwordHash = await bcrypt.hash(password, 12)
+    if (roles) updateData.roles = roles
+    
+    if (departmentId !== undefined) {
+        if (departmentId === '') {
+            updateData.departmentId = null
+        } else {
+            updateData.departmentId = departmentId
+        }
+    }
+    if (isActive !== undefined) updateData.isActive = isActive
+    if (isVerified !== undefined) updateData.isVerified = isVerified
+
+    const user = await prisma.user.update({
+      where: { id: userId },
+      data: updateData,
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        roles: true,
+        departmentId: true,
+        department: { select: { name: true } },
+        isActive: true,
+        isVerified: true,
+        lastLogin: true,
+        createdAt: true
+      }
+    })
+
+    const formattedUser = {
+      ...user,
+      departmentName: user.department?.name,
+      department: undefined
+    }
+
+    return ok(res, formattedUser)
+  } catch (error) {
+    console.error('updateSuperAdminUser error:', error)
+    return fail(res, 500, 'Failed to update user')
+  }
+}
+
+export const deleteSuperAdminUser = async (req, res) => {
+  try {
+    const { userId } = req.params
+
+    const existing = await prisma.user.findUnique({ where: { id: userId } })
+    if (!existing) {
+      return fail(res, 404, 'User not found')
+    }
+
+    // Try hard delete first
+    try {
+      await prisma.user.delete({ where: { id: userId } })
+      return ok(res, { message: 'User deleted successfully' })
+    } catch (dbError) {
+      // If foreign key constraint fails, we inform the user to deactivate instead
+      if (dbError.code === 'P2003') {
+        return fail(res, 400, 'Cannot delete user because they have active records (e.g. issues, comments). Please deactivate them instead.')
+      }
+      throw dbError
+    }
+  } catch (error) {
+    console.error('deleteSuperAdminUser error:', error)
+    return fail(res, 500, 'Failed to delete user')
   }
 }
 

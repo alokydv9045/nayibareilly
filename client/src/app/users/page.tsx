@@ -116,10 +116,10 @@ export default function UsersPage() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-slate-600">
                 Current role: <Badge variant="outline">{currentUserRole}</Badge>
               </p>
-              <p className="text-xs text-gray-500 mt-2">
+              <p className="text-xs text-slate-500 mt-2">
                 Contact your system administrator if you believe you should have access.
               </p>
             </CardContent>
@@ -136,8 +136,8 @@ export default function UsersPage() {
         <div className="mb-6">
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">User Management</h1>
-              <p className="text-sm text-gray-600">
+              <h1 className="text-2xl font-bold text-slate-900">User Management</h1>
+              <p className="text-sm text-slate-600">
                 {currentUserRole === 'SUPER_ADMIN' && 'Full system control - Mayor level access to all users and administrators'}
                 {currentUserRole === 'DEPT_ADMIN' && 'Department view - Read-only access to staff in your department'}
               </p>
@@ -155,10 +155,10 @@ export default function UsersPage() {
             <CardContent className="p-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Users className="h-5 w-5 text-blue-500" />
+                  <Users className="h-5 w-5 text-emerald-500" />
                   <div>
                     <p className="font-medium">Access Level: {currentUserRole}</p>
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-slate-500">
                       {currentUserRole === 'SUPER_ADMIN' && 'Full CRUD access to all users (Mayor level)'}
                       {currentUserRole === 'DEPT_ADMIN' && 'Read-only access to department staff'}
                     </p>

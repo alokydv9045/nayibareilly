@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "dev:turbopack": "next dev --turbopack",
     "build": "next build",
     "build-clean": "rimraf .next && next build",
@@ -44,7 +44,7 @@
     "csurf": "^1.11.0",
     "daisyui": "^5.1.18",
     "date-fns": "^4.1.0",
-    "framer-motion": "^12.23.21",
+    "framer-motion": "^12.42.0",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.540.0",
     "next": "15.5.0",

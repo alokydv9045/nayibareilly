@@ -27,6 +27,7 @@ import { useModeratorAPI } from '@/hooks/api/useModeratorAPI'
 
 interface PendingIssue {
   id: string
+  reportId: string
   title: string
   description: string
   address: string
@@ -136,7 +137,7 @@ export default function ModeratorPendingPage() {
       case 'HIGH': return 'bg-orange-100 text-orange-800'
       case 'MEDIUM': return 'bg-yellow-100 text-yellow-800'
       case 'LOW': return 'bg-green-100 text-green-800'
-      default: return 'bg-gray-100 text-gray-800'
+      default: return 'bg-slate-100 text-slate-800'
     }
   }
 
@@ -157,8 +158,8 @@ export default function ModeratorPendingPage() {
                 Back to Dashboard
               </Button>
               <div>
-                <h1 className="text-3xl font-bold text-gray-900">Pending Reviews</h1>
-                <p className="text-gray-600 mt-1">
+                <h1 className="text-3xl font-bold text-slate-900">Pending Reviews</h1>
+                <p className="text-slate-600 mt-1">
                   {filteredIssues.length} issues awaiting moderation
                 </p>
               </div>
@@ -187,7 +188,7 @@ export default function ModeratorPendingPage() {
           <CardContent>
             <div className="flex flex-wrap gap-4">
               <div>
-                <label className="text-sm font-medium text-gray-700 mb-2 block">
+                <label className="text-sm font-medium text-slate-700 mb-2 block">
                   Priority
                 </label>
                 <Select value={filterPriority} onValueChange={setFilterPriority}>
@@ -204,7 +205,7 @@ export default function ModeratorPendingPage() {
                 </Select>
               </div>
               <div>
-                <label className="text-sm font-medium text-gray-700 mb-2 block">
+                <label className="text-sm font-medium text-slate-700 mb-2 block">
                   Department
                 </label>
                 <Select value={filterDepartment} onValueChange={setFilterDepartment}>
@@ -228,15 +229,15 @@ export default function ModeratorPendingPage() {
         {/* Issues List */}
         {isLoading ? (
           <div className="text-center py-12">
-            <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-4 text-gray-400" />
-            <p className="text-gray-500">Loading pending issues...</p>
+            <RefreshCw className="h-8 w-8 animate-spin mx-auto mb-4 text-slate-400" />
+            <p className="text-slate-500">Loading pending issues...</p>
           </div>
         ) : filteredIssues.length === 0 ? (
           <Card>
             <CardContent className="text-center py-12">
               <CheckCircle className="h-12 w-12 mx-auto mb-4 text-green-500" />
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">All Caught Up!</h3>
-              <p className="text-gray-600">No pending issues to review at the moment.</p>
+              <h3 className="text-lg font-semibold text-slate-900 mb-2">All Caught Up!</h3>
+              <p className="text-slate-600">No pending issues to review at the moment.</p>
             </CardContent>
           </Card>
         ) : (
@@ -253,7 +254,7 @@ export default function ModeratorPendingPage() {
                         </Badge>
                         <Badge variant="outline">{issue.categoryName || 'Uncategorized'}</Badge>
                       </div>
-                      <CardDescription className="text-sm text-gray-600">
+                      <CardDescription className="text-sm text-slate-600">
                         <div className="flex items-center space-x-4">
                           <span className="flex items-center">
                             <User className="h-4 w-4 mr-1" />
@@ -283,7 +284,7 @@ export default function ModeratorPendingPage() {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-700 mb-4 line-clamp-2">{issue.description}</p>
+                  <p className="text-slate-700 mb-4 line-clamp-2">{issue.description}</p>
                   
                   {/* Images */}
                   {issue.images && issue.images.length > 0 && (
@@ -299,7 +300,7 @@ export default function ModeratorPendingPage() {
                         </div>
                       ))}
                       {issue.images.length > 3 && (
-                        <div className="w-16 h-16 rounded-lg bg-gray-100 flex items-center justify-center text-sm text-gray-500">
+                        <div className="w-16 h-16 rounded-lg bg-slate-100 flex items-center justify-center text-sm text-slate-500">
                           +{issue.images.length - 3}
                         </div>
                       )}
@@ -376,12 +377,12 @@ export default function ModeratorPendingPage() {
                 
                 <div>
                   <h4 className="font-medium mb-2">Description</h4>
-                  <p className="text-gray-700">{selectedIssue.description}</p>
+                  <p className="text-slate-700">{selectedIssue.description}</p>
                 </div>
 
                 <div>
                   <h4 className="font-medium mb-2">Reporter Information</h4>
-                  <div className="bg-gray-50 p-3 rounded-lg">
+                  <div className="bg-slate-50 p-3 rounded-lg">
                     <p><strong>Name:</strong> {selectedIssue.reporterName}</p>
                   </div>
                 </div>
@@ -389,7 +390,7 @@ export default function ModeratorPendingPage() {
                 {selectedIssue.address && (
                   <div>
                     <h4 className="font-medium mb-2">Location</h4>
-                    <p className="text-gray-700">{selectedIssue.address}</p>
+                    <p className="text-slate-700">{selectedIssue.address}</p>
                   </div>
                 )}
 
@@ -413,7 +414,7 @@ export default function ModeratorPendingPage() {
 
                 <div>
                   <h4 className="font-medium mb-2">Submission Date</h4>
-                  <p className="text-gray-700">
+                  <p className="text-slate-700">
                     {new Date(selectedIssue.createdAt).toLocaleString()}
                   </p>
                 </div>

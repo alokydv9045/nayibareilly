@@ -1,32 +1,34 @@
 "use client"
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { me as apiMe } from '@/lib/api/auth'
+import { useSession } from '@/lib/providers/SessionProvider'
+import { Loader2 } from 'lucide-react'
 
 export default function RequireUser({ children }: { children: React.ReactNode }) {
   const router = useRouter()
-  const [ok, setOk] = useState(false)
+  const { isAuthenticated, isLoading } = useSession()
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    let mounted = true
+    setMounted(true)
+  }, [])
 
-    const checkAuth = async () => {
-      try {
-        const user = await apiMe()
-        if (!user) throw new Error('no-user')
-        if (mounted) setOk(true)
-      } catch {
-        if (mounted) router.replace('/login')
-      }
+  useEffect(() => {
+    if (mounted && !isLoading && !isAuthenticated) {
+      router.replace('/login')
     }
+  }, [mounted, isLoading, isAuthenticated, router])
 
-    checkAuth()
+  if (!mounted || isLoading) {
+    return (
+      <div className="flex h-[50vh] w-full items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-emerald-600" />
+        <span className="ml-2 text-slate-600 text-lg font-medium">Checking authentication...</span>
+      </div>
+    )
+  }
 
-    return () => {
-      mounted = false
-    }
-  }, [router])
+  if (!isAuthenticated) return null
 
-  if (!ok) return null
   return <>{children}</>
 }

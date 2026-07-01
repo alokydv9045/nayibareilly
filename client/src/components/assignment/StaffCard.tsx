@@ -163,7 +163,7 @@ export function StaffCard({
             <p className="text-xs font-medium text-muted-foreground">Why this match?</p>
             <ul className="space-y-0.5">
               {matchReasons.slice(0, 3).map((reason, idx) => (
-                <li key={idx} className="text-xs text-gray-600 dark:text-gray-400 flex items-start gap-1">
+                <li key={idx} className="text-xs text-slate-600 dark:text-slate-400 flex items-start gap-1">
                   <span className="text-primary mt-0.5">•</span>
                   <span>{reason}</span>
                 </li>

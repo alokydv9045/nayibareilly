@@ -73,14 +73,14 @@ export default function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
 
       {/* Sidebar */}
       <div className={cn(
-        "fixed top-16 left-0 h-[calc(100vh-4rem)] w-64 bg-white border-r border-gray-200 transform transition-transform duration-300 ease-in-out z-50",
+        "fixed top-16 left-0 h-[calc(100vh-4rem)] w-64 bg-white border-r border-slate-200 transform transition-transform duration-300 ease-in-out z-50",
         "lg:translate-x-0 lg:static lg:top-0 lg:h-screen lg:pt-16",
         isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
       )}>
         <div className="flex flex-col h-full">
           {/* Close button for mobile */}
           <div className="flex justify-between items-center p-4 border-b lg:hidden">
-            <h2 className="text-lg font-semibold text-gray-900">Admin Menu</h2>
+            <h2 className="text-lg font-semibold text-slate-900">Admin Menu</h2>
             <Button variant="ghost" size="sm" onClick={onClose}>
               <X className="h-5 w-5" />
             </Button>
@@ -113,24 +113,24 @@ export default function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
                   }}
                   className={cn(
                     "w-full flex items-start p-3 rounded-lg text-left transition-colors",
-                    "hover:bg-gray-100 group",
+                    "hover:bg-slate-100 group",
                     isItemActive 
-                      ? "bg-blue-50 text-blue-700 border border-blue-200" 
-                      : "text-gray-700"
+                      ? "bg-emerald-50 text-emerald-700 border border-emerald-200" 
+                      : "text-slate-700"
                   )}
                 >
                   <item.icon className={cn(
                     "h-5 w-5 mt-0.5 mr-3 flex-shrink-0",
-                    isItemActive ? "text-blue-600" : "text-gray-500 group-hover:text-gray-700"
+                    isItemActive ? "text-emerald-600" : "text-slate-500 group-hover:text-slate-700"
                   )} />
                   <div>
                     <div className={cn(
                       "font-medium text-sm",
-                      isItemActive ? "text-blue-700" : "text-gray-900"
+                      isItemActive ? "text-emerald-700" : "text-slate-900"
                     )}>
                       {item.title}
                     </div>
-                    <div className="text-xs text-gray-500 mt-0.5">
+                    <div className="text-xs text-slate-500 mt-0.5">
                       {item.description}
                     </div>
                   </div>
@@ -140,8 +140,8 @@ export default function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
           </nav>
 
           {/* Footer */}
-          <div className="p-4 border-t border-gray-200">
-            <div className="flex items-center space-x-2 text-xs text-gray-500">
+          <div className="p-4 border-t border-slate-200">
+            <div className="flex items-center space-x-2 text-xs text-slate-500">
               <Shield className="h-4 w-4" />
               <span>Admin Panel v1.0</span>
             </div>

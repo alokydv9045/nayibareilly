@@ -99,18 +99,18 @@ export function AdminFooter({ className = '' }: AdminFooterProps) {
   }, [])
 
   return (
-    <footer className={`bg-gray-50 border-t border-gray-200 mt-auto ${className}`}>
+    <footer className={`bg-slate-50 border-t border-slate-200 mt-auto ${className}`}>
       {/* Stats Bar */}
-      <div className="bg-white border-b border-gray-200 py-4">
+      <div className="bg-white border-b border-slate-200 py-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <Card className="shadow-none border-none">
               <CardContent className="p-3">
                 <div className="flex items-center space-x-2">
-                  <Users className="h-5 w-5 text-blue-600" />
+                  <Users className="h-5 w-5 text-emerald-600" />
                   <div>
-                    <p className="text-xs text-gray-500">Total Users</p>
-                    <p className="text-lg font-semibold text-gray-900">{displayStats.totalUsers}</p>
+                    <p className="text-xs text-slate-500">Total Users</p>
+                    <p className="text-lg font-semibold text-slate-900">{displayStats.totalUsers}</p>
                   </div>
                 </div>
               </CardContent>
@@ -119,10 +119,10 @@ export function AdminFooter({ className = '' }: AdminFooterProps) {
             <Card className="shadow-none border-none">
               <CardContent className="p-3">
                 <div className="flex items-center space-x-2">
-                  <FileText className="h-5 w-5 text-purple-600" />
+                  <FileText className="h-5 w-5 text-slate-800" />
                   <div>
-                    <p className="text-xs text-gray-500">Total Issues</p>
-                    <p className="text-lg font-semibold text-gray-900">{displayStats.totalIssues}</p>
+                    <p className="text-xs text-slate-500">Total Issues</p>
+                    <p className="text-lg font-semibold text-slate-900">{displayStats.totalIssues}</p>
                   </div>
                 </div>
               </CardContent>
@@ -133,8 +133,8 @@ export function AdminFooter({ className = '' }: AdminFooterProps) {
                 <div className="flex items-center space-x-2">
                   <TrendingUp className="h-5 w-5 text-green-600" />
                   <div>
-                    <p className="text-xs text-gray-500">Resolved</p>
-                    <p className="text-lg font-semibold text-gray-900">{displayStats.resolvedIssues}</p>
+                    <p className="text-xs text-slate-500">Resolved</p>
+                    <p className="text-lg font-semibold text-slate-900">{displayStats.resolvedIssues}</p>
                   </div>
                 </div>
               </CardContent>
@@ -145,8 +145,8 @@ export function AdminFooter({ className = '' }: AdminFooterProps) {
                 <div className="flex items-center space-x-2">
                   <Activity className="h-5 w-5 text-orange-600" />
                   <div>
-                    <p className="text-xs text-gray-500">Pending</p>
-                    <p className="text-lg font-semibold text-gray-900">{displayStats.pendingIssues}</p>
+                    <p className="text-xs text-slate-500">Pending</p>
+                    <p className="text-lg font-semibold text-slate-900">{displayStats.pendingIssues}</p>
                   </div>
                 </div>
               </CardContent>
@@ -160,14 +160,14 @@ export function AdminFooter({ className = '' }: AdminFooterProps) {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* About */}
           <div className="space-y-4">
-            <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider">
+            <h3 className="text-sm font-semibold text-slate-900 uppercase tracking-wider">
               About NayiBareilly
             </h3>
             <div className="space-y-2">
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-slate-600">
                 Digital platform for efficient urban governance and citizen engagement.
               </p>
-              <div className="flex items-center space-x-2 text-sm text-gray-600">
+              <div className="flex items-center space-x-2 text-sm text-slate-600">
                 <Globe className="h-4 w-4" />
                 <span>nayibareilly.gov.in</span>
               </div>
@@ -176,27 +176,27 @@ export function AdminFooter({ className = '' }: AdminFooterProps) {
 
           {/* Quick Links */}
           <div className="space-y-4">
-            <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider">
+            <h3 className="text-sm font-semibold text-slate-900 uppercase tracking-wider">
               Quick Links
             </h3>
             <ul className="space-y-2">
               <li>
-                <a href="/dashboard" className="text-sm text-gray-600 hover:text-blue-600">
+                <a href="/dashboard" className="text-sm text-slate-600 hover:text-emerald-600">
                   Dashboard
                 </a>
               </li>
               <li>
-                <a href="/users" className="text-sm text-gray-600 hover:text-blue-600">
+                <a href="/users" className="text-sm text-slate-600 hover:text-emerald-600">
                   User Management
                 </a>
               </li>
               <li>
-                <a href="/issues" className="text-sm text-gray-600 hover:text-blue-600">
+                <a href="/issues" className="text-sm text-slate-600 hover:text-emerald-600">
                   Issue Management
                 </a>
               </li>
               <li>
-                <a href="/superadmin/logs" className="text-sm text-gray-600 hover:text-blue-600">
+                <a href="/superadmin/logs" className="text-sm text-slate-600 hover:text-emerald-600">
                   System Logs
                 </a>
               </li>
@@ -205,19 +205,19 @@ export function AdminFooter({ className = '' }: AdminFooterProps) {
 
           {/* Contact */}
           <div className="space-y-4">
-            <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider">
+            <h3 className="text-sm font-semibold text-slate-900 uppercase tracking-wider">
               Contact
             </h3>
             <div className="space-y-2">
-              <div className="flex items-center space-x-2 text-sm text-gray-600">
+              <div className="flex items-center space-x-2 text-sm text-slate-600">
                 <Mail className="h-4 w-4" />
                 <span>admin@nayibareilly.gov.in</span>
               </div>
-              <div className="flex items-center space-x-2 text-sm text-gray-600">
+              <div className="flex items-center space-x-2 text-sm text-slate-600">
                 <Phone className="h-4 w-4" />
                 <span>1800-123-4567</span>
               </div>
-              <div className="flex items-center space-x-2 text-sm text-gray-600">
+              <div className="flex items-center space-x-2 text-sm text-slate-600">
                 <MapPin className="h-4 w-4" />
                 <span>Government Complex, City</span>
               </div>
@@ -226,15 +226,15 @@ export function AdminFooter({ className = '' }: AdminFooterProps) {
 
           {/* System Status */}
           <div className="space-y-4">
-            <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider">
+            <h3 className="text-sm font-semibold text-slate-900 uppercase tracking-wider">
               System Status
             </h3>
             <div className="space-y-2">
               <div className="flex items-center space-x-2">
                 <div className="h-2 w-2 bg-green-500 rounded-full"></div>
-                <span className="text-sm text-gray-600">All Systems Operational</span>
+                <span className="text-sm text-slate-600">All Systems Operational</span>
               </div>
-              <p className="text-xs text-gray-500" suppressHydrationWarning>
+              <p className="text-xs text-slate-500" suppressHydrationWarning>
                 Last updated: {lastUpdated || 'â€”'}
               </p>
             </div>
@@ -242,20 +242,20 @@ export function AdminFooter({ className = '' }: AdminFooterProps) {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-8 pt-8 border-t border-gray-200">
+        <div className="mt-8 pt-8 border-t border-slate-200">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-slate-500">
               <span suppressHydrationWarning>{currentYear ? `Â© ${currentYear} ` : ''}</span>
               NayiBareilly. All rights reserved.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <a href="#" className="text-sm text-gray-500 hover:text-blue-600">
+              <a href="#" className="text-sm text-slate-500 hover:text-emerald-600">
                 Privacy Policy
               </a>
-              <a href="#" className="text-sm text-gray-500 hover:text-blue-600">
+              <a href="#" className="text-sm text-slate-500 hover:text-emerald-600">
                 Terms of Service
               </a>
-              <a href="#" className="text-sm text-gray-500 hover:text-blue-600">
+              <a href="#" className="text-sm text-slate-500 hover:text-emerald-600">
                 Support
               </a>
             </div>

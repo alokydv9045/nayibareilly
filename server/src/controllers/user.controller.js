@@ -5,10 +5,18 @@ import { ok, fail } from '../utils/apiResponse.js'
 export const updateProfile = async (req, res) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) return fail(res, 400, 'Invalid input', errors.array())
-  const { name, avatarUrl } = req.body
+  const { name, avatarUrl, email } = req.body
+  
+  const dataToUpdate = { name, avatarUrl }
+  if (email && email !== req.user.email) {
+    const existing = await prisma.user.findUnique({ where: { email } })
+    if (existing) return fail(res, 400, 'Email already in use')
+    dataToUpdate.email = email
+  }
+
   const updated = await prisma.user.update({
     where: { id: req.user.id },
-    data: { name, avatarUrl },
+    data: dataToUpdate,
     select: { id: true, email: true, name: true, avatarUrl: true, roles: true, createdAt: true }
   })
   try {

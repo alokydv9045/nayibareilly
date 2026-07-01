@@ -80,7 +80,7 @@ export function ManualAssignPanel({
     <div className={`space-y-6 ${className}`}>
       {/* Current Assignment Status */}
       {assignmentLoading ? (
-        <div className="h-24 animate-pulse bg-gray-200 dark:bg-gray-800 rounded-lg" />
+        <div className="h-24 animate-pulse bg-slate-200 dark:bg-slate-800 rounded-lg" />
       ) : isAlreadyAssigned ? (
         <Alert className="border-green-200 bg-green-50 dark:bg-green-950/20">
           <CheckCircle className="h-4 w-4 text-green-600" />
@@ -132,7 +132,7 @@ export function ManualAssignPanel({
             {staffLoading ? (
               <div className="space-y-4">
                 {[1, 2, 3].map(i => (
-                  <div key={i} className="h-48 animate-pulse bg-gray-200 dark:bg-gray-800 rounded-lg" />
+                  <div key={i} className="h-48 animate-pulse bg-slate-200 dark:bg-slate-800 rounded-lg" />
                 ))}
               </div>
             ) : staff.length === 0 ? (

@@ -63,8 +63,8 @@ export default function CitizenSignupForm() {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       {/* Name Field */}
       <div className="space-y-2 animate-fadeInUp">
-        <Label htmlFor="name" className="text-sm font-medium text-gray-700 flex items-center">
-          <User className="h-4 w-4 mr-2 text-purple-600" />
+        <Label htmlFor="name" className="text-sm font-medium text-slate-700 flex items-center">
+          <User className="h-4 w-4 mr-2 text-slate-800" />
           Full Name
         </Label>
         <div className="relative group">
@@ -74,10 +74,10 @@ export default function CitizenSignupForm() {
             placeholder="Enter your full name"
             {...register("name")}
             className={`pl-10 transition-all duration-300 focus:scale-105 hover:shadow-md ${
-              errors.name ? 'border-red-500 focus:border-red-500' : 'focus:border-purple-500'
+              errors.name ? 'border-red-500 focus:border-red-500' : 'focus:border-slate-700'
             }`}
           />
-          <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 group-hover:text-purple-600 transition-colors duration-300" />
+          <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400 group-hover:text-slate-800 transition-colors duration-300" />
         </div>
         {errors.name && (
           <p className="text-sm text-red-600 flex items-center animate-fadeInLeft">
@@ -89,8 +89,8 @@ export default function CitizenSignupForm() {
 
       {/* Email Field */}
       <div className="space-y-2 animate-fadeInUp animation-delay-200">
-        <Label htmlFor="email" className="text-sm font-medium text-gray-700 flex items-center">
-          <Mail className="h-4 w-4 mr-2 text-purple-600" />
+        <Label htmlFor="email" className="text-sm font-medium text-slate-700 flex items-center">
+          <Mail className="h-4 w-4 mr-2 text-slate-800" />
           Email Address
         </Label>
         <div className="relative group">
@@ -100,10 +100,10 @@ export default function CitizenSignupForm() {
             placeholder="Enter your email address"
             {...register("email")}
             className={`pl-10 transition-all duration-300 focus:scale-105 hover:shadow-md ${
-              errors.email ? 'border-red-500 focus:border-red-500' : 'focus:border-purple-500'
+              errors.email ? 'border-red-500 focus:border-red-500' : 'focus:border-slate-700'
             }`}
           />
-          <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 group-hover:text-purple-600 transition-colors duration-300" />
+          <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400 group-hover:text-slate-800 transition-colors duration-300" />
         </div>
         {errors.email && (
           <p className="text-sm text-red-600 flex items-center animate-fadeInLeft">
@@ -115,8 +115,8 @@ export default function CitizenSignupForm() {
 
       {/* Phone Field */}
       <div className="space-y-2 animate-fadeInUp animation-delay-400">
-        <Label htmlFor="phone" className="text-sm font-medium text-gray-700 flex items-center">
-          <Phone className="h-4 w-4 mr-2 text-purple-600" />
+        <Label htmlFor="phone" className="text-sm font-medium text-slate-700 flex items-center">
+          <Phone className="h-4 w-4 mr-2 text-slate-800" />
           Phone Number
         </Label>
         <div className="relative group">
@@ -126,10 +126,10 @@ export default function CitizenSignupForm() {
             placeholder="Enter your phone number"
             {...register("phone")}
             className={`pl-10 transition-all duration-300 focus:scale-105 hover:shadow-md ${
-              errors.phone ? 'border-red-500 focus:border-red-500' : 'focus:border-purple-500'
+              errors.phone ? 'border-red-500 focus:border-red-500' : 'focus:border-slate-700'
             }`}
           />
-          <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 group-hover:text-purple-600 transition-colors duration-300" />
+          <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400 group-hover:text-slate-800 transition-colors duration-300" />
         </div>
         {errors.phone && (
           <p className="text-sm text-red-600 flex items-center animate-fadeInLeft">
@@ -141,8 +141,8 @@ export default function CitizenSignupForm() {
 
       {/* Address Field */}
       <div className="space-y-2 animate-fadeInUp animation-delay-600">
-        <Label htmlFor="address" className="text-sm font-medium text-gray-700 flex items-center">
-          <MapPin className="h-4 w-4 mr-2 text-purple-600" />
+        <Label htmlFor="address" className="text-sm font-medium text-slate-700 flex items-center">
+          <MapPin className="h-4 w-4 mr-2 text-slate-800" />
           Address
         </Label>
         <div className="relative group">
@@ -152,10 +152,10 @@ export default function CitizenSignupForm() {
             placeholder="Enter your complete address"
             {...register("address")}
             className={`pl-10 transition-all duration-300 focus:scale-105 hover:shadow-md ${
-              errors.address ? 'border-red-500 focus:border-red-500' : 'focus:border-purple-500'
+              errors.address ? 'border-red-500 focus:border-red-500' : 'focus:border-slate-700'
             }`}
           />
-          <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 group-hover:text-purple-600 transition-colors duration-300" />
+          <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400 group-hover:text-slate-800 transition-colors duration-300" />
         </div>
         {errors.address && (
           <p className="text-sm text-red-600 flex items-center animate-fadeInLeft">
@@ -167,8 +167,8 @@ export default function CitizenSignupForm() {
 
       {/* Password Field */}
       <div className="space-y-2 animate-fadeInUp animation-delay-800">
-        <Label htmlFor="password" className="text-sm font-medium text-gray-700 flex items-center">
-          <Lock className="h-4 w-4 mr-2 text-purple-600" />
+        <Label htmlFor="password" className="text-sm font-medium text-slate-700 flex items-center">
+          <Lock className="h-4 w-4 mr-2 text-slate-800" />
           Password
         </Label>
         <div className="relative group">
@@ -178,14 +178,14 @@ export default function CitizenSignupForm() {
             placeholder="Create a strong password"
             {...register("password")}
             className={`pl-10 pr-10 transition-all duration-300 focus:scale-105 hover:shadow-md ${
-              errors.password ? 'border-red-500 focus:border-red-500' : 'focus:border-purple-500'
+              errors.password ? 'border-red-500 focus:border-red-500' : 'focus:border-slate-700'
             }`}
           />
-          <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 group-hover:text-purple-600 transition-colors duration-300" />
+          <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400 group-hover:text-slate-800 transition-colors duration-300" />
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-purple-600 transition-colors duration-300"
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-800 transition-colors duration-300"
           >
             {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
           </button>
@@ -200,8 +200,8 @@ export default function CitizenSignupForm() {
 
       {/* Confirm Password Field */}
       <div className="space-y-2 animate-fadeInUp animation-delay-1000">
-        <Label htmlFor="confirmPassword" className="text-sm font-medium text-gray-700 flex items-center">
-          <Lock className="h-4 w-4 mr-2 text-purple-600" />
+        <Label htmlFor="confirmPassword" className="text-sm font-medium text-slate-700 flex items-center">
+          <Lock className="h-4 w-4 mr-2 text-slate-800" />
           Confirm Password
         </Label>
         <div className="relative group">
@@ -211,14 +211,14 @@ export default function CitizenSignupForm() {
             placeholder="Confirm your password"
             {...register("confirmPassword")}
             className={`pl-10 pr-10 transition-all duration-300 focus:scale-105 hover:shadow-md ${
-              errors.confirmPassword ? 'border-red-500 focus:border-red-500' : 'focus:border-purple-500'
+              errors.confirmPassword ? 'border-red-500 focus:border-red-500' : 'focus:border-slate-700'
             }`}
           />
-          <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 group-hover:text-purple-600 transition-colors duration-300" />
+          <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400 group-hover:text-slate-800 transition-colors duration-300" />
           <button
             type="button"
             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-purple-600 transition-colors duration-300"
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-800 transition-colors duration-300"
           >
             {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
           </button>
@@ -238,17 +238,17 @@ export default function CitizenSignupForm() {
             id="agreeToTerms"
             checked={agreeToTerms}
             onCheckedChange={(checked) => setValue("agreeToTerms", checked as boolean)}
-            className="data-[state=checked]:bg-purple-600 data-[state=checked]:border-purple-600"
+            className="data-[state=checked]:bg-slate-800 data-[state=checked]:border-slate-800"
           />
         </div>
         <div className="space-y-1">
-          <Label htmlFor="agreeToTerms" className="text-sm text-gray-700 cursor-pointer">
+          <Label htmlFor="agreeToTerms" className="text-sm text-slate-700 cursor-pointer">
             I agree to the{" "}
-            <a href="/terms" className="text-purple-600 hover:text-purple-700 underline font-medium">
+            <a href="/terms" className="text-slate-800 hover:text-purple-700 underline font-medium">
               Terms of Service
             </a>{" "}
             and{" "}
-            <a href="/privacy" className="text-purple-600 hover:text-purple-700 underline font-medium">
+            <a href="/privacy" className="text-slate-800 hover:text-purple-700 underline font-medium">
               Privacy Policy
             </a>
           </Label>
@@ -265,7 +265,7 @@ export default function CitizenSignupForm() {
       <Button
         type="submit"
         disabled={isLoading}
-        className="w-full py-3 bg-gradient-to-r from-purple-600 to-teal-600 hover:from-purple-700 hover:to-teal-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 animate-fadeInUp animation-delay-1400"
+        className="w-full py-3 bg-gradient-to-r from-slate-800 to-teal-600 hover:from-purple-700 hover:to-teal-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 animate-fadeInUp animation-delay-1400"
       >
         {isLoading ? (
           <div className="flex items-center justify-center space-x-2">
@@ -281,7 +281,7 @@ export default function CitizenSignupForm() {
       </Button>
 
       {/* Additional Info */}
-      <div className="text-center text-sm text-gray-500 animate-fadeInUp animation-delay-1600">
+      <div className="text-center text-sm text-slate-500 animate-fadeInUp animation-delay-1600">
         <p className="flex items-center justify-center space-x-1">
           <Lock className="h-3 w-3" />
           <span>Your information is secure and will never be shared</span>

@@ -49,7 +49,7 @@ export function AssignmentHistory({
         <CardContent>
           <div className="space-y-3">
             {[1, 2, 3].map(i => (
-              <div key={i} className="h-20 animate-pulse bg-gray-200 dark:bg-gray-800 rounded" />
+              <div key={i} className="h-20 animate-pulse bg-slate-200 dark:bg-slate-800 rounded" />
             ))}
           </div>
         </CardContent>
@@ -96,10 +96,10 @@ export function AssignmentHistory({
                 <div className="flex flex-col items-center">
                   <div className={`
                     w-3 h-3 rounded-full border-2 mt-1
-                    ${index === 0 ? 'bg-primary border-primary' : 'bg-gray-300 border-gray-300'}
+                    ${index === 0 ? 'bg-primary border-primary' : 'bg-slate-300 border-slate-300'}
                   `} />
                   {index < history.length - 1 && (
-                    <div className="w-0.5 h-full min-h-[40px] bg-gray-200 dark:bg-gray-700 mt-1" />
+                    <div className="w-0.5 h-full min-h-[40px] bg-slate-200 dark:bg-slate-700 mt-1" />
                   )}
                 </div>
 
@@ -136,10 +136,10 @@ export function AssignmentHistory({
                   </div>
 
                   {entry.reason && (
-                    <div className="mt-2 p-2 bg-gray-50 dark:bg-gray-900 rounded text-sm">
+                    <div className="mt-2 p-2 bg-slate-50 dark:bg-slate-900 rounded text-sm">
                       <div className="flex items-start gap-2">
                         <MessageSquare className="h-4 w-4 text-muted-foreground mt-0.5 flex-shrink-0" />
-                        <p className="text-gray-700 dark:text-gray-300">{entry.reason}</p>
+                        <p className="text-slate-700 dark:text-slate-300">{entry.reason}</p>
                       </div>
                     </div>
                   )}

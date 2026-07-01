@@ -56,8 +56,8 @@ export function ModeratorStats() {
       title: 'Approval Rate',
       value: `${stats.approvalRate}%`,
       icon: TrendingUp,
-      iconBg: 'bg-blue-500/20',
-      iconColor: 'text-blue-300',
+      iconBg: 'bg-emerald-500/20',
+      iconColor: 'text-emerald-300',
       description: 'Quality metric'
     }
   ]

@@ -115,13 +115,13 @@ export default function MayorBanner() {
           <div className="space-y-6 animate-fadeInUp">
             {/* Mayor Title */}
             <div className="space-y-2">
-              <h3 className="text-lg sm:text-xl font-semibold text-blue-200">
+              <h3 className="text-lg sm:text-xl font-semibold text-emerald-200">
                 Hon&apos;ble Mayor of Bareilly
               </h3>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold">
                 Dr. Umesh Gautam
               </h2>
-              <p className="text-sm sm:text-base text-blue-200">
+              <p className="text-sm sm:text-base text-emerald-200">
                 भारतीय जनता पार्टी (BJP) • बरेली नगर निगम
               </p>
             </div>
@@ -132,15 +132,15 @@ export default function MayorBanner() {
                 <h3 className="text-xl sm:text-2xl font-bold text-white">
                   {currentSlideData.title}
                 </h3>
-                <h4 className="text-lg sm:text-xl font-semibold text-blue-200">
+                <h4 className="text-lg sm:text-xl font-semibold text-emerald-200">
                   {currentSlideData.titleHindi}
                 </h4>
               </div>
 
-              <p className="text-base sm:text-lg text-gray-200 leading-relaxed">
+              <p className="text-base sm:text-lg text-slate-200 leading-relaxed">
                 {currentSlideData.description}
               </p>
-              <p className="text-sm sm:text-base text-blue-100 leading-relaxed">
+              <p className="text-sm sm:text-base text-emerald-100 leading-relaxed">
                 {currentSlideData.descriptionHindi}
               </p>
 
@@ -149,11 +149,11 @@ export default function MayorBanner() {
                 <div className="grid grid-cols-3 gap-4 mt-6">
                   {currentSlideData.stats.map((stat, index) => (
                     <div key={index} className="text-center">
-                      <stat.icon className="h-6 w-6 sm:h-8 sm:w-8 mx-auto mb-2 text-blue-300" />
+                      <stat.icon className="h-6 w-6 sm:h-8 sm:w-8 mx-auto mb-2 text-emerald-300" />
                       <div className="text-lg sm:text-xl font-bold text-white">
                         {stat.value}
                       </div>
-                      <div className="text-xs sm:text-sm text-blue-200">
+                      <div className="text-xs sm:text-sm text-emerald-200">
                         {stat.label}
                       </div>
                     </div>
@@ -166,7 +166,7 @@ export default function MayorBanner() {
                 <div className="pt-4">
                   <Button
                     asChild
-                    className="bg-white text-blue-900 hover:bg-blue-50 font-semibold px-6 py-3 rounded-full transition-all duration-300 transform hover:scale-105"
+                    className="bg-white text-blue-900 hover:bg-emerald-50 font-semibold px-6 py-3 rounded-full transition-all duration-300 transform hover:scale-105"
                   >
                     <a href={currentSlideData.cta.href}>
                       {currentSlideData.cta.text}
@@ -220,17 +220,17 @@ export default function MayorBanner() {
           <div className="relative">
             <Card className="overflow-hidden shadow-2xl border-0">
               <CardContent className="p-0">
-                <div className="aspect-[4/3] bg-gradient-to-br from-blue-100 to-green-100 flex items-center justify-center relative">
+                <div className="aspect-[4/3] bg-gradient-to-br from-emerald-100 to-green-100 flex items-center justify-center relative">
                   {/* Placeholder for Mayor Image */}
                   <div className="text-center space-y-4">
-                    <div className="w-32 h-32 sm:w-40 sm:h-40 bg-gradient-to-br from-blue-500 to-green-600 rounded-full mx-auto flex items-center justify-center shadow-lg">
+                    <div className="w-32 h-32 sm:w-40 sm:h-40 bg-gradient-to-br from-emerald-500 to-green-600 rounded-full mx-auto flex items-center justify-center shadow-lg">
                       <Users className="h-16 w-16 sm:h-20 sm:w-20 text-white" />
                     </div>
                     <div className="space-y-1">
-                      <p className="text-lg sm:text-xl font-bold text-gray-800">
+                      <p className="text-lg sm:text-xl font-bold text-slate-800">
                         Mayor Dr. Umesh Gautam
                       </p>
-                      <p className="text-sm text-gray-600">
+                      <p className="text-sm text-slate-600">
                         Hon&apos;ble Mayor, Bareilly
                       </p>
                     </div>

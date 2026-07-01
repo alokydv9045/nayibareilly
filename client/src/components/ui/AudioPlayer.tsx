@@ -205,11 +205,11 @@ export default function AudioPlayer({
 
             {/* Progress Bar */}
             <div 
-              className="w-full h-2 bg-gray-200 rounded-full cursor-pointer overflow-hidden"
+              className="w-full h-2 bg-slate-200 rounded-full cursor-pointer overflow-hidden"
               onClick={handleSeek}
             >
               <div 
-                className="h-full bg-blue-500 transition-all duration-100"
+                className="h-full bg-emerald-500 transition-all duration-100"
                 style={{ 
                   width: duration ? `${(currentTime / duration) * 100}%` : '0%' 
                 }}
@@ -251,14 +251,14 @@ export default function AudioPlayer({
             <div className="text-xs text-muted-foreground mb-2">
               Transcript:
             </div>
-            <div className="text-sm leading-relaxed p-3 bg-gray-50 rounded-lg">
+            <div className="text-sm leading-relaxed p-3 bg-slate-50 rounded-lg">
               {transcript}
             </div>
           </div>
         )}
 
         {/* Waveform Placeholder */}
-        <div className="h-16 bg-gray-100 rounded-lg flex items-center justify-center">
+        <div className="h-16 bg-slate-100 rounded-lg flex items-center justify-center">
           <div className="flex items-end gap-1 h-8">
             {Array.from({ length: 32 }, (_, i) => (
               <div

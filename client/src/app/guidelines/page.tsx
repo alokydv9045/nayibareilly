@@ -182,7 +182,7 @@ export default function GuidelinesPage() {
   const currentContent = content[language]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-indigo-100">
       <div className="container mx-auto px-4 py-8">
         {/* Language Toggle */}
         <div className="flex justify-end mb-6">
@@ -208,8 +208,8 @@ export default function GuidelinesPage() {
 
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">{currentContent.title}</h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <h1 className="text-4xl font-bold text-slate-900 mb-4">{currentContent.title}</h1>
+          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
             {currentContent.subtitle}
           </p>
         </div>
@@ -218,12 +218,12 @@ export default function GuidelinesPage() {
         <div className="grid md:grid-cols-3 gap-6 mb-12">
           <Card className="hover:shadow-lg transition-shadow">
             <CardHeader className="text-center">
-              <FileText className="h-12 w-12 text-blue-600 mx-auto mb-2" />
+              <FileText className="h-12 w-12 text-emerald-600 mx-auto mb-2" />
               <CardTitle>{currentContent.reportCard.title}</CardTitle>
               <CardDescription>{currentContent.reportCard.description}</CardDescription>
             </CardHeader>
             <CardContent className="text-center">
-              <Link href="/report" className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+              <Link href="/report" className="inline-flex items-center px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors">
                 {currentContent.reportCard.button}
               </Link>
             </CardContent>
@@ -244,12 +244,12 @@ export default function GuidelinesPage() {
 
           <Card className="hover:shadow-lg transition-shadow">
             <CardHeader className="text-center">
-              <Shield className="h-12 w-12 text-purple-600 mx-auto mb-2" />
+              <Shield className="h-12 w-12 text-slate-800 mx-auto mb-2" />
               <CardTitle>{currentContent.privacyCard.title}</CardTitle>
               <CardDescription>{currentContent.privacyCard.description}</CardDescription>
             </CardHeader>
             <CardContent className="text-center">
-              <Link href="/privacy" className="inline-flex items-center px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+              <Link href="/privacy" className="inline-flex items-center px-4 py-2 bg-slate-800 text-white rounded-lg hover:bg-purple-700 transition-colors">
                 {currentContent.privacyCard.button}
               </Link>
             </CardContent>
@@ -290,7 +290,7 @@ export default function GuidelinesPage() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Clock className="h-5 w-5 text-blue-600" />
+                <Clock className="h-5 w-5 text-emerald-600" />
                 {currentContent.responseTimes.title}
               </CardTitle>
             </CardHeader>
@@ -314,7 +314,7 @@ export default function GuidelinesPage() {
                 </div>
               </div>
               <div className="pt-4 border-t">
-                <p className="text-xs text-gray-600">
+                <p className="text-xs text-slate-600">
                   <AlertTriangle className="h-4 w-4 inline mr-1" />
                   {currentContent.responseTimes.note}
                 </p>
@@ -333,19 +333,19 @@ export default function GuidelinesPage() {
             <CardContent className="space-y-3">
               <div>
                 <h4 className="font-medium">{currentContent.communityStandards.respectful.title}</h4>
-                <p className="text-sm text-gray-600">{currentContent.communityStandards.respectful.description}</p>
+                <p className="text-sm text-slate-600">{currentContent.communityStandards.respectful.description}</p>
               </div>
               <div>
                 <h4 className="font-medium">{currentContent.communityStandards.constructive.title}</h4>
-                <p className="text-sm text-gray-600">{currentContent.communityStandards.constructive.description}</p>
+                <p className="text-sm text-slate-600">{currentContent.communityStandards.constructive.description}</p>
               </div>
               <div>
                 <h4 className="font-medium">{currentContent.communityStandards.accurate.title}</h4>
-                <p className="text-sm text-gray-600">{currentContent.communityStandards.accurate.description}</p>
+                <p className="text-sm text-slate-600">{currentContent.communityStandards.accurate.description}</p>
               </div>
               <div>
                 <h4 className="font-medium">{currentContent.communityStandards.privacy.title}</h4>
-                <p className="text-sm text-gray-600">{currentContent.communityStandards.privacy.description}</p>
+                <p className="text-sm text-slate-600">{currentContent.communityStandards.privacy.description}</p>
               </div>
             </CardContent>
           </Card>
@@ -354,7 +354,7 @@ export default function GuidelinesPage() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <FileText className="h-5 w-5 text-purple-600" />
+                <FileText className="h-5 w-5 text-slate-800" />
                 {currentContent.issueCategories.title}
               </CardTitle>
             </CardHeader>
@@ -376,14 +376,14 @@ export default function GuidelinesPage() {
         {/* Footer */}
         <div className="text-center mt-12 p-6 bg-white rounded-lg shadow">
           <h3 className="text-lg font-semibold mb-2">{currentContent.footer.title}</h3>
-          <p className="text-gray-600 mb-4">
+          <p className="text-slate-600 mb-4">
             {currentContent.footer.description}
           </p>
           <div className="flex justify-center gap-4">
-            <Link href="/help" className="text-blue-600 hover:underline">
+            <Link href="/help" className="text-emerald-600 hover:underline">
               {currentContent.footer.helpCenter}
             </Link>
-            <Link href="/contact" className="text-blue-600 hover:underline">
+            <Link href="/contact" className="text-emerald-600 hover:underline">
               {currentContent.footer.contactSupport}
             </Link>
           </div>

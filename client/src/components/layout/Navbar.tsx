@@ -66,13 +66,13 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50">
+    <nav className="bg-white shadow-sm border-b border-slate-100 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-14 sm:h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2 min-w-0">
-            <div className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent truncate">
-              NayiBareilly
+            <div className="text-2xl font-bold truncate">
+              <span className="text-slate-900">Nayi</span><span className="text-emerald-500">Bareilly</span>
             </div>
           </Link>
 
@@ -86,12 +86,12 @@ export default function Navbar() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="relative flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors duration-200 group"
+                  className="relative flex items-center space-x-2 text-slate-700 hover:text-emerald-600 transition-colors duration-200 group"
                 >
                   <Icon className="h-4 w-4 group-hover:scale-110 transition-transform" />
                   <span className="font-medium">{label}</span>
                   {showBadge && (
-                    <span className="absolute -top-2 -right-3 inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-blue-600 text-white text-[10px] px-1">
+                    <span className="absolute -top-2 -right-3 inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-emerald-600 text-white text-[10px] px-1">
                       {unreadCount > 9 ? '9+' : unreadCount}
                     </span>
                   )}
@@ -108,8 +108,8 @@ export default function Navbar() {
           <div className="hidden md:flex items-center space-x-4">
             {!mounted || sessionLoading ? (
               <div className="flex items-center space-x-2">
-                <div className="animate-pulse bg-gray-200 h-10 w-10 rounded-full"></div>
-                <div className="animate-pulse bg-gray-200 h-4 w-20 rounded"></div>
+                <div className="animate-pulse bg-slate-200 h-10 w-10 rounded-full"></div>
+                <div className="animate-pulse bg-slate-200 h-4 w-20 rounded"></div>
               </div>
             ) : user ? (
               <DropdownMenu>
@@ -117,7 +117,7 @@ export default function Navbar() {
                   <Button variant="ghost" className="relative h-10 w-10 rounded-full">
                     <Avatar className="h-10 w-10">
                       <AvatarImage src={user.avatarUrl} alt={user.name || user.email} />
-                      <AvatarFallback className="bg-gradient-to-r from-blue-500 to-green-500 text-white">
+                      <AvatarFallback className="bg-gradient-to-r from-emerald-500 to-green-500 text-white">
                         {(user.name || user.email || 'U')[0].toUpperCase()}
                       </AvatarFallback>
                     </Avatar>
@@ -159,7 +159,7 @@ export default function Navbar() {
                     Sign In
                   </Link>
                 </Button>
-                <Button asChild className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700">
+                <Button asChild className="bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700">
                   <Link href="/get-started">
                     <UserPlus className="mr-2 h-4 w-4" />
                     Let&apos;s Get Started
@@ -180,11 +180,11 @@ export default function Navbar() {
               <SheetContent side="right" className="w-full max-w-sm sm:w-80 p-0">
                 <SheetHeader className="p-4 sm:p-6 border-b">
                   <SheetTitle className="text-left">
-                    <div className="text-lg sm:text-xl font-bold bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
-                      NayiBareilly
+                    <div className="text-2xl font-bold">
+                      <span className="text-slate-900">Nayi</span><span className="text-emerald-500">Bareilly</span>
                     </div>
                   </SheetTitle>
-                  <SheetDescription className="text-left text-sm text-gray-600">
+                  <SheetDescription className="text-left text-sm text-slate-600">
                     नई सोच, नया समाधान, नई बरेली
                   </SheetDescription>
                 </SheetHeader>
@@ -197,11 +197,11 @@ export default function Navbar() {
                         key={item.href}
                         href={item.href}
                         onClick={() => setMobileMenuOpen(false)}
-                        className="flex items-center space-x-3 p-3 sm:p-4 rounded-lg hover:bg-gray-50 transition-colors touch-manipulation"
+                        className="flex items-center space-x-3 p-3 sm:p-4 rounded-lg hover:bg-slate-50 transition-colors touch-manipulation"
                       >
-                        <Icon className="h-5 w-5 text-blue-600 flex-shrink-0" />
+                        <Icon className="h-5 w-5 text-emerald-600 flex-shrink-0" />
                         <div className="min-w-0">
-                          <div className="font-medium text-gray-900 truncate">{label}</div>
+                          <div className="font-medium text-slate-900 truncate">{label}</div>
                         </div>
                       </Link>
                     )
@@ -209,24 +209,24 @@ export default function Navbar() {
                 </div>
 
                 {!mounted || sessionLoading ? (
-                  <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-gray-200 px-4 sm:px-6">
+                  <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-slate-200 px-4 sm:px-6">
                     <div className="flex items-center space-x-3 mb-4">
-                      <div className="animate-pulse bg-gray-200 h-10 w-10 rounded-full"></div>
-                      <div className="animate-pulse bg-gray-200 h-4 w-20 rounded"></div>
+                      <div className="animate-pulse bg-slate-200 h-10 w-10 rounded-full"></div>
+                      <div className="animate-pulse bg-slate-200 h-4 w-20 rounded"></div>
                     </div>
                   </div>
                 ) : user ? (
-                  <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-gray-200 px-4 sm:px-6">
+                  <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-slate-200 px-4 sm:px-6">
                     <div className="flex items-center space-x-3 mb-4">
                       <Avatar className="h-10 w-10 flex-shrink-0">
                         <AvatarImage src={user.avatarUrl} alt={user.name || user.email} />
-                        <AvatarFallback className="bg-gradient-to-r from-blue-500 to-green-500 text-white text-sm">
+                        <AvatarFallback className="bg-gradient-to-r from-emerald-500 to-green-500 text-white text-sm">
                           {(user.name || user.email || 'U')[0].toUpperCase()}
                         </AvatarFallback>
                       </Avatar>
                       <div className="min-w-0">
-                        <div className="font-medium text-gray-900 truncate">{user.name || 'User'}</div>
-                        <div className="text-sm text-gray-500 truncate">{user.email}</div>
+                        <div className="font-medium text-slate-900 truncate">{user.name || 'User'}</div>
+                        <div className="text-sm text-slate-500 truncate">{user.email}</div>
                       </div>
                     </div>
                     <div className="space-y-2">
@@ -257,14 +257,14 @@ export default function Navbar() {
                     </div>
                   </div>
                 ) : (
-                  <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-gray-200 px-4 sm:px-6 space-y-3">
+                  <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-slate-200 px-4 sm:px-6 space-y-3">
                     <Button variant="ghost" className="w-full justify-start h-12 touch-manipulation" asChild>
                       <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
                         <LogIn className="mr-3 h-4 w-4" />
                         Sign In
                       </Link>
                     </Button>
-                    <Button className="w-full h-12 bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 touch-manipulation" asChild>
+                    <Button className="w-full h-12 bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 touch-manipulation" asChild>
                       <Link href="/get-started" onClick={() => setMobileMenuOpen(false)}>
                         <UserPlus className="mr-3 h-4 w-4" />
                         Let&apos;s Get Started

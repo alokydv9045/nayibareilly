@@ -77,7 +77,7 @@ const STATUS_CONFIG: Record<IssueStatus, {
   closed: {
     label: 'Closed',
     icon: Archive,
-    className: 'bg-gray-100 text-gray-800 border-gray-200',
+    className: 'bg-slate-100 text-slate-800 border-slate-200',
     tooltip: 'Issue has been closed'
   },
   archived: {

@@ -250,14 +250,14 @@ interface NominatimResult {
   return (
     <div className={cn('space-y-4', className)}>
       {/* Tab Navigation */}
-      <div className="flex space-x-2 p-1 bg-gray-100 rounded-lg">
+      <div className="flex space-x-2 p-1 bg-slate-100 rounded-lg">
         <button
           type="button"
           className={cn(
             'flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors',
             currentTab === 'gps'
-              ? 'bg-white text-gray-900 shadow-sm'
-              : 'text-gray-600 hover:text-gray-900'
+              ? 'bg-white text-slate-900 shadow-sm'
+              : 'text-slate-600 hover:text-slate-900'
           )}
           onClick={() => setCurrentTab('gps')}
           disabled={disabled}
@@ -271,8 +271,8 @@ interface NominatimResult {
           className={cn(
             'flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors',
             currentTab === 'search'
-              ? 'bg-white text-gray-900 shadow-sm'
-              : 'text-gray-600 hover:text-gray-900'
+              ? 'bg-white text-slate-900 shadow-sm'
+              : 'text-slate-600 hover:text-slate-900'
           )}
           onClick={() => setCurrentTab('search')}
           disabled={disabled}
@@ -286,8 +286,8 @@ interface NominatimResult {
           className={cn(
             'flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors',
             currentTab === 'map'
-              ? 'bg-white text-gray-900 shadow-sm'
-              : 'text-gray-600 hover:text-gray-900'
+              ? 'bg-white text-slate-900 shadow-sm'
+              : 'text-slate-600 hover:text-slate-900'
           )}
           onClick={() => setCurrentTab('map')}
           disabled={disabled}
@@ -313,7 +313,7 @@ interface NominatimResult {
                 >
                   {isGettingLocation ? (
                     <>
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mr-2" />
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-emerald-600 mr-2" />
                       Getting location...
                     </>
                   ) : (
@@ -334,7 +334,7 @@ interface NominatimResult {
           {currentTab === 'search' && (
             <div className="space-y-4">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400" />
                 <Input
                   type="text"
                   placeholder="Search for an address or landmark..."
@@ -345,7 +345,7 @@ interface NominatimResult {
                 />
                 {isSearching && (
                   <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600" />
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-emerald-600" />
                   </div>
                 )}
               </div>
@@ -356,17 +356,17 @@ interface NominatimResult {
                     <button
                       key={index}
                       type="button"
-                      className="w-full text-left p-3 hover:bg-gray-50 rounded-lg border transition-colors"
+                      className="w-full text-left p-3 hover:bg-slate-50 rounded-lg border transition-colors"
                       onClick={() => handleSearchResultSelect(result)}
                       disabled={disabled}
                     >
                       <div className="flex items-start gap-3">
-                        <MapPin className="h-4 w-4 text-gray-400 mt-1 flex-shrink-0" />
+                        <MapPin className="h-4 w-4 text-slate-400 mt-1 flex-shrink-0" />
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium text-gray-900 truncate">
+                          <p className="text-sm font-medium text-slate-900 truncate">
                             {result.address?.split(',')[0]}
                           </p>
-                          <p className="text-xs text-gray-500 truncate">
+                          <p className="text-xs text-slate-500 truncate">
                             {result.address}
                           </p>
                         </div>
@@ -409,7 +409,7 @@ interface NominatimResult {
               <CheckCircle className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-1">
-                  <p className="text-sm font-medium text-gray-900">
+                  <p className="text-sm font-medium text-slate-900">
                     Location Selected
                   </p>
                   {value.accuracy && (
@@ -428,11 +428,11 @@ interface NominatimResult {
                   )}
                 </div>
                 
-                <p className="text-xs text-gray-500 truncate">
+                <p className="text-xs text-slate-500 truncate">
                   {value.address || `${value.latitude.toFixed(6)}, ${value.longitude.toFixed(6)}`}
                 </p>
                 
-                <p className="text-xs text-gray-400 mt-1">
+                <p className="text-xs text-slate-400 mt-1">
                   {t.exactAddress}
                 </p>
               </div>

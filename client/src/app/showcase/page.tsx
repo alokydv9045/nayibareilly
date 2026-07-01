@@ -244,8 +244,8 @@ export default function ComponentShowcase() {
               title="Total Issues"
               value={247}
               icon={AlertCircle}
-              iconColor="text-blue-600"
-              iconBgColor="bg-blue-100"
+              iconColor="text-emerald-600"
+              iconBgColor="bg-emerald-100"
               change={{ value: 12, label: "from last month", trend: "up" }}
             />
             <StatsCard 
@@ -267,7 +267,7 @@ export default function ComponentShowcase() {
               title="Satisfaction"
               value="94%"
               icon={TrendingUp}
-              iconColor="text-purple-600"
+              iconColor="text-slate-800"
               iconBgColor="bg-purple-100"
               change={{ value: 3, label: "from last quarter", trend: "up" }}
             />

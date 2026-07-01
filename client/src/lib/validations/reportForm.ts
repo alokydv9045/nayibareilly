@@ -291,14 +291,14 @@ export const PRIORITY_LEVELS = [
     enName: 'Low Priority',
     hiName: 'कम प्राथमिकता',
     description: 'Non-urgent, can wait',
-    color: 'bg-gray-500'
+    color: 'bg-slate-500'
   },
   { 
     id: 'medium', 
     enName: 'Medium Priority',
     hiName: 'मध्यम प्राथमिकता',
     description: 'Moderate urgency',
-    color: 'bg-blue-500'
+    color: 'bg-emerald-500'
   },
   { 
     id: 'high', 
@@ -322,7 +322,7 @@ export const ISSUE_STATUSES = [
     id: 'new', 
     enName: 'New',
     hiName: 'नया',
-    color: 'bg-blue-500'
+    color: 'bg-emerald-500'
   },
   { 
     id: 'triaged', 
@@ -334,7 +334,7 @@ export const ISSUE_STATUSES = [
     id: 'assigned', 
     enName: 'Assigned',
     hiName: 'सौंपा गया',
-    color: 'bg-purple-500'
+    color: 'bg-slate-700'
   },
   { 
     id: 'in-progress', 
@@ -346,7 +346,7 @@ export const ISSUE_STATUSES = [
     id: 'on-hold', 
     enName: 'On Hold',
     hiName: 'रोक पर',
-    color: 'bg-gray-500'
+    color: 'bg-slate-500'
   },
   { 
     id: 'resolved', 

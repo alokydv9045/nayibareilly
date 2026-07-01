@@ -45,14 +45,14 @@ const getStatusColor = (status: string) => {
     case 'STAFF_EN_ROUTE':
     case 'STAFF_ON_SITE':
     case 'WORK_IN_PROGRESS':
-      return 'bg-blue-100 text-blue-800'
+      return 'bg-emerald-100 text-blue-800'
     case 'RESOLVED':
     case 'CITIZEN_VERIFIED':
       return 'bg-green-100 text-green-800'
     case 'REJECTED':
       return 'bg-red-100 text-red-800'
     default:
-      return 'bg-gray-100 text-gray-800'
+      return 'bg-slate-100 text-slate-800'
   }
 }
 
@@ -103,14 +103,14 @@ export function DuplicateIssuesModal({
 
                   {/* Description */}
                   {issue.description && (
-                    <p className="text-sm text-gray-600 line-clamp-2">
+                    <p className="text-sm text-slate-600 line-clamp-2">
                       {issue.description}
                     </p>
                   )}
 
                   {/* Image preview */}
                   {issue.images && issue.images.length > 0 && (
-                    <div className="relative w-full h-32 rounded-md overflow-hidden bg-gray-100">
+                    <div className="relative w-full h-32 rounded-md overflow-hidden bg-slate-100">
                       <Image
                         src={issue.images[0].url}
                         alt={issue.title}
@@ -121,7 +121,7 @@ export function DuplicateIssuesModal({
                   )}
 
                   {/* Metadata */}
-                  <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500">
+                  <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500">
                     <div className="flex items-center gap-1">
                       <MapPin className="h-4 w-4" />
                       <span>{issue.distance}m away</span>
@@ -140,7 +140,7 @@ export function DuplicateIssuesModal({
                   <Link
                     href={`/track/${issue.reportId}`}
                     target="_blank"
-                    className="inline-flex items-center gap-1 text-sm text-blue-600 hover:text-blue-800 font-medium"
+                    className="inline-flex items-center gap-1 text-sm text-emerald-600 hover:text-blue-800 font-medium"
                   >
                     View full details
                     <ExternalLink className="h-3 w-3" />

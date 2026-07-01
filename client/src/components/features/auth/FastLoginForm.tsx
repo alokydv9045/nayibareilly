@@ -158,7 +158,7 @@ export default function FastLoginForm() {
       <form onSubmit={handleSubmit} className="space-y-5">
         {/* Email Field */}
         <div className="space-y-2">
-          <Label htmlFor="email" className="text-sm font-medium text-gray-700">
+          <Label htmlFor="email" className="text-sm font-medium text-slate-700">
             Email Address
           </Label>
           <div className="relative">
@@ -173,13 +173,13 @@ export default function FastLoginForm() {
               autoComplete="email"
               autoFocus
             />
-            <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
           </div>
         </div>
 
         {/* Role Selection */}
         <div className="space-y-2">
-          <Label htmlFor="role" className="text-sm font-medium text-gray-700">
+          <Label htmlFor="role" className="text-sm font-medium text-slate-700">
             Login As
           </Label>
           <div className="relative">
@@ -226,19 +226,19 @@ export default function FastLoginForm() {
                 </SelectItem>
               </SelectContent>
             </Select>
-            <Shield className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <Shield className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
           </div>
         </div>
 
         {/* Password Field */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <Label htmlFor="password" className="text-sm font-medium text-gray-700">
+            <Label htmlFor="password" className="text-sm font-medium text-slate-700">
               Password
             </Label>
             <Link
               href="/forgot-password"
-              className="text-sm text-blue-600 hover:text-blue-700 hover:underline"
+              className="text-sm text-emerald-600 hover:text-emerald-700 hover:underline font-semibold"
             >
               Forgot password?
             </Link>
@@ -254,11 +254,11 @@ export default function FastLoginForm() {
               className="pl-10 pr-12 h-12 text-base"
               autoComplete="current-password"
             />
-            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-600"
             >
               {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
             </button>
@@ -272,9 +272,9 @@ export default function FastLoginForm() {
             id="remember"
             checked={rememberMe}
             onChange={(e) => setRememberMe(e.target.checked)}
-            className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+            className="h-4 w-4 text-emerald-500 border-slate-300 rounded focus:ring-emerald-500"
           />
-          <label htmlFor="remember" className="ml-2 text-sm text-gray-700 cursor-pointer">
+          <label htmlFor="remember" className="ml-2 text-sm text-slate-700 cursor-pointer font-medium">
             Remember me
           </label>
         </div>
@@ -283,7 +283,7 @@ export default function FastLoginForm() {
         <Button
           type="submit"
           disabled={!canSubmit}
-          className="w-full h-12 bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white font-semibold text-base"
+          className="w-full h-12 bg-emerald-500 hover:bg-emerald-600 shadow-md text-white font-semibold text-base transition-all border-0"
         >
           {isLoading ? (
             <div className="flex items-center gap-2">
@@ -300,12 +300,12 @@ export default function FastLoginForm() {
       </form>
 
       {/* Register Link */}
-      <div className="text-center pt-4 border-t border-gray-100">
-        <p className="text-sm text-gray-600">
-          Don&apos;t have an account?{' '}
+      <div className="text-center pt-4 border-t border-slate-100">
+        <p className="text-sm text-slate-600 font-medium">
+          Don't have an account?{' '}
           <Link
             href="/get-started"
-            className="text-blue-600 hover:text-blue-700 hover:underline font-semibold"
+            className="text-emerald-600 hover:text-emerald-700 hover:underline font-bold"
           >
             Get started
           </Link>

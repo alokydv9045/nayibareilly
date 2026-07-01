@@ -107,7 +107,7 @@ export default function EnvironmentalServicesPage() {
       case 'HIGH': return 'bg-orange-500 text-white'
       case 'MEDIUM': return 'bg-yellow-500 text-black'
       case 'LOW': return 'bg-green-500 text-white'
-      default: return 'bg-gray-500 text-white'
+      default: return 'bg-slate-500 text-white'
     }
   }
 
@@ -169,7 +169,7 @@ export default function EnvironmentalServicesPage() {
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-blue-200 text-sm">Active Cases</p>
+                    <p className="text-emerald-200 text-sm">Active Cases</p>
                     <p className="text-2xl font-bold text-white">{stats?.inProgressIssues || 0}</p>
                     <p className="text-xs text-blue-400">In Treatment</p>
                   </div>
@@ -241,7 +241,7 @@ export default function EnvironmentalServicesPage() {
                   <div className="space-y-4">
                     {[
                       { type: 'Waste Management', count: environmentIssues.length, color: 'bg-emerald-500', icon: Trash2 },
-                      { type: 'Sanitation', count: 12, color: 'bg-blue-500', icon: Droplets },
+                      { type: 'Sanitation', count: 12, color: 'bg-emerald-500', icon: Droplets },
                       { type: 'Environmental Protection', count: 8, color: 'bg-green-500', icon: Leaf },
                       { type: 'Pollution Control', count: 6, color: 'bg-orange-500', icon: Activity }
                     ].map((item, index) => (
@@ -453,7 +453,7 @@ export default function EnvironmentalServicesPage() {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="max-w-md bg-white/10 border-white/20 text-white placeholder:text-green-300"
               />
-              <Badge className="bg-blue-600/30 text-blue-200">
+              <Badge className="bg-emerald-600/30 text-emerald-200">
                 {filteredInProgress.length} Active Cases
               </Badge>
             </div>
@@ -478,7 +478,7 @@ export default function EnvironmentalServicesPage() {
                           <div className="flex items-center space-x-3 mb-3">
                             {getIssueIcon(issue.category.name)}
                             <h3 className="text-white font-semibold">{issue.title}</h3>
-                            <Badge className="bg-blue-600 text-white">IN TREATMENT</Badge>
+                            <Badge className="bg-emerald-600 text-white">IN TREATMENT</Badge>
                             <Badge className={getPriorityColor(issue.priority)}>
                               {issue.priority}
                             </Badge>
@@ -611,7 +611,7 @@ export default function EnvironmentalServicesPage() {
                       )}
                       <Badge className={`
                         ${facility.status === 'Operational' || facility.status === 'Active Testing' ? 'bg-green-600' : 
-                          facility.status === 'On Standby' || facility.status === 'Monitoring' ? 'bg-yellow-600' : 'bg-blue-600'}
+                          facility.status === 'On Standby' || facility.status === 'Monitoring' ? 'bg-yellow-600' : 'bg-emerald-600'}
                         text-white
                       `}>
                         {facility.status}

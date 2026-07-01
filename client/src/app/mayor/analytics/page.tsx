@@ -184,13 +184,13 @@ export default function MayorAnalyticsPage() {
   const getTrendIcon = (trend: number) => {
     if (trend > 0) return <TrendingUp className="h-4 w-4 text-green-600" />
     if (trend < 0) return <TrendingDown className="h-4 w-4 text-red-600" />
-    return <div className="h-4 w-4 bg-gray-400 rounded-full" />
+    return <div className="h-4 w-4 bg-slate-400 rounded-full" />
   }
 
   const getTrendColor = (trend: number) => {
     if (trend > 0) return 'text-green-600'
     if (trend < 0) return 'text-red-600'
-    return 'text-gray-600'
+    return 'text-slate-600'
   }
 
   const getPerformanceColor = (score: number) => {
@@ -210,7 +210,7 @@ export default function MayorAnalyticsPage() {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="flex items-center justify-center min-h-[400px]">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-purple-600"></div>
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-slate-800"></div>
         </div>
       </div>
     )
@@ -221,9 +221,9 @@ export default function MayorAnalyticsPage() {
       <div className="container mx-auto px-4 py-8">
         <Card>
           <CardContent className="text-center py-12">
-            <AlertTriangle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">No Data Available</h3>
-            <p className="text-gray-600">Unable to load analytics data.</p>
+            <AlertTriangle className="h-12 w-12 text-slate-400 mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-slate-900 mb-2">No Data Available</h3>
+            <p className="text-slate-600">Unable to load analytics data.</p>
           </CardContent>
         </Card>
       </div>
@@ -234,8 +234,8 @@ export default function MayorAnalyticsPage() {
     <div className="container mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <BarChart3 className="h-8 w-8 text-purple-600" />
-          <h1 className="text-3xl font-bold text-gray-900">City Analytics Dashboard</h1>
+          <BarChart3 className="h-8 w-8 text-slate-800" />
+          <h1 className="text-3xl font-bold text-slate-900">City Analytics Dashboard</h1>
           <Crown className="h-6 w-6 text-yellow-600" />
         </div>
         <div className="flex gap-3">
@@ -272,19 +272,19 @@ export default function MayorAnalyticsPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <Card>
           <CardContent className="p-4 text-center">
-            <Users className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-            <div className="text-2xl font-bold text-blue-600">
+            <Users className="h-8 w-8 text-emerald-600 mx-auto mb-2" />
+            <div className="text-2xl font-bold text-emerald-600">
               {data.summary.populationServed.toLocaleString()}
             </div>
-            <div className="text-sm text-gray-600">Citizens Served</div>
-            <div className="text-xs text-blue-600 mt-1">{data.summary.wardsCovered} wards</div>
+            <div className="text-sm text-slate-600">Citizens Served</div>
+            <div className="text-xs text-emerald-600 mt-1">{data.summary.wardsCovered} wards</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
             <CheckCircle className="h-8 w-8 text-green-600 mx-auto mb-2" />
             <div className="text-2xl font-bold text-green-600">{getResolutionRate()}%</div>
-            <div className="text-sm text-gray-600">Resolution Rate</div>
+            <div className="text-sm text-slate-600">Resolution Rate</div>
             <div className="flex items-center justify-center gap-1 mt-1">
               {getTrendIcon(data.trends.resolutionImprovement)}
               <span className={`text-xs ${getTrendColor(data.trends.resolutionImprovement)}`}>
@@ -299,7 +299,7 @@ export default function MayorAnalyticsPage() {
             <div className="text-2xl font-bold text-yellow-600">
               {data.summary.citizenSatisfaction.toFixed(1)}
             </div>
-            <div className="text-sm text-gray-600">Satisfaction Score</div>
+            <div className="text-sm text-slate-600">Satisfaction Score</div>
             <div className="flex items-center justify-center gap-1 mt-1">
               {getTrendIcon(data.trends.satisfactionTrend)}
               <span className={`text-xs ${getTrendColor(data.trends.satisfactionTrend)}`}>
@@ -310,11 +310,11 @@ export default function MayorAnalyticsPage() {
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
-            <Target className="h-8 w-8 text-purple-600 mx-auto mb-2" />
-            <div className="text-2xl font-bold text-purple-600">
+            <Target className="h-8 w-8 text-slate-800 mx-auto mb-2" />
+            <div className="text-2xl font-bold text-slate-800">
               {data.summary.budgetEfficiency}%
             </div>
-            <div className="text-sm text-gray-600">Budget Efficiency</div>
+            <div className="text-sm text-slate-600">Budget Efficiency</div>
             <div className="flex items-center justify-center gap-1 mt-1">
               {getTrendIcon(data.trends.budgetUtilization)}
               <span className={`text-xs ${getTrendColor(data.trends.budgetUtilization)}`}>
@@ -413,10 +413,10 @@ export default function MayorAnalyticsPage() {
                         <Badge variant={resolutionRate >= 80 ? 'default' : 'secondary'}>
                           {resolutionRate}%
                         </Badge>
-                        <Star className={`h-4 w-4 ${dept.satisfaction >= 4 ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`} />
+                        <Star className={`h-4 w-4 ${dept.satisfaction >= 4 ? 'fill-yellow-400 text-yellow-400' : 'text-slate-300'}`} />
                       </div>
                     </div>
-                    <div className="grid grid-cols-3 gap-3 text-xs text-gray-600">
+                    <div className="grid grid-cols-3 gap-3 text-xs text-slate-600">
                       <div>Issues: {dept.issues}</div>
                       <div>Avg Time: {dept.avgTime}h</div>
                       <div>Budget: {budgetEfficiency}%</div>
@@ -442,14 +442,14 @@ export default function MayorAnalyticsPage() {
                   <div key={ward.ward} className="border rounded-lg p-3">
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-2">
-                        <MapPin className="h-4 w-4 text-blue-600" />
+                        <MapPin className="h-4 w-4 text-emerald-600" />
                         <span className="font-medium">Ward {ward.ward}</span>
                       </div>
                       <Badge variant={resolutionRate >= 80 ? 'default' : resolutionRate >= 60 ? 'secondary' : 'destructive'}>
                         {resolutionRate}%
                       </Badge>
                     </div>
-                    <div className="grid grid-cols-2 gap-3 text-xs text-gray-600">
+                    <div className="grid grid-cols-2 gap-3 text-xs text-slate-600">
                       <div>Population: {ward.population.toLocaleString()}</div>
                       <div>Issues: {ward.issues}</div>
                       <div>Satisfaction: {ward.satisfaction.toFixed(1)}/5</div>
@@ -474,13 +474,13 @@ export default function MayorAnalyticsPage() {
               {data.categoryBreakdown.map((category) => (
                 <div key={category.category} className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-emerald-500 rounded-full"></div>
                     <span className="font-medium">{category.category.replace('_', ' ')}</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <div className="text-right">
                       <div className="text-sm font-bold">{category.count}</div>
-                      <div className="text-xs text-gray-600">{category.percentage}%</div>
+                      <div className="text-xs text-slate-600">{category.percentage}%</div>
                     </div>
                     <div className="flex items-center gap-1">
                       {getTrendIcon(category.trend)}
@@ -539,7 +539,7 @@ export default function MayorAnalyticsPage() {
                   {data.comparativeAnalysis.peerCities.slice(0, 3).map((city) => (
                     <div key={city.name} className="text-sm border rounded p-2">
                       <div className="font-medium">{city.name}</div>
-                      <div className="text-xs text-gray-600">
+                      <div className="text-xs text-slate-600">
                         Resolution: {city.resolutionRate}% | Satisfaction: {city.satisfaction}/5
                       </div>
                     </div>

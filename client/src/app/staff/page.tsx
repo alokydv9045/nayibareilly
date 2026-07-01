@@ -164,18 +164,18 @@ export default function StaffPage() {
         return 'bg-yellow-500'
       case 'low':
       case 'LOW':
-        return 'bg-blue-500'
+        return 'bg-emerald-500'
       default:
-        return 'bg-gray-500'
+        return 'bg-slate-500'
     }
   }
 
   const getStatusInfo = (status: string) => {
     switch (status) {
       case 'ASSIGNED_TO_STAFF':
-        return { label: 'Assigned', color: 'bg-blue-500', icon: Briefcase }
+        return { label: 'Assigned', color: 'bg-emerald-500', icon: Briefcase }
       case 'STAFF_EN_ROUTE':
-        return { label: 'En Route', color: 'bg-purple-500', icon: MapPinned }
+        return { label: 'En Route', color: 'bg-slate-700', icon: MapPinned }
       case 'STAFF_ON_SITE':
         return { label: 'On Site', color: 'bg-orange-500', icon: MapPinned }
       case 'WORK_IN_PROGRESS':
@@ -185,7 +185,7 @@ export default function StaffPage() {
       case 'RESOLVED':
         return { label: 'Completed', color: 'bg-green-500', icon: CheckCircle2 }
       default:
-        return { label: 'Unknown', color: 'bg-gray-500', icon: AlertCircle }
+        return { label: 'Unknown', color: 'bg-slate-500', icon: AlertCircle }
     }
   }
 
@@ -312,7 +312,7 @@ export default function StaffPage() {
                                     <div className="flex items-center space-x-3 mb-2">
                                       <h3 className="text-xl font-semibold text-white">{issue.title}</h3>
                                       <Badge className={getPriorityColor(issue.priority)}>{String(issue.priority).toUpperCase()}</Badge>
-                                      {issue.category && <Badge className="bg-purple-500">{issue.category}</Badge>}
+                                      {issue.category && <Badge className="bg-slate-700">{issue.category}</Badge>}
                                     </div>
                                     {issue.description && <p className="text-cyan-200 mb-3">{issue.description}</p>}
                                     <div className="grid grid-cols-2 gap-2 text-sm text-cyan-200">
@@ -341,11 +341,11 @@ export default function StaffPage() {
                                 </div>
 
                                 {issue.moderatorNotes && (
-                                  <div className="bg-blue-500/20 border border-blue-500/30 rounded-lg p-3">
+                                  <div className="bg-emerald-500/20 border border-emerald-500/30 rounded-lg p-3">
                                     <div className="flex items-start space-x-2">
-                                      <MessageSquare className="h-4 w-4 text-blue-300 mt-1" />
+                                      <MessageSquare className="h-4 w-4 text-emerald-300 mt-1" />
                                       <div>
-                                        <p className="text-blue-200 text-sm font-semibold mb-1">Assignment Notes:</p>
+                                        <p className="text-emerald-200 text-sm font-semibold mb-1">Assignment Notes:</p>
                                         <p className="text-white text-sm italic">&ldquo;{issue.moderatorNotes}&rdquo;</p>
                                       </div>
                                     </div>
@@ -358,7 +358,7 @@ export default function StaffPage() {
                                       <Button
                                         variant="outline"
                                         size="sm"
-                                        className="bg-blue-600/20 border-blue-500 text-blue-300 hover:bg-blue-600/30"
+                                        className="bg-emerald-600/20 border-emerald-500 text-emerald-300 hover:bg-emerald-600/30"
                                         onClick={() => window.open(`https://maps.google.com/?q=${issue.latitude},${issue.longitude}`, '_blank')}
                                       >
                                         <Navigation className="h-4 w-4 mr-1" />

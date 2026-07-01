@@ -31,31 +31,31 @@ export default function DepartmentAdminPage() {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center">
         <div className="text-white">Loading...</div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center space-x-3 mb-4">
-            <div className="p-3 bg-blue-600/20 rounded-xl border border-blue-500/30">
+            <div className="p-3 bg-emerald-600/20 rounded-xl border border-emerald-500/30">
               <Building className="h-8 w-8 text-blue-400" />
             </div>
             <div>
               <h1 className="text-3xl font-bold text-white">Department Administration</h1>
-              <p className="text-blue-200">Municipal Department Management & Oversight</p>
+              <p className="text-emerald-200">Municipal Department Management & Oversight</p>
             </div>
           </div>
           
           {/* Welcome Message */}
           <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-6 mb-6">
             <h2 className="text-xl font-semibold text-white mb-2">Welcome, {user.name}</h2>
-            <p className="text-blue-200">
+            <p className="text-emerald-200">
               Manage municipal services across core departments. Select a department below to access specialized tools and staff management.
             </p>
           </div>
@@ -63,13 +63,13 @@ export default function DepartmentAdminPage() {
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="bg-white/10 border border-white/20">
-            <TabsTrigger value="overview" className="data-[state=active]:bg-blue-600/30">
+            <TabsTrigger value="overview" className="data-[state=active]:bg-emerald-600/30">
               Department Overview
             </TabsTrigger>
-            <TabsTrigger value="staff" className="data-[state=active]:bg-blue-600/30">
+            <TabsTrigger value="staff" className="data-[state=active]:bg-emerald-600/30">
               All Staff Management
             </TabsTrigger>
-            <TabsTrigger value="analytics" className="data-[state=active]:bg-blue-600/30">
+            <TabsTrigger value="analytics" className="data-[state=active]:bg-emerald-600/30">
               Analytics & Reports
             </TabsTrigger>
           </TabsList>
@@ -178,48 +178,48 @@ export default function DepartmentAdminPage() {
               </Card>
 
               {/* Water Supply & Utilities */}
-              <Card className="bg-gradient-to-br from-blue-900/20 to-cyan-900/20 backdrop-blur-lg border-blue-500/30 hover:border-blue-400/50 transition-all group cursor-pointer"
+              <Card className="bg-gradient-to-br from-blue-900/20 to-cyan-900/20 backdrop-blur-lg border-emerald-500/30 hover:border-blue-400/50 transition-all group cursor-pointer"
                     onClick={() => navigateToDepartment('water')}>
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
-                      <div className="p-3 bg-blue-600/30 rounded-xl">
-                        <Droplets className="h-6 w-6 text-blue-300" />
+                      <div className="p-3 bg-emerald-600/30 rounded-xl">
+                        <Droplets className="h-6 w-6 text-emerald-300" />
                       </div>
                       <div>
-                        <CardTitle className="text-white group-hover:text-blue-200 transition-colors">
+                        <CardTitle className="text-white group-hover:text-emerald-200 transition-colors">
                           Water Supply & Utilities
                         </CardTitle>
-                        <p className="text-blue-200 text-sm">Water, Sewerage & Utilities</p>
+                        <p className="text-emerald-200 text-sm">Water, Sewerage & Utilities</p>
                       </div>
                     </div>
-                    <ArrowRight className="h-5 w-5 text-blue-300 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="h-5 w-5 text-emerald-300 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
                     <div className="grid grid-cols-2 gap-4">
                       <div className="bg-white/10 rounded-lg p-3">
-                        <p className="text-blue-200 text-xs">Active Connections</p>
+                        <p className="text-emerald-200 text-xs">Active Connections</p>
                         <p className="text-white text-lg font-bold">1,245</p>
                       </div>
                       <div className="bg-white/10 rounded-lg p-3">
-                        <p className="text-blue-200 text-xs">Staff Members</p>
+                        <p className="text-emerald-200 text-xs">Staff Members</p>
                         <p className="text-white text-lg font-bold">15</p>
                       </div>
                     </div>
                     <div className="space-y-2">
                       <div className="flex justify-between text-sm">
-                        <span className="text-blue-200">Water Quality</span>
+                        <span className="text-emerald-200">Water Quality</span>
                         <Badge className="bg-green-600 text-white text-xs">Excellent</Badge>
                       </div>
                       <div className="flex justify-between text-sm">
-                        <span className="text-blue-200">System Status</span>
-                        <Badge className="bg-blue-600 text-white text-xs">Operational</Badge>
+                        <span className="text-emerald-200">System Status</span>
+                        <Badge className="bg-emerald-600 text-white text-xs">Operational</Badge>
                       </div>
                     </div>
                     <Button 
-                      className="w-full bg-blue-600/30 hover:bg-blue-600/50 border border-blue-500/30 text-blue-200"
+                      className="w-full bg-emerald-600/30 hover:bg-emerald-600/50 border border-emerald-500/30 text-emerald-200"
                       onClick={(e) => {
                         e.stopPropagation()
                         navigateToDepartment('water')
@@ -238,7 +238,7 @@ export default function DepartmentAdminPage() {
                 <CardContent className="p-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-blue-200 text-sm">Total Active Issues</p>
+                      <p className="text-emerald-200 text-sm">Total Active Issues</p>
                       <p className="text-2xl font-bold text-white">68</p>
                       <p className="text-xs text-blue-400">Across All Departments</p>
                     </div>
@@ -307,7 +307,7 @@ export default function DepartmentAdminPage() {
                           <div className={`w-3 h-3 rounded-full bg-${dept.color}-500`}></div>
                           <div>
                             <h3 className="text-white font-medium">{dept.dept}</h3>
-                            <p className="text-gray-300 text-sm">{dept.total} Total Staff</p>
+                            <p className="text-slate-300 text-sm">{dept.total} Total Staff</p>
                           </div>
                         </div>
                         <div className="flex items-center space-x-4">
@@ -358,7 +358,7 @@ export default function DepartmentAdminPage() {
                       <div key={index} className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
                         <div>
                           <p className="text-white text-sm font-medium">{item.metric}</p>
-                          <p className="text-blue-300 text-xs">Performance indicator</p>
+                          <p className="text-emerald-300 text-xs">Performance indicator</p>
                         </div>
                         <div className="text-right">
                           <p className="text-white text-lg font-bold">{item.value}</p>
@@ -396,7 +396,7 @@ export default function DepartmentAdminPage() {
                             {dept.efficiency}%
                           </Badge>
                         </div>
-                        <div className="flex justify-between text-xs text-gray-300">
+                        <div className="flex justify-between text-xs text-slate-300">
                           <span>{dept.issues} Active Issues</span>
                           <span>Avg: {dept.avgTime}</span>
                         </div>

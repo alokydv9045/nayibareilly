@@ -84,10 +84,10 @@ export default function IssuesMapRootPage() {
         <div className="max-w-7xl mx-auto space-y-6">
           {/* Header */}
           <div className="text-center space-y-4 animate-fadeInUp">
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
               Issues Map
             </h1>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <p className="text-slate-600 max-w-2xl mx-auto">
               Explore community issues on an interactive map. Find nearby problems and track resolution progress visually.
             </p>
           </div>
@@ -97,12 +97,12 @@ export default function IssuesMapRootPage() {
             <Card className="group hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
               <CardContent className="p-4 text-center">
                 <div className="flex items-center justify-center mb-2">
-                  <div className="bg-blue-100 rounded-full p-2 group-hover:scale-110 transition-transform duration-300">
-                    <MapPin className="h-5 w-5 text-blue-600" />
+                  <div className="bg-emerald-100 rounded-full p-2 group-hover:scale-110 transition-transform duration-300">
+                    <MapPin className="h-5 w-5 text-emerald-600" />
                   </div>
                 </div>
-                <p className="text-2xl font-bold text-gray-900">{stats.total}</p>
-                <p className="text-sm text-gray-600">Total Issues</p>
+                <p className="text-2xl font-bold text-slate-900">{stats.total}</p>
+                <p className="text-sm text-slate-600">Total Issues</p>
               </CardContent>
             </Card>
 
@@ -114,7 +114,7 @@ export default function IssuesMapRootPage() {
                   </div>
                 </div>
                 <p className="text-2xl font-bold text-red-600">{stats.highPriority}</p>
-                <p className="text-sm text-gray-600">High Priority</p>
+                <p className="text-sm text-slate-600">High Priority</p>
               </CardContent>
             </Card>
 
@@ -126,7 +126,7 @@ export default function IssuesMapRootPage() {
                   </div>
                 </div>
                 <p className="text-2xl font-bold text-yellow-600">{stats.mediumPriority}</p>
-                <p className="text-sm text-gray-600">Medium Priority</p>
+                <p className="text-sm text-slate-600">Medium Priority</p>
               </CardContent>
             </Card>
 
@@ -138,7 +138,7 @@ export default function IssuesMapRootPage() {
                   </div>
                 </div>
                 <p className="text-2xl font-bold text-green-600">{stats.lowPriority}</p>
-                <p className="text-sm text-gray-600">Low Priority</p>
+                <p className="text-sm text-slate-600">Low Priority</p>
               </CardContent>
             </Card>
           </div>
@@ -155,7 +155,7 @@ export default function IssuesMapRootPage() {
               <div className="flex flex-col lg:flex-row gap-4">
                 {/* Search */}
                 <div className="flex-1 relative group">
-                  <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400 group-hover:text-green-600 transition-colors duration-300" />
+                  <Search className="absolute left-3 top-3 h-4 w-4 text-slate-400 group-hover:text-green-600 transition-colors duration-300" />
                   <Input
                     placeholder="Search issues by title or category..."
                     value={searchTerm}
@@ -226,7 +226,7 @@ export default function IssuesMapRootPage() {
               {/* Active Filters */}
               {(searchTerm || selectedCategory !== 'all' || selectedPriority !== 'all') && (
                 <div className="flex items-center gap-2 flex-wrap animate-fadeInUp">
-                  <span className="text-sm text-gray-600">Active filters:</span>
+                  <span className="text-sm text-slate-600">Active filters:</span>
                   {searchTerm && (
                     <Badge variant="secondary" className="group cursor-pointer hover:bg-red-100 transition-colors duration-300">
                       Search: &ldquo;{searchTerm}&rdquo;
@@ -276,10 +276,10 @@ export default function IssuesMapRootPage() {
             <CardContent className="p-0">
               <div className="h-[600px] lg:h-[700px] relative overflow-hidden rounded-lg">
                 {isLoading ? (
-                  <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
+                  <div className="absolute inset-0 flex items-center justify-center bg-slate-100">
                     <div className="text-center space-y-4">
                       <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto"></div>
-                      <p className="text-gray-600">Loading map data...</p>
+                      <p className="text-slate-600">Loading map data...</p>
                     </div>
                   </div>
                 ) : (
@@ -331,10 +331,10 @@ export default function IssuesMapRootPage() {
           <Card className="animate-fadeInUp animation-delay-900">
             <CardContent className="p-6">
               <div className="text-center space-y-4">
-                <h3 className="text-lg font-semibold text-gray-900">How to Use the Map</h3>
-                <div className="grid md:grid-cols-3 gap-4 text-sm text-gray-600">
+                <h3 className="text-lg font-semibold text-slate-900">How to Use the Map</h3>
+                <div className="grid md:grid-cols-3 gap-4 text-sm text-slate-600">
                   <div className="flex items-start space-x-2">
-                    <Target className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                    <Target className="h-5 w-5 text-emerald-600 mt-0.5 flex-shrink-0" />
                     <div>
                       <p className="font-medium">Click markers</p>
                       <p>View issue details and status</p>
@@ -348,7 +348,7 @@ export default function IssuesMapRootPage() {
                     </div>
                   </div>
                   <div className="flex items-start space-x-2">
-                    <Navigation className="h-5 w-5 text-purple-600 mt-0.5 flex-shrink-0" />
+                    <Navigation className="h-5 w-5 text-slate-800 mt-0.5 flex-shrink-0" />
                     <div>
                       <p className="font-medium">Find location</p>
                       <p>Center map on your position</p>

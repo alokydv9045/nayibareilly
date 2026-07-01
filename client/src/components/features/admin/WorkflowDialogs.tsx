@@ -44,9 +44,9 @@ export function TriageDialog({ open, onOpenChange, onConfirm, isLoading, issue }
           <DialogDescription>
             Assign this issue to the appropriate department for handling.
             {issue && (
-              <div className="mt-2 p-2 bg-gray-50 rounded text-sm">
+              <div className="mt-2 p-2 bg-slate-50 rounded text-sm">
                 <strong>Issue:</strong> {issue.title}
-                {issue.reportId && <div className="text-xs text-gray-500">ID: {issue.reportId}</div>}
+                {issue.reportId && <div className="text-xs text-slate-500">ID: {issue.reportId}</div>}
               </div>
             )}
           </DialogDescription>
@@ -131,9 +131,9 @@ export function AssignStaffDialog({ open, onOpenChange, onConfirm, isLoading, is
           <DialogDescription>
             Select a staff member to handle this issue in the field.
             {issue && (
-              <div className="mt-2 p-2 bg-gray-50 rounded text-sm">
+              <div className="mt-2 p-2 bg-slate-50 rounded text-sm">
                 <strong>Issue:</strong> {issue.title}
-                {issue.department && <div className="text-xs text-gray-500">Dept: {issue.department}</div>}
+                {issue.department && <div className="text-xs text-slate-500">Dept: {issue.department}</div>}
               </div>
             )}
           </DialogDescription>
@@ -154,7 +154,7 @@ export function AssignStaffDialog({ open, onOpenChange, onConfirm, isLoading, is
                   <SelectItem value="staff_005">Vijay Verma (Health Dept)</SelectItem>
                 </SelectContent>
               </Select>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs text-slate-500">
                 Note: In production, this would fetch actual staff members from the selected department.
               </p>
             </div>
@@ -217,9 +217,9 @@ export function CloseIssueDialog({ open, onOpenChange, onConfirm, isLoading, iss
           <DialogDescription>
             Mark this issue as officially closed after verification.
             {issue && (
-              <div className="mt-2 p-2 bg-gray-50 rounded text-sm">
+              <div className="mt-2 p-2 bg-slate-50 rounded text-sm">
                 <strong>Issue:</strong> {issue.title}
-                {issue.reportId && <div className="text-xs text-gray-500">ID: {issue.reportId}</div>}
+                {issue.reportId && <div className="text-xs text-slate-500">ID: {issue.reportId}</div>}
                 {issue.resolvedAt && (
                   <div className="text-xs text-green-600 mt-1">
                     Resolved on {new Date(issue.resolvedAt).toLocaleString()}
@@ -296,9 +296,9 @@ export function RejectIssueDialog({ open, onOpenChange, onConfirm, isLoading, is
           <DialogDescription>
             Provide a reason for rejecting this issue.
             {issue && (
-              <div className="mt-2 p-2 bg-gray-50 rounded text-sm">
+              <div className="mt-2 p-2 bg-slate-50 rounded text-sm">
                 <strong>Issue:</strong> {issue.title}
-                {issue.reportId && <div className="text-xs text-gray-500">ID: {issue.reportId}</div>}
+                {issue.reportId && <div className="text-xs text-slate-500">ID: {issue.reportId}</div>}
               </div>
             )}
           </DialogDescription>
@@ -361,12 +361,12 @@ export function IssueDetailsDialog({ open, onOpenChange, issue }: IssueDetailsDi
   if (!issue) return null
 
   const statusColors = {
-    PENDING: 'bg-blue-100 text-blue-800',
+    PENDING: 'bg-emerald-100 text-blue-800',
     TRIAGED: 'bg-indigo-100 text-indigo-800',
     ASSIGNED_TO_STAFF: 'bg-cyan-100 text-cyan-800',
     IN_PROGRESS: 'bg-yellow-100 text-yellow-800',
     RESOLVED: 'bg-green-100 text-green-800',
-    CLOSED: 'bg-gray-100 text-gray-800',
+    CLOSED: 'bg-slate-100 text-slate-800',
     REJECTED: 'bg-red-100 text-red-800',
   }
 
@@ -382,7 +382,7 @@ export function IssueDetailsDialog({ open, onOpenChange, issue }: IssueDetailsDi
       <DialogContent className="sm:max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
-            <FileText className="h-5 w-5 text-blue-600" />
+            <FileText className="h-5 w-5 text-emerald-600" />
             Issue Details
           </DialogTitle>
         </DialogHeader>
@@ -405,26 +405,26 @@ export function IssueDetailsDialog({ open, onOpenChange, issue }: IssueDetailsDi
           <div className="space-y-3">
             <div>
               <Label className="text-sm font-medium">Description</Label>
-              <p className="text-sm text-gray-700 mt-1">{issue.description}</p>
+              <p className="text-sm text-slate-700 mt-1">{issue.description}</p>
             </div>
 
             <div>
               <Label className="text-sm font-medium">Location</Label>
-              <p className="text-sm text-gray-700 mt-1">{issue.location || 'Not specified'}</p>
+              <p className="text-sm text-slate-700 mt-1">{issue.location || 'Not specified'}</p>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <Label className="text-sm font-medium">Reported By</Label>
-                <p className="text-sm text-gray-700 mt-1">{issue.reportedBy.name}</p>
-                <p className="text-xs text-gray-500">{issue.reportedBy.email}</p>
+                <p className="text-sm text-slate-700 mt-1">{issue.reportedBy.name}</p>
+                <p className="text-xs text-slate-500">{issue.reportedBy.email}</p>
               </div>
               {issue.assignedTo && (
                 <div>
                   <Label className="text-sm font-medium">Assigned To</Label>
-                  <p className="text-sm text-gray-700 mt-1">{issue.assignedTo.name}</p>
+                  <p className="text-sm text-slate-700 mt-1">{issue.assignedTo.name}</p>
                   {issue.assignedTo.department && (
-                    <p className="text-xs text-gray-500">{issue.assignedTo.department}</p>
+                    <p className="text-xs text-slate-500">{issue.assignedTo.department}</p>
                   )}
                 </div>
               )}
@@ -433,14 +433,14 @@ export function IssueDetailsDialog({ open, onOpenChange, issue }: IssueDetailsDi
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <Label className="text-sm font-medium">Created</Label>
-                <p className="text-sm text-gray-700 mt-1">
+                <p className="text-sm text-slate-700 mt-1">
                   {new Date(issue.createdAt).toLocaleString()}
                 </p>
               </div>
               {issue.resolvedAt && (
                 <div>
                   <Label className="text-sm font-medium">Resolved</Label>
-                  <p className="text-sm text-gray-700 mt-1">
+                  <p className="text-sm text-slate-700 mt-1">
                     {new Date(issue.resolvedAt).toLocaleString()}
                   </p>
                 </div>

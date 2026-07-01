@@ -109,28 +109,28 @@ export default function GetStartedPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-purple-50 flex items-center justify-center p-4">
       <div className="w-full max-w-2xl">
         {/* Logo */}
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center space-x-3">
-            <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+            <div className="w-12 h-12 bg-gradient-to-br from-emerald-600 to-slate-800 rounded-xl flex items-center justify-center shadow-lg">
               <Shield className="h-6 w-6 text-white" />
             </div>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              NayiBareilly
+            <h1 className="text-2xl font-bold">
+              <span className="text-slate-900">Nayi</span><span className="text-emerald-500">Bareilly</span>
             </h1>
           </Link>
-          <p className="text-gray-600 mt-2">नई सोच, नया समाधान, नई बरेली</p>
+          <p className="text-slate-600 mt-2">नई सोच, नया समाधान, नई बरेली</p>
         </div>
 
         <Card className="shadow-xl border-0 bg-white/90 backdrop-blur-sm">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl font-bold text-gray-800 flex items-center justify-center gap-2">
-              <UserPlus className="h-6 w-6 text-purple-600" />
+            <CardTitle className="text-2xl font-bold text-slate-800 flex items-center justify-center gap-2">
+              <UserPlus className="h-6 w-6 text-slate-800" />
               Let&apos;s Get Started
             </CardTitle>
-            <CardDescription className="text-gray-600">
+            <CardDescription className="text-slate-600">
               Create your account to start reporting and tracking civic issues
             </CardDescription>
           </CardHeader>
@@ -138,12 +138,12 @@ export default function GetStartedPage() {
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               {/* Personal Information Section */}
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-gray-800 border-b pb-2">Personal Information</h3>
+                <h3 className="text-lg font-semibold text-slate-800 border-b pb-2">Personal Information</h3>
                 
                 {/* Name Field */}
                 <div className="space-y-2 animate-fadeInUp">
-                  <Label htmlFor="name" className="text-sm font-medium text-gray-700 flex items-center">
-                    <User className="h-4 w-4 mr-2 text-purple-600" />
+                  <Label htmlFor="name" className="text-sm font-medium text-slate-700 flex items-center">
+                    <User className="h-4 w-4 mr-2 text-slate-800" />
                     Full Name
                   </Label>
                   <div className="relative group">
@@ -153,10 +153,10 @@ export default function GetStartedPage() {
                       placeholder="Enter your full name"
                       {...register("name")}
                       className={`pl-10 transition-all duration-300 focus:scale-105 hover:shadow-md ${
-                        errors.name ? 'border-red-500 focus:border-red-500' : 'focus:border-purple-500'
+                        errors.name ? 'border-red-500 focus:border-red-500' : 'focus:border-slate-700'
                       }`}
                     />
-                    <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 group-hover:text-purple-600 transition-colors duration-300" />
+                    <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400 group-hover:text-slate-800 transition-colors duration-300" />
                   </div>
                   {errors.name && (
                     <p className="text-sm text-red-600 flex items-center animate-fadeInLeft">
@@ -170,8 +170,8 @@ export default function GetStartedPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {/* Email Field */}
                   <div className="space-y-2 animate-fadeInUp animation-delay-200">
-                    <Label htmlFor="email" className="text-sm font-medium text-gray-700 flex items-center">
-                      <Mail className="h-4 w-4 mr-2 text-purple-600" />
+                    <Label htmlFor="email" className="text-sm font-medium text-slate-700 flex items-center">
+                      <Mail className="h-4 w-4 mr-2 text-slate-800" />
                       Email Address
                     </Label>
                     <div className="relative group">
@@ -181,10 +181,10 @@ export default function GetStartedPage() {
                         placeholder="Enter your email address"
                         {...register("email")}
                         className={`pl-10 transition-all duration-300 focus:scale-105 hover:shadow-md ${
-                          errors.email ? 'border-red-500 focus:border-red-500' : 'focus:border-purple-500'
+                          errors.email ? 'border-red-500 focus:border-red-500' : 'focus:border-slate-700'
                         }`}
                       />
-                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 group-hover:text-purple-600 transition-colors duration-300" />
+                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400 group-hover:text-slate-800 transition-colors duration-300" />
                     </div>
                     {errors.email && (
                       <p className="text-sm text-red-600 flex items-center animate-fadeInLeft">
@@ -196,8 +196,8 @@ export default function GetStartedPage() {
 
                   {/* Phone Field */}
                   <div className="space-y-2 animate-fadeInUp animation-delay-400">
-                    <Label htmlFor="phone" className="text-sm font-medium text-gray-700 flex items-center">
-                      <Phone className="h-4 w-4 mr-2 text-purple-600" />
+                    <Label htmlFor="phone" className="text-sm font-medium text-slate-700 flex items-center">
+                      <Phone className="h-4 w-4 mr-2 text-slate-800" />
                       Phone Number
                     </Label>
                     <div className="relative group">
@@ -207,10 +207,10 @@ export default function GetStartedPage() {
                         placeholder="Enter your phone number"
                         {...register("phone")}
                         className={`pl-10 transition-all duration-300 focus:scale-105 hover:shadow-md ${
-                          errors.phone ? 'border-red-500 focus:border-red-500' : 'focus:border-purple-500'
+                          errors.phone ? 'border-red-500 focus:border-red-500' : 'focus:border-slate-700'
                         }`}
                       />
-                      <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 group-hover:text-purple-600 transition-colors duration-300" />
+                      <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400 group-hover:text-slate-800 transition-colors duration-300" />
                     </div>
                     {errors.phone && (
                       <p className="text-sm text-red-600 flex items-center animate-fadeInLeft">
@@ -223,8 +223,8 @@ export default function GetStartedPage() {
 
                 {/* Address Field */}
                 <div className="space-y-2 animate-fadeInUp animation-delay-600">
-                  <Label htmlFor="address" className="text-sm font-medium text-gray-700 flex items-center">
-                    <MapPin className="h-4 w-4 mr-2 text-purple-600" />
+                  <Label htmlFor="address" className="text-sm font-medium text-slate-700 flex items-center">
+                    <MapPin className="h-4 w-4 mr-2 text-slate-800" />
                     Address
                   </Label>
                   <div className="relative group">
@@ -234,10 +234,10 @@ export default function GetStartedPage() {
                       placeholder="Enter your complete address"
                       {...register("address")}
                       className={`pl-10 transition-all duration-300 focus:scale-105 hover:shadow-md ${
-                        errors.address ? 'border-red-500 focus:border-red-500' : 'focus:border-purple-500'
+                        errors.address ? 'border-red-500 focus:border-red-500' : 'focus:border-slate-700'
                       }`}
                     />
-                    <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 group-hover:text-purple-600 transition-colors duration-300" />
+                    <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400 group-hover:text-slate-800 transition-colors duration-300" />
                   </div>
                   {errors.address && (
                     <p className="text-sm text-red-600 flex items-center animate-fadeInLeft">
@@ -250,14 +250,14 @@ export default function GetStartedPage() {
 
               {/* Account Security Section */}
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-gray-800 border-b pb-2">Account Security</h3>
+                <h3 className="text-lg font-semibold text-slate-800 border-b pb-2">Account Security</h3>
                 
                 {/* Password and Confirm Password Row */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {/* Password Field */}
                   <div className="space-y-2 animate-fadeInUp animation-delay-800">
-                    <Label htmlFor="password" className="text-sm font-medium text-gray-700 flex items-center">
-                      <Lock className="h-4 w-4 mr-2 text-purple-600" />
+                    <Label htmlFor="password" className="text-sm font-medium text-slate-700 flex items-center">
+                      <Lock className="h-4 w-4 mr-2 text-slate-800" />
                       Password
                     </Label>
                     <div className="relative group">
@@ -267,14 +267,14 @@ export default function GetStartedPage() {
                         placeholder="Create a strong password"
                         {...register("password")}
                         className={`pl-10 pr-10 transition-all duration-300 focus:scale-105 hover:shadow-md ${
-                          errors.password ? 'border-red-500 focus:border-red-500' : 'focus:border-purple-500'
+                          errors.password ? 'border-red-500 focus:border-red-500' : 'focus:border-slate-700'
                         }`}
                       />
-                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 group-hover:text-purple-600 transition-colors duration-300" />
+                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400 group-hover:text-slate-800 transition-colors duration-300" />
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-purple-600 transition-colors duration-300"
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-800 transition-colors duration-300"
                       >
                         {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                       </button>
@@ -289,8 +289,8 @@ export default function GetStartedPage() {
 
                   {/* Confirm Password Field */}
                   <div className="space-y-2 animate-fadeInUp animation-delay-1000">
-                    <Label htmlFor="confirmPassword" className="text-sm font-medium text-gray-700 flex items-center">
-                      <Lock className="h-4 w-4 mr-2 text-purple-600" />
+                    <Label htmlFor="confirmPassword" className="text-sm font-medium text-slate-700 flex items-center">
+                      <Lock className="h-4 w-4 mr-2 text-slate-800" />
                       Confirm Password
                     </Label>
                     <div className="relative group">
@@ -300,14 +300,14 @@ export default function GetStartedPage() {
                         placeholder="Confirm your password"
                         {...register("confirmPassword")}
                         className={`pl-10 pr-10 transition-all duration-300 focus:scale-105 hover:shadow-md ${
-                          errors.confirmPassword ? 'border-red-500 focus:border-red-500' : 'focus:border-purple-500'
+                          errors.confirmPassword ? 'border-red-500 focus:border-red-500' : 'focus:border-slate-700'
                         }`}
                       />
-                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 group-hover:text-purple-600 transition-colors duration-300" />
+                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-400 group-hover:text-slate-800 transition-colors duration-300" />
                       <button
                         type="button"
                         onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-purple-600 transition-colors duration-300"
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-800 transition-colors duration-300"
                       >
                         {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                       </button>
@@ -324,17 +324,17 @@ export default function GetStartedPage() {
 
               {/* Account Type Section */}
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold text-gray-800 border-b pb-2">Account Type</h3>
+                <h3 className="text-lg font-semibold text-slate-800 border-b pb-2">Account Type</h3>
                 
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4">
                   <div className="flex items-center space-x-3">
-                    <User className="h-5 w-5 text-blue-600" />
+                    <User className="h-5 w-5 text-emerald-600" />
                     <div>
                       <div className="font-medium text-blue-900">Citizen Account</div>
-                      <div className="text-sm text-blue-700">Report and track civic issues in your community</div>
+                      <div className="text-sm text-emerald-700">Report and track civic issues in your community</div>
                     </div>
                   </div>
-                  <div className="mt-3 text-xs text-blue-600 bg-blue-100 rounded px-2 py-1 inline-block">
+                  <div className="mt-3 text-xs text-emerald-600 bg-emerald-100 rounded px-2 py-1 inline-block">
                     <strong>Note:</strong> Staff, Moderator, and Admin accounts are created by authorized personnel only.
                   </div>
                 </div>
@@ -347,17 +347,17 @@ export default function GetStartedPage() {
                     id="agreeToTerms"
                     checked={agreeToTerms}
                     onCheckedChange={(checked) => setValue("agreeToTerms", checked as boolean)}
-                    className="data-[state=checked]:bg-purple-600 data-[state=checked]:border-purple-600"
+                    className="data-[state=checked]:bg-slate-800 data-[state=checked]:border-slate-800"
                   />
                 </div>
                 <div className="space-y-1">
-                  <Label htmlFor="agreeToTerms" className="text-sm text-gray-700 cursor-pointer">
+                  <Label htmlFor="agreeToTerms" className="text-sm text-slate-700 cursor-pointer">
                     I agree to the{" "}
-                    <a href="/terms" className="text-purple-600 hover:text-purple-700 underline font-medium">
+                    <a href="/terms" className="text-slate-800 hover:text-purple-700 underline font-medium">
                       Terms of Service
                     </a>{" "}
                     and{" "}
-                    <a href="/privacy" className="text-purple-600 hover:text-purple-700 underline font-medium">
+                    <a href="/privacy" className="text-slate-800 hover:text-purple-700 underline font-medium">
                       Privacy Policy
                     </a>
                   </Label>
@@ -374,7 +374,7 @@ export default function GetStartedPage() {
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="w-full py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 animate-fadeInUp animation-delay-1400"
+                className="w-full py-3 bg-gradient-to-r from-slate-800 to-emerald-600 hover:from-purple-700 hover:to-emerald-700 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 animate-fadeInUp animation-delay-1400"
               >
                 {isLoading ? (
                   <div className="flex items-center justify-center space-x-2">
@@ -390,17 +390,17 @@ export default function GetStartedPage() {
               </Button>
 
               {/* Sign In Link */}
-              <div className="text-center text-sm text-gray-600 animate-fadeInUp animation-delay-1600">
+              <div className="text-center text-sm text-slate-600 animate-fadeInUp animation-delay-1600">
                 <p>
                   Already have an account?{" "}
-                  <Link href="/login" className="text-purple-600 hover:text-purple-700 underline font-medium">
+                  <Link href="/login" className="text-slate-800 hover:text-purple-700 underline font-medium">
                     Sign in here
                   </Link>
                 </p>
               </div>
 
               {/* Security Note */}
-              <div className="text-center text-sm text-gray-500 animate-fadeInUp animation-delay-1800">
+              <div className="text-center text-sm text-slate-500 animate-fadeInUp animation-delay-1800">
                 <p className="flex items-center justify-center space-x-1">
                   <Lock className="h-3 w-3" />
                   <span>Your information is secure and will never be shared</span>

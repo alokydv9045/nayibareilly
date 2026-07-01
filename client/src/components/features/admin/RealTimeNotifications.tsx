@@ -1,8 +1,9 @@
-﻿'use client';
+'use client';
 
 import { useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
-import { useAuth } from '@/lib/auth/auth-context';
+import { useSession } from '@/lib/providers/SessionProvider';
+import { tokenStorage } from '@/lib/auth/auth-utils';
 import socketService from '@/lib/services/socket-service';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -52,7 +53,8 @@ interface Notification {
 }
 
 export function RealTimeNotifications() {
-  const { user, token } = useAuth();
+  const { user } = useSession();
+  const token = tokenStorage.get();
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -199,7 +201,7 @@ export function RealTimeNotifications() {
       case 'error': return <AlertCircle className="h-4 w-4 text-red-500" />;
       case 'warning': return <AlertTriangle className="h-4 w-4 text-yellow-500" />;
       case 'success': return <CheckCircle className="h-4 w-4 text-green-500" />;
-      default: return <Info className="h-4 w-4 text-blue-500" />;
+      default: return <Info className="h-4 w-4 text-emerald-500" />;
     }
   };
 
@@ -236,8 +238,8 @@ export function RealTimeNotifications() {
       </Button>
 
       {isOpen && (
-        <div className="absolute right-0 top-12 w-96 max-h-96 overflow-hidden bg-white border border-gray-200 rounded-lg shadow-lg z-50">
-          <div className="p-4 border-b border-gray-200">
+        <div className="absolute right-0 top-12 w-96 max-h-96 overflow-hidden bg-white border border-slate-200 rounded-lg shadow-lg z-50">
+          <div className="p-4 border-b border-slate-200">
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-semibold">Notifications</h3>
               <div className="flex items-center space-x-2">
@@ -260,15 +262,15 @@ export function RealTimeNotifications() {
 
           <div className="max-h-80 overflow-y-auto">
             {notifications.length === 0 ? (
-              <div className="p-4 text-center text-gray-500">
+              <div className="p-4 text-center text-slate-500">
                 No notifications yet
               </div>
             ) : (
               notifications.map((notification) => (
                 <div
                   key={notification.id}
-                  className={`p-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer ${
-                    !notification.read ? 'bg-blue-50' : ''
+                  className={`p-4 border-b border-slate-100 hover:bg-slate-50 cursor-pointer ${
+                    !notification.read ? 'bg-emerald-50' : ''
                   }`}
                   onClick={() => markAsRead(notification.id)}
                 >
@@ -278,7 +280,7 @@ export function RealTimeNotifications() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between">
-                        <p className="text-sm font-medium text-gray-900">
+                        <p className="text-sm font-medium text-slate-900">
                           {notification.title}
                         </p>
                         <Button
@@ -292,10 +294,10 @@ export function RealTimeNotifications() {
                           <X className="h-3 w-3" />
                         </Button>
                       </div>
-                      <p className="text-sm text-gray-600 mt-1">
+                      <p className="text-sm text-slate-600 mt-1">
                         {notification.message}
                       </p>
-                      <p className="text-xs text-gray-400 mt-1">
+                      <p className="text-xs text-slate-400 mt-1">
                         {formatTime(notification.timestamp)}
                       </p>
                     </div>

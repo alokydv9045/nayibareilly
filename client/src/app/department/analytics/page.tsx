@@ -157,7 +157,7 @@ export default function DepartmentAnalyticsPage() {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="flex items-center justify-center min-h-[400px]">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-emerald-600"></div>
         </div>
       </div>
     )
@@ -168,9 +168,9 @@ export default function DepartmentAnalyticsPage() {
       <div className="container mx-auto px-4 py-8">
         <Card>
           <CardContent className="text-center py-12">
-            <AlertTriangle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">No Data Available</h3>
-            <p className="text-gray-600">Unable to load analytics data.</p>
+            <AlertTriangle className="h-12 w-12 text-slate-400 mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-slate-900 mb-2">No Data Available</h3>
+            <p className="text-slate-600">Unable to load analytics data.</p>
           </CardContent>
         </Card>
       </div>
@@ -181,8 +181,8 @@ export default function DepartmentAnalyticsPage() {
     <div className="container mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <BarChart3 className="h-8 w-8 text-blue-600" />
-          <h1 className="text-3xl font-bold text-gray-900">Department Analytics</h1>
+          <BarChart3 className="h-8 w-8 text-emerald-600" />
+          <h1 className="text-3xl font-bold text-slate-900">Department Analytics</h1>
         </div>
         <div className="flex gap-3">
           <Select value={dateRange} onValueChange={setDateRange}>
@@ -218,44 +218,44 @@ export default function DepartmentAnalyticsPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
         <Card>
           <CardContent className="p-4 text-center">
-            <Building2 className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-            <div className="text-2xl font-bold text-blue-600">{data.summary.totalIssues}</div>
-            <div className="text-sm text-gray-600">Total Issues</div>
+            <Building2 className="h-8 w-8 text-emerald-600 mx-auto mb-2" />
+            <div className="text-2xl font-bold text-emerald-600">{data.summary.totalIssues}</div>
+            <div className="text-sm text-slate-600">Total Issues</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
             <CheckCircle className="h-8 w-8 text-green-600 mx-auto mb-2" />
             <div className="text-2xl font-bold text-green-600">{data.summary.resolvedIssues}</div>
-            <div className="text-sm text-gray-600">Resolved</div>
+            <div className="text-sm text-slate-600">Resolved</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
-            <TrendingUp className="h-8 w-8 text-purple-600 mx-auto mb-2" />
-            <div className="text-2xl font-bold text-purple-600">{getResolutionRate()}%</div>
-            <div className="text-sm text-gray-600">Resolution Rate</div>
+            <TrendingUp className="h-8 w-8 text-slate-800 mx-auto mb-2" />
+            <div className="text-2xl font-bold text-slate-800">{getResolutionRate()}%</div>
+            <div className="text-sm text-slate-600">Resolution Rate</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
             <Clock className="h-8 w-8 text-orange-600 mx-auto mb-2" />
             <div className="text-2xl font-bold text-orange-600">{formatTime(data.summary.avgResolutionTime)}</div>
-            <div className="text-sm text-gray-600">Avg. Resolution</div>
+            <div className="text-sm text-slate-600">Avg. Resolution</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
             <Star className="h-8 w-8 text-yellow-600 mx-auto mb-2" />
             <div className="text-2xl font-bold text-yellow-600">{data.summary.satisfactionRating.toFixed(1)}</div>
-            <div className="text-sm text-gray-600">Satisfaction</div>
+            <div className="text-sm text-slate-600">Satisfaction</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
             <Users className="h-8 w-8 text-indigo-600 mx-auto mb-2" />
             <div className="text-2xl font-bold text-indigo-600">{data.summary.activeStaff}</div>
-            <div className="text-sm text-gray-600">Active Staff</div>
+            <div className="text-sm text-slate-600">Active Staff</div>
           </CardContent>
         </Card>
       </div>
@@ -271,11 +271,11 @@ export default function DepartmentAnalyticsPage() {
               {data.trends.categoryBreakdown.map((category) => (
                 <div key={category.category} className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
+                    <div className="w-3 h-3 bg-emerald-500 rounded-full"></div>
                     <span className="font-medium">{category.category.replace('_', ' ')}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-sm text-gray-600">{category.count}</span>
+                    <span className="text-sm text-slate-600">{category.count}</span>
                     <Badge variant="outline">{category.percentage}%</Badge>
                   </div>
                 </div>
@@ -301,7 +301,7 @@ export default function DepartmentAnalyticsPage() {
                     <span className="font-medium">{priority.priority}</span>
                   </div>
                   <div className="flex items-center gap-3">
-                    <span className="text-sm text-gray-600">{priority.count} issues</span>
+                    <span className="text-sm text-slate-600">{priority.count} issues</span>
                     <Badge variant="outline">{formatTime(priority.avgResolutionTime)}</Badge>
                   </div>
                 </div>
@@ -350,7 +350,7 @@ export default function DepartmentAnalyticsPage() {
                       <td className="text-center py-3">{formatTime(staff.avgResolutionTime)}</td>
                       <td className="text-center py-3">
                         <div className="flex items-center justify-center gap-1">
-                          <Star className={`h-4 w-4 ${staff.rating >= 4 ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`} />
+                          <Star className={`h-4 w-4 ${staff.rating >= 4 ? 'fill-yellow-400 text-yellow-400' : 'text-slate-300'}`} />
                           <span>{staff.rating.toFixed(1)}</span>
                         </div>
                       </td>
@@ -380,14 +380,14 @@ export default function DepartmentAnalyticsPage() {
                   <div key={ward.ward} className="border rounded-lg p-3">
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-2">
-                        <MapPin className="h-4 w-4 text-blue-600" />
+                        <MapPin className="h-4 w-4 text-emerald-600" />
                         <span className="font-medium">Ward {ward.ward}</span>
                       </div>
                       <Badge variant={resolutionRate >= 80 ? 'default' : resolutionRate >= 60 ? 'secondary' : 'destructive'}>
                         {resolutionRate}% resolved
                       </Badge>
                     </div>
-                    <div className="grid grid-cols-3 gap-3 text-sm text-gray-600">
+                    <div className="grid grid-cols-3 gap-3 text-sm text-slate-600">
                       <div>Issues: {ward.issues}</div>
                       <div>Resolved: {ward.resolved}</div>
                       <div>Avg. Time: {formatTime(ward.avgResolutionTime)}</div>
@@ -439,12 +439,12 @@ export default function DepartmentAnalyticsPage() {
               {/* Recommendations */}
               <div>
                 <h4 className="font-semibold mb-3 flex items-center gap-2">
-                  <TrendingUp className="h-4 w-4 text-blue-600" />
+                  <TrendingUp className="h-4 w-4 text-emerald-600" />
                   Recommendations
                 </h4>
                 <div className="space-y-2">
                   {data.insights.recommendations.map((recommendation, index) => (
-                    <div key={index} className="bg-blue-50 p-2 rounded text-sm">
+                    <div key={index} className="bg-emerald-50 p-2 rounded text-sm">
                       • {recommendation}
                     </div>
                   ))}

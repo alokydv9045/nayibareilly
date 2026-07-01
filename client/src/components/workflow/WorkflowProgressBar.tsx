@@ -29,7 +29,7 @@ export function WorkflowProgressBar({
     <div className={`space-y-3 ${className}`}>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          <span className="text-sm font-medium text-slate-700 dark:text-slate-300">
             Progress
           </span>
           {isComplete && (
@@ -46,7 +46,7 @@ export function WorkflowProgressBar({
           )}
         </div>
         {showPercentage && (
-          <span className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+          <span className="text-sm font-semibold text-slate-900 dark:text-slate-100">
             {progressData.percentage}%
           </span>
         )}

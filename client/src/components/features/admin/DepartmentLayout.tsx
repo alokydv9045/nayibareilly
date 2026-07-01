@@ -41,12 +41,12 @@ export function DepartmentLayout({
                   </Button>
                 </Link>
               )}
-              <div className="p-3 bg-blue-600 rounded-xl">
+              <div className="p-3 bg-emerald-600 rounded-xl">
                 {icon}
               </div>
               <div>
                 <h1 className="text-3xl font-bold text-white">{title}</h1>
-                <p className="text-blue-200">{description}</p>
+                <p className="text-emerald-200">{description}</p>
               </div>
             </div>
             <div className="flex items-center space-x-4">
@@ -85,7 +85,7 @@ export function DepartmentStatsGrid({ stats }: DepartmentStatsGridProps) {
           <div className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-blue-200 text-sm">{stat.label}</p>
+                <p className="text-emerald-200 text-sm">{stat.label}</p>
                 <p className="text-2xl font-bold text-white">{stat.value}</p>
                 {stat.description && (
                   <p className={`text-xs ${stat.color}`}>{stat.description}</p>
@@ -118,7 +118,7 @@ export function DepartmentCard({
       {(title || description) && (
         <div className="p-6 pb-0">
           {title && <h3 className="text-xl font-semibold text-white mb-2">{title}</h3>}
-          {description && <p className="text-blue-200 text-sm">{description}</p>}
+          {description && <p className="text-emerald-200 text-sm">{description}</p>}
         </div>
       )}
       <div className="p-6">

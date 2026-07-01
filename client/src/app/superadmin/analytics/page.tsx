@@ -216,7 +216,7 @@ export default function SuperAdminAnalyticsPage() {
       case 'healthy': return 'bg-green-100 text-green-800'
       case 'warning': return 'bg-yellow-100 text-yellow-800'
       case 'critical': return 'bg-red-100 text-red-800'
-      default: return 'bg-gray-100 text-gray-800'
+      default: return 'bg-slate-100 text-slate-800'
     }
   }
 
@@ -224,8 +224,8 @@ export default function SuperAdminAnalyticsPage() {
     switch (type) {
       case 'error': return <AlertTriangle className="h-4 w-4 text-red-600" />
       case 'warning': return <AlertTriangle className="h-4 w-4 text-yellow-600" />
-      case 'info': return <CheckCircle className="h-4 w-4 text-blue-600" />
-      default: return <AlertTriangle className="h-4 w-4 text-gray-600" />
+      case 'info': return <CheckCircle className="h-4 w-4 text-emerald-600" />
+      default: return <AlertTriangle className="h-4 w-4 text-slate-600" />
     }
   }
 
@@ -233,7 +233,7 @@ export default function SuperAdminAnalyticsPage() {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="flex items-center justify-center min-h-[400px]">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-emerald-600"></div>
         </div>
       </div>
     )
@@ -244,9 +244,9 @@ export default function SuperAdminAnalyticsPage() {
       <div className="container mx-auto px-4 py-8">
         <Card>
           <CardContent className="text-center py-12">
-            <AlertTriangle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">No Data Available</h3>
-            <p className="text-gray-600">Unable to load system analytics.</p>
+            <AlertTriangle className="h-12 w-12 text-slate-400 mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-slate-900 mb-2">No Data Available</h3>
+            <p className="text-slate-600">Unable to load system analytics.</p>
           </CardContent>
         </Card>
       </div>
@@ -257,8 +257,8 @@ export default function SuperAdminAnalyticsPage() {
     <div className="container mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <Shield className="h-8 w-8 text-blue-600" />
-          <h1 className="text-3xl font-bold text-gray-900">System Analytics</h1>
+          <Shield className="h-8 w-8 text-emerald-600" />
+          <h1 className="text-3xl font-bold text-slate-900">System Analytics</h1>
           <Badge variant="outline" className="text-lg px-3 py-1">
             SuperAdmin
           </Badge>
@@ -296,27 +296,27 @@ export default function SuperAdminAnalyticsPage() {
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
         <Card>
           <CardContent className="p-4 text-center">
-            <Users className="h-6 w-6 text-blue-600 mx-auto mb-2" />
-            <div className="text-xl font-bold text-blue-600">
+            <Users className="h-6 w-6 text-emerald-600 mx-auto mb-2" />
+            <div className="text-xl font-bold text-emerald-600">
               {data.overview.totalUsers.toLocaleString()}
             </div>
-            <div className="text-xs text-gray-600">Total Users</div>
+            <div className="text-xs text-slate-600">Total Users</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
             <Globe className="h-6 w-6 text-green-600 mx-auto mb-2" />
             <div className="text-xl font-bold text-green-600">{data.overview.activeCities}</div>
-            <div className="text-xs text-gray-600">Active Cities</div>
+            <div className="text-xs text-slate-600">Active Cities</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
-            <BarChart3 className="h-6 w-6 text-purple-600 mx-auto mb-2" />
-            <div className="text-xl font-bold text-purple-600">
+            <BarChart3 className="h-6 w-6 text-slate-800 mx-auto mb-2" />
+            <div className="text-xl font-bold text-slate-800">
               {data.overview.totalIssues.toLocaleString()}
             </div>
-            <div className="text-xs text-gray-600">Total Issues</div>
+            <div className="text-xs text-slate-600">Total Issues</div>
           </CardContent>
         </Card>
         <Card>
@@ -325,14 +325,14 @@ export default function SuperAdminAnalyticsPage() {
             <div className={`text-xl font-bold ${getHealthColor(data.overview.systemUptime)}`}>
               {data.overview.systemUptime}%
             </div>
-            <div className="text-xs text-gray-600">System Uptime</div>
+            <div className="text-xs text-slate-600">System Uptime</div>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
             <Clock className="h-6 w-6 text-indigo-600 mx-auto mb-2" />
             <div className="text-xl font-bold text-indigo-600">{data.overview.avgResponseTime}ms</div>
-            <div className="text-xs text-gray-600">Avg Response</div>
+            <div className="text-xs text-slate-600">Avg Response</div>
           </CardContent>
         </Card>
         <Card>
@@ -341,7 +341,7 @@ export default function SuperAdminAnalyticsPage() {
             <div className={`text-xl font-bold ${getHealthColor(data.overview.dataIntegrity)}`}>
               {data.overview.dataIntegrity}%
             </div>
-            <div className="text-xs text-gray-600">Data Integrity</div>
+            <div className="text-xs text-slate-600">Data Integrity</div>
           </CardContent>
         </Card>
       </div>
@@ -359,11 +359,11 @@ export default function SuperAdminAnalyticsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             <Card>
               <CardContent className="p-4 text-center">
-                <Server className="h-8 w-8 text-blue-600 mx-auto mb-2" />
+                <Server className="h-8 w-8 text-emerald-600 mx-auto mb-2" />
                 <div className={`text-2xl font-bold ${getHealthColor(data.performance.serverHealth)}`}>
                   {data.performance.serverHealth}%
                 </div>
-                <div className="text-sm text-gray-600">Server Health</div>
+                <div className="text-sm text-slate-600">Server Health</div>
               </CardContent>
             </Card>
             <Card>
@@ -372,16 +372,16 @@ export default function SuperAdminAnalyticsPage() {
                 <div className={`text-2xl font-bold ${getHealthColor(data.performance.databasePerformance)}`}>
                   {data.performance.databasePerformance}%
                 </div>
-                <div className="text-sm text-gray-600">Database Performance</div>
+                <div className="text-sm text-slate-600">Database Performance</div>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="p-4 text-center">
-                <Activity className="h-8 w-8 text-purple-600 mx-auto mb-2" />
-                <div className="text-2xl font-bold text-purple-600">
+                <Activity className="h-8 w-8 text-slate-800 mx-auto mb-2" />
+                <div className="text-2xl font-bold text-slate-800">
                   {data.performance.apiResponseTime}ms
                 </div>
-                <div className="text-sm text-gray-600">API Response Time</div>
+                <div className="text-sm text-slate-600">API Response Time</div>
               </CardContent>
             </Card>
             <Card>
@@ -390,7 +390,7 @@ export default function SuperAdminAnalyticsPage() {
                 <div className="text-2xl font-bold text-red-600">
                   {data.performance.errorRate}%
                 </div>
-                <div className="text-sm text-gray-600">Error Rate</div>
+                <div className="text-sm text-slate-600">Error Rate</div>
               </CardContent>
             </Card>
           </div>
@@ -472,11 +472,11 @@ export default function SuperAdminAnalyticsPage() {
                 <CardContent className="space-y-3">
                   <div className="grid grid-cols-2 gap-3 text-sm">
                     <div>
-                      <div className="text-gray-600">Total Issues</div>
+                      <div className="text-slate-600">Total Issues</div>
                       <div className="font-bold">{city.totalIssues}</div>
                     </div>
                     <div>
-                      <div className="text-gray-600">Resolution Rate</div>
+                      <div className="text-slate-600">Resolution Rate</div>
                       <div className={`font-bold ${getHealthColor(city.resolutionRate)}`}>
                         {city.resolutionRate}%
                       </div>
@@ -505,7 +505,7 @@ export default function SuperAdminAnalyticsPage() {
                     </div>
                   </div>
 
-                  <div className="text-xs text-gray-500 border-t pt-2">
+                  <div className="text-xs text-slate-500 border-t pt-2">
                     Last sync: {new Date(city.lastSync).toLocaleString()}
                   </div>
                 </CardContent>
@@ -518,11 +518,11 @@ export default function SuperAdminAnalyticsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             <Card>
               <CardContent className="p-4 text-center">
-                <Users className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-                <div className="text-2xl font-bold text-blue-600">
+                <Users className="h-8 w-8 text-emerald-600 mx-auto mb-2" />
+                <div className="text-2xl font-bold text-emerald-600">
                   {data.userAnalytics.dailyActiveUsers.toLocaleString()}
                 </div>
-                <div className="text-sm text-gray-600">Daily Active Users</div>
+                <div className="text-sm text-slate-600">Daily Active Users</div>
               </CardContent>
             </Card>
             <Card>
@@ -531,16 +531,16 @@ export default function SuperAdminAnalyticsPage() {
                 <div className="text-2xl font-bold text-green-600">
                   {data.userAnalytics.monthlyActiveUsers.toLocaleString()}
                 </div>
-                <div className="text-sm text-gray-600">Monthly Active Users</div>
+                <div className="text-sm text-slate-600">Monthly Active Users</div>
               </CardContent>
             </Card>
             <Card>
               <CardContent className="p-4 text-center">
-                <TrendingUp className="h-8 w-8 text-purple-600 mx-auto mb-2" />
-                <div className="text-2xl font-bold text-purple-600">
+                <TrendingUp className="h-8 w-8 text-slate-800 mx-auto mb-2" />
+                <div className="text-2xl font-bold text-slate-800">
                   {data.userAnalytics.userGrowthRate}%
                 </div>
-                <div className="text-sm text-gray-600">Growth Rate</div>
+                <div className="text-sm text-slate-600">Growth Rate</div>
               </CardContent>
             </Card>
             <Card>
@@ -549,7 +549,7 @@ export default function SuperAdminAnalyticsPage() {
                 <div className="text-2xl font-bold text-orange-600">
                   {data.userAnalytics.sessionDuration}m
                 </div>
-                <div className="text-sm text-gray-600">Avg Session</div>
+                <div className="text-sm text-slate-600">Avg Session</div>
               </CardContent>
             </Card>
           </div>
@@ -632,10 +632,10 @@ export default function SuperAdminAnalyticsPage() {
                     <div key={service.name} className="flex items-center justify-between p-3 border rounded">
                       <div>
                         <div className="font-medium">{service.name}</div>
-                        <div className="text-sm text-gray-600">
+                        <div className="text-sm text-slate-600">
                           Uptime: {service.uptime}% | Response: {service.responseTime}ms
                         </div>
-                        <div className="text-xs text-gray-500">
+                        <div className="text-xs text-slate-500">
                           Last check: {new Date(service.lastCheck).toLocaleString()}
                         </div>
                       </div>
@@ -655,7 +655,7 @@ export default function SuperAdminAnalyticsPage() {
               <CardContent>
                 <div className="space-y-3 max-h-96 overflow-y-auto">
                   {data.systemHealth.alerts.length === 0 ? (
-                    <div className="text-center py-8 text-gray-600">
+                    <div className="text-center py-8 text-slate-600">
                       No active alerts
                     </div>
                   ) : (
@@ -663,17 +663,17 @@ export default function SuperAdminAnalyticsPage() {
                       <div 
                         key={alert.id} 
                         className={`p-3 border rounded ${
-                          alert.resolved ? 'bg-gray-50' : 
+                          alert.resolved ? 'bg-slate-50' : 
                           alert.type === 'error' ? 'bg-red-50 border-red-200' :
                           alert.type === 'warning' ? 'bg-yellow-50 border-yellow-200' : 
-                          'bg-blue-50 border-blue-200'
+                          'bg-emerald-50 border-emerald-200'
                         }`}
                       >
                         <div className="flex items-start gap-3">
                           {getAlertIcon(alert.type)}
                           <div className="flex-1">
                             <div className="font-medium">{alert.message}</div>
-                            <div className="text-xs text-gray-500 mt-1">
+                            <div className="text-xs text-slate-500 mt-1">
                               {new Date(alert.timestamp).toLocaleString()}
                             </div>
                           </div>
@@ -734,7 +734,7 @@ export default function SuperAdminAnalyticsPage() {
                         <span className="font-medium">{region.region}</span>
                         <Badge variant="outline">{region.cities} cities</Badge>
                       </div>
-                      <div className="grid grid-cols-2 gap-3 text-sm text-gray-600">
+                      <div className="grid grid-cols-2 gap-3 text-sm text-slate-600">
                         <div>Issues: {region.issues.toLocaleString()}</div>
                         <div>Performance: {region.performance}%</div>
                       </div>

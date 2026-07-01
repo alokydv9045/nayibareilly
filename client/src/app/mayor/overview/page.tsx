@@ -157,7 +157,7 @@ export default function MayorOverviewPage() {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="flex items-center justify-center min-h-[400px]">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-purple-600"></div>
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-slate-800"></div>
         </div>
       </div>
     )
@@ -168,9 +168,9 @@ export default function MayorOverviewPage() {
       <div className="container mx-auto px-4 py-8">
         <Card>
           <CardContent className="text-center py-12">
-            <AlertTriangle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">No Data Available</h3>
-            <p className="text-gray-600">Unable to load dashboard data.</p>
+            <AlertTriangle className="h-12 w-12 text-slate-400 mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-slate-900 mb-2">No Data Available</h3>
+            <p className="text-slate-600">Unable to load dashboard data.</p>
           </CardContent>
         </Card>
       </div>
@@ -180,8 +180,8 @@ export default function MayorOverviewPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex items-center gap-3 mb-6">
-        <Crown className="h-8 w-8 text-purple-600" />
-        <h1 className="text-3xl font-bold text-gray-900">Mayor Dashboard</h1>
+        <Crown className="h-8 w-8 text-slate-800" />
+        <h1 className="text-3xl font-bold text-slate-900">Mayor Dashboard</h1>
         <Badge variant="outline" className="text-lg px-3 py-1">
           Executive Overview
         </Badge>
@@ -191,9 +191,9 @@ export default function MayorOverviewPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <Card>
           <CardContent className="p-4 text-center">
-            <FileText className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-            <div className="text-2xl font-bold text-blue-600">{data.summary.totalIssues}</div>
-            <div className="text-sm text-gray-600">Total Issues</div>
+            <FileText className="h-8 w-8 text-emerald-600 mx-auto mb-2" />
+            <div className="text-2xl font-bold text-emerald-600">{data.summary.totalIssues}</div>
+            <div className="text-sm text-slate-600">Total Issues</div>
             <div className="text-xs text-green-600 mt-1">
               {getResolutionRate()}% resolved
             </div>
@@ -203,7 +203,7 @@ export default function MayorOverviewPage() {
           <CardContent className="p-4 text-center">
             <Clock className="h-8 w-8 text-orange-600 mx-auto mb-2" />
             <div className="text-2xl font-bold text-orange-600">{data.summary.pendingApprovals}</div>
-            <div className="text-sm text-gray-600">Pending Approvals</div>
+            <div className="text-sm text-slate-600">Pending Approvals</div>
             {data.summary.pendingApprovals > 5 && (
               <div className="text-xs text-red-600 mt-1">Requires attention</div>
             )}
@@ -213,8 +213,8 @@ export default function MayorOverviewPage() {
           <CardContent className="p-4 text-center">
             <Building2 className="h-8 w-8 text-green-600 mx-auto mb-2" />
             <div className="text-2xl font-bold text-green-600">{data.summary.activeDepartments}</div>
-            <div className="text-sm text-gray-600">Active Departments</div>
-            <div className="text-xs text-blue-600 mt-1">
+            <div className="text-sm text-slate-600">Active Departments</div>
+            <div className="text-xs text-emerald-600 mt-1">
               {data.summary.staffEfficiency}% efficiency
             </div>
           </CardContent>
@@ -223,12 +223,12 @@ export default function MayorOverviewPage() {
           <CardContent className="p-4 text-center">
             <Star className="h-8 w-8 text-yellow-600 mx-auto mb-2" />
             <div className="text-2xl font-bold text-yellow-600">{data.summary.citizenSatisfaction.toFixed(1)}</div>
-            <div className="text-sm text-gray-600">Citizen Satisfaction</div>
+            <div className="text-sm text-slate-600">Citizen Satisfaction</div>
             <div className="flex justify-center mt-1">
               {Array.from({ length: 5 }, (_, i) => (
                 <Star
                   key={i}
-                  className={`h-3 w-3 ${i < Math.floor(data.summary.citizenSatisfaction) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`}
+                  className={`h-3 w-3 ${i < Math.floor(data.summary.citizenSatisfaction) ? 'fill-yellow-400 text-yellow-400' : 'text-slate-300'}`}
                 />
               ))}
             </div>
@@ -276,12 +276,12 @@ export default function MayorOverviewPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 pt-4 border-t">
             <div className="text-center">
-              <div className="text-2xl font-bold text-purple-600">{data.cityMetrics.populationServed.toLocaleString()}</div>
-              <div className="text-sm text-gray-600">Citizens Served</div>
+              <div className="text-2xl font-bold text-slate-800">{data.cityMetrics.populationServed.toLocaleString()}</div>
+              <div className="text-sm text-slate-600">Citizens Served</div>
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-indigo-600">{data.cityMetrics.wardsCovered}</div>
-              <div className="text-sm text-gray-600">Wards Covered</div>
+              <div className="text-sm text-slate-600">Wards Covered</div>
             </div>
           </div>
         </CardContent>
@@ -298,7 +298,7 @@ export default function MayorOverviewPage() {
           </CardHeader>
           <CardContent>
             {data.urgentMatters.length === 0 ? (
-              <div className="text-center py-4 text-gray-600">
+              <div className="text-center py-4 text-slate-600">
                 No urgent matters pending
               </div>
             ) : (
@@ -357,7 +357,7 @@ export default function MayorOverviewPage() {
                       {issue.priority}
                     </Badge>
                   </div>
-                  <div className="flex items-center gap-4 text-xs text-gray-600">
+                  <div className="flex items-center gap-4 text-xs text-slate-600">
                     <span className="flex items-center gap-1">
                       <Building2 className="h-3 w-3" />
                       {issue.department}
@@ -425,7 +425,7 @@ export default function MayorOverviewPage() {
                       <td className="text-center py-3">{formatTime(dept.avgResolutionTime)}</td>
                       <td className="text-center py-3">
                         <div className="flex items-center justify-center gap-2">
-                          <div className="w-16 bg-gray-200 rounded-full h-2">
+                          <div className="w-16 bg-slate-200 rounded-full h-2">
                             <div 
                               className={`h-2 rounded-full ${getBudgetUtilizationColor(budgetUsage)}`}
                               style={{ width: `${Math.min(budgetUsage, 100)}%` }}
@@ -436,7 +436,7 @@ export default function MayorOverviewPage() {
                       </td>
                       <td className="text-center py-3">
                         <div className="flex items-center justify-center gap-1">
-                          <Star className={`h-4 w-4 ${dept.satisfaction >= 4 ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'}`} />
+                          <Star className={`h-4 w-4 ${dept.satisfaction >= 4 ? 'fill-yellow-400 text-yellow-400' : 'text-slate-300'}`} />
                           <span>{dept.satisfaction.toFixed(1)}</span>
                         </div>
                       </td>

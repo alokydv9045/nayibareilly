@@ -130,7 +130,7 @@ export default function LogoutButton({
             <DialogTitle className="text-lg font-semibold">
               Confirm Logout
             </DialogTitle>
-            <DialogDescription className="text-gray-600">
+            <DialogDescription className="text-slate-600">
               Are you sure you want to log out? You&apos;ll need to sign in again to access your account.
             </DialogDescription>
           </DialogHeader>

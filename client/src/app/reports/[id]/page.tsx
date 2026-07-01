@@ -316,7 +316,7 @@ export default function ReportDetailPage() {
       case 'high': return 'bg-orange-100 text-orange-800 border-orange-200';
       case 'medium': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
       case 'low': return 'bg-green-100 text-green-800 border-green-200';
-      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+      default: return 'bg-slate-100 text-slate-800 border-slate-200';
     }
   };
 
@@ -420,10 +420,10 @@ export default function ReportDetailPage() {
   if (isLoading) {
     return (
       <PublicLayout>
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="min-h-screen bg-slate-50 flex items-center justify-center">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4" />
-            <p className="text-gray-600">Loading report details...</p>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto mb-4" />
+            <p className="text-slate-600">Loading report details...</p>
           </div>
         </div>
       </PublicLayout>
@@ -433,14 +433,14 @@ export default function ReportDetailPage() {
   if (error || !report) {
     return (
       <PublicLayout>
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="min-h-screen bg-slate-50 flex items-center justify-center">
           <Card className="max-w-md w-full mx-4">
             <CardContent className="p-6 text-center">
               <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-              <h2 className="text-xl font-semibold text-gray-900 mb-2">
+              <h2 className="text-xl font-semibold text-slate-900 mb-2">
                 Report Not Found
               </h2>
-              <p className="text-gray-600 mb-4">
+              <p className="text-slate-600 mb-4">
                 {error || 'The requested report could not be found.'}
               </p>
               <Button onClick={() => router.push('/reports')}>
@@ -458,14 +458,14 @@ export default function ReportDetailPage() {
 
   return (
     <PublicLayout>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-slate-50">
   <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
           {/* Back Button */}
           <div className="mb-6">
             <Button
               variant="ghost"
               onClick={() => router.back()}
-              className="flex items-center gap-2 text-gray-600 hover:text-gray-900 min-h-[44px]"
+              className="flex items-center gap-2 text-slate-600 hover:text-slate-900 min-h-[44px]"
             >
               <ArrowLeft className="h-4 w-4" />
               Back to Reports
@@ -487,10 +487,10 @@ export default function ReportDetailPage() {
                       {statusInfo?.enName}
                     </Badge>
                   </div>
-                  <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-gray-900 mb-2">
+                  <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-900 mb-2">
                     {report.title}
                   </h1>
-                  <div className="flex items-center gap-4 text-sm text-gray-500">
+                  <div className="flex items-center gap-4 text-sm text-slate-500">
                     <div className="flex items-center gap-1">
                       <MapPin className="h-4 w-4" />
                       <span>{report.location.area}, {report.location.city}</span>
@@ -503,7 +503,7 @@ export default function ReportDetailPage() {
                 </div>
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                   {/* Enhanced Voting System */}
-                  <div className="flex items-center gap-2 bg-gray-50 rounded-xl p-2">
+                  <div className="flex items-center gap-2 bg-slate-50 rounded-xl p-2">
                     <Button
                       variant={currentVote === 'up' ? 'default' : 'ghost'}
                       size="sm"
@@ -542,7 +542,7 @@ export default function ReportDetailPage() {
                       onClick={handleLike}
                       className={cn(
                         'flex items-center gap-2 px-4 py-2 rounded-lg transition-all',
-                        isLiked ? 'text-red-600 border-red-200 bg-red-50 hover:bg-red-100' : 'hover:bg-gray-50'
+                        isLiked ? 'text-red-600 border-red-200 bg-red-50 hover:bg-red-100' : 'hover:bg-slate-50'
                       )}
                     >
                       <Heart className={cn('h-4 w-4', isLiked ? 'fill-current' : '')} />
@@ -555,7 +555,7 @@ export default function ReportDetailPage() {
                       onClick={handleBookmark}
                       className={cn(
                         'flex items-center gap-2 px-4 py-2 rounded-lg transition-all',
-                        isBookmarked ? 'text-blue-600 border-blue-200 bg-blue-50 hover:bg-blue-100' : 'hover:bg-gray-50'
+                        isBookmarked ? 'text-emerald-600 border-emerald-200 bg-emerald-50 hover:bg-emerald-100' : 'hover:bg-slate-50'
                       )}
                     >
                       <BookmarkPlus className={cn('h-4 w-4', isBookmarked ? 'fill-current' : '')} />
@@ -567,14 +567,14 @@ export default function ReportDetailPage() {
                         variant="outline"
                         size="sm"
                         onClick={() => setShowShareMenu(!showShareMenu)}
-                        className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-50"
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-slate-50"
                       >
                         <Share2 className="h-4 w-4" />
                         Share
                       </Button>
                       
                       {showShareMenu && (
-                        <div className="absolute top-full mt-2 right-0 bg-white border border-gray-200 rounded-lg shadow-lg p-2 z-10 min-w-[180px]">
+                        <div className="absolute top-full mt-2 right-0 bg-white border border-slate-200 rounded-lg shadow-lg p-2 z-10 min-w-[180px]">
                           <Button
                             variant="ghost"
                             size="sm"
@@ -629,7 +629,7 @@ export default function ReportDetailPage() {
                   <CardTitle>Description</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-700 whitespace-pre-wrap leading-relaxed">
+                  <p className="text-slate-700 whitespace-pre-wrap leading-relaxed">
                     {report.description}
                   </p>
                 </CardContent>
@@ -645,7 +645,7 @@ export default function ReportDetailPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {report.photos.map((photo) => (
                         <div key={photo.id} className="space-y-2">
-                          <div className="aspect-video bg-gray-200 rounded-lg overflow-hidden">
+                          <div className="aspect-video bg-slate-200 rounded-lg overflow-hidden">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
                               src={photo.url}
@@ -654,7 +654,7 @@ export default function ReportDetailPage() {
                             />
                           </div>
                           {photo.caption && (
-                            <p className="text-sm text-gray-600">{photo.caption}</p>
+                            <p className="text-sm text-slate-600">{photo.caption}</p>
                           )}
                         </div>
                       ))}
@@ -676,21 +676,21 @@ export default function ReportDetailPage() {
                         <div key={index} className="flex items-start gap-3">
                           <div className={cn(
                             'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0',
-                            statusInfo?.color || 'bg-gray-200'
+                            statusInfo?.color || 'bg-slate-200'
                           )}>
                             {getStatusIcon(history.status)}
                           </div>
                           <div className="flex-1">
                             <div className="flex items-center justify-between">
-                              <h4 className="font-medium text-gray-900">
+                              <h4 className="font-medium text-slate-900">
                                 {statusInfo?.enName}
                               </h4>
-                              <span className="text-sm text-gray-500">
+                              <span className="text-sm text-slate-500">
                                 {formatDate(history.timestamp)}
                               </span>
                             </div>
                             {history.note && (
-                              <p className="text-sm text-gray-600 mt-1">{history.note}</p>
+                              <p className="text-sm text-slate-600 mt-1">{history.note}</p>
                             )}
                           </div>
                         </div>
@@ -705,7 +705,7 @@ export default function ReportDetailPage() {
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <CardTitle className="flex items-center gap-2">
-                      <MessageCircle className="h-5 w-5 text-blue-600" />
+                      <MessageCircle className="h-5 w-5 text-emerald-600" />
                       Community Discussion ({comments.length})
                     </CardTitle>
                     <Button
@@ -720,7 +720,7 @@ export default function ReportDetailPage() {
                 {showComments && (
                   <CardContent className="space-y-6">
                     {/* Add Comment Form */}
-                    <div className="border-b border-gray-100 pb-6">
+                    <div className="border-b border-slate-100 pb-6">
                       <div className="flex items-start gap-3">
                         <Avatar className="w-10 h-10">
                           <AvatarImage src="/api/placeholder/40/40" />
@@ -734,7 +734,7 @@ export default function ReportDetailPage() {
                             className="min-h-[80px] resize-none"
                           />
                           <div className="flex items-center justify-between">
-                            <span className="text-sm text-gray-500">
+                            <span className="text-sm text-slate-500">
                               {newComment.length}/500 characters
                             </span>
                             <Button
@@ -758,7 +758,7 @@ export default function ReportDetailPage() {
                     {/* Comments List */}
                     <div className="space-y-6">
                       {comments.length === 0 ? (
-                        <div className="text-center py-8 text-gray-500">
+                        <div className="text-center py-8 text-slate-500">
                           <MessageSquare className="h-12 w-12 mx-auto mb-3 opacity-50" />
                           <p className="text-lg font-medium mb-1">No comments yet</p>
                           <p className="text-sm">Be the first to share your thoughts!</p>
@@ -772,22 +772,22 @@ export default function ReportDetailPage() {
                                 <AvatarFallback>{comment.author[0]}</AvatarFallback>
                               </Avatar>
                               <div className="flex-1 space-y-2">
-                                <div className="bg-gray-50 rounded-xl p-4">
+                                <div className="bg-slate-50 rounded-xl p-4">
                                   <div className="flex items-center gap-2 mb-2">
-                                    <span className="font-medium text-gray-900">
+                                    <span className="font-medium text-slate-900">
                                       {comment.author}
                                     </span>
                                     {comment.isOfficial && (
-                                      <Badge variant="secondary" className="text-xs bg-blue-100 text-blue-700">
+                                      <Badge variant="secondary" className="text-xs bg-emerald-100 text-emerald-700">
                                         <Building2 className="h-3 w-3 mr-1" />
                                         Official
                                       </Badge>
                                     )}
-                                    <span className="text-sm text-gray-500">
+                                    <span className="text-sm text-slate-500">
                                       {formatDate(comment.timestamp)}
                                     </span>
                                   </div>
-                                  <p className="text-gray-700 leading-relaxed">
+                                  <p className="text-slate-700 leading-relaxed">
                                     {comment.content}
                                   </p>
                                 </div>
@@ -800,7 +800,7 @@ export default function ReportDetailPage() {
                                     onClick={() => handleCommentLike(comment.id)}
                                     className={cn(
                                       'flex items-center gap-1 px-2 py-1 h-auto',
-                                      comment.isLiked ? 'text-red-600' : 'text-gray-500'
+                                      comment.isLiked ? 'text-red-600' : 'text-slate-500'
                                     )}
                                   >
                                     <Heart className={cn('h-3 w-3', comment.isLiked ? 'fill-current' : '')} />
@@ -809,7 +809,7 @@ export default function ReportDetailPage() {
                                   <Button
                                     variant="ghost"
                                     size="sm"
-                                    className="flex items-center gap-1 px-2 py-1 h-auto text-gray-500"
+                                    className="flex items-center gap-1 px-2 py-1 h-auto text-slate-500"
                                   >
                                     <MessageCircle className="h-3 w-3" />
                                     Reply
@@ -817,7 +817,7 @@ export default function ReportDetailPage() {
                                   <Button
                                     variant="ghost"
                                     size="sm"
-                                    className="flex items-center gap-1 px-2 py-1 h-auto text-gray-500"
+                                    className="flex items-center gap-1 px-2 py-1 h-auto text-slate-500"
                                   >
                                     <Flag className="h-3 w-3" />
                                     Report
@@ -826,7 +826,7 @@ export default function ReportDetailPage() {
 
                                 {/* Replies */}
                                 {comment.replies && comment.replies.length > 0 && (
-                                  <div className="ml-6 space-y-3 pt-3 border-l-2 border-gray-100 pl-4">
+                                  <div className="ml-6 space-y-3 pt-3 border-l-2 border-slate-100 pl-4">
                                     {comment.replies.map((reply) => (
                                       <div key={reply.id} className="flex items-start gap-3">
                                         <Avatar className="w-6 h-6">
@@ -834,16 +834,16 @@ export default function ReportDetailPage() {
                                           <AvatarFallback className="text-xs">{reply.author[0]}</AvatarFallback>
                                         </Avatar>
                                         <div className="flex-1 space-y-1">
-                                          <div className="bg-white border border-gray-200 rounded-lg p-3">
+                                          <div className="bg-white border border-slate-200 rounded-lg p-3">
                                             <div className="flex items-center gap-2 mb-1">
-                                              <span className="font-medium text-gray-900 text-sm">
+                                              <span className="font-medium text-slate-900 text-sm">
                                                 {reply.author}
                                               </span>
-                                              <span className="text-xs text-gray-500">
+                                              <span className="text-xs text-slate-500">
                                                 {formatDate(reply.timestamp)}
                                               </span>
                                             </div>
-                                            <p className="text-gray-700 text-sm leading-relaxed">
+                                            <p className="text-slate-700 text-sm leading-relaxed">
                                               {reply.content}
                                             </p>
                                           </div>
@@ -853,7 +853,7 @@ export default function ReportDetailPage() {
                                               size="sm"
                                               className={cn(
                                                 'flex items-center gap-1 px-1 py-0 h-auto',
-                                                reply.isLiked ? 'text-red-600' : 'text-gray-500'
+                                                reply.isLiked ? 'text-red-600' : 'text-slate-500'
                                               )}
                                             >
                                               <Heart className={cn('h-2.5 w-2.5', reply.isLiked ? 'fill-current' : '')} />
@@ -885,7 +885,7 @@ export default function ReportDetailPage() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div>
-                    <p className="text-sm text-gray-600">Category</p>
+                    <p className="text-sm text-slate-600">Category</p>
                     <div className="flex items-center gap-2 mt-1">
                       <span className="text-lg">{categoryInfo?.icon}</span>
                       <span className="font-medium">{categoryInfo?.enName}</span>
@@ -893,33 +893,33 @@ export default function ReportDetailPage() {
                   </div>
                   
                   <div>
-                    <p className="text-sm text-gray-600">Reported by</p>
+                    <p className="text-sm text-slate-600">Reported by</p>
                     <div className="flex items-center gap-2 mt-1">
-                      <User className="h-4 w-4 text-gray-400" />
+                      <User className="h-4 w-4 text-slate-400" />
                       <span className="font-medium">{report.reportedBy}</span>
                     </div>
                   </div>
 
                   <div>
-                    <p className="text-sm text-gray-600">Views</p>
+                    <p className="text-sm text-slate-600">Views</p>
                     <div className="flex items-center gap-2 mt-1">
-                      <Eye className="h-4 w-4 text-gray-400" />
+                      <Eye className="h-4 w-4 text-slate-400" />
                       <span className="font-medium">{report.views}</span>
                     </div>
                   </div>
 
                   {report.assignedDepartment && (
                     <div>
-                      <p className="text-sm text-gray-600">Assigned Department</p>
+                      <p className="text-sm text-slate-600">Assigned Department</p>
                       <p className="font-medium mt-1">{report.assignedDepartment}</p>
                     </div>
                   )}
 
                   {report.estimatedResolution && (
                     <div>
-                      <p className="text-sm text-gray-600">Estimated Resolution</p>
+                      <p className="text-sm text-slate-600">Estimated Resolution</p>
                       <div className="flex items-center gap-2 mt-1">
-                        <Clock className="h-4 w-4 text-gray-400" />
+                        <Clock className="h-4 w-4 text-slate-400" />
                         <span className="font-medium">{report.estimatedResolution}</span>
                       </div>
                     </div>
@@ -934,13 +934,13 @@ export default function ReportDetailPage() {
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <div>
-                    <p className="text-sm text-gray-600">Address</p>
+                    <p className="text-sm text-slate-600">Address</p>
                     <p className="font-medium mt-1">{report.location.address}</p>
                   </div>
                   
                   {report.location.coordinates && (
                     <div>
-                      <p className="text-sm text-gray-600">Coordinates</p>
+                      <p className="text-sm text-slate-600">Coordinates</p>
                       <p className="font-mono text-sm mt-1">
                         {report.location.coordinates.latitude.toFixed(6)}, {report.location.coordinates.longitude.toFixed(6)}
                       </p>

@@ -112,88 +112,88 @@ export interface UpdateDepartmentInput {
 
 // API Functions
 const fetchUsers = async (): Promise<SuperadminUser[]> => {
-  const { data } = await api.request<SuperadminUser[]>({
+  const { data } = await api.request<{ data: SuperadminUser[] }>({
     method: 'GET',
     url: '/api/v1/admin/superadmin/users',
   })
-  return data
+  return data.data || []
 }
 
 const fetchDepartments = async (): Promise<SuperadminDepartment[]> => {
-  const { data } = await api.request<SuperadminDepartment[]>({
+  const { data } = await api.request<{ data: SuperadminDepartment[] }>({
     method: 'GET',
     url: '/api/v1/admin/superadmin/departments',
   })
-  return data
+  return data.data || []
 }
 
 const fetchSettings = async (): Promise<SuperadminSettings> => {
-  const { data } = await api.request<SuperadminSettings>({
+  const { data } = await api.request<{ data: SuperadminSettings }>({
     method: 'GET',
     url: '/api/v1/admin/superadmin/settings',
   })
-  return data
+  return data.data
 }
 
-const createUser = async (data: CreateUserInput): Promise<SuperadminUser> => {
-  const res = await api.request<SuperadminUser>({
+const createUser = async (payload: CreateUserInput): Promise<SuperadminUser> => {
+  const res = await api.request<{ data: SuperadminUser }>({
     method: 'POST',
     url: '/api/v1/admin/superadmin/users',
-    data,
+    data: payload,
   })
-  return res.data
+  return res.data.data
 }
 
 const updateUser = async ({ id, data }: { id: string; data: UpdateUserInput }): Promise<SuperadminUser> => {
-  const res = await api.request<SuperadminUser>({
+  const res = await api.request<{ data: SuperadminUser }>({
     method: 'PUT',
     url: `/api/v1/admin/superadmin/users/${id}`,
     data,
   })
-  return res.data
+  return res.data.data
 }
 
 const deleteUser = async (id: string): Promise<void> => {
-  await api.request<void>({
+  await api.request<{ data: void }>({
     method: 'DELETE',
     url: `/api/v1/admin/superadmin/users/${id}`,
   })
   return
 }
 
-const createDepartment = async (data: CreateDepartmentInput): Promise<SuperadminDepartment> => {
-  const res = await api.request<SuperadminDepartment>({
+const createDepartment = async (payload: CreateDepartmentInput): Promise<SuperadminDepartment> => {
+  const res = await api.request<{ data: SuperadminDepartment }>({
     method: 'POST',
     url: '/api/v1/admin/superadmin/departments',
-    data,
+    data: payload,
   })
-  return res.data
+  return res.data.data
 }
 
 const updateDepartment = async ({ id, data }: { id: string; data: UpdateDepartmentInput }): Promise<SuperadminDepartment> => {
-  const res = await api.request<SuperadminDepartment>({
+  const res = await api.request<{ data: SuperadminDepartment }>({
     method: 'PUT',
     url: `/api/v1/admin/superadmin/departments/${id}`,
     data,
   })
-  return res.data
+  return res.data.data
 }
 
 const deleteDepartment = async (id: string): Promise<void> => {
-  await api.request<void>({
+  await api.request<{ data: void }>({
     method: 'DELETE',
     url: `/api/v1/admin/superadmin/departments/${id}`,
   })
   return
 }
 
-const updateSettings = async (data: Partial<SuperadminSettings>): Promise<SuperadminSettings> => {
-  const res = await api.request<SuperadminSettings>({
+const updateSettings = async (payload: Partial<SuperadminSettings>): Promise<SuperadminSettings> => {
+  const res = await api.request<{ data: SuperadminSettings }>({
     method: 'PUT',
     url: '/api/v1/admin/superadmin/settings',
-    data,
+    data: payload,
   })
-  return res.data
+  return res.data.data
 }
 
 // Hooks
