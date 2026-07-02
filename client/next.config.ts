@@ -37,13 +37,9 @@ const nextConfig: NextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
   
-  // TypeScript and ESLint - strict for production
+  // TypeScript - strict for production
   typescript: {
     ignoreBuildErrors: false,
-  },
-  eslint: {
-    ignoreDuringBuilds: false,
-    dirs: ['src', 'app', 'components', 'lib'],
   },
   
   // Headers for security and SEO
@@ -149,21 +145,7 @@ const nextConfig: NextConfig = {
       },
     ]
   },
-  
-  // Webpack configuration
-  webpack: (config, { isServer }) => {
-    // Optimize for production
-    if (!isServer) {
-      config.resolve.fallback = {
-        ...config.resolve.fallback,
-        fs: false,
-        net: false,
-        tls: false,
-      }
-    }
-    
-    return config
-  },
+
   
   // Experimental features (stable in Next.js 15)
   experimental: {
