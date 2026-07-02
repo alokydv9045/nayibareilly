@@ -14,8 +14,7 @@
     "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest",
     "seed:admin": "node ./scripts/seed-admin-prisma.js",
     "seed:realistic": "node ./scripts/seed-realistic-data.js",
-    "seed": "node ./scripts/seed-realistic-data.js",
-    "prepare": "cd .. && husky server/.husky"
+    "seed": "node ./scripts/seed-realistic-data.js"
   },
   "lint-staged": {
     "src/**/*.js": [
