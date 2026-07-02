@@ -129,7 +129,10 @@ if (!disableClustering && cluster.isPrimary) {
   const { initializeSocketIO, getIO } = await import('./config/socket.js')
   const io = initializeSocketIO(server, {
     cors: {
-      origin: (process.env.CLIENT_ORIGIN || 'http://localhost:3000,http://localhost:3001,http://localhost:3002,https://nayibareilly-one.vercel.app').split(',').map(o => o.trim()),
+      origin: [
+        ...(process.env.CLIENT_ORIGIN ? process.env.CLIENT_ORIGIN.split(',') : ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002']),
+        'https://nayibareilly-one.vercel.app'
+      ].map(o => o.trim()),
       credentials: true,
     }
   })
@@ -138,10 +141,10 @@ if (!disableClustering && cluster.isPrimary) {
 
   app.use(createHttpLogger())
 
-  const clientOrigins = (process.env.CLIENT_ORIGIN || 'http://localhost:3000,http://localhost:3001,http://localhost:3002,https://nayibareilly-one.vercel.app')
-    .split(',')
-    .map((origin) => origin.trim())
-    .filter(Boolean)
+  const clientOrigins = [
+    ...(process.env.CLIENT_ORIGIN ? process.env.CLIENT_ORIGIN.split(',') : ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002']),
+    'https://nayibareilly-one.vercel.app'
+  ].map((origin) => origin.trim()).filter(Boolean)
 
   const storageOrigins = (process.env.STORAGE_CDN_BASE_URL || '')
     .split(',')
