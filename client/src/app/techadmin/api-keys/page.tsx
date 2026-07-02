@@ -1,4 +1,5 @@
 'use client'
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -102,7 +103,7 @@ export default function ApiKeysPage() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-8">
+    <div className="min-h-screen bg-transparent pb-8">
       {/* Topbar */}
       <header className="sticky top-16 lg:top-0 z-40 bg-white border-b border-gray-200 px-4 md:px-8 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
@@ -115,10 +116,10 @@ export default function ApiKeysPage() {
             <Shield className="h-6 w-6 text-indigo-600" />
           </div>
           <div>
-            <h1 className="text-xl md:text-2xl font-bold text-gray-900 flex items-center gap-2">
+            <AnimatedHeading as="h1" className="text-xl md:text-2xl font-bold text-gray-900 flex items-center gap-2">
               API Keys & Developer Portal
               <Badge variant="outline" className="text-xs bg-gray-50 hidden sm:flex">TechAdmin</Badge>
-            </h1>
+            </AnimatedHeading>
             <p className="text-xs text-gray-500 mt-0.5">Manage secure access keys for civic developers</p>
           </div>
         </div>

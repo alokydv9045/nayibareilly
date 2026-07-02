@@ -1,4 +1,5 @@
 ﻿'use client'
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -237,13 +238,8 @@ export default function MayorAnalyticsPage() {
     <div className="container mx-auto px-4 py-8">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-<<<<<<< HEAD
           <BarChart3 className="h-8 w-8 text-slate-800" />
-          <h1 className="text-3xl font-bold text-slate-900">City Analytics Dashboard</h1>
-=======
-          <BarChart3 className="h-8 w-8 text-blue-600" />
-          <h1 className="text-3xl font-bold text-gray-900">City Analytics Dashboard</h1>
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
+          <AnimatedHeading as="h1" className="text-3xl font-bold text-slate-900">City Analytics Dashboard</AnimatedHeading>
           <Crown className="h-6 w-6 text-yellow-600" />
         </div>
         <div className="flex gap-3">
@@ -318,13 +314,8 @@ export default function MayorAnalyticsPage() {
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
-<<<<<<< HEAD
             <Target className="h-8 w-8 text-slate-800 mx-auto mb-2" />
             <div className="text-2xl font-bold text-slate-800">
-=======
-            <Target className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-            <div className="text-2xl font-bold text-blue-600">
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
               {data.summary.budgetEfficiency}%
             </div>
             <div className="text-sm text-slate-600">Budget Efficiency</div>
@@ -473,11 +464,7 @@ export default function MayorAnalyticsPage() {
                         <Badge variant={resolutionRate >= 80 ? 'default' : 'secondary'}>
                           {resolutionRate}%
                         </Badge>
-<<<<<<< HEAD
                         <Star className={`h-4 w-4 ${dept.satisfaction >= 4 ? 'fill-yellow-400 text-yellow-400' : 'text-slate-300'}`} />
-=======
-                        <Star className={`h-4 w-4 ${dept.satisfaction >= 4 ? 'fill-yellow-400 text-yellow-600' : 'text-gray-300'}`} />
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
                       </div>
                     </div>
                     <div className="grid grid-cols-3 gap-3 text-xs text-slate-600">

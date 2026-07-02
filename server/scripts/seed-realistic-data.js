@@ -272,73 +272,107 @@ async function main() {
   // 4. Create Issues
   console.log('🚨 Creating realistic issues...')
   
+  const categoryImages = {
+    'Road Repair': [
+      'https://res.cloudinary.com/dfvudsdld/image/upload/v1782978205/nayibareilly/seeds/pf9mcjugamlioxkekltk.jpg', // Pothole
+      'https://res.cloudinary.com/dfvudsdld/image/upload/v1782978205/nayibareilly/seeds/pf9mcjugamlioxkekltk.jpg'
+    ],
+    'Street Lighting': [
+      'https://res.cloudinary.com/dfvudsdld/image/upload/v1782978206/nayibareilly/seeds/kc8vikhiramf5ubzxk69.jpg', // Streetlight
+      'https://res.cloudinary.com/dfvudsdld/image/upload/v1782978206/nayibareilly/seeds/kc8vikhiramf5ubzxk69.jpg'
+    ],
+    'Water Supply Issue': [
+      'https://res.cloudinary.com/dfvudsdld/image/upload/v1782978209/nayibareilly/seeds/tb0cja8mggaghouhqhaw.jpg', // Water leak
+      'https://res.cloudinary.com/dfvudsdld/image/upload/v1782978209/nayibareilly/seeds/tb0cja8mggaghouhqhaw.jpg'
+    ],
+    'Sewerage Problem': [
+      'https://res.cloudinary.com/dfvudsdld/image/upload/v1782978209/nayibareilly/seeds/tb0cja8mggaghouhqhaw.jpg', // Water leak
+      'https://res.cloudinary.com/dfvudsdld/image/upload/v1782978208/nayibareilly/seeds/h8uqilhsmvqpgo3eem23.jpg'  // Garbage/Mess
+    ],
+    'Garbage Collection': [
+      'https://res.cloudinary.com/dfvudsdld/image/upload/v1782978208/nayibareilly/seeds/h8uqilhsmvqpgo3eem23.jpg', // Garbage
+      'https://res.cloudinary.com/dfvudsdld/image/upload/v1782978208/nayibareilly/seeds/h8uqilhsmvqpgo3eem23.jpg'
+    ],
+    'Traffic Management': [
+      'https://res.cloudinary.com/dfvudsdld/image/upload/v1782978205/nayibareilly/seeds/pf9mcjugamlioxkekltk.jpg', // Pothole/Road
+      'https://res.cloudinary.com/dfvudsdld/image/upload/v1782978206/nayibareilly/seeds/kc8vikhiramf5ubzxk69.jpg'
+    ],
+    'Public Health': [
+      'https://res.cloudinary.com/dfvudsdld/image/upload/v1782978208/nayibareilly/seeds/h8uqilhsmvqpgo3eem23.jpg'  // Garbage
+    ],
+    'Public Safety': [
+      'https://res.cloudinary.com/dfvudsdld/image/upload/v1782978206/nayibareilly/seeds/kc8vikhiramf5ubzxk69.jpg' // Broken light
+    ]
+  };
+
+  
   const issueTemplates = [
     {
-      title: 'Large Pothole on MG Road',
-      description: 'There is a big pothole near Lovely Professional University gate on MG Road. It\'s causing traffic jams and vehicle damage. Urgent repair needed.',
+      title: 'सड़क पर बड़ा गड्ढा - Massive Pothole on MG Road',
+      description: 'MG Road पर LPU गेट के पास एक बहुत बड़ा गड्ढा है, जिससे रोज़ ट्रैफिक जाम हो रहा है। बारिश के कारण यह और भी खतरनाक हो गया है। There is a big pothole near Lovely Professional University gate on MG Road causing daily traffic jams. It has become extremely dangerous after the recent rains. Urgent repair needed.',
       categoryId: categories[0].id,
       priority: 'HIGH',
       location: { lat: 28.3670, lng: 79.4304, address: 'MG Road, near LPU Gate, Bareilly' }
     },
     {
-      title: 'Street Light Not Working',
-      description: 'Street light pole number SL-234 on Pilibhit Road has been non-functional for the past week. Area becomes very dark at night.',
+      title: 'स्ट्रीट लाइट खराब है - Street Light Not Working',
+      description: 'पीलीभीत रोड पर सेक्टर 7 में स्ट्रीट लाइट पोल (SL-234) पिछले एक हफ्ते से बंद है। रात में यहां पूरा अंधेरा रहता है जिससे चोरी का डर है। Street light pole number SL-234 on Pilibhit Road has been non-functional for the past week. The area becomes completely dark at night posing security risks.',
       categoryId: categories[1].id,
       priority: 'MEDIUM',
       location: { lat: 28.3587, lng: 79.4148, address: 'Pilibhit Road, Sector 7, Bareilly' }
     },
     {
-      title: 'No Water Supply for 3 Days',
-      description: 'Our locality in Faridpur hasn\'t received water supply for the past 3 days. Many families are facing severe shortage.',
+      title: '3 दिन से पानी नहीं आ रहा - No Water Supply for 3 Days',
+      description: 'फरीदपुर कॉलोनी के ब्लॉक ए में पिछले 3 दिनों से पानी की सप्लाई पूरी तरह ठप है। इलाके में टैंकर भी नहीं भेजा गया है। Our locality in Faridpur hasn\'t received water supply for the past 3 days. Families are facing severe shortage and no water tankers have been dispatched.',
       categoryId: categories[2].id,
       priority: 'CRITICAL',
       location: { lat: 28.3499, lng: 79.4312, address: 'Faridpur Colony, Block A, Bareilly' }
     },
     {
-      title: 'Sewerage Overflow Near School',
-      description: 'There is sewerage overflow near Government Primary School in Subhash Nagar. It\'s creating unhygienic conditions for children.',
+      title: 'स्कूल के पास सीवर ओवरफ्लो - Sewerage Overflow Near School',
+      description: 'सुभाष नगर में सरकारी प्राइमरी स्कूल के ठीक बाहर सीवर का पानी बह रहा है। बच्चों के लिए यह बहुत अस्वच्छ है और बीमारी फैल सकती है। There is a massive sewerage overflow right outside the Government Primary School in Subhash Nagar. It is creating highly unhygienic conditions for children.',
       categoryId: categories[3].id,
       priority: 'HIGH',
       location: { lat: 28.3645, lng: 79.4267, address: 'Near Govt. Primary School, Subhash Nagar, Bareilly' }
     },
     {
-      title: 'Garbage Not Collected This Week',
-      description: 'Garbage in our society hasn\'t been collected for the past 5 days. Waste is piling up and attracting stray animals.',
+      title: 'कचरा नहीं उठाया जा रहा - Garbage Not Collected This Week',
+      description: 'नवाबगंज की ग्रीन वैली सोसाइटी में पिछले 5 दिनों से कूड़ा नहीं उठाया गया है। कचरा सड़क तक आ गया है और जानवर उसे फैला रहे हैं। Garbage in our society hasn\'t been collected for the past 5 days. Waste is spilling onto the roads and stray animals are spreading it everywhere.',
       categoryId: categories[4].id,
       priority: 'MEDIUM',
       location: { lat: 28.3712, lng: 79.4156, address: 'Green Valley Society, Nawabganj, Bareilly' }
     },
     {
-      title: 'Traffic Signal Malfunction',
-      description: 'Traffic light at Civil Lines intersection has been showing red on all sides for 2 days. Causing major traffic confusion.',
+      title: 'ट्रैफिक सिग्नल खराब है - Traffic Signal Malfunction',
+      description: 'सिविल लाइंस चौराहे का ट्रैफिक सिग्नल पिछले 2 दिनों से हर तरफ लाल बत्ती ही दिखा रहा है, जिससे भारी जाम लग रहा है। The traffic light at Civil Lines intersection has been stuck on red on all sides for 2 days, causing massive confusion and traffic congestion.',
       categoryId: categories[5].id,
       priority: 'HIGH',
       location: { lat: 28.3598, lng: 79.4201, address: 'Civil Lines Intersection, Bareilly' }
     },
     {
-      title: 'Stagnant Water Breeding Mosquitoes',
-      description: 'Water has been stagnant in the park area for weeks. It\'s becoming a breeding ground for mosquitoes and health hazard.',
+      title: 'पार्क में रुका हुआ पानी - Stagnant Water Breeding Mosquitoes',
+      description: 'इज्जत नगर के कम्युनिटी पार्क में हफ्तों से बारिश का पानी जमा है। यहां मच्छरों की पैदावार हो रही है, जिससे डेंगू का खतरा है। Rainwater has been stagnant in the community park for weeks. It has become a breeding ground for mosquitoes, posing a severe dengue threat.',
       categoryId: categories[6].id,
       priority: 'MEDIUM',
       location: { lat: 28.3523, lng: 79.4089, address: 'Community Park, Izzat Nagar, Bareilly' }
     },
     {
-      title: 'Broken Boundary Wall Safety Concern',
-      description: 'The boundary wall of the government hospital has collapsed. It\'s a safety risk for pedestrians and needs immediate attention.',
+      title: 'अस्पताल की टूटी दीवार - Broken Boundary Wall Safety Concern',
+      description: 'जिला अस्पताल की बाउंड्री वॉल गिर गई है। पैदल चलने वालों के लिए यह एक बड़ा खतरा है, कृपया इसे तुरंत ठीक कराएं। The boundary wall of the district hospital has collapsed. It is a major safety risk for pedestrians and patients, requiring immediate reconstruction.',
       categoryId: categories[7].id,
       priority: 'CRITICAL',
       location: { lat: 28.3634, lng: 79.4178, address: 'District Hospital Boundary, Bareilly' }
     },
     {
-      title: 'Road Cracked After Heavy Rain',
-      description: 'The newly constructed road in Kargaina area has developed multiple cracks after last week\'s rainfall. Quality seems poor.',
+      title: 'नई सड़क में दरारें - Road Cracked After Heavy Rain',
+      description: 'करगैना इलाके में हाल ही में बनी सड़क में पिछले हफ्ते की बारिश के बाद बड़ी दरारें आ गई हैं। निर्माण सामग्री की गुणवत्ता खराब लगती है। The newly constructed road in Kargaina has developed massive cracks after last week\'s rainfall. The material quality appears to be extremely poor.',
       categoryId: categories[0].id,
       priority: 'MEDIUM',
       location: { lat: 28.3789, lng: 79.4123, address: 'New Road, Kargaina, Bareilly' }
     },
     {
-      title: 'Water Contamination Reported',
-      description: 'Water supplied to our area has a strange smell and taste. Multiple residents are reporting stomach issues after consumption.',
+      title: 'दूषित पेयजल की सप्लाई - Water Contamination Reported',
+      description: 'वार्ड 23, शाही कॉलोनी में जो पानी सप्लाई हो रहा है उसमें से बहुत गंदी बदबू आ रही है। कई लोगों को पेट खराब होने की शिकायत हुई है। The municipal water supplied to Ward 23 has a foul smell and yellow tint. Multiple residents have reported severe stomach infections after consumption.',
       categoryId: categories[2].id,
       priority: 'CRITICAL',
       location: { lat: 28.3445, lng: 79.4267, address: 'Shahi Colony, Ward 23, Bareilly' }
@@ -364,6 +398,15 @@ async function main() {
       
       const status = randomChoice(allStatuses);
       
+      const categoryObj = categories.find(c => c.id === template.categoryId);
+      const categoryName = categoryObj ? categoryObj.name : 'Garbage Collection';
+      const possibleImages = categoryImages[categoryName] || categoryImages['Garbage Collection'];
+      
+      const mediaData = [
+        { url: randomChoice(possibleImages), filename: 'image1.jpg', originalName: 'image1.jpg', mimeType: 'image/jpeg', size: 102400 },
+        { url: randomChoice(possibleImages), filename: 'image2.jpg', originalName: 'image2.jpg', mimeType: 'image/jpeg', size: 102400 }
+      ];
+      
       const issue = await prisma.issue.create({
         data: {
           reportId: `REP-${String(Date.now()).slice(-4)}${String(issueCounter).padStart(3, '0')}`,
@@ -383,7 +426,8 @@ async function main() {
           isAnonymous: false,
           createdAt: createdDate,
           updatedAt: randomDate(createdDate, new Date()),
-          resolvedAt: ['RESOLVED', 'CLOSED'].includes(status) ? new Date() : null
+          resolvedAt: ['RESOLVED', 'CLOSED'].includes(status) ? new Date() : null,
+          images: { create: mediaData }
         }
       })
       issues.push(issue)

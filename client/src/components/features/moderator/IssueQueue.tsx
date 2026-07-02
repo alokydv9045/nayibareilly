@@ -1,4 +1,4 @@
-﻿/**
+/**
  * IssueQueue - Display and manage pending issues queue
  */
 
@@ -87,10 +87,12 @@ export function IssueQueue({
 
     socketService.on('issue:new', handleNewIssue)
     socketService.on('issue:update', handleIssueUpdate)
+    socketService.on('issue:deleted', handleIssueUpdate)
 
     return () => {
       socketService.off('issue:new', handleNewIssue)
       socketService.off('issue:update', handleIssueUpdate)
+      socketService.off('issue:deleted', handleIssueUpdate)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

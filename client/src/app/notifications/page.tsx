@@ -1,4 +1,5 @@
 ﻿'use client';
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import { useEffect, useState } from 'react';
 import { Bell, CheckCheck, Filter, Loader2, Settings, Trash2 } from 'lucide-react';
@@ -77,7 +78,7 @@ function NotificationCenterContent() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Notification Center</h1>
+          <AnimatedHeading as="h1" className="text-3xl font-bold tracking-tight">Notification Center</AnimatedHeading>
           <p className="text-muted-foreground mt-1">
             Manage your notifications and preferences
           </p>

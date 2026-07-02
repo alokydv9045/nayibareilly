@@ -1,10 +1,13 @@
 "use client"
 
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { Wrench, Trash2, Droplets, Shield, FileText, MapPin, Users, Search, SortDesc, TrendingUp, Zap, Activity } from 'lucide-react'
+import { Wrench, Trash2, Droplets, Shield, FileText, MapPin, Users, Search, SortDesc, TrendingUp, Zap, Activity, Bell, ChevronRight, Leaf, Building, Globe } from 'lucide-react'
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
+import TypingHeading from '@/components/ui/TypingHeading'
 import { Button } from '@/components/ui/button'
-import { Card, CardTitle, CardDescription } from '@/components/ui/card'
+import { Card, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
 import { 
@@ -15,18 +18,16 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { useState, useMemo } from 'react'
-<<<<<<< HEAD
-import { usePublicStats, usePublicReports } from '@/hooks/api/usePublic'
-=======
 import { ISSUE_CATEGORIES } from '@/lib/validations/reportForm'
 import { toast } from 'react-hot-toast'
 import { usePublicStats, usePublicReports, usePublicCategories, useRecentActivity } from '@/hooks/api/usePublic'
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
 import { formatDistanceToNow } from 'date-fns'
 import HeroSection from '@/components/sections/HeroSection'
 import Image from 'next/image'
 
 export default function LandingPage() {
+  const router = useRouter()
+  const [showAllReports, setShowAllReports] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'votes'>('newest')
   const [page] = useState(1)
@@ -35,17 +36,14 @@ export default function LandingPage() {
   const { data: stats, isLoading: statsLoading } = usePublicStats()
   const { data: reportsResponse, isLoading: reportsLoading } = usePublicReports({
     page,
-    limit: 12,
+    limit: showAllReports ? 50 : 5,
     status: 'all',
     sort: sortBy,
     search: searchTerm || undefined
   })
-<<<<<<< HEAD
-=======
   const { data: categories } = usePublicCategories()
   const { data: recentActivity } = useRecentActivity(5)
   const { data: topVotedReportsResponse } = usePublicReports({ sort: 'votes', limit: 3, status: 'all' })
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
 
   const reportsData = reportsResponse?.issues || []
 
@@ -66,7 +64,7 @@ export default function LandingPage() {
   }, [reportsData, searchTerm, sortBy]);
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col font-sans selection:bg-emerald-500 selection:text-white">
+    <div className="min-h-screen flex flex-col font-sans selection:bg-emerald-500 selection:text-white bg-transparent">
       
       {/* Official Government Banner */}
       <div className="bg-slate-900 text-slate-300 py-1.5 px-4 text-xs font-medium border-b border-slate-800">
@@ -94,7 +92,7 @@ export default function LandingPage() {
       <section className="px-4 sm:px-6 lg:px-8 pb-12 sm:pb-16 -mt-8 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-6">
-            <h2 className="text-3xl font-extrabold text-slate-900 mb-3">Report Civic Issues</h2>
+            <TypingHeading as="h2" text="Report Civic Issues" highlightText="Civic Issues" className="text-3xl font-extrabold text-slate-900 justify-center mb-3" />
             <p className="text-base text-slate-500 font-medium max-w-2xl mx-auto">Select a category below to instantly report an issue directly to the concerned municipal department.</p>
           </div>
           
@@ -162,13 +160,13 @@ export default function LandingPage() {
               <Users className="h-4 w-4" />
               <span>Community Driven</span>
             </div>
-            <h2 className="text-3xl font-extrabold text-slate-900 mb-4">Community Reports</h2>
+            <TypingHeading as="h2" text="Community Reports" highlightText="Reports" className="text-3xl font-extrabold text-slate-900 justify-center mb-4" />
             <p className="text-base text-slate-500 font-medium max-w-3xl mx-auto">
               Vote and review issues reported by citizens. Your voice matters in making our city better.
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-8">
+          <div className="grid lg:grid-cols-3 gap-8 items-start">
             {/* Feed Section */}
             <div className="lg:col-span-2 space-y-6">
               
@@ -224,34 +222,65 @@ export default function LandingPage() {
                     key={report.id} 
                     whileHover={{ y: -6, boxShadow: "0px 12px 24px rgba(0,0,0,0.1)" }}
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                    className="bg-white rounded-2xl border border-slate-200 overflow-hidden cursor-pointer group"
+                    onClick={() => router.push(`/reports/${report.id}`)}
+                    className="bg-white rounded-2xl border border-slate-200 overflow-hidden cursor-pointer group flex flex-col"
                   >
-                    <div className="p-6">
-                      <div className="flex justify-between items-start mb-4">
-                        <div className="flex items-center gap-3">
+                    <div className="p-4 flex flex-col flex-1">
+                      <div className="flex justify-between items-start mb-2">
+                        <div className="flex items-center gap-2">
                           {isCritical ? (
-                            <Badge className="bg-rose-50 text-rose-700 border-rose-200 hover:bg-rose-100 font-bold uppercase tracking-wider text-[10px]">Critical Priority</Badge>
+                            <Badge className="bg-rose-50 text-rose-700 border-rose-200 hover:bg-rose-100 font-bold uppercase tracking-wider text-[9px] px-1.5 py-0">Critical Priority</Badge>
                           ) : (
-                            <Badge className="bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 font-bold uppercase tracking-wider text-[10px]">Standard Priority</Badge>
+                            <Badge className="bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 font-bold uppercase tracking-wider text-[9px] px-1.5 py-0">Standard Priority</Badge>
                           )}
                         </div>
-                        <span className="text-xs text-slate-500 font-medium">{timeAgo}</span>
+                        <span className="text-[10px] text-slate-500 font-medium">{timeAgo}</span>
                       </div>
                       
-                      <h4 className="font-extrabold text-lg text-slate-900 mb-2 group-hover:text-emerald-600 transition-colors">
+                      <h4 className="font-extrabold text-[15px] leading-tight text-slate-900 mb-1.5 group-hover:text-emerald-600 transition-colors">
                         {report.title}
                       </h4>
-                      <p className="text-slate-600 text-sm mb-6 line-clamp-2 font-medium">
+                      <p className="text-slate-600 text-[12px] mb-2.5 line-clamp-2 font-medium leading-snug">
                         {report.description || 'No description provided'}
                       </p>
+
+                      {report.images && report.images.length > 0 && (
+                        <div className={`grid gap-2 mb-4 mt-1 ${report.images.length === 1 ? 'grid-cols-1' : 'grid-cols-2'}`}>
+                          {report.images.slice(0, 3).map((img: any, i: number, arr: any[]) => {
+                            const isFirstOfThree = arr.length >= 3 && i === 0;
+                            return (
+                              <div 
+                                key={i} 
+                                className={`relative rounded-xl overflow-hidden border border-slate-200 shadow-sm bg-slate-100 group/img ${
+                                  isFirstOfThree ? 'col-span-2 aspect-[2/1] max-h-[160px]' : 
+                                  arr.length === 1 ? 'aspect-[16/9] max-h-[200px]' : 
+                                  'aspect-square sm:aspect-[4/3] max-h-[120px]'
+                                }`}
+                              >
+                                 {/* eslint-disable-next-line @next/next/no-img-element */}
+                                 <img 
+                                  src={img.url} 
+                                  alt={`${report.title} image ${i + 1}`} 
+                                  className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-110" 
+                                />
+                                {report.images.length > 3 && i === 2 && (
+                                  <div className="absolute inset-0 bg-black/50 flex items-center justify-center backdrop-blur-[2px] transition-colors group-hover/img:bg-black/60">
+                                    <span className="text-white font-extrabold text-lg">+{report.images.length - 3}</span>
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
                       
-                      <div className="flex items-center gap-4 text-slate-500 text-xs font-semibold mb-6 uppercase tracking-wider">
-                        <span className="flex items-center gap-1"><MapPin className="h-3.5 w-3.5" /> {realisticLocation}</span>
-                        <span className="flex items-center gap-1"><TrendingUp className="h-3.5 w-3.5" /> {report.votesCount || 0} Votes</span>
-                      </div>
+                      <div className="flex items-center gap-3 text-slate-500 text-[10px] font-semibold mb-3 uppercase tracking-wider mt-auto">
+                        <span className="flex items-center gap-1"><MapPin className="h-3 w-3" /> {realisticLocation}</span>
+                        <span className="flex items-center gap-1"><TrendingUp className="h-3 w-3" /> {report.votesCount || 0} Votes</span>
+                       </div>
                       
                       {/* Timeline Progress Bar */}
-                      <div className="relative pt-2 pb-6">
+                      <div className="relative pt-1 pb-2">
                         <div className="absolute top-[18px] left-0 w-full h-1 bg-slate-100 rounded-full"></div>
                         <div className="absolute top-[18px] left-0 h-1 bg-slate-900 rounded-full transition-all" style={{
                             width: report.status === 'resolved' ? '100%' : report.status === 'in_progress' ? '66%' : report.status === 'open' ? '33%' : '0%'
@@ -280,22 +309,32 @@ export default function LandingPage() {
                   </motion.div>
                 )
               })}
+              {filteredAndSortedReports.length > 0 && !showAllReports && (
+                <div className="text-center mt-6">
+                  <Button 
+                    onClick={() => setShowAllReports(true)}
+                    variant="outline"
+                    className="rounded-full px-8 font-semibold bg-white border-slate-300 text-slate-700 hover:bg-slate-50"
+                  >
+                    View All Reports
+                  </Button>
+                </div>
+              )}
             </div>
 
             {/* Side Widgets */}
             <div className="space-y-6">
               {/* Daily Impact */}
               <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
-                <h3 className="text-lg font-extrabold text-slate-900 flex items-center gap-2 mb-6">
+                <AnimatedHeading as="h3" className="text-lg font-extrabold text-slate-900 flex items-center gap-2 mb-6">
                   <Activity className="h-5 w-5 text-emerald-500" />
                   Live Platform Impact
-                </h3>
+                </AnimatedHeading>
                 <div className="space-y-4">
                   <div className="flex justify-between items-center pb-4 border-b border-slate-100">
                     <span className="text-slate-500 font-medium">Issues Resolved</span>
                     <span className="font-extrabold text-slate-900 text-xl">{statsLoading ? '...' : stats?.resolvedIssues || 0}</span>
                   </div>
-<<<<<<< HEAD
                   <div className="flex justify-between items-center pb-4 border-b border-slate-100">
                     <span className="text-slate-500 font-medium">Active Citizens</span>
                     <span className="font-extrabold text-slate-900 text-xl">{statsLoading ? '...' : stats?.activeUsers || 0}</span>
@@ -303,150 +342,6 @@ export default function LandingPage() {
                   <div className="flex justify-between items-center">
                     <span className="text-slate-500 font-medium">Avg. Resolution</span>
                     <span className="font-extrabold text-emerald-600 text-xl">48 Hrs</span>
-=======
-                  
-                  <div className="space-y-4">
-                    {recentActivity && recentActivity.length > 0 ? (
-                      recentActivity.map((activity: any, index: number) => (
-                        <div key={activity.id || index} className="flex items-center justify-between bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
-                          <div className="flex items-center space-x-3">
-                            <div className={`w-3 h-3 rounded-full animate-pulse ${
-                              activity.type === 'resolved' ? 'bg-green-400' :
-                              activity.type === 'in_progress' ? 'bg-yellow-400' :
-                              'bg-blue-400'
-                            }`}></div>
-                            <div>
-                              <div className="text-sm font-medium">{activity.title}</div>
-                              <div className="text-xs text-blue-100">{activity.category || 'Issue'}</div>
-                            </div>
-                          </div>
-                          <span className="text-xs text-blue-200 whitespace-nowrap">
-                            {formatDistanceToNow(new Date(activity.timestamp), { addSuffix: true })}
-                          </span>
-                        </div>
-                      ))
-                    ) : (
-                      <div className="text-center py-4 text-blue-100 text-sm">No recent activity</div>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Enhanced Impact Stats */}
-              <Card className="border-0 shadow-lg">
-                <CardHeader>
-                  <CardTitle className="text-xl flex items-center space-x-2">
-                    <TrendingUp className="h-5 w-5 text-blue-600" />
-                    <span>Today&apos;s Impact</span>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="text-center p-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl border border-blue-200">
-                      <div className="text-3xl font-bold text-blue-600 mb-1">{stats?.issuesToday || 0}</div>
-                      <div className="text-xs text-blue-700 font-medium">New Reports Today</div>
-                    </div>
-                    <div className="text-center p-4 bg-gradient-to-br from-green-50 to-green-100 rounded-xl border border-green-200">
-                      <div className="text-3xl font-bold text-green-600 mb-1">{stats?.resolvedIssues || 0}</div>
-                      <div className="text-xs text-green-700 font-medium">Total Resolved</div>
-                    </div>
-                    <div className="text-center p-4 bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl border border-purple-200">
-                      <div className="text-3xl font-bold text-purple-600 mb-1">{stats?.activeUsers || 0}</div>
-                      <div className="text-xs text-purple-700 font-medium">Active Users</div>
-                    </div>
-                    <div className="text-center p-4 bg-gradient-to-br from-orange-50 to-orange-100 rounded-xl border border-orange-200">
-                      <div className="text-3xl font-bold text-orange-600 mb-1">{stats?.avgResponseDays || 0}</div>
-                      <div className="text-xs text-orange-700 font-medium">Avg Resolution (Days)</div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Enhanced Top Voted Issues */}
-              <Card className="border-0 shadow-lg">
-                <CardHeader>
-                  <CardTitle className="text-xl flex items-center space-x-2">
-                    <Star className="h-5 w-5 text-yellow-500" />
-                    <span>Most Voted Issues</span>
-                  </CardTitle>
-                  <CardDescription>Issues getting the most community attention</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    {topVotedReportsResponse?.issues && topVotedReportsResponse.issues.length > 0 ? (
-                      topVotedReportsResponse.issues.map((item: any, index: number) => (
-                        <Link href={`/reports/${item.id}`} key={item.id}>
-                          <div className="flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl border border-gray-200 hover:from-blue-50 hover:to-blue-100 hover:border-blue-200 transition-all cursor-pointer mb-3">
-                            <div className="flex items-center space-x-3">
-                              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold shrink-0 ${
-                                index === 0 ? 'bg-yellow-100 text-yellow-700' :
-                                index === 1 ? 'bg-gray-100 text-gray-700' :
-                                'bg-orange-100 text-orange-700'
-                              }`}>
-                                {index + 1}
-                              </div>
-                              <div className="min-w-0">
-                                <div className="font-medium text-sm truncate max-w-[150px] sm:max-w-[180px]">{item.title}</div>
-                                <div className="text-xs text-gray-600 truncate">{item.location?.address || 'Unknown area'}</div>
-                              </div>
-                            </div>
-                            <div className="text-right shrink-0">
-                              <div className="text-lg font-bold text-blue-600">{item.votesCount || 0}</div>
-                              <div className="text-xs text-gray-500">votes</div>
-                            </div>
-                          </div>
-                        </Link>
-                      ))
-                    ) : (
-                      <div className="text-center py-4 text-gray-500 text-sm">No highly voted reports yet</div>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Community Engagement CTA */}
-              <Card className="shadow-lg bg-gradient-to-br from-green-50 to-blue-50 border border-green-200">
-                <CardContent className="p-6 text-center">
-                  <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Users className="h-8 w-8 text-white" />
-                  </div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">Join the Community</h3>
-                  <p className="text-sm text-gray-600 mb-4">
-                    Help make our city better by reporting issues and voting on solutions.
-                  </p>
-                  <Button className="w-full bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700">
-                    Get Started
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Live Updates */}
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-r from-blue-600 to-green-600 rounded-3xl p-8 text-white">
-            <div className="grid lg:grid-cols-2 gap-8 items-center">
-              <div>
-                <h2 className="text-3xl font-bold mb-4">Real-time Updates</h2>
-                <p className="text-blue-100 mb-6">
-                  Get instant notifications about your complaints and city development projects
-                </p>
-                <div className="space-y-3">
-                  <div className="flex items-center space-x-3">
-                    <CheckCircle className="h-5 w-5 text-green-300" />
-                    <span>SMS & Email Notifications</span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <CheckCircle className="h-5 w-5 text-green-300" />
-                    <span>Real-time Status Tracking</span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <CheckCircle className="h-5 w-5 text-green-300" />
-                    <span>Community Updates</span>
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
                   </div>
                 </div>
               </div>
@@ -457,13 +352,13 @@ export default function LandingPage() {
                   <Shield className="w-24 h-24" />
                 </div>
                 <div className="relative z-10">
-                  <h3 className="text-lg font-bold text-emerald-400 mb-3">Our Vision</h3>
+                  <AnimatedHeading as="h3" className="text-lg font-bold text-emerald-400 mb-3">Our Vision</AnimatedHeading>
                   <p className="text-slate-300 text-sm leading-relaxed mb-6 font-medium italic">
                     "Together we are building a smarter, cleaner, and highly responsive municipal ecosystem for every citizen."
                   </p>
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-slate-700 border-2 border-slate-600 overflow-hidden relative">
-                      <Image src="/images/Mayorsahab.jpg" alt="Mayor" fill className="object-cover" />
+                    <div className="h-12 w-12 rounded-full overflow-hidden border-2 border-emerald-500 relative flex-shrink-0">
+                      <Image src="/images/Mayorsahab.jpg" alt="Mayor" fill sizes="48px" className="object-cover" />
                     </div>
                     <div>
                       <p className="font-bold text-sm">Dr. Umesh Gautam</p>
@@ -473,6 +368,86 @@ export default function LandingPage() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Key Government Initiatives */}
+      <section className="py-20 relative z-10 overflow-hidden bg-transparent">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <div className="text-center mb-16">
+            <Badge className="px-4 py-2 text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200 mb-4 uppercase tracking-wider">
+              National Programs
+            </Badge>
+            <TypingHeading as="h2" text="Key Civic Initiatives" highlightText="Civic Initiatives" className="text-4xl font-extrabold text-slate-900 justify-center mb-4" />
+            <p className="text-slate-600 text-lg max-w-2xl mx-auto font-medium">
+              Aligning with national goals to transform Bareilly into a sustainable, modern, and citizen-first metropolis.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Smart City */}
+            <motion.div whileHover={{ y: -8, boxShadow: "0px 20px 25px -5px rgba(0,0,0,0.1), 0px 10px 10px -5px rgba(0,0,0,0.04)" }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
+              <Card className="h-full border-0 shadow-lg overflow-hidden group bg-gradient-to-br from-indigo-50 to-white relative">
+                <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
+                  <Building className="w-32 h-32 text-indigo-900" />
+                </div>
+                <CardContent className="p-8 relative z-10">
+                  <div className="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center mb-6 shadow-sm">
+                    <Building className="w-8 h-8" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-3 group-hover:text-indigo-600 transition-colors">Smart City Mission</h3>
+                  <p className="text-slate-600 mb-6 font-medium leading-relaxed">
+                    Integrating IoT sensors, centralized command centers, and digital service delivery for intelligent urban management.
+                  </p>
+                  <Button variant="ghost" className="text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50 p-0 h-auto font-bold flex items-center gap-1 group/btn">
+                    Explore Mission <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                  </Button>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Swachh Bharat */}
+            <motion.div whileHover={{ y: -8, boxShadow: "0px 20px 25px -5px rgba(0,0,0,0.1), 0px 10px 10px -5px rgba(0,0,0,0.04)" }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
+              <Card className="h-full border-0 shadow-lg overflow-hidden group bg-gradient-to-br from-emerald-50 to-white relative">
+                <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
+                  <Leaf className="w-32 h-32 text-emerald-900" />
+                </div>
+                <CardContent className="p-8 relative z-10">
+                  <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mb-6 shadow-sm">
+                    <Leaf className="w-8 h-8" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-3 group-hover:text-emerald-600 transition-colors">Swachh Bharat</h3>
+                  <p className="text-slate-600 mb-6 font-medium leading-relaxed">
+                    100% door-to-door waste collection, scientific waste processing, and community-driven cleanliness drives.
+                  </p>
+                  <Button variant="ghost" className="text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 p-0 h-auto font-bold flex items-center gap-1 group/btn">
+                    View Progress <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                  </Button>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Digital India */}
+            <motion.div whileHover={{ y: -8, boxShadow: "0px 20px 25px -5px rgba(0,0,0,0.1), 0px 10px 10px -5px rgba(0,0,0,0.04)" }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
+              <Card className="h-full border-0 shadow-lg overflow-hidden group bg-gradient-to-br from-sky-50 to-white relative">
+                <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
+                  <Globe className="w-32 h-32 text-sky-900" />
+                </div>
+                <CardContent className="p-8 relative z-10">
+                  <div className="w-16 h-16 bg-sky-100 text-sky-600 rounded-2xl flex items-center justify-center mb-6 shadow-sm">
+                    <Globe className="w-8 h-8" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-3 group-hover:text-sky-600 transition-colors">Digital Governance</h3>
+                  <p className="text-slate-600 mb-6 font-medium leading-relaxed">
+                    Bringing all municipal services to your fingertips. Paperless approvals, online tax payments, and direct feedback.
+                  </p>
+                  <Button variant="ghost" className="text-sky-600 hover:text-sky-700 hover:bg-sky-50 p-0 h-auto font-bold flex items-center gap-1 group/btn">
+                    Access Services <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                  </Button>
+                </CardContent>
+              </Card>
+            </motion.div>
           </div>
         </div>
       </section>

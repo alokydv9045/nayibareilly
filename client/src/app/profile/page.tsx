@@ -1,4 +1,5 @@
 "use client"
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 import CitizenLayout from '@/components/layout/CitizenLayout'
 import RequireUser from '@/components/features/auth/RequireUser'
 import { useMe, useUpdateProfile } from '@/hooks/auth/useProfile'
@@ -107,7 +108,7 @@ export default function ProfilePage() {
   return (
     <RequireUser>
       <CitizenLayout>
-        <div className="min-h-screen bg-slate-50 selection:bg-emerald-500 selection:text-white">
+        <div className="min-h-screen bg-transparent selection:bg-emerald-500 selection:text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             {/* Header Section */}
             <div className="bg-slate-900 rounded-2xl p-8 mb-8 text-white shadow-md">
@@ -132,9 +133,9 @@ export default function ProfilePage() {
                 </div>
                 
                 <div className="flex-1 text-center md:text-left">
-                  <h1 className="text-3xl md:text-4xl font-extrabold mb-2 text-white">
+                  <AnimatedHeading as="h1" className="text-3xl md:text-4xl font-extrabold mb-2 text-white">
                     {me?.name || 'Welcome'}
-                  </h1>
+                  </AnimatedHeading>
                   <p className="text-emerald-400 font-medium mb-4 flex items-center justify-center md:justify-start">
                     <Mail className="h-4 w-4 mr-2" />
                     {me?.email}

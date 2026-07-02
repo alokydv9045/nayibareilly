@@ -1,4 +1,5 @@
 ﻿'use client'
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -104,14 +105,14 @@ export default function WaterDepartmentPage() {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-900 via-cyan-900 to-blue-900 flex items-center justify-center">
+      <div className="min-h-screen bg-transparent flex items-center justify-center">
         <div className="text-white">Loading...</div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-cyan-900 to-blue-900 p-6">
+    <div className="min-h-screen bg-transparent p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
@@ -120,7 +121,7 @@ export default function WaterDepartmentPage() {
               <Droplets className="h-8 w-8 text-blue-400" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-white">Water Supply & Utilities</h1>
+              <AnimatedHeading as="h1" className="text-3xl font-bold text-white">Water Supply & Utilities</AnimatedHeading>
               <p className="text-emerald-200">Water Supply, Sewerage, Drainage & Utility Management</p>
             </div>
           </div>

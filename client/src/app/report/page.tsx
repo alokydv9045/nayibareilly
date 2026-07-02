@@ -1,4 +1,5 @@
 "use client"
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
@@ -310,15 +311,15 @@ export default function EnhancedReportPage() {
   return (
     <RequireUser>
       <CitizenLayout>
-        <div className="min-h-screen bg-slate-50 selection:bg-emerald-500 selection:text-white">
+        <div className="min-h-screen bg-transparent selection:bg-emerald-500 selection:text-white">
           <div className="max-w-4xl mx-auto px-3 sm:px-4 lg:px-8 py-3 sm:py-4 lg:py-8">
             {/* Header */}
             <div className="mb-4 sm:mb-6">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3 sm:mb-4">
                 <div>
-                  <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-tight text-slate-900">
+                  <AnimatedHeading as="h1" className="text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-tight text-slate-900">
                     {t.pageTitle}
-                  </h1>
+                  </AnimatedHeading>
                   <p className="text-slate-600 font-medium mt-1 text-sm sm:text-base">
                     {t.pageSubtitle}
                   </p>
@@ -587,7 +588,6 @@ export default function EnhancedReportPage() {
                   <Save className="h-4 w-4" />
                   <span className="text-sm sm:text-base">{t.saveDraft}</span>
                 </Button>
-<<<<<<< HEAD
                 <Button
                   type="submit"
                   disabled={!isFormValid || isSubmitting}
@@ -597,27 +597,9 @@ export default function EnhancedReportPage() {
                     <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
                   ) : (
                     <Send className="h-4 w-4" />
-=======
-                <div className="flex flex-col items-stretch sm:items-end gap-1 order-1 sm:order-2">
-                  {!isFormValid && photos.length < 2 && (
-                    <p className="text-xs text-amber-600 text-right">
-                      {photos.length === 0 ? '2–3 photos required' : `${2 - photos.length} more photo${2 - photos.length > 1 ? 's' : ''} required`}
-                    </p>
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
                   )}
-                  <Button
-                    type="submit"
-                    disabled={!isFormValid || isSubmitting}
-                    className="flex items-center gap-2 bg-green-600 hover:bg-green-700 w-full sm:w-auto justify-center min-h-[44px] touch-manipulation"
-                  >
-                    {isSubmitting ? (
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
-                    ) : (
-                      <Send className="h-4 w-4" />
-                    )}
-                    <span className="text-sm sm:text-base">{isSubmitting ? t.submitting : t.submitReport}</span>
-                  </Button>
-                </div>
+                  <span className="text-sm sm:text-base">{isSubmitting ? t.submitting : t.submitReport}</span>
+                </Button>
               </div>
             </form>
           </div>

@@ -1,4 +1,5 @@
 'use client'
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import React, { Component, ReactNode } from 'react'
 import { toast } from 'react-hot-toast'
@@ -156,9 +157,9 @@ function DefaultErrorFallback({ error, errorInfo, onReset }: DefaultErrorFallbac
           </div>
         </div>
 
-        <h1 className="text-2xl font-bold text-center text-destructive mb-4">
+        <AnimatedHeading as="h1" className="text-2xl font-bold text-center text-destructive mb-4">
           Oops! Something went wrong
-        </h1>
+        </AnimatedHeading>
 
         <p className="text-center text-muted-foreground mb-6">
           We&apos;re sorry, but something unexpected happened.

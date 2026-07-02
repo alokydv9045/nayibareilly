@@ -1,4 +1,5 @@
 ﻿"use client"
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
@@ -95,11 +96,7 @@ export default function ModeratorAnalyticsPage() {
       value: data?.reviews?.today || 0,
       icon: <Target className="h-4 w-4" />,
       description: "Reviews done today",
-<<<<<<< HEAD
       color: "text-slate-800",
-=======
-      color: "text-blue-600",
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
       bgColor: "bg-purple-50"
     }
   ]
@@ -119,7 +116,7 @@ export default function ModeratorAnalyticsPage() {
                 Back to Dashboard
               </Button>
               <div>
-                <h1 className="text-3xl font-bold text-slate-900">Analytics & Insights</h1>
+                <AnimatedHeading as="h1" className="text-3xl font-bold text-slate-900">Analytics & Insights</AnimatedHeading>
                 <p className="text-slate-600 mt-1">Track your moderation performance</p>
               </div>
             </div>

@@ -1,4 +1,5 @@
 ﻿'use client'
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -180,13 +181,8 @@ export default function MayorOverviewPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex items-center gap-3 mb-6">
-<<<<<<< HEAD
         <Crown className="h-8 w-8 text-slate-800" />
-        <h1 className="text-3xl font-bold text-slate-900">Mayor Dashboard</h1>
-=======
-        <Crown className="h-8 w-8 text-blue-600" />
-        <h1 className="text-3xl font-bold text-gray-900">Mayor Dashboard</h1>
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
+        <AnimatedHeading as="h1" className="text-3xl font-bold text-slate-900">Mayor Dashboard</AnimatedHeading>
         <Badge variant="outline" className="text-lg px-3 py-1">
           Executive Overview
         </Badge>
@@ -233,11 +229,7 @@ export default function MayorOverviewPage() {
               {Array.from({ length: 5 }, (_, i) => (
                 <Star
                   key={i}
-<<<<<<< HEAD
                   className={`h-3 w-3 ${i < Math.floor(data.summary.citizenSatisfaction) ? 'fill-yellow-400 text-yellow-400' : 'text-slate-300'}`}
-=======
-                  className={`h-3 w-3 ${i < Math.floor(data.summary.citizenSatisfaction) ? 'fill-yellow-400 text-yellow-600' : 'text-gray-300'}`}
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
                 />
               ))}
             </div>
@@ -285,13 +277,8 @@ export default function MayorOverviewPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 pt-4 border-t">
             <div className="text-center">
-<<<<<<< HEAD
               <div className="text-2xl font-bold text-slate-800">{data.cityMetrics.populationServed.toLocaleString()}</div>
               <div className="text-sm text-slate-600">Citizens Served</div>
-=======
-              <div className="text-2xl font-bold text-blue-600">{data.cityMetrics.populationServed.toLocaleString()}</div>
-              <div className="text-sm text-gray-600">Citizens Served</div>
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
             </div>
             <div className="text-center">
               <div className="text-2xl font-bold text-indigo-600">{data.cityMetrics.wardsCovered}</div>
@@ -450,11 +437,7 @@ export default function MayorOverviewPage() {
                       </td>
                       <td className="text-center py-3">
                         <div className="flex items-center justify-center gap-1">
-<<<<<<< HEAD
                           <Star className={`h-4 w-4 ${dept.satisfaction >= 4 ? 'fill-yellow-400 text-yellow-400' : 'text-slate-300'}`} />
-=======
-                          <Star className={`h-4 w-4 ${dept.satisfaction >= 4 ? 'fill-yellow-400 text-yellow-600' : 'text-gray-300'}`} />
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
                           <span>{dept.satisfaction.toFixed(1)}</span>
                         </div>
                       </td>

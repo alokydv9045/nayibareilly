@@ -1,4 +1,5 @@
 ﻿"use client"
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 import dynamic from 'next/dynamic'
 import { useMemo, useState, useEffect } from 'react'
 import CitizenLayout from '@/components/layout/CitizenLayout'
@@ -84,9 +85,9 @@ export default function IssuesMapRootPage() {
         <div className="max-w-7xl mx-auto space-y-6">
           {/* Header */}
           <div className="text-center space-y-4 animate-fadeInUp">
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+            <AnimatedHeading as="h1" className="text-4xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
               Issues Map
-            </h1>
+            </AnimatedHeading>
             <p className="text-slate-600 max-w-2xl mx-auto">
               Explore community issues on an interactive map. Find nearby problems and track resolution progress visually.
             </p>

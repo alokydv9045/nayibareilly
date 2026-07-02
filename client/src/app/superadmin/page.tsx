@@ -132,17 +132,23 @@ export default function SuperAdminDashboard() {
     socketService.on('issue:new', handleIssue)
     socketService.on('issue:update', handleIssue)
     socketService.on('issue:status', handleIssue)
+    socketService.on('issue:deleted', handleIssue)
+    socketService.on('system:departments:updated', fetchDashboardStats)
+    socketService.on('system:user:updated', fetchDashboardStats)
 
     return () => {
       clearInterval(interval)
       socketService.off('issue:new', handleIssue)
       socketService.off('issue:update', handleIssue)
       socketService.off('issue:status', handleIssue)
+      socketService.off('issue:deleted', handleIssue)
+      socketService.off('system:departments:updated', fetchDashboardStats)
+      socketService.off('system:user:updated', fetchDashboardStats)
     }
   }, [fetchDashboardStats, fetchModeratorPerformance, fetchRealtimeIssues])
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans">
+    <div className="min-h-screen bg-transparent text-slate-900 font-sans">
       <Toaster position="top-right" />
       
       {/* TopAppBar */}

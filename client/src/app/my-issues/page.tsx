@@ -1,4 +1,5 @@
 "use client"
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 import RequireUser from '@/components/features/auth/RequireUser'
 import CitizenLayout from '@/components/layout/CitizenLayout'
 import IssueCard from '@/components/features/citizen/IssueCard'
@@ -59,9 +60,9 @@ export default function MyIssuesPage() {
   <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 space-y-8">
           {/* Header */}
           <div className="text-center space-y-2 sm:space-y-3 animate-fadeInUp">
-            <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
+            <AnimatedHeading as="h1" className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
               My Issues
-            </h1>
+            </AnimatedHeading>
             <p className="text-slate-600 max-w-2xl mx-auto text-sm sm:text-base">
               Track and manage all your reported issues in one place. Monitor progress and stay updated on resolutions.
             </p>

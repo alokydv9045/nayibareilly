@@ -295,13 +295,8 @@ export function AdminNavbar({ className = '' }: AdminNavbarProps) {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={() => handleThemeChange('techadmin')}>
                     <div className="flex items-center space-x-2">
-<<<<<<< HEAD
                       <div className="w-4 h-4 bg-slate-700 rounded"></div>
                       <span>Super Admin (Purple)</span>
-=======
-                      <div className="w-4 h-4 bg-purple-500 rounded"></div>
-                      <span>Tech Admin (Purple)</span>
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
                     </div>
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => handleThemeChange('orgadmin')}>

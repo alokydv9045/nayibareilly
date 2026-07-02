@@ -1,4 +1,5 @@
 'use client'
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import { useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -12,7 +13,7 @@ export default function SettingsPage() {
     <div className="container mx-auto py-8 px-4">
       <div className="max-w-6xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold">Account Settings</h1>
+          <AnimatedHeading as="h1" className="text-3xl font-bold">Account Settings</AnimatedHeading>
           <p className="text-muted-foreground mt-2">
             Manage your account security, preferences, and session activity
           </p>

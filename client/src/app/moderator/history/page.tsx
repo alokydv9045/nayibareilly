@@ -1,4 +1,5 @@
 ﻿"use client"
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
@@ -106,7 +107,7 @@ export default function ModeratorHistoryPage() {
                 Back to Dashboard
               </Button>
               <div>
-                <h1 className="text-3xl font-bold text-slate-900">Review History</h1>
+                <AnimatedHeading as="h1" className="text-3xl font-bold text-slate-900">Review History</AnimatedHeading>
                 <p className="text-slate-600">Track all your moderation decisions</p>
               </div>
             </div>

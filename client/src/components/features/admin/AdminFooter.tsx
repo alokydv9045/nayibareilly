@@ -196,11 +196,7 @@ export function AdminFooter({ className = '' }: AdminFooterProps) {
                 </a>
               </li>
               <li>
-<<<<<<< HEAD
                 <a href="/superadmin/logs" className="text-sm text-slate-600 hover:text-emerald-600">
-=======
-                <a href="/techadmin/logs" className="text-sm text-gray-600 hover:text-blue-600">
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
                   System Logs
                 </a>
               </li>

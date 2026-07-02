@@ -1,3 +1,4 @@
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 /**
  * Dashboard Layout with Sidebar
  * Complete layout with role-based navigation, header, and content area
@@ -312,7 +313,7 @@ export function SimpleLayout({
       <main className="container mx-auto px-4 py-8">
         {(title || description) && (
           <div className="mb-8 text-center">
-            {title && <h1 className="text-4xl font-bold mb-2">{title}</h1>}
+            {title && <AnimatedHeading as="h1" className="text-4xl font-bold mb-2">{title}</AnimatedHeading>}
             {description && (
               <p className="text-xl text-muted-foreground">{description}</p>
             )}

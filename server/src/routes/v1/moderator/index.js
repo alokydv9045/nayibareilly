@@ -204,4 +204,21 @@ router.post('/approve-assign', [
   }
 });
 
+/**
+ * PUT /api/v1/moderator/announcements
+ * Update global announcements
+ */
+router.put('/announcements', [
+  auth(['MODERATOR', 'DEPT_ADMIN', 'MAYOR', 'SUPER_ADMIN']),
+  validateCSRFToken,
+  body('announcements').isArray()
+], async (req, res, next) => {
+  try {
+    const { updateAnnouncements } = await import('../../../controllers/moderator.controller.js');
+    return updateAnnouncements(req, res, next);
+  } catch (error) {
+    next(error);
+  }
+});
+
 export default router;

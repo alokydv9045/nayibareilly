@@ -1,4 +1,5 @@
 ﻿'use client'
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -163,13 +164,8 @@ export default function MayorDepartmentsPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex items-center gap-3 mb-6">
-<<<<<<< HEAD
         <Building2 className="h-8 w-8 text-slate-800" />
-        <h1 className="text-3xl font-bold text-slate-900">Department Management</h1>
-=======
-        <Building2 className="h-8 w-8 text-blue-600" />
-        <h1 className="text-3xl font-bold text-gray-900">Department Management</h1>
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
+        <AnimatedHeading as="h1" className="text-3xl font-bold text-slate-900">Department Management</AnimatedHeading>
         <Badge variant="outline" className="text-lg px-3 py-1">
           {departments.length} Departments
         </Badge>
@@ -195,11 +191,7 @@ export default function MayorDepartmentsPage() {
                 <div className="flex items-start justify-between">
                   <CardTitle className="text-lg">{dept.name}</CardTitle>
                   <div className="flex items-center gap-1">
-<<<<<<< HEAD
                     <Star className={`h-4 w-4 ${overallRating >= 80 ? 'fill-yellow-400 text-yellow-400' : 'text-slate-300'}`} />
-=======
-                    <Star className={`h-4 w-4 ${overallRating >= 80 ? 'fill-yellow-400 text-yellow-600' : 'text-gray-300'}`} />
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
                     <span className={`text-sm font-bold ${getPerformanceColor(overallRating)}`}>
                       {overallRating}/100
                     </span>
@@ -314,11 +306,7 @@ export default function MayorDepartmentsPage() {
                       </Card>
                       <Card>
                         <CardContent className="p-4 text-center">
-<<<<<<< HEAD
                           <DollarSign className="h-6 w-6 text-slate-800 mx-auto mb-2" />
-=======
-                          <DollarSign className="h-6 w-6 text-blue-600 mx-auto mb-2" />
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
                           <div className={`text-xl font-bold ${getPerformanceColor(dept.kpis.budgetCompliance)}`}>
                             {dept.kpis.budgetCompliance}/100
                           </div>

@@ -172,13 +172,8 @@ export default function Navbar() {
                     Sign In
                   </Link>
                 </Button>
-<<<<<<< HEAD
                 <Button asChild className="bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700">
                   <Link href="/get-started">
-=======
-                <Button asChild className="bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700">
-                  <Link href="/login">
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
                     <UserPlus className="mr-2 h-4 w-4" />
                     Let&apos;s Get Started
                   </Link>
@@ -295,13 +290,8 @@ export default function Navbar() {
                         Sign In
                       </Link>
                     </Button>
-<<<<<<< HEAD
                     <Button className="w-full h-12 bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 touch-manipulation" asChild>
                       <Link href="/get-started" onClick={() => setMobileMenuOpen(false)}>
-=======
-                    <Button className="w-full h-12 bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 touch-manipulation" asChild>
-                      <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
                         <UserPlus className="mr-3 h-4 w-4" />
                         Let&apos;s Get Started
                       </Link>

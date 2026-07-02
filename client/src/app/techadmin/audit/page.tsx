@@ -1,4 +1,5 @@
 'use client'
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -333,28 +334,15 @@ export default function TechAdminAuditPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-8">
+    <div className="min-h-screen bg-transparent pb-8">
       {/* Topbar */}
       <header className="sticky top-16 lg:top-0 z-40 bg-white border-b border-gray-200 px-4 md:px-8 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-<<<<<<< HEAD:client/src/app/superadmin/audit/page.tsx
           <Shield className="h-8 w-8 text-emerald-600" />
-          <h1 className="text-3xl font-bold text-slate-900">System Audit & Security</h1>
+          <AnimatedHeading as="h1" className="text-3xl font-bold text-slate-900">System Audit & Security</AnimatedHeading>
           <Badge variant="outline" className="text-lg px-3 py-1">
             SuperAdmin
           </Badge>
-=======
-          <div className="p-2 bg-red-50 rounded-lg">
-            <Shield className="h-6 w-6 text-red-600" />
-          </div>
-          <div>
-            <h1 className="text-xl md:text-2xl font-bold text-gray-900 flex items-center gap-2">
-              System Audit & Security
-              <Badge variant="outline" className="text-xs bg-gray-50">TechAdmin</Badge>
-            </h1>
-            <p className="text-xs text-gray-500 mt-0.5">Audit trails and security monitoring</p>
-          </div>
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9:client/src/app/techadmin/audit/page.tsx
         </div>
         <div className="flex flex-wrap gap-3 w-full md:w-auto">
           <Button

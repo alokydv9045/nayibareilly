@@ -14,7 +14,7 @@ const REGISTER_PATH = '/register'
 // Public routes (no authentication required)
 const PUBLIC_ROUTES = [
   '/', '/about', '/services', '/contact', '/help', '/privacy', '/terms', '/guidelines',
-  LOGIN_PATH, REGISTER_PATH, '/signup', '/forgot-password', '/reset-password'
+  LOGIN_PATH, REGISTER_PATH, '/signup', '/forgot-password', '/reset-password', '/reports'
 ]
 
 // Default dashboard for each role

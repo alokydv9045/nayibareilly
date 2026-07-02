@@ -1,4 +1,5 @@
 'use client'
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import { ReactNode } from 'react'
 import { Card } from '@/components/ui/card'
@@ -45,7 +46,7 @@ export function DepartmentLayout({
                 {icon}
               </div>
               <div>
-                <h1 className="text-3xl font-bold text-white">{title}</h1>
+                <AnimatedHeading as="h1" className="text-3xl font-bold text-white">{title}</AnimatedHeading>
                 <p className="text-emerald-200">{description}</p>
               </div>
             </div>

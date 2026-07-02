@@ -1,10 +1,11 @@
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 import PublicLayout from '@/components/layout/PublicLayout'
 
 export default function PrivacyPage() {
   return (
     <PublicLayout>
       <div className="max-w-3xl mx-auto py-10 px-4">
-        <h1 className="text-3xl font-bold mb-4 text-center">Privacy Policy / गोपनीयता नीति</h1>
+        <AnimatedHeading as="h1" className="text-3xl font-bold mb-4 text-center">Privacy Policy / गोपनीयता नीति</AnimatedHeading>
         <p className="text-muted-foreground mb-8 text-center">
           We value your privacy and are committed to protecting your personal information.<br />
           हम आपकी गोपनीयता का सम्मान करते हैं और आपकी व्यक्तिगत जानकारी की सुरक्षा के लिए प्रतिबद्ध हैं。

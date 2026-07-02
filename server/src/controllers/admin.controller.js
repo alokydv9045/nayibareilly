@@ -739,6 +739,13 @@ export const createSuperAdminUser = async (req, res) => {
       department: undefined
     }
 
+    try {
+      const io = req.app.get('io')
+      if (io) io.emit('system:user:updated', formattedUser)
+    } catch (error) {
+      console.warn('Failed to emit user creation socket event', error.message)
+    }
+
     return created(res, formattedUser)
   } catch (error) {
     console.error('createSuperAdminUser error:', error)
@@ -799,6 +806,13 @@ export const updateSuperAdminUser = async (req, res) => {
       ...user,
       departmentName: user.department?.name,
       department: undefined
+    }
+
+    try {
+      const io = req.app.get('io')
+      if (io) io.emit('system:user:updated', formattedUser)
+    } catch (error) {
+      console.warn('Failed to emit user update socket event', error.message)
     }
 
     return ok(res, formattedUser)
@@ -1463,6 +1477,11 @@ export const updateUserRoles = async (req, res) => {
       data: { roles }
     });
     
+    try {
+      const io = req.app.get('io')
+      if (io) io.emit('system:user:updated', user)
+    } catch (error) {}
+    
     return ok(res, { user });
   } catch (error) {
     console.error('Update user roles error:', error);
@@ -1477,6 +1496,12 @@ export const activateUser = async (req, res) => {
       where: { id: userId },
       data: { isActive: true }
     });
+    
+    try {
+      const io = req.app.get('io')
+      if (io) io.emit('system:user:updated', user)
+    } catch (error) {}
+    
     return ok(res, { user });
   } catch (error) {
     console.error('Activate user error:', error);
@@ -1491,6 +1516,12 @@ export const deactivateUser = async (req, res) => {
       where: { id: userId },
       data: { isActive: false }
     });
+    
+    try {
+      const io = req.app.get('io')
+      if (io) io.emit('system:user:updated', user)
+    } catch (error) {}
+    
     return ok(res, { user });
   } catch (error) {
     console.error('Deactivate user error:', error);

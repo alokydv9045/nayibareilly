@@ -1,4 +1,5 @@
 "use client"
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -183,7 +184,7 @@ function ReportSuccessContent() {
     return (
       <RequireUser>
         <CitizenLayout>
-          <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+          <div className="min-h-screen bg-transparent flex items-center justify-center">
             <div className="text-center">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto mb-4" />
               <p className="text-slate-600">Loading issue details...</p>
@@ -198,7 +199,7 @@ function ReportSuccessContent() {
     return (
       <RequireUser>
         <CitizenLayout>
-          <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+          <div className="min-h-screen bg-transparent flex items-center justify-center">
             <Card className="max-w-md w-full mx-4">
               <CardContent className="p-6 text-center">
                 <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
@@ -225,7 +226,7 @@ function ReportSuccessContent() {
   return (
     <RequireUser>
       <CitizenLayout>
-        <div className="min-h-screen bg-slate-50">
+        <div className="min-h-screen bg-transparent">
           <div className="max-w-4xl mx-auto px-4 py-8">
             {/* Header */}
             <div className="text-center mb-8">
@@ -235,9 +236,9 @@ function ReportSuccessContent() {
                 </div>
               </div>
               
-              <h1 className="text-3xl font-bold text-slate-900 mb-2">
+              <AnimatedHeading as="h1" className="text-3xl font-bold text-slate-900 mb-2">
                 {t.reportSubmitted}
-              </h1>
+              </AnimatedHeading>
               <p className="text-slate-600 max-w-2xl mx-auto">
                 {t.submissionSuccess}
               </p>
@@ -511,7 +512,7 @@ function ReportSuccessContent() {
 export default function ReportSuccessPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-50 flex items-center justify-center">
+      <div className="min-h-screen bg-transparent flex items-center justify-center">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600" />
       </div>
     }>

@@ -1,4 +1,5 @@
 'use client'
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
@@ -161,7 +162,7 @@ export default function VerifyIssuePage({ params }: { params: Promise<{ id: stri
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 flex items-center justify-center">
+      <div className="min-h-screen bg-transparent flex items-center justify-center">
         <div className="text-white text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-white mx-auto mb-4"></div>
           <p>Loading issue...</p>
@@ -175,11 +176,11 @@ export default function VerifyIssuePage({ params }: { params: Promise<{ id: stri
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900">
+    <div className="min-h-screen bg-transparent">
       <div className="container mx-auto p-6 max-w-4xl">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">Verify Issue Resolution</h1>
+          <AnimatedHeading as="h1" className="text-3xl font-bold text-white mb-2">Verify Issue Resolution</AnimatedHeading>
           <p className="text-emerald-200">
             Please review the resolution and provide your feedback
           </p>

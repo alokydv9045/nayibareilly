@@ -1,4 +1,5 @@
 ﻿"use client"
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -50,7 +51,7 @@ export default function DepartmentStaffPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 flex items-center justify-center">
+      <div className="min-h-screen bg-transparent flex items-center justify-center">
         <div className="text-gray-900 text-lg">Loading staff members...</div>
       </div>
     )
@@ -58,14 +59,14 @@ export default function DepartmentStaffPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 flex items-center justify-center">
+      <div className="min-h-screen bg-transparent flex items-center justify-center">
         <div className="text-red-600 text-lg">Error loading staff members</div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900">
+    <div className="min-h-screen bg-transparent">
       <div className="container mx-auto p-6">
         {/* Header */}
         <div className="mb-8">
@@ -81,17 +82,10 @@ export default function DepartmentStaffPage() {
                 <Users className="h-8 w-8 text-gray-900" />
               </div>
               <div>
-<<<<<<< HEAD
-                <h1 className="text-3xl font-bold text-white">Department Staff Management</h1>
+                <AnimatedHeading as="h1" className="text-3xl font-bold text-white">Department Staff Management</AnimatedHeading>
                 <p className="text-emerald-200">Manage and monitor your department staff members</p>
                 {user?.name && (
                   <p className="text-sm text-emerald-300">Department Admin: {user.name}</p>
-=======
-                <h1 className="text-3xl font-bold text-gray-900">Department Staff Management</h1>
-                <p className="text-blue-200">Manage and monitor your department staff members</p>
-                {user?.name && (
-                  <p className="text-sm text-blue-600">Department Admin: {user.name}</p>
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
                 )}
               </div>
             </div>
@@ -107,15 +101,9 @@ export default function DepartmentStaffPage() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-<<<<<<< HEAD
                   <p className="text-emerald-200 text-sm">Total Staff</p>
                   <p className="text-2xl font-bold text-white">{staff.length}</p>
                   <p className="text-xs text-blue-400">Department Members</p>
-=======
-                  <p className="text-blue-200 text-sm">Total Staff</p>
-                  <p className="text-2xl font-bold text-gray-900">{staff.length}</p>
-                  <p className="text-xs text-blue-600">Department Members</p>
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
                 </div>
                 <Users className="h-8 w-8 text-blue-600" />
               </div>
@@ -126,13 +114,8 @@ export default function DepartmentStaffPage() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-<<<<<<< HEAD
                   <p className="text-emerald-200 text-sm">Available Staff</p>
                   <p className="text-2xl font-bold text-white">
-=======
-                  <p className="text-blue-200 text-sm">Available Staff</p>
-                  <p className="text-2xl font-bold text-gray-900">
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
                     {staff.filter(s => s.workloadStatus === 'available').length}
                   </p>
                   <p className="text-xs text-green-600">Ready for assignments</p>
@@ -146,13 +129,8 @@ export default function DepartmentStaffPage() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-<<<<<<< HEAD
                   <p className="text-emerald-200 text-sm">Busy Staff</p>
                   <p className="text-2xl font-bold text-white">
-=======
-                  <p className="text-blue-200 text-sm">Busy Staff</p>
-                  <p className="text-2xl font-bold text-gray-900">
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
                     {staff.filter(s => s.workloadStatus === 'heavy').length}
                   </p>
                   <p className="text-xs text-yellow-600">High workload</p>
@@ -166,13 +144,8 @@ export default function DepartmentStaffPage() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-<<<<<<< HEAD
                   <p className="text-emerald-200 text-sm">Active Issues</p>
                   <p className="text-2xl font-bold text-white">
-=======
-                  <p className="text-blue-200 text-sm">Active Issues</p>
-                  <p className="text-2xl font-bold text-gray-900">
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
                     {staff.reduce((total, s) => total + s.activeIssues, 0)}
                   </p>
                   <p className="text-xs text-orange-600">Total assigned</p>
@@ -188,20 +161,12 @@ export default function DepartmentStaffPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div className="relative flex-1 max-w-sm">
-<<<<<<< HEAD
                 <Search className="absolute left-3 top-3 h-4 w-4 text-emerald-300" />
-=======
-                <Search className="absolute left-3 top-3 h-4 w-4 text-blue-600" />
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
                 <Input
                   placeholder="Search staff members..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-<<<<<<< HEAD
                   className="pl-10 bg-white/10 border-white/20 text-white placeholder:text-emerald-300"
-=======
-                  className="pl-10 bg-white border-gray-200 text-gray-900 placeholder:text-blue-600"
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
                 />
               </div>
               <Button className="bg-green-600 hover:bg-green-700" disabled>
@@ -215,25 +180,15 @@ export default function DepartmentStaffPage() {
         {/* Staff List */}
         <Card className="bg-white border-gray-200">
           <CardHeader>
-<<<<<<< HEAD
             <CardTitle className="text-white">Department Staff Members</CardTitle>
             <CardDescription className="text-emerald-200">
-=======
-            <CardTitle className="text-gray-900">Department Staff Members</CardTitle>
-            <CardDescription className="text-blue-200">
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
               Monitor workload and manage assignments for your department staff
             </CardDescription>
           </CardHeader>
           <CardContent>
             {filteredStaff.length === 0 ? (
-<<<<<<< HEAD
               <div className="text-center py-12 text-white">
                 <Users className="h-16 w-16 mx-auto mb-4 text-slate-400" />
-=======
-              <div className="text-center py-12 text-gray-900">
-                <Users className="h-16 w-16 mx-auto mb-4 text-gray-400" />
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
                 <p className="text-lg mb-2">No Staff Members Found</p>
                 <p className="text-emerald-200">
                   {searchTerm ? 'Try adjusting your search terms' : 'No staff members assigned to this department yet'}
@@ -244,24 +199,14 @@ export default function DepartmentStaffPage() {
                 {filteredStaff.map((member) => (
                   <div key={member.id} className="flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
                     <div className="flex items-center space-x-4">
-<<<<<<< HEAD
                       <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-slate-700 rounded-full flex items-center justify-center">
                         <span className="font-semibold text-white text-lg">
-=======
-                      <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
-                        <span className="font-semibold text-gray-900 text-lg">
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
                           {member.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
                         </span>
                       </div>
                       <div>
-<<<<<<< HEAD
                         <h3 className="font-semibold text-white">{member.name}</h3>
                         <div className="flex items-center space-x-4 text-sm text-emerald-200">
-=======
-                        <h3 className="font-semibold text-gray-900">{member.name}</h3>
-                        <div className="flex items-center space-x-4 text-sm text-blue-200">
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
                           <div className="flex items-center space-x-1">
                             <Mail className="h-3 w-3" />
                             <span>{member.email}</span>
@@ -284,15 +229,9 @@ export default function DepartmentStaffPage() {
                     
                     <div className="flex items-center space-x-4">
                       <div className="text-right">
-<<<<<<< HEAD
                         <p className="text-sm font-medium text-white">{member.activeIssues} Active Issues</p>
                         <p className="text-xs text-emerald-200">Workload: {member.workloadStatus}</p>
                         <p className="text-xs text-slate-400">ID: {member.id}</p>
-=======
-                        <p className="text-sm font-medium text-gray-900">{member.activeIssues} Active Issues</p>
-                        <p className="text-xs text-blue-200">Workload: {member.workloadStatus}</p>
-                        <p className="text-xs text-gray-400">ID: {member.id}</p>
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
                       </div>
                       <Button 
                         variant="outline" 

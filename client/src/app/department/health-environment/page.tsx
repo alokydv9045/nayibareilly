@@ -1,4 +1,5 @@
 ﻿'use client'
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -129,14 +130,14 @@ export default function EnvironmentalServicesPage() {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-emerald-900 via-green-900 to-emerald-900 flex items-center justify-center">
+      <div className="min-h-screen bg-transparent flex items-center justify-center">
         <div className="text-white">Loading...</div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-900 via-green-900 to-emerald-900 p-6">
+    <div className="min-h-screen bg-transparent p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
@@ -145,7 +146,7 @@ export default function EnvironmentalServicesPage() {
               <Leaf className="h-8 w-8 text-green-400" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-white">Environmental Services</h1>
+              <AnimatedHeading as="h1" className="text-3xl font-bold text-white">Environmental Services</AnimatedHeading>
               <p className="text-green-200">Environmental Protection, Waste Management & Sanitation</p>
             </div>
           </div>

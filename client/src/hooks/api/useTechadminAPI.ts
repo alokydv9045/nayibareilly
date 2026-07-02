@@ -111,78 +111,41 @@ export interface UpdateDepartmentInput {
 }
 
 // API Functions
-<<<<<<< HEAD:client/src/hooks/api/useSuperadminAPI.ts
-const fetchUsers = async (): Promise<SuperadminUser[]> => {
-  const { data } = await api.request<{ data: SuperadminUser[] }>({
-=======
 const fetchUsers = async (): Promise<TechadminUser[]> => {
-  const { data } = await api.request<any>({
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9:client/src/hooks/api/useTechadminAPI.ts
+  const { data } = await api.request<{ data: TechadminUser[] }>({
     method: 'GET',
     url: '/admin/users',
   })
-<<<<<<< HEAD:client/src/hooks/api/useSuperadminAPI.ts
   return data.data || []
-}
-
-const fetchDepartments = async (): Promise<SuperadminDepartment[]> => {
-  const { data } = await api.request<{ data: SuperadminDepartment[] }>({
-=======
-  return data?.data?.users || data?.users || []
 }
 
 const fetchDepartments = async (): Promise<TechadminDepartment[]> => {
-  const { data } = await api.request<any>({
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9:client/src/hooks/api/useTechadminAPI.ts
+  const { data } = await api.request<{ data: TechadminDepartment[] }>({
     method: 'GET',
     url: '/departments',
   })
-<<<<<<< HEAD:client/src/hooks/api/useSuperadminAPI.ts
   return data.data || []
 }
 
-const fetchSettings = async (): Promise<SuperadminSettings> => {
-  const { data } = await api.request<{ data: SuperadminSettings }>({
-=======
-  return data?.data?.items || data?.items || []
-}
-
 const fetchSettings = async (): Promise<TechadminSettings> => {
-  const { data } = await api.request<TechadminSettings>({
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9:client/src/hooks/api/useTechadminAPI.ts
+  const { data } = await api.request<{ data: TechadminSettings }>({
     method: 'GET',
     url: '/admin/techadmin/settings',
   })
-<<<<<<< HEAD:client/src/hooks/api/useSuperadminAPI.ts
   return data.data
 }
 
-const createUser = async (payload: CreateUserInput): Promise<SuperadminUser> => {
-  const res = await api.request<{ data: SuperadminUser }>({
+const createUser = async (payload: CreateUserInput): Promise<TechadminUser> => {
+  const res = await api.request<{ data: TechadminUser }>({
     method: 'POST',
     url: '/api/v1/admin/superadmin/users',
     data: payload,
-=======
-  return (data as any)?.data || data
-}
-
-const createUser = async (data: CreateUserInput): Promise<TechadminUser> => {
-  const res = await api.request<TechadminUser>({
-    method: 'POST',
-    url: '/admin/users',
-    data,
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9:client/src/hooks/api/useTechadminAPI.ts
   })
   return res.data.data
 }
 
-<<<<<<< HEAD:client/src/hooks/api/useSuperadminAPI.ts
-const updateUser = async ({ id, data }: { id: string; data: UpdateUserInput }): Promise<SuperadminUser> => {
-  const res = await api.request<{ data: SuperadminUser }>({
-=======
 const updateUser = async ({ id, data }: { id: string; data: UpdateUserInput }): Promise<TechadminUser> => {
-  const res = await api.request<TechadminUser>({
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9:client/src/hooks/api/useTechadminAPI.ts
+  const res = await api.request<{ data: TechadminUser }>({
     method: 'PUT',
     url: `/admin/users/${id}`,
     data,
@@ -198,30 +161,17 @@ const deleteUser = async (id: string): Promise<void> => {
   return
 }
 
-<<<<<<< HEAD:client/src/hooks/api/useSuperadminAPI.ts
-const createDepartment = async (payload: CreateDepartmentInput): Promise<SuperadminDepartment> => {
-  const res = await api.request<{ data: SuperadminDepartment }>({
+const createDepartment = async (payload: CreateDepartmentInput): Promise<TechadminDepartment> => {
+  const res = await api.request<{ data: TechadminDepartment }>({
     method: 'POST',
     url: '/api/v1/admin/superadmin/departments',
     data: payload,
-=======
-const createDepartment = async (data: CreateDepartmentInput): Promise<TechadminDepartment> => {
-  const res = await api.request<TechadminDepartment>({
-    method: 'POST',
-    url: '/departments',
-    data,
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9:client/src/hooks/api/useTechadminAPI.ts
   })
   return res.data.data
 }
 
-<<<<<<< HEAD:client/src/hooks/api/useSuperadminAPI.ts
-const updateDepartment = async ({ id, data }: { id: string; data: UpdateDepartmentInput }): Promise<SuperadminDepartment> => {
-  const res = await api.request<{ data: SuperadminDepartment }>({
-=======
 const updateDepartment = async ({ id, data }: { id: string; data: UpdateDepartmentInput }): Promise<TechadminDepartment> => {
-  const res = await api.request<TechadminDepartment>({
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9:client/src/hooks/api/useTechadminAPI.ts
+  const res = await api.request<{ data: TechadminDepartment }>({
     method: 'PUT',
     url: `/departments/${id}`,
     data,
@@ -237,23 +187,13 @@ const deleteDepartment = async (id: string): Promise<void> => {
   return
 }
 
-<<<<<<< HEAD:client/src/hooks/api/useSuperadminAPI.ts
-const updateSettings = async (payload: Partial<SuperadminSettings>): Promise<SuperadminSettings> => {
-  const res = await api.request<{ data: SuperadminSettings }>({
+const updateSettings = async (payload: Partial<TechadminSettings>): Promise<TechadminSettings> => {
+  const res = await api.request<{ data: TechadminSettings }>({
     method: 'PUT',
     url: '/api/v1/admin/superadmin/settings',
     data: payload,
   })
   return res.data.data
-=======
-const updateSettings = async (data: Partial<TechadminSettings>): Promise<TechadminSettings> => {
-  const res = await api.request<TechadminSettings>({
-    method: 'PUT',
-    url: '/admin/techadmin/settings',
-    data,
-  })
-  return (res.data as any)?.data || res.data
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9:client/src/hooks/api/useTechadminAPI.ts
 }
 
 // Hooks

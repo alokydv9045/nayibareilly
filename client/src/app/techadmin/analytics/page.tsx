@@ -1,4 +1,5 @@
 'use client'
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -287,28 +288,15 @@ export default function TechAdminAnalyticsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-8">
+    <div className="min-h-screen bg-transparent pb-8">
       {/* Topbar */}
       <header className="sticky top-16 lg:top-0 z-40 bg-white border-b border-gray-200 px-4 md:px-8 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-<<<<<<< HEAD:client/src/app/superadmin/analytics/page.tsx
           <Shield className="h-8 w-8 text-emerald-600" />
-          <h1 className="text-3xl font-bold text-slate-900">System Analytics</h1>
+          <AnimatedHeading as="h1" className="text-3xl font-bold text-slate-900">System Analytics</AnimatedHeading>
           <Badge variant="outline" className="text-lg px-3 py-1">
             SuperAdmin
           </Badge>
-=======
-          <div className="p-2 bg-blue-50 rounded-lg">
-            <Shield className="h-6 w-6 text-blue-600" />
-          </div>
-          <div>
-            <h1 className="text-xl md:text-2xl font-bold text-gray-900 flex items-center gap-2">
-              System Analytics
-              <Badge variant="outline" className="text-xs bg-gray-50">TechAdmin</Badge>
-            </h1>
-            <p className="text-xs text-gray-500 mt-0.5">Comprehensive overview of platform performance and metrics</p>
-          </div>
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9:client/src/app/techadmin/analytics/page.tsx
         </div>
         <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
           <Button
@@ -360,13 +348,8 @@ export default function TechAdminAnalyticsPage() {
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
-<<<<<<< HEAD:client/src/app/superadmin/analytics/page.tsx
             <BarChart3 className="h-6 w-6 text-slate-800 mx-auto mb-2" />
             <div className="text-xl font-bold text-slate-800">
-=======
-            <BarChart3 className="h-6 w-6 text-blue-600 mx-auto mb-2" />
-            <div className="text-xl font-bold text-blue-600">
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9:client/src/app/techadmin/analytics/page.tsx
               {data.overview.totalIssues.toLocaleString()}
             </div>
             <div className="text-xs text-slate-600">Total Issues</div>
@@ -430,13 +413,8 @@ export default function TechAdminAnalyticsPage() {
             </Card>
             <Card>
               <CardContent className="p-4 text-center">
-<<<<<<< HEAD:client/src/app/superadmin/analytics/page.tsx
                 <Activity className="h-8 w-8 text-slate-800 mx-auto mb-2" />
                 <div className="text-2xl font-bold text-slate-800">
-=======
-                <Activity className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-                <div className="text-2xl font-bold text-blue-600">
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9:client/src/app/techadmin/analytics/page.tsx
                   {data.performance.apiResponseTime}ms
                 </div>
                 <div className="text-sm text-slate-600">API Response Time</div>
@@ -594,13 +572,8 @@ export default function TechAdminAnalyticsPage() {
             </Card>
             <Card>
               <CardContent className="p-4 text-center">
-<<<<<<< HEAD:client/src/app/superadmin/analytics/page.tsx
                 <TrendingUp className="h-8 w-8 text-slate-800 mx-auto mb-2" />
                 <div className="text-2xl font-bold text-slate-800">
-=======
-                <TrendingUp className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-                <div className="text-2xl font-bold text-blue-600">
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9:client/src/app/techadmin/analytics/page.tsx
                   {data.userAnalytics.userGrowthRate}%
                 </div>
                 <div className="text-sm text-slate-600">Growth Rate</div>

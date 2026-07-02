@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@custom-variant dark (&:is(.dark, .dark *));
 
 /* Local Inter font fallback to avoid Google Fonts network fetch in dev */
 /* You can replace src URLs with locally hosted font files under /public/fonts if added. */
@@ -469,6 +470,22 @@
     linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
     linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
   background-size: 50px 50px;
+}
+
+@layer utilities {
+  /* Aceternity UI Dot Backgrounds */
+  .bg-dot-black {
+    background-image: radial-gradient(circle, rgba(0,0,0,0.1) 1px, transparent 1px);
+    background-size: 16px 16px;
+  }
+  .bg-dot-white {
+    background-image: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 16px 16px;
+  }
+  .bg-dot-emerald {
+    background-image: radial-gradient(circle, rgba(16, 185, 129, 0.4) 2px, transparent 2px);
+    background-size: 30px 30px;
+  }
 }
 
 /* Enhanced Shadow Effects */

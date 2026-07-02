@@ -1,4 +1,5 @@
 "use client"
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import { useState, useEffect, useCallback } from 'react'
 import { config } from '@/lib/constants/app.config'
@@ -127,11 +128,17 @@ export default function TechAdminDashboard() {
     socketService.on('issue:new', onIssue)
     socketService.on('issue:update', onIssue)
     socketService.on('issue:status', onIssue)
+    socketService.on('issue:deleted', onIssue)
+    socketService.on('system:user:updated', fetchStats)
+    socketService.on('system:departments:updated', fetchStats)
     return () => {
       clearInterval(poll); clearInterval(clock)
       socketService.off('issue:new', onIssue)
       socketService.off('issue:update', onIssue)
       socketService.off('issue:status', onIssue)
+      socketService.off('issue:deleted', onIssue)
+      socketService.off('system:user:updated', fetchStats)
+      socketService.off('system:departments:updated', fetchStats)
     }
   }, [fetchStats, fetchModeratorPerformance, fetchRealtimeIssues, fetchLogs])
 
@@ -178,11 +185,11 @@ export default function TechAdminDashboard() {
   ]
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-8">
+    <div className="min-h-screen bg-transparent pb-8">
         {/* Topbar */}
         <header className="sticky top-16 lg:top-0 z-40 bg-white border-b border-gray-200 px-4 md:px-8 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-xl md:text-2xl font-bold text-gray-900">Tech Admin & Systems Dashboard</h1>
+            <AnimatedHeading as="h1" className="text-xl md:text-2xl font-bold text-gray-900">Tech Admin & Systems Dashboard</AnimatedHeading>
             <p className="text-xs text-blue-600 mt-0.5">
               {isMounted ? `${currentTime.toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' })} • ${currentTime.toLocaleTimeString('en-IN')}` : 'Loading time...'}
             </p>

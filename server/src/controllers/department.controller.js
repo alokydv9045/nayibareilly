@@ -37,6 +37,14 @@ export const createDepartment = async (req, res) => {
       slaHours: typeof slaHours === 'number' ? slaHours : undefined,
       isActive: typeof isActive === 'boolean' ? isActive : undefined,
     } })
+    
+    try {
+      const io = req.app.get('io');
+      io.emit('system:departments:updated');
+    } catch (e) {
+      logger.warn('Failed to emit department update', { error: e.message });
+    }
+    
     created(res, { department: dep })
   } catch (e) {
     if (e && e.code === 'P2002') return fail(res, 409, 'Department name or code already exists')
@@ -62,6 +70,14 @@ export const updateDepartment = async (req, res) => {
         budget: typeof budget === 'number' ? budget : undefined,
       },
     })
+    
+    try {
+      const io = req.app.get('io');
+      io.emit('system:departments:updated');
+    } catch (e) {
+      logger.warn('Failed to emit department update', { error: e.message });
+    }
+    
     ok(res, { department: dep })
   } catch (e) {
     if (e && e.code === 'P2025') return fail(res, 404, 'Department not found')
@@ -98,6 +114,13 @@ export const deleteDepartment = async (req, res) => {
         metadata: { departmentId: id }
       }
     });
+    
+    try {
+      const io = req.app.get('io');
+      io.emit('system:departments:updated');
+    } catch (e) {
+      logger.warn('Failed to emit department update', { error: e.message });
+    }
     
     return ok(res, { message: 'Department successfully deleted', department: updated });
   } catch (error) {

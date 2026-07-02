@@ -1,4 +1,5 @@
 'use client'
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import dynamic from 'next/dynamic'
 import { useState, useEffect, useMemo } from 'react'
@@ -241,7 +242,7 @@ export default function PublicMapPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-transparent">
       {/* Header */}
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 py-4">
@@ -249,9 +250,9 @@ export default function PublicMapPage() {
             <div className="flex items-center gap-3">
               <MapPin className="h-8 w-8 text-emerald-600" />
               <div>
-                <h1 className="text-2xl font-bold text-slate-900">
+                <AnimatedHeading as="h1" className="text-2xl font-bold text-slate-900">
                   {cityInfo?.name || 'Nayibareilly'} Public Map
-                </h1>
+                </AnimatedHeading>
                 <p className="text-sm text-slate-600">
                   View civic issues and city information - No login required
                 </p>

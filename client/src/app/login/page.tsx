@@ -1,4 +1,5 @@
 "use client";
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import Link from "next/link";
 import { Suspense } from "react";
@@ -23,7 +24,7 @@ function LoginFormWithSuspense() {
 export default function LoginPage() {
   return (
     <AuthLayout>
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-3 sm:p-4 selection:bg-emerald-500 selection:text-white">
+      <div className="min-h-screen bg-transparent flex items-center justify-center p-3 sm:p-4 selection:bg-emerald-500 selection:text-white">
         <div className="w-full max-w-sm sm:max-w-md">
           {/* Logo */}
           <div className="text-center mb-8">
@@ -31,9 +32,9 @@ export default function LoginPage() {
               <div className="w-12 h-12 bg-emerald-500 rounded-xl flex items-center justify-center shadow-md group-hover:bg-emerald-600 transition-colors">
                 <Shield className="h-6 w-6 text-white" />
               </div>
-              <h1 className="text-2xl font-bold">
+              <AnimatedHeading as="h1" className="text-2xl font-bold">
                 <span className="text-slate-900">Nayi</span><span className="text-emerald-500">Bareilly</span>
-              </h1>
+              </AnimatedHeading>
             </Link>
             <p className="text-slate-500 mt-2 font-medium">Smart Civic Platform</p>
           </div>

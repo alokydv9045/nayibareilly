@@ -1,3 +1,4 @@
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 import Link from 'next/link'
 import { Home, AlertCircle, MapPin, Shield } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -13,9 +14,9 @@ export default function NotFound() {
           <AlertCircle className="w-10 h-10 text-rose-500" strokeWidth={1.5} />
         </div>
         
-        <h1 className="text-7xl font-black text-slate-900 tracking-tight mb-4">
+        <AnimatedHeading as="h1" className="text-7xl font-black text-slate-900 tracking-tight mb-4">
           404
-        </h1>
+        </AnimatedHeading>
         
         <h2 className="text-2xl font-bold text-slate-800 mb-3">
           Page Not Found

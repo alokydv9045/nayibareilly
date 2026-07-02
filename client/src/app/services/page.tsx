@@ -1,3 +1,4 @@
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 import PublicLayout from '@/components/layout/PublicLayout'
 
 // Metadata for this page
@@ -10,7 +11,7 @@ export const metadata = {
 export default function ServicesPage() {
   return (
     <PublicLayout>
-      <h1 className="text-3xl font-bold mb-4">Services</h1>
+      <AnimatedHeading as="h1" className="text-3xl font-bold mb-4">Services</AnimatedHeading>
       <p className="text-muted-foreground max-w-2xl">Explore municipal services and how NayiBareilly streamlines citizen engagement.</p>
     </PublicLayout>
   )

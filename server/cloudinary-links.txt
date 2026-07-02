@@ -1,0 +1,31 @@
+  const categoryImages = {
+    'Road Repair': [
+      'https://res.cloudinary.com/dfvudsdld/image/upload/v1782978115/nayibareilly/seeds/x5tc4jkgywpfk5hkqzob.jpg',
+      'https://images.unsplash.com/photo-1584985223049-741cefae2494?auto=format&fit=crop&w=800&q=80',
+    ],
+    'Street Lighting': [
+      'https://images.unsplash.com/photo-1533036814674-cfa686fc2424?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1584282463248-12c8b05da26b?auto=format&fit=crop&w=800&q=80',
+    ],
+    'Water Supply Issue': [
+      'https://res.cloudinary.com/dfvudsdld/image/upload/v1782978118/nayibareilly/seeds/pkyggggcmcl8dl3wcwao.jpg',
+      'https://images.unsplash.com/photo-1585827552668-d0728b355e3c?auto=format&fit=crop&w=800&q=80',
+    ],
+    'Sewerage Problem': [
+      'https://images.unsplash.com/photo-1621516625895-d603a1188365?auto=format&fit=crop&w=800&q=80',
+    ],
+    'Garbage Collection': [
+      'https://res.cloudinary.com/dfvudsdld/image/upload/v1782978121/nayibareilly/seeds/snfu6xybfcovcxcucnsm.jpg',
+      'https://images.unsplash.com/photo-1605600659905-2457cbe80738?auto=format&fit=crop&w=800&q=80',
+    ],
+    'Traffic Management': [
+      'https://images.unsplash.com/photo-1566838316377-f2da157c164a?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1549615024-db01a6b0c266?auto=format&fit=crop&w=800&q=80',
+    ],
+    'Public Health': [
+      'https://res.cloudinary.com/dfvudsdld/image/upload/v1782978125/nayibareilly/seeds/mh31x3nvodqhwg7ujfw5.jpg',
+    ],
+    'Public Safety': [
+      'https://images.unsplash.com/photo-1517686520775-6e069c99ec17?auto=format&fit=crop&w=800&q=80',
+    ],
+  };

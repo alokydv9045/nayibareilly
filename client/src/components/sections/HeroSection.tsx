@@ -7,6 +7,8 @@ import Image from 'next/image'
 import { Camera, MapPin, Zap, ArrowRight, Shield, CheckCircle2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
+import TypingHeading from '@/components/ui/TypingHeading'
 
 export default function HeroSection() {
   const [currentSlide, setCurrentSlide] = useState(0)
@@ -37,12 +39,11 @@ export default function HeroSection() {
   }, [mayorContent.length])
 
   return (
-<<<<<<< HEAD
     <section className="relative z-0 overflow-hidden pt-12 pb-24 min-h-[85vh] flex items-center">
       {/* Enhanced Animated Background similar to AuthLayout */}
       <div className="absolute inset-0 z-[-1] pointer-events-none">
-        {/* Base gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-emerald-50/30" />
+        {/* Removed local gradient to let global Aceternity bg show through */}
+        <div className="absolute inset-0" />
         
         {/* Large Gradient Orbs (Theme Colors: Emerald and Slate) */}
         <div className="absolute inset-0 opacity-60">
@@ -110,15 +111,7 @@ export default function HeroSection() {
           />
         </div>
 
-        {/* Grid pattern */}
-        <div className="absolute inset-0 bg-grid-pattern opacity-[0.03]"></div>
-=======
-    <section className="relative min-h-screen bg-gradient-to-br from-blue-50 via-sky-50 to-blue-100/50 overflow-hidden">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-green-400/20 rounded-full blur-3xl animate-pulse" />
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
+        {/* Removed local grid pattern to prevent conflict with global dot pattern */}
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
@@ -139,13 +132,21 @@ export default function HeroSection() {
 
             {/* Main Heading */}
             <div className="space-y-6">
-              <h1 className="text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-tight">
-                Nayi Bareilly
-              </h1>
+              <TypingHeading 
+                as="h1" 
+                text="Nayi Bareilly" 
+                highlightText="Bareilly" 
+                className="text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-tight" 
+              />
               
-              <p className="text-3xl lg:text-4xl font-bold text-slate-900 leading-tight">
-                Empowering Citizens, Building Smarter Cities
-              </p>
+              <TypingHeading 
+                as="h2" 
+                delay={0.2} 
+                text="Empowering Citizens, Building Smarter Cities" 
+                highlightText="Building Smarter Cities"
+                aceternityHighlight={true}
+                className="text-3xl lg:text-4xl font-bold text-slate-900 leading-tight"
+              />
 
               <p className="text-lg text-slate-600 leading-relaxed max-w-2xl">
                 Report civic issues as easy as clicking a photo. AI-powered detection, GPS auto-tagging, and real-time transparent tracking for a cleaner, smarter city.

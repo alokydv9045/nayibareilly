@@ -1,4 +1,5 @@
 ﻿'use client'
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
@@ -186,7 +187,7 @@ export default function DepartmentAnalyticsPage() {
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
           <BarChart3 className="h-8 w-8 text-emerald-600" />
-          <h1 className="text-3xl font-bold text-slate-900">Department Analytics</h1>
+          <AnimatedHeading as="h1" className="text-3xl font-bold text-slate-900">Department Analytics</AnimatedHeading>
         </div>
         <div className="flex gap-3">
           <Select value={dateRange} onValueChange={setDateRange}>
@@ -233,15 +234,9 @@ export default function DepartmentAnalyticsPage() {
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
-<<<<<<< HEAD
             <TrendingUp className="h-8 w-8 text-slate-800 mx-auto mb-2" />
             <div className="text-2xl font-bold text-slate-800">{getResolutionRate()}%</div>
             <div className="text-sm text-slate-600">Resolution Rate</div>
-=======
-            <TrendingUp className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-            <div className="text-2xl font-bold text-blue-600">{getResolutionRate()}%</div>
-            <div className="text-sm text-gray-600">Resolution Rate</div>
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
           </CardContent>
         </Card>
         <Card>
@@ -389,11 +384,7 @@ export default function DepartmentAnalyticsPage() {
                       <td className="text-center py-3">{formatTime(staff.avgResolutionTime)}</td>
                       <td className="text-center py-3">
                         <div className="flex items-center justify-center gap-1">
-<<<<<<< HEAD
                           <Star className={`h-4 w-4 ${staff.rating >= 4 ? 'fill-yellow-400 text-yellow-400' : 'text-slate-300'}`} />
-=======
-                          <Star className={`h-4 w-4 ${staff.rating >= 4 ? 'fill-yellow-400 text-yellow-600' : 'text-gray-300'}`} />
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
                           <span>{staff.rating.toFixed(1)}</span>
                         </div>
                       </td>

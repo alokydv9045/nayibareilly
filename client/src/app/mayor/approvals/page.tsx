@@ -1,4 +1,5 @@
 ﻿'use client'
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -221,13 +222,8 @@ export default function MayorApprovalsPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex items-center gap-3 mb-6">
-<<<<<<< HEAD
         <Crown className="h-8 w-8 text-slate-800" />
-        <h1 className="text-3xl font-bold text-slate-900">Mayor Approvals</h1>
-=======
-        <Crown className="h-8 w-8 text-blue-600" />
-        <h1 className="text-3xl font-bold text-gray-900">Mayor Approvals</h1>
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
+        <AnimatedHeading as="h1" className="text-3xl font-bold text-slate-900">Mayor Approvals</AnimatedHeading>
         <Badge variant="outline" className="text-lg px-3 py-1">
           {stats.pending} Pending
         </Badge>
@@ -272,15 +268,9 @@ export default function MayorApprovalsPage() {
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
-<<<<<<< HEAD
             <Calendar className="h-6 w-6 text-slate-800 mx-auto mb-1" />
             <div className="text-xl font-bold text-slate-800">{stats.avgProcessingTime}d</div>
             <div className="text-xs text-slate-600">Avg Time</div>
-=======
-            <Calendar className="h-6 w-6 text-blue-600 mx-auto mb-1" />
-            <div className="text-xl font-bold text-blue-600">{stats.avgProcessingTime}d</div>
-            <div className="text-xs text-gray-600">Avg Time</div>
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
           </CardContent>
         </Card>
       </div>

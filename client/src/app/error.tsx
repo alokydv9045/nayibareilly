@@ -1,4 +1,5 @@
 "use client"
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 import { useEffect } from 'react'
 import Link from 'next/link'
 
@@ -11,7 +12,7 @@ export default function GlobalError({ error, reset }: { error: Error & { digest?
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-6 text-center space-y-6">
       <div>
-        <h1 className="text-3xl font-bold mb-2">Something went wrong</h1>
+        <AnimatedHeading as="h1" className="text-3xl font-bold mb-2">Something went wrong</AnimatedHeading>
         <p className="text-base-content/70 max-w-md mx-auto">An unexpected error occurred. You can try again or return to a safe page.</p>
         {error?.digest && <p className="mt-2 text-xs opacity-50">Ref: {error.digest}</p>}
       </div>

@@ -1,3 +1,4 @@
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 /**
  * Breadcrumb Navigation Component
  * Automatic breadcrumb generation based on current route
@@ -221,7 +222,7 @@ export function PageHeader({
       <Breadcrumbs items={breadcrumbs} />
       <div className="flex items-start justify-between">
         <div className="space-y-1">
-          <h1 className="text-3xl font-bold tracking-tight">{title}</h1>
+          <AnimatedHeading as="h1" className="text-3xl font-bold tracking-tight">{title}</AnimatedHeading>
           {description && (
             <p className="text-muted-foreground">{description}</p>
           )}

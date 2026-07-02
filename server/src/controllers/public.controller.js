@@ -554,3 +554,34 @@ export const getPublicMapData = async (req, res) => {
   }
 }
 
+/**
+ * Get public announcements for the global ticker
+ * No authentication required
+ */
+export const getAnnouncements = async (req, res) => {
+  try {
+    const setting = await prisma.systemSetting.findUnique({
+      where: { key: 'announcements' }
+    });
+
+    let announcements = [
+      "Welcome to NayiBareilly - The Official Civic Portal",
+      "Property Tax 5% rebate extended till 31st March"
+    ];
+
+    if (setting && setting.value) {
+      try {
+        announcements = JSON.parse(setting.value);
+      } catch (e) {
+        console.error('Failed to parse announcements JSON', e);
+      }
+    }
+
+    return ok(res, announcements);
+  } catch (error) {
+    console.error('Error fetching announcements:', error);
+    return fail(res, 500, 'Failed to fetch announcements', error.message);
+  }
+}
+
+

@@ -1,4 +1,5 @@
 ﻿"use client"
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -6,11 +7,11 @@ import { AlertTriangle } from 'lucide-react'
 
 export default function AdminDiagnostic() {
   return (
-    <div className="min-h-screen bg-slate-50 py-8">
+    <div className="min-h-screen bg-transparent py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900">Admin Diagnostic Panel</h1>
+            <AnimatedHeading as="h1" className="text-3xl font-bold text-slate-900">Admin Diagnostic Panel</AnimatedHeading>
             <p className="mt-2 text-slate-600">This page is temporarily disabled during migration.</p>
           </div>
           <Link href="/dashboard">

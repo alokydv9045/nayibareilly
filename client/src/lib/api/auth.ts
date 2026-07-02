@@ -30,7 +30,23 @@ export const login = async (payload: LoginPayload) => {
   }
 }
 
-
+export type RegisterPayload = { name: string; email: string; password: string; role?: string; phone?: string; address?: string; requestedRole?: string; }
+export const register = async (payload: RegisterPayload) => {
+  try {
+    const { data } = await api.post('/auth/register', payload)
+    const token = data?.data?.token
+    const user = data?.data?.user
+    
+    if (typeof window !== 'undefined' && token && user) {
+      tokenStorage.set(token)
+      userStorage.set(user)
+      emitAuthEvent(authEvents.LOGIN, { token, user })
+    }
+    return data?.data
+  } catch (err: unknown) {
+    throw new Error(toMessage(err, 'Registration failed'))
+  }
+}
 
 export const me = async () => {
   const { data } = await api.get('/auth/me')

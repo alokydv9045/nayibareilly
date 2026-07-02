@@ -1,6 +1,7 @@
 import { validationResult } from 'express-validator'
 import prisma from '../config/prisma.js'
 import { ok, fail } from '../utils/apiResponse.js'
+import logger from '../utils/logger.js'
 
 export const updateProfile = async (req, res) => {
   const errors = validationResult(req)
@@ -21,7 +22,10 @@ export const updateProfile = async (req, res) => {
   })
   try {
     const io = req.app.get('io')
-    if (io && updated?.id) io.to(`user:${updated.id}`).emit('user:update', { id: updated.id, name: updated.name, avatarUrl: updated.avatarUrl })
+    if (io && updated?.id) {
+      io.to(`user:${updated.id}`).emit('user:update', { id: updated.id, name: updated.name, avatarUrl: updated.avatarUrl })
+      io.emit('system:user:updated', { id: updated.id, name: updated.name, avatarUrl: updated.avatarUrl, roles: updated.roles })
+    }
   } catch (error) {
     logger.warn('Failed to emit user update socket event', {
       event: 'user:update',

@@ -1,4 +1,5 @@
 'use client'
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import { useState, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
@@ -457,21 +458,14 @@ export default function IssuesPage() {
     <OfficialLayout>
       <main className="py-4 sm:py-6 lg:py-8">
         <div className="mx-auto max-w-7xl px-3 sm:px-4 lg:px-8">
-<<<<<<< HEAD
           {/* Page Header */}
           <div className="mb-4 sm:mb-6">
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900">Issue Management</h1>
+            <AnimatedHeading as="h1" className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-900">Issue Management</AnimatedHeading>
             <p className="mt-1 sm:mt-2 text-sm sm:text-base text-slate-700">
               Track and manage citizen-reported issues across all departments
             </p>
             {data && (
               <p className="mt-1 text-xs sm:text-sm text-slate-500">
-=======
-          {/* Page Header (Removed per request) */}
-          <div className="mb-2 sm:mb-4 flex justify-end">
-            {data && (
-              <p className="text-xs sm:text-sm text-gray-500">
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
                 Total Issues: <span className="font-semibold">{data.total || 0}</span>
               </p>
             )}

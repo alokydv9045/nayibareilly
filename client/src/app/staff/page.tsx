@@ -1,4 +1,5 @@
-﻿"use client"
+"use client"
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import { useEffect, useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -11,7 +12,7 @@ import toast from 'react-hot-toast'
 import {
   Briefcase, AlertCircle, CheckCircle, Clock, MapPin, User, Calendar,
   Star, Navigation, Wrench, CheckCircle2, FileImage, MessageSquare,
-  ArrowRight, RefreshCw, LogOut, Bell, ChevronRight, Phone,
+  ArrowRight, RefreshCw, Bell, ChevronRight, Phone,
   ListChecks, History, UserCircle, ClipboardCheck, BadgeCheck,
   Loader2, XCircle, Award
 } from 'lucide-react'
@@ -55,7 +56,11 @@ export default function StaffPage() {
   const [afterPhotos, setAfterPhotos] = useState<File[]>([])
   const [isSubmittingCompletion, setIsSubmittingCompletion] = useState(false)
 
-  const apiBase = ((config as { api: { fullUrl?: string } }).api.fullUrl || 'https://nayibareilly.onrender.com/api').replace(/\/$/, '')
+  const apiBase = ((config as { api: { fullUrl?: string } }).api?.fullUrl || 'https://nayibareilly.onrender.com/api').replace(/\/$/, '')
+
+  const active = assignedIssues.filter(i => i.status !== 'RESOLVED' && i.status !== 'WORK_COMPLETED')
+  const completed = assignedIssues.filter(i => i.status === 'RESOLVED' || i.status === 'WORK_COMPLETED')
+  const urgent = active.filter(i => i.priority === 'CRITICAL' || i.priority === 'HIGH')
 
   useEffect(() => {
     void fetchAssignedIssues()
@@ -63,8 +68,8 @@ export default function StaffPage() {
       const token = tokenStorage.get() || ''
       if (token) socketService.connect(token)
       const refresh = () => void fetchAssignedIssues()
-      ;['issue:new','issue:created','issue:update','issue:updated','issue:status','issue:assigned'].forEach(e => socketService.on(e, refresh))
-      return () => { ;['issue:new','issue:created','issue:update','issue:updated','issue:status','issue:assigned'].forEach(e => socketService.off(e, refresh)) }
+      ;['issue:new','issue:created','issue:update','issue:updated','issue:status','issue:assigned','issue:deleted'].forEach(e => socketService.on(e, refresh))
+      return () => { ;['issue:new','issue:created','issue:update','issue:updated','issue:status','issue:assigned','issue:deleted'].forEach(e => socketService.off(e, refresh)) }
     } catch { /* silent */ }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -117,57 +122,13 @@ export default function StaffPage() {
     finally { setIsSubmittingCompletion(false) }
   }
 
-<<<<<<< HEAD
-  const getPriorityColor = (priority: string) => {
-    switch (priority) {
-      case 'critical':
-      case 'CRITICAL':
-        return 'bg-red-500'
-      case 'high':
-      case 'HIGH':
-        return 'bg-orange-500'
-      case 'medium':
-      case 'MEDIUM':
-        return 'bg-yellow-500'
-      case 'low':
-      case 'LOW':
-        return 'bg-emerald-500'
-      default:
-        return 'bg-slate-500'
-    }
-  }
-
-  const getStatusInfo = (status: string) => {
-    switch (status) {
-      case 'ASSIGNED_TO_STAFF':
-        return { label: 'Assigned', color: 'bg-emerald-500', icon: Briefcase }
-      case 'STAFF_EN_ROUTE':
-        return { label: 'En Route', color: 'bg-slate-700', icon: MapPinned }
-      case 'STAFF_ON_SITE':
-        return { label: 'On Site', color: 'bg-orange-500', icon: MapPinned }
-      case 'WORK_IN_PROGRESS':
-      case 'IN_PROGRESS':
-        return { label: 'In Progress', color: 'bg-yellow-500', icon: Wrench }
-      case 'WORK_COMPLETED':
-      case 'RESOLVED':
-        return { label: 'Completed', color: 'bg-green-500', icon: CheckCircle2 }
-      default:
-        return { label: 'Unknown', color: 'bg-slate-500', icon: AlertCircle }
-    }
-  }
-=======
-  const active = assignedIssues.filter(i => i.status !== 'RESOLVED' && i.status !== 'WORK_COMPLETED')
-  const completed = assignedIssues.filter(i => i.status === 'RESOLVED' || i.status === 'WORK_COMPLETED')
-  const urgent = assignedIssues.filter(i => ['CRITICAL','HIGH'].includes(i.priority?.toUpperCase()))
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
-
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-900 pb-8">
+    <div className="min-h-screen bg-transparent text-gray-900 pb-8">
         {/* Topbar */}
         <header className="sticky top-0 z-40 bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Staff Dashboard</h1>
-            <p className="text-xs text-teal-300/60 mt-0.5">Manage your assigned issues with real-time updates</p>
+            <AnimatedHeading as="h1" className="text-2xl font-bold text-gray-900">Staff Dashboard</AnimatedHeading>
+            <p className="text-xs text-teal-600 mt-0.5">Manage your assigned issues with real-time updates</p>
           </div>
           <div className="flex items-center gap-3">
             {urgent.length > 0 && (
@@ -187,7 +148,7 @@ export default function StaffPage() {
           </div>
         </header>
 
-        <div className="p-8 space-y-8">
+        <div className="p-8 space-y-8 max-w-7xl mx-auto">
           {/* Summary Cards */}
           <div className="grid grid-cols-2 xl:grid-cols-4 gap-5">
             {[
@@ -218,17 +179,17 @@ export default function StaffPage() {
 
           {/* Tabs */}
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="bg-white border border-gray-200  p-1">
-              <TabsTrigger value="assigned" className="data-[state=active]:bg-teal-600/40 data-[state=active]:text-gray-900 text-gray-600 gap-2">
+            <TabsList className="bg-white border border-gray-200 p-1">
+              <TabsTrigger value="assigned" className="data-[state=active]:bg-teal-100 data-[state=active]:text-teal-900 text-gray-600 gap-2">
                 <ListChecks className="h-4 w-4" />
                 My Issues
-                {active.length > 0 && <Badge className="bg-teal-600/40 text-teal-200 text-xs ml-1">{active.length}</Badge>}
+                {active.length > 0 && <Badge className="bg-teal-600 text-white text-xs ml-1">{active.length}</Badge>}
               </TabsTrigger>
-              <TabsTrigger value="completed" className="data-[state=active]:bg-emerald-600/40 data-[state=active]:text-gray-900 text-gray-600 gap-2">
+              <TabsTrigger value="completed" className="data-[state=active]:bg-emerald-100 data-[state=active]:text-emerald-900 text-gray-600 gap-2">
                 <ClipboardCheck className="h-4 w-4" />
                 Completed
               </TabsTrigger>
-              <TabsTrigger value="profile" className="data-[state=active]:bg-amber-100/50 data-[state=active]:text-gray-900 text-gray-600 gap-2">
+              <TabsTrigger value="profile" className="data-[state=active]:bg-amber-100 data-[state=active]:text-amber-900 text-gray-600 gap-2">
                 <UserCircle className="h-4 w-4" />
                 Profile
               </TabsTrigger>
@@ -255,373 +216,142 @@ export default function StaffPage() {
                   const canStart = issue.status === 'ASSIGNED_TO_STAFF'
                   const canComplete = issue.status === 'IN_PROGRESS' || issue.status === 'WORK_IN_PROGRESS' || issue.status === 'STAFF_ON_SITE'
 
-<<<<<<< HEAD
-          <Card className="bg-white/10 backdrop-blur-lg border-white/20">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-cyan-200 text-sm">In Progress</p>
-                  <p className="text-3xl font-bold text-white">{assignedIssues.filter((i) => i.status === 'IN_PROGRESS' || i.status === 'WORK_IN_PROGRESS').length}</p>
-                  <p className="text-xs text-blue-400">Currently working</p>
-                </div>
-                <Clock className="h-8 w-8 text-blue-400" />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-white/10 backdrop-blur-lg border-white/20">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-cyan-200 text-sm">Performance</p>
-                  <p className="text-3xl font-bold text-white">4.8</p>
-                  <p className="text-xs text-yellow-400">â˜… Excellent rating</p>
-                </div>
-                <Star className="h-8 w-8 text-yellow-400" />
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3 bg-white/10 backdrop-blur-lg">
-            <TabsTrigger value="assigned" className="data-[state=active]:bg-teal-600">My Issues</TabsTrigger>
-            <TabsTrigger value="completed" className="data-[state=active]:bg-teal-600">Completed</TabsTrigger>
-            <TabsTrigger value="profile" className="data-[state=active]:bg-teal-600">My Profile</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="assigned" className="space-y-6">
-            <Card className="bg-white/10 backdrop-blur-lg border-white/20">
-              <CardHeader>
-                <CardTitle className="text-white flex items-center space-x-2">
-                  <Briefcase className="h-5 w-5" />
-                  <span>My Assigned Issues</span>
-                </CardTitle>
-                <CardDescription className="text-cyan-200">Update status and complete your assigned tasks</CardDescription>
-              </CardHeader>
-              <CardContent>
-                {loading ? (
-                  <div className="text-center py-12 text-cyan-300">
-                    <Clock className="h-12 w-12 mx-auto mb-3 opacity-50 animate-pulse" />
-                    <p>Loading your assigned issues...</p>
-                  </div>
-                ) : assignedIssues.filter((i) => i.status !== 'RESOLVED').length === 0 ? (
-                  <div className="text-center py-12 text-cyan-300">
-                    <CheckCircle className="h-12 w-12 mx-auto mb-3 opacity-50" />
-                    <p>No active issues assigned. Great job!</p>
-                  </div>
-                ) : (
-                  <div className="space-y-4">
-                    {assignedIssues
-                      .filter((i) => i.status !== 'RESOLVED')
-                      .map((issue) => {
-                        const info = getStatusInfo(issue.status)
-                        const StatusIcon = info.icon
-                        const canStart = issue.status === 'ASSIGNED_TO_STAFF'
-                        const canComplete = issue.status === 'IN_PROGRESS' || issue.status === 'WORK_IN_PROGRESS'
-
-                        return (
-                          <Card key={issue.id} className="bg-white/5 border-white/10 hover:bg-white/10 transition-all">
-                            <CardContent className="p-6">
-                              <div className="space-y-4">
-                                <div className="flex items-start justify-between">
-                                  <div className="flex-1">
-                                    <div className="flex items-center space-x-3 mb-2">
-                                      <h3 className="text-xl font-semibold text-white">{issue.title}</h3>
-                                      <Badge className={getPriorityColor(issue.priority)}>{String(issue.priority).toUpperCase()}</Badge>
-                                      {issue.category && <Badge className="bg-slate-700">{issue.category}</Badge>}
-                                    </div>
-                                    {issue.description && <p className="text-cyan-200 mb-3">{issue.description}</p>}
-                                    <div className="grid grid-cols-2 gap-2 text-sm text-cyan-200">
-                                      <div className="flex items-center space-x-2">
-                                        <User className="h-4 w-4" />
-                                        <span>{issue.citizenName || 'Citizen'}</span>
-                                      </div>
-                                      <div className="flex items-center space-x-2">
-                                        <MapPin className="h-4 w-4" />
-                                        <span>{issue.location ?? issue.address ?? ''}</span>
-                                      </div>
-                                      {issue.assignedAt && (
-                                        <div className="flex items-center space-x-2">
-                                          <Calendar className="h-4 w-4" />
-                                          <span>Assigned {new Date(issue.assignedAt).toLocaleDateString()}</span>
-                                        </div>
-                                      )}
-                                    </div>
-                                  </div>
-                                  <div className="text-right">
-                                    <Badge className={`${info.color} px-4 py-2 text-lg`}>
-                                      <StatusIcon className="h-4 w-4 mr-2" />
-                                      {info.label}
-                                    </Badge>
-                                  </div>
-                                </div>
-
-                                {issue.moderatorNotes && (
-                                  <div className="bg-emerald-500/20 border border-emerald-500/30 rounded-lg p-3">
-                                    <div className="flex items-start space-x-2">
-                                      <MessageSquare className="h-4 w-4 text-emerald-300 mt-1" />
-                                      <div>
-                                        <p className="text-emerald-200 text-sm font-semibold mb-1">Assignment Notes:</p>
-                                        <p className="text-white text-sm italic">&ldquo;{issue.moderatorNotes}&rdquo;</p>
-                                      </div>
-                                    </div>
-                                  </div>
-                                )}
-
-                                <div className="flex items-center justify-between pt-2 border-t border-white/10">
-                                  <div className="flex items-center space-x-2">
-                                    {issue.latitude && issue.longitude && (
-                                      <Button
-                                        variant="outline"
-                                        size="sm"
-                                        className="bg-emerald-600/20 border-emerald-500 text-emerald-300 hover:bg-emerald-600/30"
-                                        onClick={() => window.open(`https://maps.google.com/?q=${issue.latitude},${issue.longitude}`, '_blank')}
-                                      >
-                                        <Navigation className="h-4 w-4 mr-1" />
-                                        Navigate
-                                      </Button>
-                                    )}
-                                    {issue.citizenPhone && (
-                                      <a href={`tel:${issue.citizenPhone}`}>
-                                        <Button
-                                          variant="outline"
-                                          size="sm"
-                                          className="bg-green-600/20 border-green-500 text-green-300 hover:bg-green-600/30"
-                                        >
-                                          Call Citizen
-                                        </Button>
-                                      </a>
-                                    )}
-                                  </div>
-
-                                  <div className="flex items-center space-x-2">
-                                    {canStart && (
-                                      <Button className="bg-green-600 hover:bg-green-700" size="sm" onClick={() => startWork(issue.id)}>
-                                        <ArrowRight className="h-4 w-4 mr-1" /> Start Work
-                                      </Button>
-                                    )}
-                                    {canComplete && (
-                                      <Button className="bg-green-600 hover:bg-green-700" size="sm" onClick={() => setSelectedIssue(issue.id)}>
-                                        <CheckCircle2 className="h-4 w-4 mr-1" /> Complete Work
-                                      </Button>
-                                    )}
-                                  </div>
-                                </div>
-
-                                {selectedIssue === issue.id && (
-                                  <div className="bg-green-500/20 border border-green-500/30 rounded-lg p-4 space-y-4">
-                                    <h4 className="text-green-200 font-semibold text-lg">Complete This Issue</h4>
-                                    <p className="text-green-300 text-sm">Upload photos and provide completion notes. Citizen will be notified to verify online.</p>
-
-                                    <div>
-                                      <label className="block text-green-200 text-sm font-semibold mb-2">Work Completion Notes *</label>
-                                      <Textarea
-                                        value={completionNotes}
-                                        onChange={(e) => setCompletionNotes(e.target.value)}
-                                        placeholder="Describe the work completed, parts used, materials, tools, etc..."
-                                        className="bg-white/10 border-white/20 text-white"
-                                        rows={3}
-                                      />
-                                    </div>
-
-                                    <div>
-                                      <label className="block text-green-200 text-sm font-semibold mb-2">After Photos (Work Completed) *</label>
-                                      <Input type="file" accept="image/*" multiple onChange={(e) => e.target.files && setAfterPhotos(Array.from(e.target.files))} className="bg-white/10 border-white/20 text-white" />
-                                      {afterPhotos.length > 0 && (
-                                        <div className="flex items-center space-x-2 text-sm text-green-200 mt-2">
-                                          <FileImage className="h-4 w-4" />
-                                          <span>{afterPhotos.length} after photo(s) selected</span>
-                                        </div>
-                                      )}
-                                    </div>
-
-                                    <div className="flex items-center space-x-2 pt-2">
-                                      <Button className="flex-1 bg-green-600 hover:bg-green-700" onClick={() => completeIssue(issue.id)}>
-                                        <CheckCircle2 className="h-4 w-4 mr-2" /> Submit Completion
-                                      </Button>
-                                      <Button
-                                        variant="outline"
-                                        className="bg-red-600/20 border-red-500 text-red-300 hover:bg-red-600/30"
-                                        onClick={() => {
-                                          setSelectedIssue(null)
-                                          setCompletionNotes('')
-                                          setAfterPhotos([])
-                                        }}
-                                      >
-                                        Cancel
-                                      </Button>
-                                    </div>
-                                  </div>
-                                )}
-                              </div>
-                            </CardContent>
-                          </Card>
-                        )
-                      })}
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
-
-          <TabsContent value="completed" className="space-y-6">
-            <Card className="bg-white/10 backdrop-blur-lg border-white/20">
-              <CardHeader>
-                <CardTitle className="text-white flex items-center space-x-2">
-                  <CheckCircle className="h-5 w-5" />
-                  <span>Completed Issues</span>
-                </CardTitle>
-                <CardDescription className="text-cyan-200">View your completed work history</CardDescription>
-              </CardHeader>
-              <CardContent>
-                {assignedIssues.filter((i) => i.status === 'RESOLVED').length === 0 ? (
-                  <div className="text-center py-12 text-cyan-300">
-                    <Clock className="h-12 w-12 mx-auto mb-3 opacity-50" />
-                    <p>No completed issues yet</p>
-                  </div>
-                ) : (
-                  <div className="space-y-3">
-                    {assignedIssues
-                      .filter((i) => i.status === 'RESOLVED')
-                      .map((issue) => (
-                        <Card key={issue.id} className="bg-white/5 border-white/10">
-                          <CardContent className="p-4">
-                            <div className="flex items-center justify-between">
-                              <div>
-                                <h3 className="text-white font-semibold">{issue.title}</h3>
-                                <p className="text-cyan-200 text-sm">{issue.location ?? issue.address ?? ''}</p>
-                              </div>
-                              <Badge className="bg-green-500">
-                                <CheckCircle className="h-3 w-3 mr-1" /> Completed
-=======
                   return (
-                    <Card key={issue.id} className="bg-white border border-gray-200 hover:border-gray-200 transition-all ">
-                      <CardContent className="p-6 space-y-4">
-                        {/* Header */}
-                        <div className="flex items-start justify-between gap-4">
-                          <div className="flex-1 min-w-0">
-                            <div className="flex flex-wrap items-center gap-2 mb-2">
-                              <h3 className="text-lg font-semibold text-gray-900">{issue.title}</h3>
-                              <Badge className={`border text-xs ${priority.color}`}>
-                                <span className={`w-1.5 h-1.5 rounded-full ${priority.dot} inline-block mr-1`} />
-                                {priority.label}
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
+                    <Card key={issue.id} className="bg-white border-gray-200 shadow-sm hover:shadow-md transition-all">
+                      <CardContent className="p-6">
+                        <div className="space-y-4">
+                          <div className="flex items-start justify-between">
+                            <div className="flex-1">
+                              <div className="flex items-center space-x-3 mb-2">
+                                <h3 className="text-xl font-semibold text-gray-900">{issue.title}</h3>
+                                <Badge className={priority.color}>{priority.label}</Badge>
+                                {issue.category && <Badge className="bg-gray-100 text-gray-700 border-gray-200">{issue.category}</Badge>}
+                              </div>
+                              {issue.description && <p className="text-gray-600 mb-3">{issue.description}</p>}
+                              <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
+                                <div className="flex items-center space-x-2">
+                                  <User className="h-4 w-4" />
+                                  <span>{issue.citizenName || 'Citizen'}</span>
+                                </div>
+                                <div className="flex items-center space-x-2">
+                                  <MapPin className="h-4 w-4" />
+                                  <span>{issue.location ?? issue.address ?? ''}</span>
+                                </div>
+                                {issue.assignedAt && (
+                                  <div className="flex items-center space-x-2">
+                                    <Calendar className="h-4 w-4" />
+                                    <span>Assigned {new Date(issue.assignedAt).toLocaleDateString()}</span>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                            <div className="text-right">
+                              <Badge className={`${statusInfo.color} px-4 py-2 text-sm font-semibold`}>
+                                <StatusIcon className="h-4 w-4 mr-2" />
+                                {statusInfo.label}
                               </Badge>
-                              {issue.category && (
-                                <Badge className="bg-purple-500/20 text-blue-600 border border-purple-200 text-xs">{issue.category}</Badge>
-                              )}
-                            </div>
-                            {issue.description && (
-                              <p className="text-sm text-gray-600 line-clamp-2">{issue.description}</p>
-                            )}
-                          </div>
-                          <Badge className={`border shrink-0 ${statusInfo.color} flex items-center gap-1.5`}>
-                            <StatusIcon className="h-3.5 w-3.5" />
-                            {statusInfo.label}
-                          </Badge>
-                        </div>
-
-                        {/* Meta */}
-                        <div className="flex flex-wrap gap-4 text-xs text-gray-600">
-                          {issue.citizenName && (
-                            <span className="flex items-center gap-1.5"><User className="h-3.5 w-3.5 text-teal-400" />{issue.citizenName}</span>
-                          )}
-                          {(issue.location || issue.address) && (
-                            <span className="flex items-center gap-1.5"><MapPin className="h-3.5 w-3.5 text-teal-400" />{issue.location || issue.address}</span>
-                          )}
-                          {issue.assignedAt && (
-                            <span className="flex items-center gap-1.5"><Calendar className="h-3.5 w-3.5 text-teal-400" />Assigned {new Date(issue.assignedAt).toLocaleDateString()}</span>
-                          )}
-                        </div>
-
-                        {/* Moderator notes */}
-                        {issue.moderatorNotes && (
-                          <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-3 flex items-start gap-2">
-                            <MessageSquare className="h-4 w-4 text-blue-600 shrink-0 mt-0.5" />
-                            <div>
-                              <p className="text-xs font-semibold text-blue-600 mb-0.5">Assignment Notes</p>
-                              <p className="text-xs text-gray-600 italic">&ldquo;{issue.moderatorNotes}&rdquo;</p>
                             </div>
                           </div>
-                        )}
 
-                        {/* Actions */}
-                        <div className="flex items-center justify-between pt-2 border-t border-gray-200">
-                          <div className="flex gap-2">
-                            {issue.latitude && issue.longitude && (
-                              <Button variant="outline" size="sm"
-                                className="bg-blue-500/10 border-blue-200 text-blue-600 hover:bg-blue-500/20 gap-1.5"
-                                onClick={() => window.open(`https://maps.google.com/?q=${issue.latitude},${issue.longitude}`, '_blank')}>
-                                <Navigation className="h-3.5 w-3.5" />
-                                Navigate
-                              </Button>
-                            )}
-                            {issue.citizenPhone && (
-                              <a href={`tel:${issue.citizenPhone}`}>
-                                <Button variant="outline" size="sm"
-                                  className="bg-emerald-500/10 border-emerald-200 text-emerald-600 hover:bg-emerald-500/20 gap-1.5">
-                                  <Phone className="h-3.5 w-3.5" />
-                                  Call
+                          {issue.moderatorNotes && (
+                            <div className="bg-blue-50 border border-blue-100 rounded-lg p-3">
+                              <div className="flex items-start space-x-2">
+                                <MessageSquare className="h-4 w-4 text-blue-500 mt-1" />
+                                <div>
+                                  <p className="text-blue-800 text-sm font-semibold mb-1">Assignment Notes:</p>
+                                  <p className="text-blue-900 text-sm italic">&ldquo;{issue.moderatorNotes}&rdquo;</p>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+
+                          <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                            <div className="flex items-center space-x-2">
+                              {issue.latitude && issue.longitude && (
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  className="text-blue-600 border-blue-200 hover:bg-blue-50"
+                                  onClick={() => window.open(`https://maps.google.com/?q=${issue.latitude},${issue.longitude}`, '_blank')}
+                                >
+                                  <Navigation className="h-4 w-4 mr-1" />
+                                  Navigate
                                 </Button>
-                              </a>
-                            )}
-                          </div>
-                          <div className="flex gap-2">
-                            {canStart && (
-                              <Button size="sm" className="bg-teal-600 hover:bg-teal-700 gap-1.5"
-                                onClick={() => startWork(issue.id)}>
-                                <ArrowRight className="h-3.5 w-3.5" />
-                                Start Work
-                              </Button>
-                            )}
-                            {canComplete && (
-                              <Button size="sm" className="bg-emerald-600 hover:bg-emerald-700 gap-1.5"
-                                onClick={() => setSelectedIssue(issue.id)}>
-                                <CheckCircle2 className="h-3.5 w-3.5" />
-                                Mark Complete
-                              </Button>
-                            )}
-                          </div>
-                        </div>
-
-                        {/* Completion Form */}
-                        {selectedIssue === issue.id && (
-                          <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-5 space-y-4">
-                            <div>
-                              <h4 className="text-sm font-semibold text-emerald-600 mb-0.5">Complete This Issue</h4>
-                              <p className="text-xs text-emerald-200/70">Upload photos and provide notes. Citizen will verify online.</p>
-                            </div>
-                            <div className="space-y-1">
-                              <label className="text-xs font-medium text-emerald-200">Work Completion Notes *</label>
-                              <Textarea value={completionNotes} onChange={e => setCompletionNotes(e.target.value)}
-                                placeholder="Describe the work completed, parts used, etc."
-                                className="bg-white border-gray-200 text-gray-900 placeholder:text-gray-600 text-sm" rows={3} />
-                            </div>
-                            <div className="space-y-1">
-                              <label className="text-xs font-medium text-emerald-200">After Photos *</label>
-                              <Input type="file" accept="image/*" multiple
-                                onChange={e => e.target.files && setAfterPhotos(Array.from(e.target.files))}
-                                className="bg-white border-gray-200 text-gray-900 text-sm" />
-                              {afterPhotos.length > 0 && (
-                                <p className="text-xs text-emerald-600 flex items-center gap-1">
-                                  <FileImage className="h-3.5 w-3.5" />{afterPhotos.length} photo(s) selected
-                                </p>
+                              )}
+                              {issue.citizenPhone && (
+                                <a href={`tel:${issue.citizenPhone}`}>
+                                  <Button
+                                    variant="outline"
+                                    size="sm"
+                                    className="text-emerald-600 border-emerald-200 hover:bg-emerald-50"
+                                  >
+                                    <Phone className="h-4 w-4 mr-1" />
+                                    Call Citizen
+                                  </Button>
+                                </a>
                               )}
                             </div>
-                            <div className="flex gap-2">
-                              <Button className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-sm"
-                                onClick={() => completeIssue(issue.id)} disabled={isSubmittingCompletion}>
-                                {isSubmittingCompletion ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <ClipboardCheck className="h-4 w-4 mr-2" />}
-                                Submit Completion
-                              </Button>
-                              <Button variant="outline" className="border-red-200 text-red-600 hover:bg-red-500/10 text-sm"
-                                onClick={() => { setSelectedIssue(null); setCompletionNotes(''); setAfterPhotos([]) }}>
-                                <XCircle className="h-4 w-4 mr-1" /> Cancel
-                              </Button>
+
+                            <div className="flex items-center space-x-2">
+                              {canStart && (
+                                <Button className="bg-teal-600 hover:bg-teal-700 text-white" size="sm" onClick={() => startWork(issue.id)}>
+                                  <ArrowRight className="h-4 w-4 mr-1" /> Start Work
+                                </Button>
+                              )}
+                              {canComplete && (
+                                <Button className="bg-emerald-600 hover:bg-emerald-700 text-white" size="sm" onClick={() => setSelectedIssue(issue.id)}>
+                                  <CheckCircle2 className="h-4 w-4 mr-1" /> Complete Work
+                                </Button>
+                              )}
                             </div>
                           </div>
-                        )}
+
+                          {selectedIssue === issue.id && (
+                            <div className="bg-emerald-50 border border-emerald-100 rounded-lg p-5 mt-4 space-y-4">
+                              <h4 className="text-emerald-800 font-semibold text-lg">Complete This Issue</h4>
+                              <p className="text-emerald-700 text-sm">Upload photos and provide completion notes. Citizen will be notified to verify online.</p>
+
+                              <div>
+                                <label className="block text-emerald-900 text-sm font-semibold mb-2">Work Completion Notes *</label>
+                                <Textarea
+                                  value={completionNotes}
+                                  onChange={(e) => setCompletionNotes(e.target.value)}
+                                  placeholder="Describe the work completed, parts used, materials, tools, etc..."
+                                  className="bg-white border-emerald-200"
+                                  rows={3}
+                                />
+                              </div>
+
+                              <div>
+                                <label className="block text-emerald-900 text-sm font-semibold mb-2">After Photos (Work Completed) *</label>
+                                <Input type="file" accept="image/*" multiple onChange={(e) => e.target.files && setAfterPhotos(Array.from(e.target.files))} className="bg-white border-emerald-200" />
+                                {afterPhotos.length > 0 && (
+                                  <div className="flex items-center space-x-2 text-sm text-emerald-700 mt-2">
+                                    <FileImage className="h-4 w-4" />
+                                    <span>{afterPhotos.length} after photo(s) selected</span>
+                                  </div>
+                                )}
+                              </div>
+
+                              <div className="flex items-center space-x-2 pt-2">
+                                <Button className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white" onClick={() => completeIssue(issue.id)} disabled={isSubmittingCompletion}>
+                                  {isSubmittingCompletion ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <CheckCircle2 className="h-4 w-4 mr-2" />} Submit Completion
+                                </Button>
+                                <Button
+                                  variant="outline"
+                                  className="border-red-200 text-red-600 hover:bg-red-50"
+                                  onClick={() => {
+                                    setSelectedIssue(null)
+                                    setCompletionNotes('')
+                                    setAfterPhotos([])
+                                  }}
+                                >
+                                  Cancel
+                                </Button>
+                              </div>
+                            </div>
+                          )}
+                        </div>
                       </CardContent>
                     </Card>
                   )
@@ -638,17 +368,17 @@ export default function StaffPage() {
                 </div>
               ) : (
                 completed.map(issue => (
-                  <Card key={issue.id} className="bg-white border border-gray-200 ">
+                  <Card key={issue.id} className="bg-white border border-gray-200 shadow-sm">
                     <CardContent className="p-5">
                       <div className="flex items-center justify-between">
                         <div className="min-w-0 flex-1">
                           <h3 className="text-sm font-semibold text-gray-900 mb-1">{issue.title}</h3>
                           <p className="text-xs text-gray-600 flex items-center gap-1">
-                            <MapPin className="h-3.5 w-3.5 text-teal-400" />
+                            <MapPin className="h-3.5 w-3.5 text-teal-500" />
                             {issue.location || issue.address || 'No location'}
                           </p>
                         </div>
-                        <Badge className="bg-emerald-500/20 text-emerald-600 border border-emerald-200 gap-1.5 ml-3">
+                        <Badge className="bg-emerald-100 text-emerald-800 border border-emerald-200 gap-1.5 ml-3">
                           <BadgeCheck className="h-3.5 w-3.5" />
                           Resolved
                         </Badge>
@@ -661,10 +391,10 @@ export default function StaffPage() {
 
             {/* Profile Tab */}
             <TabsContent value="profile" className="mt-6">
-              <Card className="bg-white border border-gray-200 ">
+              <Card className="bg-white border border-gray-200 shadow-sm">
                 <CardHeader>
                   <CardTitle className="text-gray-900 flex items-center gap-2">
-                    <Award className="h-5 w-5 text-yellow-600" />
+                    <Award className="h-5 w-5 text-amber-600" />
                     Staff Performance
                   </CardTitle>
                   <CardDescription className="text-gray-600">Your work statistics and ratings</CardDescription>
@@ -675,11 +405,11 @@ export default function StaffPage() {
                       { label: 'Total Resolved', value: '145', icon: CheckCircle2, color: 'text-emerald-600' },
                       { label: 'Avg Rating', value: '4.8 ★', icon: Star, color: 'text-yellow-600' },
                       { label: 'Response Time', value: '1.2 hrs', icon: Clock, color: 'text-blue-600' },
-                      { label: 'Completion Rate', value: '96%', icon: ChevronRight, color: 'text-teal-400' },
+                      { label: 'Completion Rate', value: '96%', icon: ChevronRight, color: 'text-teal-600' },
                     ].map((item, i) => {
                       const Icon = item.icon
                       return (
-                        <div key={i} className="bg-white rounded-xl p-4 border border-gray-200">
+                        <div key={i} className="bg-gray-50 rounded-xl p-4 border border-gray-100">
                           <div className="flex items-center gap-2 mb-2">
                             <Icon className={`h-4 w-4 ${item.color}`} />
                             <p className="text-xs text-gray-600">{item.label}</p>
@@ -697,4 +427,3 @@ export default function StaffPage() {
     </div>
   )
 }
-

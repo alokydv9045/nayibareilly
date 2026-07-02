@@ -1,4 +1,5 @@
 'use client'
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -169,7 +170,7 @@ export default function StaffInProgressPage() {
     <div className="container mx-auto px-4 py-8">
       <div className="flex items-center gap-3 mb-6">
         <Play className="h-8 w-8 text-emerald-600" />
-        <h1 className="text-3xl font-bold text-slate-900">In Progress Issues</h1>
+        <AnimatedHeading as="h1" className="text-3xl font-bold text-slate-900">In Progress Issues</AnimatedHeading>
         <Badge variant="secondary" className="text-lg px-3 py-1">
           {filteredIssues.length} Active
         </Badge>

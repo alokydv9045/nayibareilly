@@ -1,4 +1,5 @@
 "use client";
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -109,7 +110,7 @@ export default function GetStartedPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-purple-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-transparent flex items-center justify-center p-4">
       <div className="w-full max-w-2xl">
         {/* Logo */}
         <div className="text-center mb-8">
@@ -117,9 +118,9 @@ export default function GetStartedPage() {
             <div className="w-12 h-12 bg-gradient-to-br from-emerald-600 to-slate-800 rounded-xl flex items-center justify-center shadow-lg">
               <Shield className="h-6 w-6 text-white" />
             </div>
-            <h1 className="text-2xl font-bold">
+            <AnimatedHeading as="h1" className="text-2xl font-bold">
               <span className="text-slate-900">Nayi</span><span className="text-emerald-500">Bareilly</span>
-            </h1>
+            </AnimatedHeading>
           </Link>
           <p className="text-slate-600 mt-2">नई सोच, नया समाधान, नई बरेली</p>
         </div>

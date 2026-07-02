@@ -88,7 +88,7 @@ export function PublicNavbar({ language = 'en', onLanguageChange }: PublicNavbar
           </Button>
           <Button
             onClick={() => router.push('/login')}
-            className="gap-2 min-h-[44px] bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold shadow-md transition-all hover:shadow-lg hover:-translate-y-0.5 border-0"
+            className="gap-2 min-h-[44px] bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white font-semibold shadow-md transition-all hover:shadow-lg hover:-translate-y-0.5 border-0"
           >
             <LogIn className="h-4 w-4" />
             {language === 'hi' ? 'लॉगिन / रजिस्टर' : 'Login / Register'}
@@ -179,7 +179,7 @@ export function PublicNavbar({ language = 'en', onLanguageChange }: PublicNavbar
                   setMobileMenuOpen(false)
                   router.push('/login')
                 }}
-                className="w-full gap-2 min-h-[44px] bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold shadow-md transition-all border-0"
+                className="w-full gap-2 min-h-[44px] bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white font-semibold shadow-md transition-all border-0"
               >
                 <LogIn className="h-4 w-4" />
                 {language === 'hi' ? 'लॉगिन / रजिस्टर' : 'Login / Register'}

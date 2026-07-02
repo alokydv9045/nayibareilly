@@ -1,4 +1,5 @@
 'use client'
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import { useState } from 'react'
 import { useMyAssignedIssues, useStartWork, useResolveIssue } from '@/lib/api/staff-workflow'
@@ -131,7 +132,7 @@ export default function StaffWorkPage() {
     <div className="container mx-auto py-8 space-y-8">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold">My Work Queue</h1>
+          <AnimatedHeading as="h1" className="text-3xl font-bold">My Work Queue</AnimatedHeading>
           <p className="text-muted-foreground">Issues assigned to you</p>
         </div>
       </div>

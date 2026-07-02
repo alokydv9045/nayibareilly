@@ -1,4 +1,5 @@
 ﻿'use client'
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -146,11 +147,7 @@ export default function StaffCompletedPage() {
     return Array.from({ length: 5 }, (_, i) => (
       <Star
         key={i}
-<<<<<<< HEAD
         className={`h-4 w-4 ${i < rating ? 'fill-yellow-400 text-yellow-400' : 'text-slate-300'}`}
-=======
-        className={`h-4 w-4 ${i < rating ? 'fill-yellow-400 text-yellow-600' : 'text-gray-300'}`}
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
       />
     ))
   }
@@ -190,7 +187,7 @@ export default function StaffCompletedPage() {
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
           <CheckCircle className="h-8 w-8 text-green-600" />
-          <h1 className="text-3xl font-bold text-slate-900">Completed Issues</h1>
+          <AnimatedHeading as="h1" className="text-3xl font-bold text-slate-900">Completed Issues</AnimatedHeading>
           <Badge variant="secondary" className="text-lg px-3 py-1">
             {filteredIssues.length} Completed
           </Badge>
@@ -220,11 +217,7 @@ export default function StaffCompletedPage() {
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
-<<<<<<< HEAD
             <div className="text-2xl font-bold text-slate-800">
-=======
-            <div className="text-2xl font-bold text-blue-600">
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
               {formatDuration(Math.round(getAverageCompletionTime()))}
             </div>
             <div className="text-sm text-slate-600">Avg. Completion Time</div>

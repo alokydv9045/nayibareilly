@@ -1,4 +1,5 @@
 ﻿"use client"
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import { useState, useCallback, useEffect } from 'react'
 import Image from 'next/image'
@@ -158,7 +159,7 @@ export default function ModeratorPendingPage() {
                 Back to Dashboard
               </Button>
               <div>
-                <h1 className="text-3xl font-bold text-slate-900">Pending Reviews</h1>
+                <AnimatedHeading as="h1" className="text-3xl font-bold text-slate-900">Pending Reviews</AnimatedHeading>
                 <p className="text-slate-600 mt-1">
                   {filteredIssues.length} issues awaiting moderation
                 </p>

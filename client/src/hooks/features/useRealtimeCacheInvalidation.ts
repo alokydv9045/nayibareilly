@@ -158,6 +158,14 @@ export function useRealtimeCacheInvalidation() {
       queryClient.invalidateQueries({ queryKey: ['organization', 'stats'] })
     })
 
+    socketService.onIssueDeleted((data) => {
+      logger.debug('🔄 Invalidating caches due to issue deletion:', data.id)
+      queryClient.invalidateQueries({ queryKey: ['issues'] })
+      queryClient.invalidateQueries({ queryKey: ['admin', 'system-stats'] })
+      queryClient.invalidateQueries({ queryKey: ['admin', 'dashboard'] })
+      queryClient.invalidateQueries({ queryKey: ['organization', 'stats'] })
+    })
+
     // Department stats events
     socketService.onDepartmentStats((data) => {
       logger.debug('🔄 Updating department stats cache:', data.departmentId)
@@ -174,6 +182,24 @@ export function useRealtimeCacheInvalidation() {
       
       // Could invalidate system health queries if they exist
       queryClient.invalidateQueries({ queryKey: ['system', 'health'] })
+    })
+
+    // New system update events
+    socketService.onSystemDepartmentsUpdated(() => {
+      logger.debug('🔄 Invalidating caches due to department updates')
+      queryClient.invalidateQueries({ queryKey: ['departments'] })
+      queryClient.invalidateQueries({ queryKey: ['admin', 'departments'] })
+    })
+
+    socketService.onSystemUserUpdated(() => {
+      logger.debug('🔄 Invalidating caches due to user updates')
+      queryClient.invalidateQueries({ queryKey: ['users'] })
+      queryClient.invalidateQueries({ queryKey: ['admin', 'users'] })
+    })
+
+    socketService.onSystemAnnouncementsUpdated(() => {
+      logger.debug('🔄 Invalidating caches due to announcement updates')
+      queryClient.invalidateQueries({ queryKey: ['announcements'] })
     })
 
     // Cleanup function is not needed as socket service manages its own listeners

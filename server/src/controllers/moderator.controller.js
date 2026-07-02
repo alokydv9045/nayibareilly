@@ -369,6 +369,20 @@ export const markAsSpam = async (req, res) => {
       })
     }
 
+    try {
+      const io = req.app.get('io')
+      io.emit('issue:status', {
+        id: issue.id,
+        status: issue.status,
+        moderationStatus: issue.moderationStatus
+      })
+    } catch (error) {
+      logger.warn('Failed to emit socket events for spam mark', {
+        error: error.message,
+        issueId: issue.id
+      })
+    }
+
     logger.info('Issue marked as spam', {
       issueId: issue.id,
       moderatorId,
@@ -755,5 +769,49 @@ export const getModeratorHistory = async (req, res) => {
       moderatorId: req.user.id
     })
     return fail(res, 500, 'Failed to fetch moderator history')
+  }
+}
+
+/**
+ * Update global announcements
+ */
+export const updateAnnouncements = async (req, res) => {
+  try {
+    const { announcements } = req.body;
+    
+    if (!Array.isArray(announcements)) {
+      return fail(res, 400, 'Announcements must be an array of strings');
+    }
+
+    const jsonString = JSON.stringify(announcements);
+
+    // Upsert the system setting
+    await prisma.systemSetting.upsert({
+      where: { key: 'announcements' },
+      update: { value: jsonString },
+      create: { key: 'announcements', value: jsonString }
+    });
+
+    try {
+      const io = req.app.get('io')
+      io.emit('system:announcements', announcements)
+    } catch (error) {
+      logger.warn('Failed to emit socket events for announcements', {
+        error: error.message
+      })
+    }
+
+    logger.info('Global announcements updated by moderator', {
+      moderatorId: req.user.id,
+      count: announcements.length
+    });
+
+    return ok(res, { message: 'Announcements updated successfully', announcements });
+  } catch (error) {
+    logger.error('Error updating announcements', {
+      error: error.message,
+      moderatorId: req.user.id
+    });
+    return fail(res, 500, 'Failed to update announcements');
   }
 }

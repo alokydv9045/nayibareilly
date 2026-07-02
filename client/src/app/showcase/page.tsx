@@ -1,3 +1,5 @@
+'use client'
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 /**
  * Component Showcase - Visual examples of all shared components
  * 
@@ -5,7 +7,7 @@
  * Use this as a reference or copy examples for your own pages.
  */
 
-'use client'
+
 
 import { 
   StatusBadge, 
@@ -177,12 +179,12 @@ const sampleTableData = [
 
 export default function ComponentShowcase() {
   return (
-    <div className="min-h-screen bg-background p-8">
+    <div className="min-h-screen bg-transparent p-8">
       <div className="max-w-7xl mx-auto space-y-12">
         
         {/* Header */}
         <header className="text-center">
-          <h1 className="text-4xl font-bold mb-2">Component Library Showcase</h1>
+          <AnimatedHeading as="h1" className="text-4xl font-bold mb-2">Component Library Showcase</AnimatedHeading>
           <p className="text-muted-foreground">
             Visual examples of all shared components with copy-paste code
           </p>

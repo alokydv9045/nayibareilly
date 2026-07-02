@@ -1,4 +1,5 @@
 'use client'
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import { useState } from 'react'
 import Link from 'next/link'
@@ -182,7 +183,7 @@ export default function GuidelinesPage() {
   const currentContent = content[language]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-indigo-100">
+    <div className="min-h-screen bg-transparent">
       <div className="container mx-auto px-4 py-8">
         {/* Language Toggle */}
         <div className="flex justify-end mb-6">
@@ -208,7 +209,7 @@ export default function GuidelinesPage() {
 
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-slate-900 mb-4">{currentContent.title}</h1>
+          <AnimatedHeading as="h1" className="text-4xl font-bold text-slate-900 mb-4">{currentContent.title}</AnimatedHeading>
           <p className="text-xl text-slate-600 max-w-3xl mx-auto">
             {currentContent.subtitle}
           </p>

@@ -69,7 +69,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="bg-blue-50" suppressHydrationWarning>
+      <body className="bg-transparent" suppressHydrationWarning>
         {/* Skip link for keyboard users to jump directly to main content */}
         <a href="#main-content" className="skip-link">Skip to main content</a>
         <GlobalErrorHandler />

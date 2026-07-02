@@ -1,4 +1,5 @@
 'use client';
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import { ArrowLeft, Bell, Mail, Smartphone, Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -94,7 +95,7 @@ function NotificationPreferencesContent() {
           <ArrowLeft className="h-4 w-4 mr-2" />
           Back
         </Button>
-        <h1 className="text-3xl font-bold tracking-tight">Notification Preferences</h1>
+        <AnimatedHeading as="h1" className="text-3xl font-bold tracking-tight">Notification Preferences</AnimatedHeading>
         <p className="text-muted-foreground mt-1">
           Customize how and when you receive notifications
         </p>

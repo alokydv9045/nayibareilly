@@ -11,6 +11,15 @@ import CitizenRealtimeBridge from '@/components/features/realtime/CitizenRealtim
 import { NotificationProvider } from '@/components/features/realtime/NotificationProvider'
 import NotificationBell from '@/components/features/realtime/NotificationBell'
 import MobileBottomNav from '@/components/layout/MobileBottomNav'
+import AceternityBackground from '@/components/ui/AceternityBackground'
+import AnnouncementBar from '@/components/ui/AnnouncementBar'
+
+import { useRealtimeCacheInvalidation } from '@/hooks/features/useRealtimeCacheInvalidation'
+
+function RealtimeCacheWrapper() {
+  useRealtimeCacheInvalidation()
+  return null
+}
 
 export default function AppFrame({ children }: { children: ReactNode }) {
   const [queryClient] = useState(() => new QueryClient())
@@ -48,9 +57,16 @@ export default function AppFrame({ children }: { children: ReactNode }) {
   }, [queryClient])
 
   return (
-    <div data-theme={theme} className="min-h-screen bg-blue-50">
+    <div data-theme={theme} className="min-h-screen bg-transparent relative">
+      <AceternityBackground />
       <QueryClientProvider client={queryClient}>
-        {!isAdminRoute && <Navbar />}
+        <RealtimeCacheWrapper />
+        {!isAdminRoute && (
+          <div className="sticky top-0 z-50 w-full flex flex-col">
+            <AnnouncementBar />
+            <Navbar />
+          </div>
+        )}
         <NotificationProvider>
           {!isAdminRoute && <CitizenRealtimeBridge />}
           <ErrorHandler>

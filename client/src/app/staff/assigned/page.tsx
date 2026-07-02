@@ -1,4 +1,5 @@
 "use client"
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import { useEffect, useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -189,7 +190,7 @@ export default function StaffAssignedPage() {
       <div className="mb-8">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900">Assigned Issues</h1>
+            <AnimatedHeading as="h1" className="text-3xl font-bold text-slate-900">Assigned Issues</AnimatedHeading>
             <p className="text-slate-600 mt-2">
               Issues assigned to you for resolution
             </p>

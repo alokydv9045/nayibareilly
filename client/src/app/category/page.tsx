@@ -1,4 +1,5 @@
 ﻿"use client"
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 import RequireUser from '@/components/features/auth/RequireUser'
 import CitizenLayout from '@/components/layout/CitizenLayout'
 import { useRouter, useSearchParams } from 'next/navigation'
@@ -34,7 +35,7 @@ function CategoryContent() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-2xl font-bold mb-2">Browse by Category</h1>
+        <AnimatedHeading as="h1" className="text-2xl font-bold mb-2">Browse by Category</AnimatedHeading>
         <div className="flex flex-wrap gap-2">
           {categories.map(c => (
             <button

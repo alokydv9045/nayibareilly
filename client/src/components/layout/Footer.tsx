@@ -107,7 +107,7 @@ export default function Footer() {
   return (
     <footer className="bg-gray-900 text-white">
       {/* Newsletter Section */}
-      <div className="bg-sky-600">
+      <div className="bg-emerald-600">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex flex-col md:flex-row items-center justify-between">
             <div className="mb-4 md:mb-0">
@@ -125,14 +125,14 @@ export default function Footer() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email address"
                   aria-label="Email address for newsletter"
-                  className="w-full px-4 py-3 rounded-l-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-sky-300"
+                  className="w-full px-4 py-3 rounded-l-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-300"
                 />
               </div>
               <button
                 type="submit"
                 disabled={subscribing}
                 aria-label={subscribing ? 'Subscribing…' : 'Subscribe to newsletter'}
-                className="px-6 py-3 bg-sky-700 hover:bg-sky-800 rounded-r-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+                className="px-6 py-3 bg-emerald-700 hover:bg-emerald-800 rounded-r-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
               >
                 {subscribing ? (
                   <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white" aria-hidden="true" />
@@ -168,17 +168,7 @@ export default function Footer() {
               Building a smarter Bareilly through community collaboration and innovative civic solutions.
             </p>
 
-            {/* Quick Stats */}
-            <div className="grid grid-cols-2 gap-4 pt-4">
-              <div className="text-center p-3 bg-gray-800 rounded-lg">
-                <div className="text-lg font-bold text-sky-400">2,847</div>
-                <div className="text-xs text-gray-400">Issues Reported</div>
-              </div>
-              <div className="text-center p-3 bg-gray-800 rounded-lg">
-                <div className="text-lg font-bold text-green-400">2,103</div>
-                <div className="text-xs text-gray-400">Issues Resolved</div>
-              </div>
-            </div>
+
           </div>
 
           {/* Quick Links */}

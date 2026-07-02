@@ -12,7 +12,8 @@ import {
   getPublicReportById,
   getPublicCategories,
   getRecentActivity,
-  getPublicMapData
+  getPublicMapData,
+  getAnnouncements
 } from '../../../controllers/public.controller.js';
 
 const router = Router();
@@ -61,5 +62,11 @@ router.get('/activity', [
  * Get public issues with location data for map visualization
  */
 router.get('/issues/map', getPublicMapData);
+
+/**
+ * GET /api/v1/public/announcements
+ * Get public announcements
+ */
+router.get('/announcements', getAnnouncements);
 
 export default router;

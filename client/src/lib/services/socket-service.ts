@@ -205,6 +205,10 @@ class SocketService {
     this.socket?.on('issue:escalated', callback);
   }
 
+  onIssueDeleted(callback: SocketEventCallback<{ id: string }>): void {
+    this.socket?.on('issue:deleted', callback);
+  }
+
   onUserLogin(callback: SocketEventCallback<UserEventData>): void {
     this.socket?.on('user:login', callback);
   }
@@ -227,6 +231,18 @@ class SocketService {
 
   onDepartmentStats(callback: SocketEventCallback<DepartmentStatsData>): void {
     this.socket?.on('department:stats', callback);
+  }
+
+  onSystemDepartmentsUpdated(callback: SocketEventCallback): void {
+    this.socket?.on('system:departments:updated', callback);
+  }
+
+  onSystemUserUpdated(callback: SocketEventCallback): void {
+    this.socket?.on('system:user:updated', callback);
+  }
+
+  onSystemAnnouncementsUpdated(callback: SocketEventCallback): void {
+    this.socket?.on('system:announcements', callback);
   }
 
   // Event emission methods

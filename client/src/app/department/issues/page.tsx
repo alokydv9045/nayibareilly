@@ -1,4 +1,5 @@
 ﻿'use client'
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -225,7 +226,7 @@ export default function DepartmentIssuesPage() {
     <div className="container mx-auto px-4 py-8">
       <div className="flex items-center gap-3 mb-6">
         <Building2 className="h-8 w-8 text-emerald-600" />
-        <h1 className="text-3xl font-bold text-slate-900">Department Issues Management</h1>
+        <AnimatedHeading as="h1" className="text-3xl font-bold text-slate-900">Department Issues Management</AnimatedHeading>
       </div>
 
       {/* Stats Cards */}
@@ -244,13 +245,8 @@ export default function DepartmentIssuesPage() {
         </Card>
         <Card>
           <CardContent className="p-4 text-center">
-<<<<<<< HEAD
             <div className="text-2xl font-bold text-slate-800">{stats.inProgress}</div>
             <div className="text-sm text-slate-600">In Progress</div>
-=======
-            <div className="text-2xl font-bold text-blue-600">{stats.inProgress}</div>
-            <div className="text-sm text-gray-600">In Progress</div>
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
           </CardContent>
         </Card>
         <Card>

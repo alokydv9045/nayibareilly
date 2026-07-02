@@ -1,4 +1,5 @@
 "use client"
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import { useState, useEffect } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -81,7 +82,7 @@ export default function UserManagementPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-8">
+    <div className="min-h-screen bg-transparent pb-8">
       {/* Topbar */}
       <header className="sticky top-16 lg:top-0 z-40 bg-white border-b border-gray-200 px-4 md:px-8 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
@@ -94,10 +95,10 @@ export default function UserManagementPage() {
             <Users className="h-6 w-6 text-blue-600" />
           </div>
           <div>
-            <h1 className="text-xl md:text-2xl font-bold text-gray-900 flex items-center gap-2">
+            <AnimatedHeading as="h1" className="text-xl md:text-2xl font-bold text-gray-900 flex items-center gap-2">
               User Management
               <Badge variant="outline" className="text-xs bg-gray-50 hidden sm:flex">TechAdmin</Badge>
-            </h1>
+            </AnimatedHeading>
             <p className="text-xs text-gray-500 mt-0.5">Create, edit, and manage all user accounts</p>
           </div>
         </div>
@@ -257,7 +258,7 @@ export default function UserManagementPage() {
               </div>
             ) : (
               <div className="space-y-3">
-                {filteredUsers.map((user) => (
+                {filteredUsers.map((user: UserData) => (
                   <div 
                     key={user.id}
                     className="bg-white rounded-lg p-4 border border-gray-200 hover:bg-gray-50 transition-all"
@@ -270,7 +271,7 @@ export default function UserManagementPage() {
                         <div className="flex-1">
                           <div className="flex items-center space-x-3 mb-2">
                             <h3 className="text-gray-900 font-semibold text-lg">{user.name}</h3>
-                            {user.roles.map((role, idx) => (
+                            {user.roles.map((role: string, idx: number) => (
                               <Badge key={idx} className={getRoleBadgeColor(role)}>
                                 {getRoleLabel(role)}
                               </Badge>

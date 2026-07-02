@@ -1704,6 +1704,20 @@ export const deleteIssue = async (req, res) => {
   if (!isAdmin) return fail(res, 403, 'Only admins can delete issues');
   
   await prisma.issue.delete({ where: { id: issueId } });
+  
+  try {
+    const io = req.app.get('io');
+    io.emit('issue:deleted', { id: issueId });
+    if (issue.departmentId) {
+      emitDepartmentStats(io, issue.departmentId);
+    }
+  } catch (error) {
+    logger.warn('Failed to emit issue deletion socket events', {
+      error: error.message,
+      issueId
+    });
+  }
+  
   return ok(res, { message: 'Issue deleted successfully' });
 }
 

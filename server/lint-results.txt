@@ -1,0 +1,121 @@
+
+> nayibareilly-backend@0.1.0 lint
+> eslint src/**/*.js
+
+
+C:\Users\Acer\Desktop\alok\nayibareilly\server\src\config\prisma.js
+  20:6   error  'global' is not defined  no-undef
+  20:24  error  'global' is not defined  no-undef
+
+C:\Users\Acer\Desktop\alok\nayibareilly\server\src\config\redis.js
+  1:8  warning  'Redis' is defined but never used  no-unused-vars
+
+C:\Users\Acer\Desktop\alok\nayibareilly\server\src\controllers\admin.controller.js
+  325:7  warning  'slaMetrics' is assigned a value but never used  no-unused-vars
+
+C:\Users\Acer\Desktop\alok\nayibareilly\server\src\controllers\auth.controller.js
+    6:14  warning  'created' is defined but never used  no-unused-vars
+  137:14  warning  'e' is defined but never used        no-unused-vars
+
+C:\Users\Acer\Desktop\alok\nayibareilly\server\src\controllers\issue.controller.js
+  57:16  warning  'error' is defined but never used  no-unused-vars
+
+C:\Users\Acer\Desktop\alok\nayibareilly\server\src\controllers\mayor.controller.js
+    2:14  warning  'fail' is defined but never used            no-unused-vars
+    8:3   error    Unnecessary try/catch wrapper               no-useless-catch
+   60:3   error    Unnecessary try/catch wrapper               no-useless-catch
+  108:3   error    Unnecessary try/catch wrapper               no-useless-catch
+  158:3   error    Unnecessary try/catch wrapper               no-useless-catch
+  159:11  warning  'range' is assigned a value but never used  no-unused-vars
+
+C:\Users\Acer\Desktop\alok\nayibareilly\server\src\controllers\moderator.controller.js
+  2:14  warning  'created' is defined but never used  no-unused-vars
+
+C:\Users\Acer\Desktop\alok\nayibareilly\server\src\controllers\session.controller.js
+   1:8   warning  'crypto' is defined but never used                        no-unused-vars
+  31:11  warning  'currentRefreshToken' is assigned a value but never used  no-unused-vars
+
+C:\Users\Acer\Desktop\alok\nayibareilly\server\src\controllers\techadmin.controller.js
+    8:3   error    Unnecessary try/catch wrapper  no-useless-catch
+   21:3   error    Unnecessary try/catch wrapper  no-useless-catch
+   34:3   error    Unnecessary try/catch wrapper  no-useless-catch
+   51:3   error    Unnecessary try/catch wrapper  no-useless-catch
+   60:3   error    Unnecessary try/catch wrapper  no-useless-catch
+   89:3   error    Unnecessary try/catch wrapper  no-useless-catch
+  105:3   error    Unnecessary try/catch wrapper  no-useless-catch
+  121:3   error    Unnecessary try/catch wrapper  no-useless-catch
+  130:3   error    Unnecessary try/catch wrapper  no-useless-catch
+  207:3   error    Unnecessary try/catch wrapper  no-useless-catch
+  274:3   error    Unnecessary try/catch wrapper  no-useless-catch
+  280:51  warning  'e' is defined but never used  no-unused-vars
+  304:3   error    Unnecessary try/catch wrapper  no-useless-catch
+  325:3   error    Unnecessary try/catch wrapper  no-useless-catch
+  354:3   error    Unnecessary try/catch wrapper  no-useless-catch
+  394:3   error    Unnecessary try/catch wrapper  no-useless-catch
+  443:3   error    Unnecessary try/catch wrapper  no-useless-catch
+
+C:\Users\Acer\Desktop\alok\nayibareilly\server\src\controllers\user.controller.js
+  26:5  error  'logger' is not defined  no-undef
+
+C:\Users\Acer\Desktop\alok\nayibareilly\server\src\middlewares\error.js
+   2:48  warning  'errorLogger' is defined but never used                                 no-unused-vars
+  25:56  warning  'next' is defined but never used. Allowed unused args must match /^_/u  no-unused-vars
+
+C:\Users\Acer\Desktop\alok\nayibareilly\server\src\middlewares\monitoring\metrics.js
+  7:10  warning  'getRedisClient' is defined but never used  no-unused-vars
+
+C:\Users\Acer\Desktop\alok\nayibareilly\server\src\middlewares\rateLimit.js
+  27:9  warning  'tenMinutesAgo' is assigned a value but never used  no-unused-vars
+
+C:\Users\Acer\Desktop\alok\nayibareilly\server\src\middlewares\static.middleware.js
+  36:14  warning  'error' is defined but never used  no-unused-vars
+
+C:\Users\Acer\Desktop\alok\nayibareilly\server\src\routes\v1\auth\index.js
+  13:3  warning  'registerRateLimit' is defined but never used  no-unused-vars
+
+C:\Users\Acer\Desktop\alok\nayibareilly\server\src\routes\v1\notifications\index.js
+  8:24  warning  'body' is defined but never used  no-unused-vars
+
+C:\Users\Acer\Desktop\alok\nayibareilly\server\src\server.js
+   28:10  warning  'error' is defined but never used                                          no-unused-vars
+   66:23  warning  'worker' is defined but never used. Allowed unused args must match /^_/u   no-unused-vars
+   66:31  warning  'code' is defined but never used. Allowed unused args must match /^_/u     no-unused-vars
+   66:37  warning  'signal' is defined but never used. Allowed unused args must match /^_/u   no-unused-vars
+   74:16  warning  'API_VERSION_telemetry' is assigned a value but never used                 no-unused-vars
+   81:15  warning  'SocketIOServer' is assigned a value but never used                        no-unused-vars
+  129:31  warning  'getIO' is assigned a value but never used                                 no-unused-vars
+  457:45  warning  'promise' is defined but never used. Allowed unused args must match /^_/u  no-unused-vars
+
+C:\Users\Acer\Desktop\alok\nayibareilly\server\src\services\databaseService.js
+  33:7  warning  'status' is assigned a value but never used        no-unused-vars
+  34:7  warning  'priority' is assigned a value but never used      no-unused-vars
+  35:7  warning  'categoryId' is assigned a value but never used    no-unused-vars
+  36:7  warning  'departmentId' is assigned a value but never used  no-unused-vars
+  37:7  warning  'userId' is assigned a value but never used        no-unused-vars
+  38:7  warning  'search' is assigned a value but never used        no-unused-vars
+  39:7  warning  'startDate' is assigned a value but never used     no-unused-vars
+  40:7  warning  'endDate' is assigned a value but never used       no-unused-vars
+  41:7  warning  'location' is assigned a value but never used      no-unused-vars
+  42:7  warning  'isAnonymous' is assigned a value but never used   no-unused-vars
+
+C:\Users\Acer\Desktop\alok\nayibareilly\server\src\services\notification.service.js
+   9:3   error    Definition for rule '@typescript-eslint/no-var-requires' was not found  @typescript-eslint/no-var-requires
+  11:3   error    Definition for rule '@typescript-eslint/no-var-requires' was not found  @typescript-eslint/no-var-requires
+  13:10  warning  'e' is defined but never used                                           no-unused-vars
+
+C:\Users\Acer\Desktop\alok\nayibareilly\server\src\services\storage.service.js
+  12:7  warning  '__dirname' is assigned a value but never used  no-unused-vars
+
+C:\Users\Acer\Desktop\alok\nayibareilly\server\src\utils\auditLogger.js
+  92:14  warning  'error' is defined but never used  no-unused-vars
+
+C:\Users\Acer\Desktop\alok\nayibareilly\server\src\utils\errorHandler.js
+  360:16  warning  'parseError' is defined but never used  no-unused-vars
+
+C:\Users\Acer\Desktop\alok\nayibareilly\server\src\utils\logger.js
+  15:3   warning  'context' is assigned a value but never used  no-unused-vars
+  16:3   warning  'trace' is assigned a value but never used    no-unused-vars
+  18:10  warning  'error' is defined but never used             no-unused-vars
+
+✖ 68 problems (25 errors, 43 warnings)
+

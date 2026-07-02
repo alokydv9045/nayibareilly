@@ -1,4 +1,5 @@
 'use client'
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import { useState } from 'react'
 import Link from 'next/link'
@@ -56,7 +57,7 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-emerald-50 to-green-50">
+    <div className="min-h-screen bg-transparent">
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-900 via-blue-800 to-green-800 text-white py-20 relative overflow-hidden">
         {/* Animated background elements */}
@@ -73,9 +74,9 @@ export default function ContactPage() {
                 <MessageSquare className="h-12 w-12 text-white animate-bounce" />
               </div>
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fadeInUp animation-delay-200">
+            <AnimatedHeading as="h1" className="text-4xl md:text-6xl font-bold mb-6 animate-fadeInUp animation-delay-200">
               Contact <span className="bg-gradient-to-r from-sky-300 to-green-300 bg-clip-text text-transparent animate-pulse">NayiBareilly</span>
-            </h1>
+            </AnimatedHeading>
             <p className="text-xl md:text-2xl text-emerald-100 mb-4 animate-fadeInUp animation-delay-400">
               हमसे जुड़ें - आपकी आवाज़ हमारी प्राथमिकता
             </p>

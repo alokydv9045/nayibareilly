@@ -1,4 +1,5 @@
 ﻿"use client"
+import AnimatedHeading from '@/components/ui/AnimatedHeading'
 import { useState, useMemo } from 'react'
 import CitizenLayout from '@/components/layout/CitizenLayout'
 import RequireUser from '@/components/features/auth/RequireUser'
@@ -50,9 +51,9 @@ export default function TrackIssuePage() {
       <CitizenLayout>
         <div className="max-w-5xl mx-auto px-3 sm:px-4 lg:px-8 py-3 sm:py-4 lg:py-6 space-y-4 sm:space-y-6 lg:space-y-8">
           <div className="text-center space-y-2 sm:space-y-3">
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-emerald-600 to-slate-800 bg-clip-text text-transparent tracking-tight">
+            <AnimatedHeading as="h1" className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-emerald-600 to-slate-800 bg-clip-text text-transparent tracking-tight">
               Track Your Issue
-            </h1>
+            </AnimatedHeading>
             <p className="text-slate-600 max-w-2xl mx-auto text-sm sm:text-base px-2">
               Enter your unique Tracking Code (starts with REP-) to check the real-time status and progress of your civic issue report
             </p>

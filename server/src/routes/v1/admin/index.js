@@ -26,13 +26,10 @@ import {
   getModeratorStats,
   getModeratorPending,
   getDepartmentRealtimeStats,
-<<<<<<< HEAD
   getSuperAdminUsers,
   createSuperAdminUser,
   updateSuperAdminUser,
-  deleteSuperAdminUser
-, updateUserRoles, activateUser, deactivateUser, getCategory, updateCategory, deleteCategory, getActivityLogs } from '../../../controllers/admin.controller.js';
-=======
+  deleteSuperAdminUser,
   updateUserRoles,
   activateUser,
   deactivateUser,
@@ -43,7 +40,6 @@ import {
 } from '../../../controllers/admin.controller.js';
 
 import techAdminRoutes from './techadmin.js';
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
 
 const router = Router();
 
@@ -250,7 +246,6 @@ router.get('/superadmin/moderator-performance', [
 ], getSuperAdminModeratorPerformance);
 
 /**
-<<<<<<< HEAD
  * GET /api/v1/admin/superadmin/users
  * Get all users for superadmin
  */
@@ -281,7 +276,8 @@ router.put('/superadmin/users/:userId', [
 router.delete('/superadmin/users/:userId', [
   auth(['SUPER_ADMIN'])
 ], deleteSuperAdminUser);
-=======
+
+/**
  * GET /api/v1/admin/techadmin/stats
  * Get techadmin statistics (alias for superadmin stats)
  */
@@ -304,7 +300,6 @@ router.get('/techadmin/realtime-issues', [
 router.get('/techadmin/moderator-performance', [
   auth(['TECH_ADMIN', 'SUPER_ADMIN'])
 ], getSuperAdminModeratorPerformance);
->>>>>>> 456e75f6e70a7bf5b20f7c5d924a4fd45800a5b9
 
 /**
  * GET /api/v1/admin/department/:departmentId/issues
