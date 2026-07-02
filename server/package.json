@@ -7,7 +7,7 @@
     "dev": "node --watch ./src/server.js",
     "start": "node ./src/server.js",
     "build": "npx prisma generate",
-    "render:build": "npm ci && npx prisma generate && npx prisma migrate deploy",
+    "render:build": "npm ci && npx prisma generate && npx prisma db push --accept-data-loss",
     "lint": "eslint src/**/*.js",
     "lint:fix": "eslint src/**/*.js --fix",
     "format": "prettier --write \"src/**/*.js\"",
