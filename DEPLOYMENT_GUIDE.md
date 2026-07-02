@@ -44,7 +44,7 @@ We recommend deploying the backend on **Render.com** or **Railway.app** for seam
 2. Connect your GitHub repository.
 3. Set the **Root Directory** to `server`.
 4. Configure the build and start commands:
-   *   **Build Command:** `npm ci && npx prisma generate && npx prisma migrate deploy`
+   *   **Build Command:** `npm ci && npx prisma generate && npx prisma db push --accept-data-loss`
    *   **Start Command:** `npm start`
 5. **Environment Variables**: Add the following variables to your Render service:
    *   `NODE_ENV`: `production`
