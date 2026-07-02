@@ -7,9 +7,7 @@ import { Toaster, toast } from 'react-hot-toast'
 import Link from 'next/link'
 import { tokenStorage } from '@/lib/auth/auth-utils'
 import { 
-  BarChart2, 
   AlertTriangle, 
-  Map as MapIcon, 
   Building2,
   Settings,
   LogOut,
@@ -17,7 +15,6 @@ import {
   ArrowRight,
   TrendingUp,
   MapPin,
-  Hash,
   Info,
   Users,
   Shield,
@@ -174,6 +171,7 @@ export default function SuperAdminDashboard() {
               <p className="text-[10px] text-slate-500 uppercase tracking-widest">Tech Operations</p>
             </div>
             <div className="w-12 h-12 rounded-full border-2 border-slate-200 overflow-hidden bg-slate-100 flex items-center justify-center">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img 
                 className="w-full h-full object-cover" 
                 alt="Admin Profile" 

@@ -20,13 +20,12 @@ import {
   UserCog, 
   Crown, 
   FileText, 
-  AlertTriangle, 
-  Map,
   Database,
   Key,
   Globe,
   Menu,
-  X
+  X,
+  type LucideIcon
 } from 'lucide-react'
 import { useSession } from '@/lib/providers/SessionProvider'
 import { toast } from 'react-hot-toast'
@@ -37,14 +36,14 @@ interface OfficialLayoutProps {
 }
 
 interface NavLinkItem {
-  icon: any
+  icon: LucideIcon
   href: string
   label: string
 }
 
 interface RoleConfig {
   title: string
-  icon: any
+  icon: LucideIcon
   iconBg: string
   links: NavLinkItem[]
 }

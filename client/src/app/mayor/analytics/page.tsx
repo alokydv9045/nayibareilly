@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
 import { useState, useEffect } from 'react'
@@ -22,7 +22,7 @@ import {
 } from 'lucide-react'
 import { useToast } from '@/components/ui/use-toast'
 import { 
-  ResponsiveContainer, BarChart, Bar, LineChart, Line, AreaChart, Area, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend
+  ResponsiveContainer, BarChart, Bar, AreaChart, Area, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend
 } from 'recharts'
 
 interface CityAnalytics {

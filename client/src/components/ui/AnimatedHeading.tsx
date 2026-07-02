@@ -1,7 +1,7 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { ReactNode } from 'react'
+import { motion, Variants } from 'framer-motion'
+import React, { ReactNode } from 'react'
 import { cn } from '@/lib/utils/helpers' // Used helper for better resolution
 
 interface AnimatedHeadingProps {
@@ -12,10 +12,10 @@ interface AnimatedHeadingProps {
 }
 
 export default function AnimatedHeading({ children, className, as: Component = 'h2', delay = 0 }: AnimatedHeadingProps) {
-  const MotionComponent = motion[Component as keyof typeof motion] as any
+  const MotionComponent = motion[Component as keyof typeof motion] as React.ElementType
 
   if (typeof children === 'string') {
-    const container: any = {
+    const container: Variants = {
       hidden: { opacity: 0 },
       visible: {
         opacity: 1,
@@ -23,7 +23,7 @@ export default function AnimatedHeading({ children, className, as: Component = '
       }
     };
     
-    const child: any = {
+    const child: Variants = {
       hidden: { opacity: 0, y: 10, filter: "blur(2px)" },
       visible: { 
         opacity: 1, 

@@ -14,12 +14,11 @@ import {
   Star, Navigation, Wrench, CheckCircle2, FileImage, MessageSquare,
   ArrowRight, RefreshCw, Bell, ChevronRight, Phone,
   ListChecks, History, UserCircle, ClipboardCheck, BadgeCheck,
-  Loader2, XCircle, Award
+  Loader2, Award
 } from 'lucide-react'
 import socketService from '@/lib/services/socket-service'
 import { config } from '@/lib/constants/config'
-import { tokenStorage, userStorage } from '@/lib/auth/auth-utils'
-import { useRouter } from 'next/navigation'
+import { tokenStorage } from '@/lib/auth/auth-utils'
 
 interface AssignedIssue {
   id: string; title: string; category?: string; location?: string; address?: string
@@ -47,7 +46,6 @@ const STATUS_CONFIG: Record<string, { label: string; color: string; icon: React.
 }
 
 export default function StaffPage() {
-  const router = useRouter()
   const [activeTab, setActiveTab] = useState('assigned')
   const [assignedIssues, setAssignedIssues] = useState<AssignedIssue[]>([])
   const [loading, setLoading] = useState(false)

@@ -1,10 +1,9 @@
+'use client';
 import AnimatedHeading from '@/components/ui/AnimatedHeading'
 /**
  * Breadcrumb Navigation Component
  * Automatic breadcrumb generation based on current route
  */
-
-'use client';
 
 import React from 'react';
 import Link from 'next/link';

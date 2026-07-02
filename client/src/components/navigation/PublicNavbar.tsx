@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { Menu, X, LogIn, UserPlus, Globe } from 'lucide-react'
+import { Menu, X, LogIn, Globe } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { useNavigation } from '@/hooks/navigation/useNavigation'

@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { 
-  Users, CheckCircle, Globe, 
+  Users, CheckCircle, 
   MapPin, Target, Eye, Heart,
   Building2, Smartphone, Zap, FileText, BarChart3,
   ArrowRight, UserCheck, Shield, Clock, Camera
@@ -89,7 +89,7 @@ export default function AboutPage() {
                     {/* Mayor Info */}
                     <div className="space-y-1">
                       <h3 className="text-xl font-bold text-slate-900">Dr. Umesh Gautam</h3>
-                      <p className="text-emerald-600 text-sm font-semibold uppercase tracking-wider">Hon'ble Mayor</p>
+                      <p className="text-emerald-600 text-sm font-semibold uppercase tracking-wider">Hon&apos;ble Mayor</p>
                       <p className="text-xs text-slate-500 font-medium">Bareilly Municipal Corporation</p>
                     </div>
 
@@ -124,7 +124,7 @@ export default function AboutPage() {
                       <div className="space-y-1">
                         <p>
                           It is with great pride and enthusiasm that I present to you <strong>NayiBareilly</strong> – 
-                          a revolutionary digital platform that marks a new chapter in our city's journey towards 
+                          a revolutionary digital platform that marks a new chapter in our city&apos;s journey towards 
                           becoming a truly smart and citizen-centric municipality.
                         </p>
                         <p className="text-slate-500 text-xs font-medium">
@@ -138,7 +138,7 @@ export default function AboutPage() {
                           As your Mayor, I have always believed that the strength of our city lies in the active 
                           participation of our citizens. This platform is not just a technological advancement; 
                           it is a bridge that connects every resident of Bareilly directly to their municipal government, 
-                          ensuring that your voice is heard, your concerns are addressed, and your ideas shape our city's future.
+                          ensuring that your voice is heard, your concerns are addressed, and your ideas shape our city&apos;s future.
                         </p>
                         <p className="text-slate-500 text-xs font-medium">
                           आपके मेयर के रूप में, मैंने हमेशा माना है कि हमारे शहर की ताकत हमारे नागरिकों की सक्रिय भागीदारी में निहित है। 
@@ -196,7 +196,7 @@ export default function AboutPage() {
                       <p className="font-bold text-slate-900 text-base">Dr. Umesh Gautam</p>
                       <p className="text-sm text-slate-500 font-medium">Mayor, Bareilly Municipal Corporation</p>
                       <p className="text-xs text-emerald-600 font-semibold mt-1">
-                        "नई सोच, नया समाधान, नई बरेली"
+                        &quot;नई सोच, नया समाधान, नई बरेली&quot;
                       </p>
                     </div>
                   </div>

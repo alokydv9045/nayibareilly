@@ -1,7 +1,7 @@
 'use client'
 import AnimatedHeading from '@/components/ui/AnimatedHeading'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -120,7 +120,7 @@ export default function TechAdminAnalyticsPage() {
   const [timeRange, setTimeRange] = useState('month')
   const { toast } = useToast()
 
-  const getMockAnalytics = (): SystemAnalytics => ({
+  const getMockAnalytics = useCallback((): SystemAnalytics => ({
     overview: { totalUsers: 15430, activeCities: 12, totalIssues: 4521, systemUptime: 99.9, avgResponseTime: 45, dataIntegrity: 100 },
     performance: { serverHealth: 98, databasePerformance: 95, apiResponseTime: 120, errorRate: 0.1, throughput: 450, memoryUsage: 62, cpuUsage: 45, diskUsage: 55 },
     userAnalytics: { dailyActiveUsers: 1200, monthlyActiveUsers: 8500, userGrowthRate: 15, userRetention: 78, sessionDuration: 12, bounceRate: 25 },
@@ -138,45 +138,45 @@ export default function TechAdminAnalyticsPage() {
       totalBudget: 5000000, budgetUtilized: 2500000, costPerResolution: 1250,
       roiMetrics: { citizenSatisfactionROI: 15, efficiencyGains: 25, costSavings: 1500000 }
     }
-  })
+  }), [])
 
-  const mapBackendData = (apiData: any): SystemAnalytics => {
+  const mapBackendData = useCallback((apiData: Record<string, unknown>): SystemAnalytics => {
     const mock = getMockAnalytics()
     if (!apiData?.overview && !apiData?.distributions) return mock
     
     // If it's already matching the interface (e.g. mock returned from backend), return it
-    if (apiData.overview && apiData.performance) return apiData
+    if (apiData.overview && apiData.performance) return apiData as unknown as SystemAnalytics
 
     // Otherwise map the new backend format (distributions, trends, metrics) to our UI format
     return {
       ...mock,
       overview: {
         ...mock.overview,
-        totalUsers: apiData.metrics?.users?.newRegistrations || mock.overview.totalUsers,
-        totalIssues: apiData.totalIssues || 0,
-        avgResponseTime: apiData.metrics?.resolution?.averageHours || 0
+        totalUsers: (apiData.metrics as Record<string, unknown>)?.users ? ((apiData.metrics as Record<string, unknown>).users as Record<string, unknown>).newRegistrations as number : mock.overview.totalUsers,
+        totalIssues: apiData.totalIssues as number || 0,
+        avgResponseTime: (apiData.metrics as Record<string, unknown>)?.resolution ? ((apiData.metrics as Record<string, unknown>).resolution as Record<string, unknown>).averageHours as number : 0
       },
       dataInsights: {
         ...mock.dataInsights,
-        topIssueCategories: (apiData.distributions?.categories || []).map((c: any) => ({
-          category: c.category?.name || 'Unknown',
-          count: c.count || 0,
+        topIssueCategories: (((apiData.distributions as Record<string, unknown>)?.categories as Array<Record<string, unknown>>) || []).map((c: Record<string, unknown>) => ({
+          category: (c.category as Record<string, unknown>)?.name as string || 'Unknown',
+          count: c.count as number || 0,
           trend: 0
         })),
-        resolutionTrends: (apiData.trends?.daily || []).slice(0, 7).map((d: any) => ({
-          period: d.date?.split('T')[0] || 'Unknown',
-          resolved: d.resolved || 0,
-          pending: d.total - d.resolved || 0,
+        resolutionTrends: (((apiData.trends as Record<string, unknown>)?.daily as Array<Record<string, unknown>>) || []).slice(0, 7).map((d: Record<string, unknown>) => ({
+          period: (d.date as string)?.split('T')[0] || 'Unknown',
+          resolved: d.resolved as number || 0,
+          pending: (d.total as number || 0) - (d.resolved as number || 0),
           satisfaction: 4.0
         }))
       }
     }
-  }
+  }, [getMockAnalytics])
 
-  const fetchAnalytics = async () => {
+  const fetchAnalytics = useCallback(async () => {
     try {
       const response = await api.get(`/admin/analytics?period=${timeRange === 'week' ? '7d' : timeRange === 'month' ? '30d' : '1y'}`)
-      setData(mapBackendData(response.data?.data || response.data))
+      setData(mapBackendData((response.data?.data || response.data) as Record<string, unknown>))
     } catch (error) {
       console.warn('Using fallback data for analytics:', error)
       setData(getMockAnalytics())
@@ -184,23 +184,11 @@ export default function TechAdminAnalyticsPage() {
       setLoading(false)
       setRefreshing(false)
     }
-  }
+  }, [timeRange, mapBackendData, getMockAnalytics])
 
   useEffect(() => {
-    const loadData = async () => {
-      try {
-        const response = await api.get(`/admin/analytics?period=${timeRange === 'week' ? '7d' : timeRange === 'month' ? '30d' : '1y'}`)
-        setData(mapBackendData(response.data?.data || response.data))
-      } catch (error) {
-        console.warn('Using fallback data for analytics:', error)
-        setData(getMockAnalytics())
-      } finally {
-        setLoading(false)
-        setRefreshing(false)
-      }
-    }
-    loadData()
-  }, [timeRange])
+    fetchAnalytics()
+  }, [fetchAnalytics])
 
   const refreshData = async () => {
     setRefreshing(true)

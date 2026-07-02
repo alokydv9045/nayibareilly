@@ -37,7 +37,7 @@ export default function UnifiedDepartmentPage() {
   const departmentId = user?.departmentId || ''
 
   const { data: triagedIssues = [], isLoading: loadingTriaged, refetch: refetchTriaged } = useDepartmentIssues(departmentId, 'TRIAGED')
-  const { data: inProgressWork = [], isLoading: loadingInProgress, refetch: refetchInProgress } = useDepartmentIssues(departmentId, 'ASSIGNED_TO_STAFF,IN_PROGRESS')
+  const { data: _inProgressWork = [], isLoading: _loadingInProgress, refetch: refetchInProgress } = useDepartmentIssues(departmentId, 'ASSIGNED_TO_STAFF,IN_PROGRESS')
   const { data: staffList = [], isLoading: loadingStaff } = useDepartmentStaff(departmentId)
   const { data: stats, refetch: refetchStats } = useDepartmentStats(departmentId)
   
@@ -85,7 +85,7 @@ export default function UnifiedDepartmentPage() {
     }
   }
 
-  const getIssueIcon = (category: string) => {
+  const _getIssueIcon = (category: string) => {
     const cat = category.toLowerCase()
     if (cat.includes('water') || cat.includes('sewer') || cat.includes('drain')) return <Droplets className="h-4 w-4" />
     if (cat.includes('road') || cat.includes('light') || cat.includes('street')) return <Activity className="h-4 w-4" />
@@ -118,7 +118,7 @@ export default function UnifiedDepartmentPage() {
           <div className="bg-white border border-gray-200 rounded-xl p-6 mb-6">
             <h2 className="text-xl font-semibold text-gray-900 mb-2">Welcome, {user.name}</h2>
             <p className="text-gray-600">
-              Manage your department's issues, staff assignments, and analytics.
+              Manage your department&apos;s issues, staff assignments, and analytics.
             </p>
           </div>
         </div>

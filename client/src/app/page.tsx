@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { Wrench, Trash2, Droplets, Shield, FileText, MapPin, Users, Search, SortDesc, TrendingUp, Zap, Activity, Bell, ChevronRight, Leaf, Building, Globe } from 'lucide-react'
+import { Wrench, Trash2, Droplets, Shield, FileText, MapPin, Users, Search, SortDesc, TrendingUp, Zap, Activity, ChevronRight, Leaf, Building, Globe } from 'lucide-react'
 import AnimatedHeading from '@/components/ui/AnimatedHeading'
 import TypingHeading from '@/components/ui/TypingHeading'
 import { Button } from '@/components/ui/button'
@@ -18,9 +18,8 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { useState, useMemo } from 'react'
-import { ISSUE_CATEGORIES } from '@/lib/validations/reportForm'
 import { toast } from 'react-hot-toast'
-import { usePublicStats, usePublicReports, usePublicCategories, useRecentActivity } from '@/hooks/api/usePublic'
+import { usePublicStats, usePublicReports } from '@/hooks/api/usePublic'
 import { formatDistanceToNow } from 'date-fns'
 import HeroSection from '@/components/sections/HeroSection'
 import Image from 'next/image'
@@ -41,10 +40,7 @@ export default function LandingPage() {
     sort: sortBy,
     search: searchTerm || undefined
   })
-  const { data: categories } = usePublicCategories()
-  const { data: recentActivity } = useRecentActivity(5)
-  const { data: topVotedReportsResponse } = usePublicReports({ sort: 'votes', limit: 3, status: 'all' })
-
+  // Categories, recent activity, top voted can be added here later if needed
   const reportsData = reportsResponse?.issues || []
 
   // Sorting and Filtering logic
@@ -209,6 +205,7 @@ export default function LandingPage() {
                   <h3 className="text-lg font-bold text-slate-900 mb-2">No reports found</h3>
                   <p className="font-medium">Try adjusting your filters or search terms</p>
                 </div>
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
               ) : filteredAndSortedReports.map((report: any, index: number) => {
                 let timeAgo = 'Recently'
                 try {
@@ -246,7 +243,7 @@ export default function LandingPage() {
 
                       {report.images && report.images.length > 0 && (
                         <div className={`grid gap-2 mb-4 mt-1 ${report.images.length === 1 ? 'grid-cols-1' : 'grid-cols-2'}`}>
-                          {report.images.slice(0, 3).map((img: any, i: number, arr: any[]) => {
+                          {Array.isArray(report.images) && report.images.slice(0, 3).map((img: {url: string} | unknown, i: number, arr: unknown[]) => {
                             const isFirstOfThree = arr.length >= 3 && i === 0;
                             return (
                               <div 
@@ -259,8 +256,8 @@ export default function LandingPage() {
                               >
                                  {/* eslint-disable-next-line @next/next/no-img-element */}
                                  <img 
-                                  src={img.url} 
-                                  alt={`${report.title} image ${i + 1}`} 
+                                  src={(img as {url: string}).url} 
+                                  alt={`${String(report.title)} image ${i + 1}`} 
                                   className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-110" 
                                 />
                                 {report.images.length > 3 && i === 2 && (
@@ -362,7 +359,7 @@ export default function LandingPage() {
                     </div>
                     <div>
                       <p className="font-bold text-sm">Dr. Umesh Gautam</p>
-                      <p className="text-xs text-slate-400">Hon'ble Mayor</p>
+                      <p className="text-xs text-slate-400">Hon&apos;ble Mayor</p>
                     </div>
                   </div>
                 </div>

@@ -422,7 +422,7 @@ export default function FastLoginForm() {
       {/* Register Link */}
       <div className="text-center pt-4 border-t border-slate-100">
         <p className="text-sm text-slate-600 font-medium">
-          Don't have an account?{' '}
+          Don&apos;t have an account?{' '}
           <Link
             href="/get-started"
             className="text-emerald-600 hover:text-emerald-700 hover:underline font-bold"

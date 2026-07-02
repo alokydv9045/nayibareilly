@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { ArrowUpDown, Eye, CheckCircle, XCircle, Clock, AlertTriangle, GitBranch, UserPlus } from 'lucide-react'
 import { DataTable, createSelectColumn, createActionsColumn } from '@/components/features/admin/DataTable'
-import { useAdminIssues, useUpdateIssueStatus, useBulkUpdateIssueStatus, useTriageIssue, useAssignIssueToStaff, useCloseIssue, type AdminIssue } from '@/lib/api/admin-issues'
+import { useAdminIssues, useUpdateIssueStatus, useTriageIssue, useAssignIssueToStaff, useCloseIssue, type AdminIssue } from '@/lib/api/admin-issues'
 import { useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
 import OfficialLayout from '@/components/layout/OfficialLayout'
@@ -94,13 +94,13 @@ export default function IssuesPage() {
   const triageMut = useTriageIssue()
   const assignMut = useAssignIssueToStaff()
   const closeMut = useCloseIssue()
-  const _bulkUpdate = useBulkUpdateIssueStatus() // planned for bulk action bar
+
   const qc = useQueryClient()
 
   // Transform to table rows
   const issues: IssueRow[] = useMemo(() => {
     return (data?.items || []).map((i: AdminIssue) => ({
-      id: i.id || i._id || (i as any).id,
+      id: i.id || i._id || (i as unknown as Record<string, unknown>).id as string,
       title: i.title,
       description: i.description || '',
       category: i.category?.name?.toUpperCase() || 'OTHER',

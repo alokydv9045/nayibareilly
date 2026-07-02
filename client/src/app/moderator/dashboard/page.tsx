@@ -15,7 +15,7 @@ import {
 import { ProtectedRoute } from '@/components/features/auth/ProtectedRoute'
 import { useModeratorAPI } from '@/hooks/api/useModeratorAPI'
 import { api } from '@/lib/api/client'
-import { tokenStorage, userStorage } from '@/lib/auth/auth-utils'
+import { tokenStorage } from '@/lib/auth/auth-utils'
 import { toast } from 'react-hot-toast'
 import {
   Dialog,
@@ -76,12 +76,6 @@ export default function ModeratorDashboard() {
     toast.success('Stats refreshed')
   }
 
-  const handleLogout = () => {
-    tokenStorage.remove()
-    userStorage.remove()
-    router.push('/login')
-    toast.success('Logged out')
-  }
 
   // Announcements state
   const [announcements, setAnnouncements] = useState<string[]>([])

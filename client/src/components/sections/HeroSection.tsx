@@ -4,10 +4,9 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Camera, MapPin, Zap, ArrowRight, Shield, CheckCircle2 } from 'lucide-react'
+import { Camera, MapPin, Zap, Shield, CheckCircle2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import AnimatedHeading from '@/components/ui/AnimatedHeading'
 import TypingHeading from '@/components/ui/TypingHeading'
 
 export default function HeroSection() {
@@ -263,7 +262,7 @@ export default function HeroSection() {
                     Dr. Umesh Gautam
                   </h3>
                   <p className="text-sm font-semibold text-slate-500 uppercase tracking-wider mt-0.5">
-                    Hon'ble Mayor, Bareilly
+                    Hon&apos;ble Mayor, Bareilly
                   </p>
                 </div>
               </div>

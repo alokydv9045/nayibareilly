@@ -102,7 +102,37 @@ interface ComplianceReport {
   }
 }
 
+
+interface RawLog {
+  id?: string;
+  createdAt?: string;
+  userId?: string;
+  user?: { email?: string; roles?: string[] };
+  action?: string;
+  issueId?: string;
+  description?: string;
+  ipAddress?: string;
+  userAgent?: string;
+}
+
+interface ActivityLogEvent {
+  id?: string;
+  timestamp?: string;
+  userId?: string;
+  userEmail?: string;
+  userRole?: string;
+  action?: string;
+  resource?: string;
+  details?: string;
+  message?: string;
+  ipAddress?: string;
+  userAgent?: string;
+  outcome?: 'SUCCESS' | 'FAILURE' | 'WARNING';
+  severity?: string;
+}
+
 export default function TechAdminAuditPage() {
+
   const [auditLogs, setAuditLogs] = useState<AuditLog[]>([])
   const [securityEvents, setSecurityEvents] = useState<SecurityEvent[]>([])
   const [systemActivity, setSystemActivity] = useState<SystemActivity[]>([])
@@ -134,7 +164,7 @@ export default function TechAdminAuditPage() {
             
             const json = auditRes.data;
             const rawLogs = json.data?.items || json.data?.logs || [];
-            auditData.logs = rawLogs.map((l: any) => {
+            auditData.logs = rawLogs.map((l: RawLog) => {
                 let severity: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL' = 'LOW'
                 const actionStr = String(l.action).toUpperCase()
                 const descStr = String(l.description || '').toUpperCase()
@@ -158,8 +188,9 @@ export default function TechAdminAuditPage() {
                     severity
                 }
             });
-        } catch (e: any) {
-            console.error('Failed to fetch activity logs. Status:', e.response?.status, 'Message:', e.message);
+        } catch (e: unknown) {
+            const err = e as { response?: { status?: number }; message?: string };
+            console.error('Failed to fetch activity logs. Status:', err.response?.status, 'Message:', err.message);
         }
 
         if (auditData.logs.length === 0) {
@@ -215,7 +246,8 @@ export default function TechAdminAuditPage() {
 
   // Subscribe to real-time activity:log events
   useEffect(() => {
-    const onActivityLog = (log: any) => {
+    const onActivityLog = (data: unknown) => {
+      const log = data as ActivityLogEvent;
       const newAuditLog: AuditLog = {
         id: log.id || String(Date.now()),
         timestamp: log.timestamp || new Date().toISOString(),

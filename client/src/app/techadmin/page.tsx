@@ -9,15 +9,14 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { toast } from 'react-hot-toast'
 import {
-  Crown, Users, Building2, Settings, Shield, BarChart3,
-  AlertTriangle, CheckCircle, Clock, TrendingUp, Activity,
-  Lock, Eye, RefreshCw, LogOut, ChevronRight, Database,
-  Zap, Bell, Search, UserCog, FileBarChart, Layers,
+  Users, Building2, Settings, Shield, BarChart3,
+  AlertTriangle, Clock, TrendingUp, Activity,
+  Lock, RefreshCw, ChevronRight, Database,
+  Zap, Bell, Search, UserCog, Layers,
   ArrowUpRight, Cpu, Globe, UserCheck, Terminal, Server
 } from 'lucide-react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import { tokenStorage, userStorage } from '@/lib/auth/auth-utils'
+import { tokenStorage } from '@/lib/auth/auth-utils'
 import { api } from '@/lib/api/client'
 
 interface RealtimeIssue { reportId: string; title: string; status: string; timeline: string }
@@ -30,7 +29,6 @@ const STATUS_COLORS: Record<string, string> = {
 }
 
 export default function TechAdminDashboard() {
-  const router = useRouter()
   const [currentTime, setCurrentTime] = useState(new Date())
   const [stats, setStats] = useState({
     totalUsers: 0, totalDepartments: 0, totalIssues: 0,
@@ -72,7 +70,7 @@ export default function TechAdminDashboard() {
     try {
       const res = await api.get('/admin/activity-logs?limit=100')
       const rawLogs = res.data?.data?.items || res.data?.data?.logs || []
-      const mappedLogs = rawLogs.map((log: any) => {
+      const mappedLogs = rawLogs.map((log: Record<string, unknown>) => {
         let level: 'INFO' | 'WARN' | 'ERROR' = 'INFO'
         let source = 'system-service'
         const actionStr = String(log.action).toUpperCase()
@@ -113,12 +111,7 @@ export default function TechAdminDashboard() {
     toast.success('Dashboard refreshed')
   }, [fetchStats, fetchRealtimeIssues, fetchModeratorPerformance, fetchLogs])
 
-  const handleLogout = useCallback(() => {
-    tokenStorage.remove()
-    userStorage.remove()
-    router.push('/login')
-    toast.success('Logged out successfully')
-  }, [router])
+
 
   useEffect(() => {
     fetchStats(); fetchRealtimeIssues(); fetchModeratorPerformance(); fetchLogs()
@@ -143,6 +136,7 @@ export default function TechAdminDashboard() {
   }, [fetchStats, fetchModeratorPerformance, fetchRealtimeIssues, fetchLogs])
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const onActivityLog = (log: any) => {
       const newLog = {
         id: log.id,

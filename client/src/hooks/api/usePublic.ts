@@ -267,6 +267,7 @@ export function usePublicReport(id: string) {
   // Real-time Socket.IO integration
   useEffect(() => {
     if (!id) return;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleReportUpdate = (updatedReport: any) => {
       if (updatedReport?.id === id || updatedReport?.reportId === id || updatedReport?.issueId === id) {
         queryClient.invalidateQueries({ queryKey: publicKeys.report(id) })

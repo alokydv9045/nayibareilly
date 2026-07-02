@@ -6,9 +6,7 @@ let admin = null
 let getMessaging = null
 try {
   // Defer requires to runtime and handle absence gracefully
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
   admin = require('firebase-admin')
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
   getMessaging = require('firebase-admin/messaging').getMessaging
 } catch (e) {
   admin = null

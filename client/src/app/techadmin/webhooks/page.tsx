@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 import { toast } from 'react-hot-toast'
 import { 
-  Zap, Plus, Trash2, Shield, Settings, Play, ArrowLeft, RefreshCw, AlertTriangle, Check
+  Zap, Plus, Trash2, Settings, Play, ArrowLeft, RefreshCw, AlertTriangle
 } from 'lucide-react'
 import Link from 'next/link'
 import { api } from '@/lib/api/client'
@@ -104,8 +104,8 @@ export default function WebhookManagerPage() {
       } else {
         toast.error(`Test failed: status ${res.data?.status || 'unknown'}`)
       }
-    } catch (err: any) {
-      toast.error(err.response?.data?.message || 'Failed to trigger test webhook')
+    } catch (err: unknown) {
+      toast.error(typeof err === 'object' && err !== null && 'response' in err ? (err as { response?: { data?: { message?: string } } }).response?.data?.message || 'Failed to trigger test webhook' : 'Failed to trigger test webhook')
     } finally {
       setTestingId(null)
     }

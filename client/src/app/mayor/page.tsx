@@ -16,7 +16,7 @@ import {
   Target, Gauge, Filter, ChevronRight
 } from 'lucide-react'
 import { config } from '@/lib/constants/config'
-import { tokenStorage, userStorage } from '@/lib/auth/auth-utils'
+import { tokenStorage } from '@/lib/auth/auth-utils'
 import { toast, Toaster } from 'react-hot-toast'
 import { 
   ResponsiveContainer, BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip, Legend
@@ -28,7 +28,7 @@ interface Timeline { stage: string; actor: string; time: string; completed: bool
 interface RecentIssue { reportId: string; title: string; description: string; status: string; timeline?: Timeline[]; totalTime: string; responseTime: string; citizenRating?: number }
 
 export default function MayorDashboard() {
-  const router = useRouter()
+
   const [activeTab, setActiveTab] = useState('overview')
   const [isRefreshing, setIsRefreshing] = useState(false)
   const [stats, setStats] = useState({ totalIssues: 0, resolvedIssues: 0, inProgress: 0, averageResolutionTime: 0, citizenSatisfaction: 0, totalReports: 0, cityHealthScore: 85, overdueIssues: 0, activeStaff: 156 })

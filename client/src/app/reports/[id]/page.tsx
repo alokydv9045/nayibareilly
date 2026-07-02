@@ -33,10 +33,7 @@ import {
   ThumbsDown,
   MessageCircle,
   Send,
-  Flag,
-  BookmarkPlus,
   Copy,
-  Facebook,
   Twitter,
   MessageSquare,
   Building2,
@@ -180,6 +177,7 @@ export default function ReportDetailPage() {
         userVote: null,
         estimatedResolution: 'Pending Assessment',
         assignedDepartment: fetchedReport.department?.name || 'Unassigned',
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         statusHistory: fetchedReport.timeline?.map((sh: any) => ({
           status: sh.status,
           timestamp: sh.createdAt,
@@ -198,6 +196,7 @@ export default function ReportDetailPage() {
       
       setReport(mappedReport);
       
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const mappedComments: Comment[] = fetchedReport.comments?.map((c: any) => ({
         id: c.id,
         author: c.user?.name || 'Anonymous',
@@ -248,9 +247,9 @@ export default function ReportDetailPage() {
       
       await api.post(`/issues/${report.id}/vote`, { type: voteType });
       toast.success(currentVote !== voteType ? 'Vote recorded!' : 'Vote removed!');
-    } catch (error: any) {
+    } catch (error: unknown) {
       // Revert optimistic update here in a full implementation
-      if (error.response?.status === 401) {
+      if (typeof error === 'object' && error !== null && 'response' in error && (error as { response?: { status?: number } }).response?.status === 401) {
         toast.error('Please login to vote on this report');
       } else {
         toast.error('Failed to record vote');
@@ -286,8 +285,8 @@ export default function ReportDetailPage() {
       setComments([newCommentObj, ...comments]); // Prepend new comment
       setNewComment('');
       toast.success('Comment added successfully!');
-    } catch (error: any) {
-      if (error.response?.status === 401) {
+    } catch (error: unknown) {
+      if (typeof error === 'object' && error !== null && 'response' in error && (error as { response?: { status?: number } }).response?.status === 401) {
         toast.error('Please login to post a comment');
       } else {
         toast.error('Failed to add comment');

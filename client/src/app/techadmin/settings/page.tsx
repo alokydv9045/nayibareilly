@@ -16,8 +16,7 @@ import {
   Shield,
   Database,
   Globe,
-  CheckCircle,
-  Settings
+  CheckCircle
 } from 'lucide-react'
 import Link from 'next/link'
 import { useTechadminSettings, useUpdateSettings } from '@/hooks/api/useTechadminAPI'
@@ -125,8 +124,8 @@ export default function SystemSettingsPage() {
       setSettings(prev => {
         const next = { ...prev };
         for (const key in fetchedSettings) {
-          if ((fetchedSettings as any)[key] !== undefined && (fetchedSettings as any)[key] !== null) {
-            (next as any)[key] = (fetchedSettings as any)[key];
+          if ((fetchedSettings as unknown as Record<string, unknown>)[key] !== undefined && (fetchedSettings as unknown as Record<string, unknown>)[key] !== null) {
+            (next as unknown as Record<string, unknown>)[key] = (fetchedSettings as unknown as Record<string, unknown>)[key];
           }
         }
         return next;

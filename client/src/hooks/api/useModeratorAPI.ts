@@ -72,9 +72,10 @@ export function useModeratorAPI() {
     try {
       const response = await adminApi.get('/v1/moderator/stats')
       return response.data.data || response.data
-    } catch (error: any) {
-      console.error('[useModeratorAPI] fetchStats FAILED:', error.response?.status, error.message)
-      throw new Error(`Failed to fetch stats: ${error.message}`)
+    } catch (error: unknown) {
+      const err = error as { response?: { status?: number, data?: { message?: string } }, message?: string };
+      console.error('[useModeratorAPI] fetchStats FAILED:', err.response?.status, err.message)
+      throw new Error(`Failed to fetch stats: ${err.message}`)
     }
   }, [])
 
@@ -83,9 +84,10 @@ export function useModeratorAPI() {
       const response = await adminApi.get('/v1/moderator/pending')
       const data = response.data.data || response.data
       return data?.items || data || []
-    } catch (error: any) {
-      console.error('[useModeratorAPI] fetchPending FAILED:', error.response?.status, error.message)
-      throw new Error(`Failed to fetch pending issues: ${error.message}`)
+    } catch (error: unknown) {
+      const err = error as { response?: { status?: number, data?: { message?: string } }, message?: string };
+      console.error('[useModeratorAPI] fetchPending FAILED:', err.response?.status, err.message)
+      throw new Error(`Failed to fetch pending issues: ${err.message}`)
     }
   }, [])
 
@@ -93,9 +95,10 @@ export function useModeratorAPI() {
     try {
       const response = await adminApi.get('/v1/moderator/departments')
       return response.data.data || response.data || []
-    } catch (error: any) {
-      console.error('[useModeratorAPI] fetchDepartments FAILED:', error.response?.status, error.message)
-      throw new Error(`Failed to fetch departments: ${error.message}`)
+    } catch (error: unknown) {
+      const err = error as { response?: { status?: number, data?: { message?: string } }, message?: string };
+      console.error('[useModeratorAPI] fetchDepartments FAILED:', err.response?.status, err.message)
+      throw new Error(`Failed to fetch departments: ${err.message}`)
     }
   }, [])
 
@@ -103,9 +106,10 @@ export function useModeratorAPI() {
     try {
       const response = await adminApi.get('/v1/moderator/performance')
       return response.data.data || response.data
-    } catch (error: any) {
-      console.error('[useModeratorAPI] fetchPerformance FAILED:', error.response?.status, error.message)
-      throw new Error(`Failed to fetch performance metrics: ${error.message}`)
+    } catch (error: unknown) {
+      const err = error as { response?: { status?: number, data?: { message?: string } }, message?: string };
+      console.error('[useModeratorAPI] fetchPerformance FAILED:', err.response?.status, err.message)
+      throw new Error(`Failed to fetch performance metrics: ${err.message}`)
     }
   }, [])
 
@@ -113,9 +117,10 @@ export function useModeratorAPI() {
     try {
       const response = await adminApi.get(`/v1/moderator/history`, { params: { page, limit } })
       return response.data.data || response.data
-    } catch (error: any) {
-      console.error('[useModeratorAPI] fetchHistory FAILED:', error.response?.status, error.message)
-      throw new Error(`Failed to fetch moderator history: ${error.message}`)
+    } catch (error: unknown) {
+      const err = error as { response?: { status?: number, data?: { message?: string } }, message?: string };
+      console.error('[useModeratorAPI] fetchHistory FAILED:', err.response?.status, err.message)
+      throw new Error(`Failed to fetch moderator history: ${err.message}`)
     }
   }, [])
 
@@ -123,9 +128,10 @@ export function useModeratorAPI() {
     try {
       const response = await adminApi.get(`/v1/moderator/issues/${issueId}/check-duplicates`)
       return response.data.data || response.data
-    } catch (error: any) {
-      console.error('[useModeratorAPI] checkDuplicates FAILED:', error.response?.status, error.message)
-      throw new Error(`Failed to check duplicates: ${error.message}`)
+    } catch (error: unknown) {
+      const err = error as { response?: { status?: number, data?: { message?: string } }, message?: string };
+      console.error('[useModeratorAPI] checkDuplicates FAILED:', err.response?.status, err.message)
+      throw new Error(`Failed to check duplicates: ${err.message}`)
     }
   }, [])
 
@@ -140,9 +146,10 @@ export function useModeratorAPI() {
         departmentId, priority, notes
       })
       return response.data
-    } catch (error: any) {
-      console.error('[useModeratorAPI] approveIssue FAILED:', error.response?.status, error.message)
-      throw new Error(error.response?.data?.message || 'Failed to approve issue')
+    } catch (error: unknown) {
+      const err = error as { response?: { status?: number, data?: { message?: string } }, message?: string };
+      console.error('[useModeratorAPI] approveIssue FAILED:', err.response?.status, err.message)
+      throw new Error(err.response?.data?.message || 'Failed to approve issue')
     }
   }, [])
 
@@ -153,9 +160,10 @@ export function useModeratorAPI() {
     try {
       const response = await adminApi.post(`/v1/moderator/issues/${issueId}/reject`, { reason })
       return response.data
-    } catch (error: any) {
-      console.error('[useModeratorAPI] rejectIssue FAILED:', error.response?.status, error.message)
-      throw new Error(error.response?.data?.message || 'Failed to reject issue')
+    } catch (error: unknown) {
+      const err = error as { response?: { status?: number, data?: { message?: string } }, message?: string };
+      console.error('[useModeratorAPI] rejectIssue FAILED:', err.response?.status, err.message)
+      throw new Error(err.response?.data?.message || 'Failed to reject issue')
     }
   }, [])
 
@@ -169,9 +177,10 @@ export function useModeratorAPI() {
         message, fields
       })
       return response.data
-    } catch (error: any) {
-      console.error('[useModeratorAPI] requestMoreInfo FAILED:', error.response?.status, error.message)
-      throw new Error(error.response?.data?.message || 'Failed to request more information')
+    } catch (error: unknown) {
+      const err = error as { response?: { status?: number, data?: { message?: string } }, message?: string };
+      console.error('[useModeratorAPI] requestMoreInfo FAILED:', err.response?.status, err.message)
+      throw new Error(err.response?.data?.message || 'Failed to request more information')
     }
   }, [])
 
@@ -182,9 +191,10 @@ export function useModeratorAPI() {
     try {
       const response = await adminApi.post(`/v1/moderator/issues/${issueId}/mark-spam`, { reason })
       return response.data
-    } catch (error: any) {
-      console.error('[useModeratorAPI] markAsSpam FAILED:', error.response?.status, error.message)
-      throw new Error(error.response?.data?.message || 'Failed to mark as spam')
+    } catch (error: unknown) {
+      const err = error as { response?: { status?: number, data?: { message?: string } }, message?: string };
+      console.error('[useModeratorAPI] markAsSpam FAILED:', err.response?.status, err.message)
+      throw new Error(err.response?.data?.message || 'Failed to mark as spam')
     }
   }, [])
 

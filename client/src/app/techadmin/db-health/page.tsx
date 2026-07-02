@@ -61,8 +61,9 @@ export default function DbHealthPage() {
       const res = await api.post('/admin/techadmin/db-health/archive', { years })
       toast.success(res.data?.message || 'Database archiving completed')
       fetchStats()
-    } catch (err: any) {
-      toast.error(err.response?.data?.message || 'Archiving failed')
+    } catch (err: unknown) {
+      const error = err as { response?: { data?: { message?: string } } };
+      toast.error(error.response?.data?.message || 'Archiving failed')
     } finally {
       setIsArchiving(false)
     }

@@ -28,7 +28,7 @@ export default function UsersPage() {
   const [page] = useState(1)
   const [currentUserRole, setCurrentUserRole] = useState<AdminRole | 'MODERATOR' | null>(null)
 
-  const { data, isLoading, isRefetching, refetch } = useAdminUsers({
+  const { data, isLoading, isRefetching } = useAdminUsers({
     page,
     search: search || undefined,
     role: roleFilter,

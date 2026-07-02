@@ -23,7 +23,7 @@ export default function NotFound() {
         </h2>
         
         <p className="text-slate-500 font-medium mb-10 leading-relaxed">
-          The civic page or resource you are looking for doesn't exist, has been moved, or you might not have access to it.
+          The civic page or resource you are looking for doesn&apos;t exist, has been moved, or you might not have access to it.
         </p>
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">

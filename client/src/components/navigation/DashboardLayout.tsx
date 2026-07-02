@@ -1,10 +1,9 @@
+'use client';
 import AnimatedHeading from '@/components/ui/AnimatedHeading'
 /**
  * Dashboard Layout with Sidebar
  * Complete layout with role-based navigation, header, and content area
  */
-
-'use client';
 
 import React, { useState } from 'react';
 import Link from 'next/link';

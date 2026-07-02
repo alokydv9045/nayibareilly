@@ -1,6 +1,8 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import React from 'react'
+
+import { motion, Variants } from 'framer-motion'
 import { cn } from '@/lib/utils/helpers'
 
 interface TypingHeadingProps {
@@ -22,9 +24,9 @@ export default function TypingHeading({
   as: Component = 'h2', 
   delay = 0 
 }: TypingHeadingProps) {
-  const MotionComponent = motion[Component as keyof typeof motion] as any
+  const MotionComponent = motion[Component as keyof typeof motion] as React.ElementType
 
-  const container: any = {
+  const container: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -32,7 +34,7 @@ export default function TypingHeading({
     }
   };
 
-  const child: any = {
+  const child: Variants = {
     hidden: { opacity: 0, y: 10, filter: "blur(2px)" },
     visible: { 
       opacity: 1, 
